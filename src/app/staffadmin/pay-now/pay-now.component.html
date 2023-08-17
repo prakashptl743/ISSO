@@ -1,0 +1,146 @@
+ 
+   <div class="event-container">
+      <div class="align-heading">DO PAYMENT HERE</div>
+ </div> 
+  <div class="ui-g-12 event-container align-container">
+    <div class="card" *ngIf="showPaidSuccess" >
+        <div class="align-success-div">
+          <i class="checkmark">✓</i>
+        </div>
+          <h1>Success</h1> 
+          <p>We received your Payment Successfully!  we'll be in touch shortly!</p>
+          <p>Your Transaction id is <b>{{generatedpaymentId}}</b></p>
+          <p><a [routerLink]="" (click)="onGoBack()">click here</a> to go back </p>
+    </div>
+    <div *ngIf="showPayemntScreen">
+    <div class="col-md-12">
+        <div class="form-group ui-g-4 pad-zero">
+          <label for="exampleInputEmail1">Select Fee Type</label>
+          <p-dropdown  [options]="feeOptions"  [(ngModel)]="feeType" placeholder="Select Fee Type" (onChange)="onPaymentTypeChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+     </div>
+     <div *ngIf="showAlredayPaidMessage" class="margin-left col-md-12 alert alert-success alert-dismissible">
+          <button type="button" class="margin-right close" data-dismiss="alert">&times;</button>
+         <span class="align-message">You have alredy done this payment.</span>
+     </div>
+    <div *ngIf="isAffilated == '2'">
+        <div class="col-md-12">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Year</label>
+            <p-dropdown  [options]="yearOptions"  [(ngModel)]="slectedYear" placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Event</label>
+            <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="slectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Game</label>
+            <p-dropdown [disabled]="!gameReadble"  [(ngModel)]="slectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="isAffilated == '1' && showPayment">
+      <div class="col-md-12">
+        <div class="form-group ui-g-4 pad-zero">
+          <label for="exampleInputEmail1">Total amount</label>
+           <input [(ngModel)]="affilateAmounnt" numbersOnly type="text" (keyup)="onKeypressEvent($event.target.value)" (blur)="setAffiliateAmount()"    placeholder="Total amount to pay" class="form-control" id="inputWarning1">
+         </div>
+      </div>
+    </div> 
+   <div class="col-md-12" *ngIf="showPayment" >
+      <div class="form-group ui-g-4 pad-zero">
+        <label for="exampleInputEmail1">Total Payable Amount</label>
+        <div><h3>{{totalAmount}} Rs.</h3></div>
+       </div>
+   </div> 
+   <div class="col-md-12" *ngIf="showPayment" >
+    <div class="form-group ui-g-4 pad-zero">
+      <button [class.disabled]="!(totalAmount > 0)"  class="btn btn-primary"  type="button" (click)="payNow(totalAmount,'','affliate')">Pay Now</button>
+     </div>
+     <!-- <div class="m-4">
+      <p class="text-start">Don't forget to <a [routerLink]="" (click)="checkPaymentStatus()">click here</a> once payment is done.</p>
+   </div> -->
+   </div>  
+   <!-- {{reportDataLength}}  -->
+  <!-- <span (click)="testFun()">Hello clcik</span> -->
+    <div class="container-fluid table-pad align-table" *ngIf="reportDataLength > 0">
+
+      <div class="">
+        <div class="table-responsive">
+  
+  
+          <table class="table table-bordered">
+            <thead class="table-color">
+              <tr>
+                <th scope="col">Select student </th>
+                <th scope="col">Sr. No </th>
+                <th scope="col">Event Name </th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Game Name</th>
+                <th scope="col">Payable Amount</th>
+                <th scope="col">Paid Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>  
+              <tr *ngFor="let studentList of reportData; let i = index;">
+                 <!-- {{studentList | json}} -->
+                 <!-- <span *ngIf="studentList.isPaid == ''">HelloS</span> -->
+                 
+                <td *ngIf="studentList.isPaid == ''">
+                   <input class="largerCheckbox" *ngIf="schoolType == 'Yes'" type="checkbox" (change)="addPaymentForStudent($event,studentList.sId,studentList.price * 1)" #checkboxes>
+                   <input class="largerCheckbox" *ngIf="schoolType == 'No'" type="checkbox" (change)="addPaymentForStudent($event,studentList.sId,studentList.price * 2)" #checkboxes>
+                </td>
+                <td *ngIf="studentList.isPaid == 'Yes'">
+                   
+               </td>
+                <td>{{i+1}}</td>
+                <td class="align-event">{{studentList.eventName}}</td>
+                <td>{{studentList.studentName}}</td>
+                <td>{{studentList.gameName}}</td>
+                <td  *ngIf="schoolType == 'Yes'">{{studentList.price * 1}} Rs.</td>
+                <td  *ngIf="schoolType == 'No'">{{studentList.price * 2}} Rs.</td>
+                <td class="paid-column" *ngIf="studentList.isPaid == 'Yes'">Paid</td>
+                <td class="not-paid-column" *ngIf="studentList.isPaid == ''">Not Paid</td>
+                <td class="action" *ngIf="studentList.isPaid == 'Yes'">
+                  <span *ngIf="schoolType == 'Yes'">N/A</span>
+                  <span *ngIf="schoolType == 'No'">N/A</span>
+                </td>
+                <td class="action" *ngIf="studentList.isPaid == ''">
+                  <button  *ngIf="schoolType == 'Yes'"  class="btn btn-primary"  type="button" (click)="payNow(studentList.price * 1,studentList.sId,'individual')">Pay Now</button>
+                  <button *ngIf="schoolType == 'No'"  class="btn btn-primary"  type="button" (click)="payNow(studentList.price * 2,studentList.sId,'individual')">Pay Now</button>
+                </td>
+            </tr>
+            </tbody>
+          </table>  
+          <div class="ui-g-12" class="pad-left">
+            <div class="col-md-12">
+             <div class="form-group ui-g-4 pad-zero float-right">
+               <span><b>Total Payable Amount</b></span>
+               <span class="pad-left"><b>{{totalTeamAmount}} Rs.</b></span>
+               <button [class.disabled]="!(totalTeamAmount > 0)"  class="align-pay-button btn btn-primary"  type="button" (click)="payNow(totalTeamAmount,'','team')">Pay Now</button>
+              </div>  
+         </div>  
+        </div>
+    </div>
+   
+  
+   </div>
+  </div>
+
+ 
+</div>    
+ 
+ 
+
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center">
+</p-toast>
+
+
+
+ 

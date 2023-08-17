@@ -1,0 +1,143 @@
+.align-form {
+    padding: 20px 10px 0 15px;
+}
+.align-text {
+    padding: 10px 10px 10px 10px;
+}
+ 
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+ }
+ .pad-bottom-none {
+    padding-bottom: 0;
+ } 
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+}
+.boder-b{
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid black;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+body .ui-dataview .ui-dataview-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+:host ::ng-deep .btn-style {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+:host ::ng-deep .ui-panel .ui-panel-content {
+    position: relative;
+}
+.car-detail {
+    padding: 5px;
+}
+:host ::ng-deep .car-detail .ui-button-text {
+    display: none;
+}
+:host ::ng-deep .ui-panel .ui-panel-content{
+  min-height: 410px;
+}
+:host ::ng-deep .float-input{
+    color: black;
+}
+:host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
+    vertical-align: middle;
+    font-weight: 700;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.search-text { 
+    width: 100%;
+    margin: 0 30px 12px 91px;
+    padding: 7px;
+    margin-left: 0px;
+}
+:host ::ng-deep .ui-dataview{
+    box-shadow: 0px 0px 8px #0000004D;
+}
+.item_label {
+    width: 30% !important;
+    float: right;
+}
+.item_label-width {
+    width: 70%;
+}
+.capacity-header{
+    background-color: #007ad9;
+    color: white;
+    border-bottom: none;
+}
+.align-capacity-header{
+    text-align: center;
+    font-style: bold;
+    padding: 5px;
+}
+.game-type  {
+    width: 49%;
+}
+.align-game {
+    padding-left: 0;
+}
+.align-button{
+    padding: 20px 0 20px 15px;
+}
+.align-add-button {
+    padding-top: 25px;
+}
+/* legend {  
+    display: block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid green;
+    background-color: #f2f2f2;
+    color: #333;
+    width: auto;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;  
+}  */
+legend {  
+    display: block;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #17a2b8;
+    background-color: #17a2b8;
+    color: #fff;
+    width: auto;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 auto 20px;
+} 
+fieldset {
+    min-width: 0;
+    padding: .35em .625em .75em;
+    margin: 0;
+    border: 1px solid silver;
+}

@@ -1,0 +1,53 @@
+.align-game-header {
+    padding: 10px 20px;
+    color: white;
+    background-color: #007ad9;
+ }
+:host ::ng-deep  .panel-body {
+    padding: 15px;
+    box-shadow: 5px 5px 8px 5px #888888;
+}
+.floatReight {
+    float: right;
+}
+.align-cancel-button {
+    margin-left: 20px;
+} 
+.editCancel {
+    padding: 20px 0 20px 15px;
+}
+.editSetting {
+    padding-right: 20px;
+}
+.error-message {
+    font-size: 14px;
+    padding-top: 5px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 150%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+    text-decoration: none;
+}
+.align-message {
+    padding: 8px;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    padding-top: 4px;
+}
+/* :host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+} */
+
+:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
+    margin-left: 2.5em;
+}

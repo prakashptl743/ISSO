@@ -1,0 +1,167 @@
+:host ::ng-deep .custom-toast .ui-toast {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-error {
+    width: 150%;
+    border-radius: 19px;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+.row-border {
+    border: 1px solid;
+    margin-top: 30px;
+}
+.col-border {
+    border-right: 1px solid;
+    padding-left: 0;
+    padding-right: 0;
+}
+.certificate-row {
+    padding: 30px;
+}
+.align-heading {
+    padding: 10px;
+    margin: 0;
+    color: white;
+    background: #0d6efd;
+}
+.certicate-header {
+    background: blue;
+    color: white;
+    height: 40px;
+    text-align: center;
+    padding: 10px;
+}
+.align-certificate-button {
+    padding: 0px 0 25px 0px;
+}
+.align-container {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+}
+.align-message {
+    padding: 8px;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+  
+    padding: 0;
+    font-size: 2em;
+    top: 11px !important;
+  }
+:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
+    margin-left: 2.5em;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-summary {
+    padding: 6px 0 .5em 0;
+}
+:host ::ng-deep .button {
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+  }
+:host ::ng-deep .ui-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 21px;
+    text-decoration: none;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    padding-top: 3px;
+}
+.align-report-heading {
+    padding: 0 50px;
+    cursor: pointer;
+}
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0px 0px -50px;
+  }
+.align-invoice-menu {
+   padding: 17px 48px; 
+   
+}
+.align-certificate-menu {
+    padding: 17px 48px;
+}
+.menu-background {
+    background: #e3ebf7;
+}
+.menu-inactive {
+    background: #f7f7f7;
+}
+.align-menu-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    cursor: pointer;
+}
+.align-drop-down {
+    width: 100%;
+    padding: 0;
+    /* padding-top: 20px; */
+    padding-bottom: 20px;
+} 
+.table .thead-dark th {
+    color: #fff;
+    background-color: dimgrey;
+    /* border-color: #32383e; */
+    /* border-bottom: 1px solid black; */
+}
+table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border: 1px solid;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+.make-header {
+    background-color: dimgrey;
+}
+.align-center {
+    text-align: center;
+}
+.header-span {
+   color: white;
+}
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-error {
+  width: 400px;
+}
+table {
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}

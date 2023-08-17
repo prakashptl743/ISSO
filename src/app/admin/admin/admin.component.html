@@ -1,0 +1,56 @@
+ 
+
+<div class="wrapper no-margin">
+   
+      
+    
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>ISSO ADMIN</h3>
+                <strong>ISSO</strong>
+            </div>
+        
+            <ul class="list-unstyled components">
+                <li *ngFor="let menu of adminMenuData">
+                  <a class="pad-right" routerLink="{{menu.routing}}" routerLinkActive="active" class="menu-color"> <span class="left-link"> {{menu.menu_name}}</span> </a>
+                </li> 
+                <li><a  class="menu-color" [routerLink]="['/login']" routerLinkActive="active"><i class="fas fa-sign-out-alt"></i><span class="left-link">Logout</span></a>
+                </li> 
+                <!-- <li>
+                  <a class="pad-right" routerLink="./dashboard" routerLinkActive="active" class="menu-color"> <i class="fas fa-table"></i> <span class="left-link">Dashboard</span> </a>
+               </li>
+                <li>
+                    <a class="pad-right" routerLink="./admin-school" routerLinkActive="active" class="menu-color"> <i class="fas fa-school"></i> <span class="left-link">School</span> </a>
+                </li>
+                <li><a routerLink="./game" routerLinkActive="active" class="menu-color"><i class="fas fa-image"></i> <span class="left-link">Game</span>  </a>
+                </li>            
+
+                <li><a routerLink="./student" routerLinkActive="active" class="menu-color"> <i class="fas fa-user-graduate"></i> <span class="left-link">Student</span></a>
+                </li>
+                <li><a routerLink="./event" routerLinkActive="active" class="menu-color"> <i class="fas fa-calendar"></i><span class="left-link">Events</span></a>
+                </li>
+          
+                <li><a routerLink="./payment" routerLinkActive="active" class="menu-color"><i class="fas fa-money-bill"></i><span class="left-link">Summary</span></a>
+                </li>
+                <li><a routerLink="./admin-payment" routerLinkActive="active" class="menu-color"><i class="fas fa-money-bill"></i><span class="left-link">Payment/Invoice</span></a>
+                </li>
+                <li><a routerLink="./report" routerLinkActive="active" class="menu-color"> <i class="fas fa-chart-line"></i><span class="left-link">Report</span></a>
+                </li>
+                <li><a routerLink="./merit" routerLinkActive="active" class="menu-color"><i class="fas fa-trophy"></i> <span class="left-link">Merit</span></a>
+                </li>
+                <li><a routerLink="./attendance" routerLinkActive="active" class="menu-color"><i class="fas  fa-bookmark"></i> <span class="left-link">Attendance</span></a>
+                </li>                                                                                  
+                <li><a routerLink="./webData" routerLinkActive="active" class="menu-color"><i class="fas fa-calendar"></i> <span class="left-link">Web Data</span></a>
+                </li>
+                <li><a  class="menu-color" [routerLink]="['/login']" routerLinkActive="active"><i class="fas fa-sign-out-alt"></i><span class="left-link">Logout</span></a>
+                </li> -->
+            </ul>
+        </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+ 
+        <router-outlet></router-outlet>
+
+</div> 
+</div>

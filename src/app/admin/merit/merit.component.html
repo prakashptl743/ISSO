@@ -1,0 +1,301 @@
+<!-- <div class="tab-menu">
+  <p-tabMenu [model]="items2"  class="floatLeft">
+      <ng-template pTemplate="item" let-item let-i="index" >
+          <div style="position: relative; text-align: center; min-width: 10em"  (click)="onloadMenu(i)">
+              <div class="ui-menuitem-text" >
+                  {{item.label}}
+              </div>
+          </div>
+      </ng-template>
+  </p-tabMenu>
+ 
+</div> -->
+
+<div class="tab">
+  <button [ngClass]="isAddMerit ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Add Merit</button>
+  <button [ngClass]="isPrintMerit ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Print Merit</button>
+  <button [ngClass]="isConsolited ? 'isMenuActive' : '' " (click)="onloadMenu(2)"  class="tablinks">Consolited Merit</button>
+</div>
+
+<app-loading *ngIf="showspinner"></app-loading>
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+<div class="ui-g-12">
+    <div class="ui-g-4">
+      <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Select Event" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+</div>
+<div class="ui-g-12">
+    <div class="ui-g-4">
+      <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+</div> 
+<div class="ui-g-12" *ngIf="!isConsolited">
+    <div class="ui-g-4" *ngIf="!isConsolited">
+      <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4" *ngIf="!isConsolited">
+      <p-dropdown  [disabled]="!isShowSubGame" [(ngModel)]="selectedSubGame"   [options]="subgameOptions"   placeholder="Select Sub Game" (onChange)="loadSubGameChange($event)"  [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+</div>
+<div class="ui-g-12">
+    <div class="ui-g-4"  *ngIf="isAddMerit">
+      <p-dropdown [disabled]="!schoolReadble" [(ngModel)]="selectedSchool"  (onChange)="loadSchoolChange($event)" [options]="schoolOptions"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4" *ngIf="isAddMerit">
+      <p-dropdown [disabled]="!isShowStudent" [(ngModel)]="selectedStudent" [options]="studentOptions"  placeholder="Select Student" (onChange)="studentOnChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+</div>
+<div class="ui-g-12">
+    <div class="ui-g-4"  *ngIf="isAddMerit || isAddMerit">
+      <p-dropdown  [disabled]="!rankReadble"  [(ngModel)]="selectedRank"  [options]="rankOptions"  placeholder="Select Rank" (onChange)="rankChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+     <div class="ui-g-4"  *ngIf="timeAndDistance">
+      <input class="form-control" name="gameName" [(ngModel)]="timeAndDistanceValue" (keyup)="onKeypressEvent($event.target.value)"  type="text" required>
+     </div>  
+</div>
+<div class="ui-g-12 align-add-button" *ngIf="isAddMerit">
+  <button type="button"  [disabled]="!isDataAvailble" (click)="addMeritData()" pButton label="Add"></button>
+ </div>
+ <div class="ui-g-12 align-merit-content"  *ngIf="showMerit">
+  <div class="panel panel-default">
+    <div class="panel-heading">ALREADY ADDED MERIT DATA</div>
+    <div class="panel-body"> 
+      <table class="table" *ngIf="individualAlreadyAddedMerit">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">School Name</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let school of showAlreadyMeritData; let i = index;">
+            <td>{{school.studentName}}</td>
+            <td>{{school.schoolName}}</td>
+            <td>{{school.rank}}</td> 
+             <td>
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              </p-button>
+                <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
+             </td> 
+          </tr>
+        </tbody>
+      </table>
+      <table class="table" *ngIf="!individualAlreadyAddedMerit">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">School Name</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let school of showAlreadyMeritData; let i = index;">
+            <td>{{school.schoolName}}</td>
+            <td>{{school.rank}}</td> 
+             <td>
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              </p-button>
+                <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
+             </td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+ 
+ 
+ <div class="ui-g-12 align-merit-content"  *ngIf="isMeritDataShow">
+  <div class="panel panel-default">
+    <div class="panel-heading">TEAM MERIT</div>
+    <div class="panel-body"> 
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Event Name</th>
+            <th scope="col">Game Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+            <th scope="col">School</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let printMerit of teamMeritArray; let i = index;">
+            <td>{{printMerit.eventName}}</td>
+            <td>{{printMerit.gameName}}</td>
+            <td>{{printMerit.agerange}}</td>
+            <td>{{printMerit.gender}}</td>
+            <td>{{printMerit.schoolName}}</td>
+            <td>{{printMerit.rank}}</td>
+            <td>
+              <div class="icons-wrap">
+                  <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMeritData(i)">
+                </button>
+             </div>
+              
+              <!-- <button  class="bg-white"  (click)="deleteMeritData(i)"><i class="fa fa-trash"></i></button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="ui-g-12 align-merit-content"  *ngIf="showStudentList">
+  <div class="panel panel-default">
+    <div class="panel-heading">INDIVIDUAL MERIT</div>
+    <div class="panel-body"> 
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Game Name</th>
+            <th scope="col">Sub Game Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+            <th scope="col">School</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let printMerit of individualMeritArray; let i = index;">
+            <td *ngIf="printMerit.studentName!==''">{{printMerit.studentName}}</td>
+            <td *ngIf="printMerit.studentName ==''">N/A</td>
+            <td>{{printMerit.eventName}}</td>
+            <td>{{printMerit.gameName}}</td>
+            <td>{{printMerit.subGameName}}</td>
+            <td>{{printMerit.agerange}}</td>
+            <td>{{printMerit.gender}}</td>
+            <td>{{printMerit.schoolName}}</td>
+            <td>{{printMerit.rank}}</td>
+            <td>
+              <div class="icons-wrap">
+                <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteIndividualMeritData(i)">
+                </button>
+             </div> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<div class="ui-g-12 align-merit-content"  *ngIf="teamSubGame">
+  <div class="panel panel-default">
+    <div class="panel-heading">SubGame Merit</div>
+    <div class="panel-body"> 
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+         
+            <th scope="col">Event Name</th>
+            <th scope="col">Game Name</th>
+            <th scope="col">Sub Game Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+            <th scope="col">School</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody> 
+          <tr *ngFor="let printMerit of teamSubGameArray; let i = index;">
+            <td>{{printMerit.eventName}}</td>
+            <td>{{printMerit.gameName}}</td>
+            <td>{{printMerit.subGameName}}</td>
+            <td>{{printMerit.agerange}}</td>
+            <td>{{printMerit.gender}}</td>
+            <td>{{printMerit.schoolName}}</td>
+            <td>{{printMerit.rank}}</td>
+            <td>
+              <div class="icons-wrap">
+                <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteteamSubGameArraya(i)">
+                </button>
+             </div> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<div class="ui-g-12 align-merit-content"  *ngIf="printmeritData">
+  <div class="panel panel-default">
+    <div class="panel-heading">PRINT MERIT</div>
+    <div class="panel-body"> 
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">School Name</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead>
+        <tbody>   
+          <tr *ngFor="let school of schoolList; let i = index;">
+            <td>{{school.schoolName}}</td>
+            <td>{{school.rank}}</td> 
+             <td> 
+                <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">Print Certificate</a>
+             </td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="ui-g-12 align-merit-content"  *ngIf="individualMeritData">
+  <div class="panel panel-default">
+    <div class="panel-heading">PRINT MERIT</div>
+    <div class="panel-body"> 
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Rank</th>
+            <th scope="col">Action</th>
+         </tr>
+        </thead> 
+        <tbody>
+          <tr *ngFor="let school of schoolList; let i = index;">
+            <td>{{school.studentName}}</td>
+            <td>{{school.rank}}</td>  
+             <td>
+              <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{school.schoolId}}/{{school.eventId}}/{{school.gameId}}/{{subGameId}}/{{school.ageRange}}/{{school.gender}}/{{school.sId}}/{{school.rank}}">Print Certificate</a>
+            </td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+   
+<div *ngIf="isConsolited" class="align-add-button">  
+    <a  [class.disabled]="!gameId" class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/consoliatedMerit/{{eventValue}}/{{gameId}}">Print Consolited Certificate</a>
+    <a  [class.disabled]="!gameId" class="btn btn-primary align-result-button" href="https://issoindia.com/isso-php/tcpdf/consoliatedMeritResult/{{eventValue}}/{{gameId}}">Print Consolited Result</a>
+</div>
+ <p-confirmDialog key="confirm-add-merit" header="Add merit data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
+ <!-- <p-confirmDialog key="confirm-add-merit" header="Add merit data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog> -->
+ 
+ <div class="ui-g-12" *ngIf="showStudentList || isMeritDataShow || teamSubGame">
+  <!-- <button [disabled]="!gameForm.valid" class="btn btn-primary-small marginR10" type="button" (click)="onSubmit()">Submit</button> -->
+  <button  class="btn btn-primary marginR10" type="button" (click)="addmeritData()">Save</button>
+
+ </div>
+ 

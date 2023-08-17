@@ -1,0 +1,36 @@
+<app-loading *ngIf="showspinner"></app-loading>
+<div class="align-table">
+    <div class="form-group col-md-4 align-year-drop-down"> 
+        <label for="inputEmail4">Select Year</label>
+        <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+<table class="table"  *ngIf="showTable">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>Event Name</th>
+        <th>Participation certificate</th>
+        <th>Merit certificate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of eventInfo;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{event.eventName}}</td>
+        <td *ngIf="event.isCertificate == 0"> 
+            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">Pending</button></span>
+        </td>
+        <td *ngIf="event.isCertificate == 1"> 
+            <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">Approved</button></span>
+        </td>
+        <td *ngIf="event.isMerit == 0"> 
+            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'merit')">Pending</button></span>
+        </td>
+        <td *ngIf="event.isMerit == 1"> 
+            <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isMerit,'merit')">Approved</button></span>
+        </td>
+     </tr>
+    </tbody>
+  </table>
+</div>
+  <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>

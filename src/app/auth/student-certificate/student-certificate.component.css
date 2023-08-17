@@ -1,0 +1,782 @@
+/*  
+body {
+  font-family: "Trirong", serif;
+ }
+.bg {
+ 
+  background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+  background-repeat:no-repeat; 
+  background-size:cover;
+ 
+  background-size: 63vw 99vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20%;
+}
+
+.align-certificate-heading {
+  padding: 240px 0 10px 0;
+  text-align:center; 
+}
+.certificate-box {
+  text-align: center;
+  font-size: 11px;
+  border: 1px solid black;
+  margin: 0 10%;
+}
+.event-venue {
+  padding-top: 1%;
+  font-size: 15px;
+}
+.event-date {
+  padding: 5px 0;
+  font-size: 15px;
+}
+.participation-heading {
+  text-align:center;
+  font-size:18px;
+ 
+}
+.align-table {
+  margin: 0 8%;
+}
+ 
+.floatleft {
+  float: left;
+}
+.certificate-content {
+  margin: 0 11%;
+  clear: both;
+ 
+}
+.scan-image {
+  padding: 10px 0 0 92px;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+    padding: 1;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 11px;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0px 0px -50px;
+}
+.img-height-width {
+  height: 100px;
+  width: 100px;
+}
+/* //@media screen and (max-device-width:640px), screen and (max-width:640px) { 
+@media only screen and (max-width: 600px) {
+  .align-certificate-heading {
+    font-size: 16px;
+  }
+  .participation-heading {
+    font-size: 16px;
+    padding: 10% 0;
+  }
+  .table-borderless > tbody > tr > td {
+    font-size: 3vw;
+  }
+  h3 {
+    font-size: 1.7vh;
+  }
+  .event-venue {
+    font-size: 12px;
+  }
+  .event-date {
+    font-size: 12px;
+  }
+  .certificate-box { 
+    margin: 0 6%;
+  }
+  .align-table {
+    margin: 0;
+  }
+  .img-height-width {
+    height: 40px;
+    width: 40px;
+  }
+  .certificate-content { 
+    margin: 0 5%;
+    font-size: 3vw;
+    padding-top: 7%;
+  } 
+  .bg { 
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    left: 0;
+    background-color: black;
+  }
+  .align-certificate-heading {
+    padding: 220px 0 10px 0;
+    font-size: 12px;
+  }
+  .participation-heading {
+    font-size: 12px;
+    padding: 4% 0;
+  }
+  .align-table {
+    margin: 5px;
+  }
+  .certificate-content {
+    margin: 0 5%;
+    font-size: 3vw;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3%;
+ }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 4px;
+  }
+.scan-image {
+  padding: 46px 0px 0 50px;
+}
+ 
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up)  
+@media only screen and (min-width: 600px) {
+  .bg { 
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: green;
+  }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up)  
+@media only screen and (min-width: 768px) {
+  .bg { 
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: yellow;
+  }
+} 
+
+/* Large devices (laptops/desktops, 992px and up)  
+@media only screen and (min-width: 992px) {
+  .bg { 
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: violet;
+  }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up)  
+  .example {background: pink;}
+}
+ */
+
+
+/* @font-face {
+  font-family: "Futura";
+  src: url('../icon-fonts/futura-medium.ttf'),
+       url('../icon-fonts/futura.eot'); /* IE9  
+} */
+
+ /* // @import url('https://fonts.googleapis.com/css?family=Trirong'); */
+/* @import url('../../assets/css/template/certificate.css'); */
+
+/* //E:\Angular\14_feb_isso\src\assets\css\template\certificate.css */
+body {
+  font-family: "Trirong", serif;
+  /* background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+  height: 100%;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-size: 100vw 100vh; */
+ 
+ 
+}
+.bg {
+ 
+  background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+  background-repeat:no-repeat;
+  background-size:cover;
+  /* background-size: 100vw 100vh; */
+  background-size: 63vw 99vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20%;
+}
+
+.align-certificate-heading {
+  padding: 240px 0 10px 0;
+  text-align:center;
+  /* font-size:22px; */
+}
+.certificate-box {
+  text-align: center;
+  font-size: 11px;
+  border: 1px solid black;
+  margin: 0 10%;
+}
+.event-venue {
+  padding-top: 1%;
+  font-size: 15px;
+}
+.event-date {
+  padding: 5px 0;
+  font-size: 15px;
+}
+.participation-heading {
+  text-align:center;
+  font-size:18px;
+  /* padding: 2%;    */
+}
+.align-table {
+  margin: 0 8%;
+}
+/* .align-photo {
+  float: left;
+  padding-left: 32%;
+} */
+.floatleft {
+  float: left;
+}
+.certificate-content {
+  margin: 0 11%;
+  clear: both;
+  /* padding-top: 2%; */
+}
+.scan-image {
+  padding: 10px 0 0 92px;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+    padding: 1;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 11px;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0px 0px -50px;
+}
+.img-height-width {
+  height: 100px;
+  width: 100px;
+}
+/* //@media screen and (max-device-width:640px), screen and (max-width:640px) { */
+@media only screen and (max-width: 600px) {
+  .align-certificate-heading {
+    font-size: 16px;
+  }
+  .participation-heading {
+    font-size: 16px;
+    padding: 10% 0;
+  }
+  .table-borderless > tbody > tr > td {
+    font-size: 3vw;
+  }
+  h3 {
+    font-size: 1.7vh;
+  }
+  .event-venue {
+    font-size: 12px;
+  }
+  .event-date {
+    font-size: 12px;
+  }
+  .certificate-box {
+    margin: 0 6%;
+  }
+  .align-table {
+    margin: 0;
+  }
+  .img-height-width {
+    height: 40px;
+    width: 40px;
+  }
+  .certificate-content {
+    margin: 0 5%;
+    font-size: 3vw;
+    padding-top: 7%;
+  }
+  .bg {
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    left: 0;
+    background-color: black;
+  }
+  .align-certificate-heading {
+    padding: 220px 0 10px 0;
+    font-size: 12px;
+  }
+  .participation-heading {
+    font-size: 12px;
+    padding: 4% 0;
+  }
+  .align-table {
+    margin: 5px;
+  }
+  .certificate-content {
+    margin: 0 5%;
+    font-size: 3vw;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3%;
+ }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 4px;
+  }
+.scan-image {
+  padding: 46px 0px 0 50px;
+}
+ 
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .bg {
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: green;
+  }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .bg {
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: yellow;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .bg {
+    background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
+    background-repeat: no-repeat;
+    background-size: 103vw 75vh;
+    background-color: violet;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .example {background: pink;}
+}
+
+
+
+/* @font-face {
+  font-family: "Futura";
+  src: url('../icon-fonts/futura-medium.ttf'),
+       url('../icon-fonts/futura.eot'); /* IE9  
+} */
+
+html,
+body {
+height: 100%;
+font-family: 'Futura', sans-serif!important;
+
+}
+
+body {
+/*background: url("../Ibertificate.jpg") 0 0 no-repeat;
+background-size: 100%;*/
+
+}
+
+.main-body{
+    width: 65%;
+    margin: 0 auto;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+color: #222222;
+margin: 0;
+margin-bottom: 10px;
+font-weight: 700;
+}
+
+h1 {
+font-size: 60px;
+margin-bottom: 40px;
+}
+
+h1 span {
+background: #291770;
+padding: 0 10px;
+color: #fff;
+display: inline-block;
+}
+
+
+h3 {
+font-size: 24px;
+margin-bottom: 30px;
+}
+
+h4 {
+font-size: 15px;
+}
+.align-main-content {
+  padding-left: 71px;
+  padding-right: 8%;
+  padding-top: 5%;
+}
+.certificate-section {
+  /* background-image: url('../../assets/images/sp2.png'); */
+  /* background-image: url(assets/images/sp2.png) 0 0 repeat-y;   */
+  background: url("../../../assets/images/sp2.png") 0 0 repeat-y;  
+    float: left;
+    background-size: 100%;
+    margin-top: -5px;
+    width: 99.98%;
+}
+.certificate-section h1{
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+.certificate-section h2 {
+font-size: 1.5rem;
+text-align: center;
+margin: 4rem 0;
+}
+.align-school-name {
+  width: 40%;
+}
+.aalign-school-label {
+  width: 33% !important
+}
+.align-school-name {
+  width: 69%;
+}
+
+
+.venue-section{
+width: 83%;
+    margin: 0 auto;
+    border: 1px solid #000;
+    padding: 1rem;
+    text-align: center;
+}
+
+.certificate-form{
+    width: 87%;
+    margin: 0 auto;
+}
+.cert-left-section{
+  width: 89%;
+  float: left;
+}
+.cert-right-section{
+width: 10%;
+float: left;
+}
+.cer-row{
+float: left;
+    width: 100%;
+   margin-bottom: 1rem;
+}
+.cer-row .cer-label-section{
+   float: left;
+   width: 37%;
+   padding-left: 20px;
+}
+.cer-row .cer-value-section{
+float: left;
+width: 60%;
+}
+.cer-row .cer-photo-section{
+    float: left;
+    text-align: center;
+}
+.cer-row .cer-photo-section img{
+    max-width: 100%;
+    width: 75px;
+    height: 55px;
+}
+.upper-body img,.lower-body .lower-bg{
+width: 100%;
+}
+.summary-section{
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-top: 3rem;
+}
+.merit-id {
+  font-family: Futura, sans-serif !important;
+  color: rgb(51, 51, 51) !important;
+}
+.summary-section p {
+    width: 84%;
+    margin: 0 auto;
+    padding: 1rem 0.5rem;
+    line-height: 1.8;
+    font-family: Futura, sans-serif !important;
+    color: rgb(51, 51, 51) !important;
+}
+.lower-body{
+   float: left;
+    width: 100%;
+    clear: both;
+    position: relative;
+}
+.qr-img{
+    position: absolute;
+    bottom: 25%;
+    left: 12%;
+    width: 15%;
+}
+
+/* ===========================
+  Responsive
+==============================*/
+@media only screen and (max-width: 1477px) {
+
+}
+
+@media only screen and (max-width: 1400px) {
+
+}
+
+/* Medium screen : 992px. */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .cert-left-section {
+    width: 85%;
+    float: left;
+  }
+  .aalign-school-label {
+    width: 31% !important;
+  }
+}
+
+/* Tablet :768px. */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+.main-body{
+  width: 90%;
+  font-size: 13px;
+}
+.certificate-section h2 {
+   font-size: 1rem;
+   text-align: center;
+   margin: 2rem 0;
+}
+.certificate-section h1 {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+  .cert-left-section {
+    width: 86%;
+    float: left;
+  }
+  .aalign-school-label {
+    width: 32% !important;
+  }
+  .summary-section p {
+    line-height: 1.8;
+    font-family: Futura, sans-serif !important;
+    color: rgb(51, 51, 51) !important;
+  }
+}
+
+/* Large Mobile :480px. */
+@media only screen and (max-width: 767px) {
+.main-body{
+width: 100%;
+font-size: 9px;
+}
+.certificate-form {
+   width: 83%;
+   margin: 0 auto;
+   font-size: 9px;
+}
+.cer-row .cer-label-section {
+    float: left;
+    width: 36%;
+    padding-left: 10px;
+}
+.cer-row .cer-value-section {
+    float: left;
+    width: 50%;
+}
+.cert-right-section {
+    width: 15%;
+    float: left;
+}
+.cer-row .cer-photo-section img {
+    max-width: 100%;
+    width: 65px;
+    height: 50px;
+}
+.venue-section {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #000;
+    padding: 0.5rem;
+    text-align: center;
+}
+.certificate-section h1 {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.certificate-section h2 {
+    font-size: 1rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+  .aalign-school-label{
+   width:29% !important;
+  }
+  .align-school-name {
+    width:62% !important;
+  }
+  .summary-section {
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-top: 0rem;
+  }
+  .cert-left-section {
+    width: 82%;
+    float: left;
+  }
+  .certificate-section h2 {
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 2rem 0 2rem;
+  }
+  .summary-section p {
+    line-height: 1.8;
+    font-family: Futura, sans-serif !important;
+    color: rgb(51, 51, 51) !important;
+  }
+}
+
+/* small mobile :320px. */
+@media only screen and (max-width: 479px) {
+.main-body{
+width: 100%;
+font-size: 9px;
+}
+.certificate-form {
+   width: 85%;
+   margin: 0 auto;
+   font-size: 9px;
+}
+.cer-row .cer-label-section {
+    float: left;
+    width: 42%;
+    padding-left: 10px;
+}
+.cer-row .cer-value-section {
+    float: left;
+    width: 50%;
+}
+.cert-right-section {
+    width: 15%;
+    float: left;
+}
+.cer-row .cer-photo-section img {
+    max-width: 100%;
+    width: 65px;
+    height: 50px;
+}
+.venue-section {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #000;
+    padding: 0.5rem;
+    text-align: center;
+}
+/*.cert-left-section {
+   width: 100%;
+   float: left;
+   order: 2;
+}
+.cert-right-section {
+   width: 100%;
+   float: left;
+}
+.cer-row .cer-photo-section{
+   float: none;
+   text-align: center;
+}
+.cer-row .cer-label-section {
+   float: left;
+   width: 100%;
+}
+.cer-row .cer-value-section {
+   float: left;
+   width: 100%;
+}*/
+/*.certificate-form{
+   display: flex;
+    flex-flow: column;
+}*/
+.certificate-section h1 {
+    text-align: center;
+    font-size: 0.8rem;
+    width: 96%;
+    margin: 2rem auto 2rem;
+}
+.certificate-section h2 {
+   font-size: 0.8rem;
+   text-align: center;
+   margin: 2rem 0 2rem;
+}
+.cer-row .cer-label-section {
+  float: left;
+  width: 47%;
+  padding-left: 10px;
+ }
+  .aalign-school-label{
+  width:38% !important;
+  }
+  .align-school-name {
+  width:59% !important;
+  }
+  .summary-section p {
+    line-height: 1.8;
+    font-family: Futura, sans-serif !important;
+    color: rgb(51, 51, 51) !important;
+  }
+
+}

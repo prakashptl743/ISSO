@@ -1,0 +1,82 @@
+.align-form {
+    padding: 20px 10px 0 15px;
+}
+.align-text {
+    padding: 10px 10px 10px 10px;
+}
+ 
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+ }
+ .pad-bottom-none {
+    padding-bottom: 0;
+ } 
+ .search-text { 
+    width: 70%;
+    margin: 0 30px 12px 91px;
+    padding: 7px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+}
+.boder-b{
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid black;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+body .ui-dataview .ui-dataview-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+:host ::ng-deep .btn-style {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+:host ::ng-deep .align-button {
+    position: absolute;
+    bottom: 0;
+}
+:host ::ng-deep .ui-panel .ui-panel-content {
+    position: relative;
+}
+.car-detail {
+    padding: 5px;
+}
+:host ::ng-deep .car-detail .ui-button-text {
+    display: none;
+}
+/* :host ::ng-deep .ui-panel .ui-panel-content{
+  min-height: 410px;  
+} */
+:host ::ng-deep .float-input{
+    color: black;
+}
+:host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
+    vertical-align: middle;
+    font-weight: 700;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

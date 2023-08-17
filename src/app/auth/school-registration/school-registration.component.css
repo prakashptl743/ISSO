@@ -1,0 +1,84 @@
+.align-menu {
+  /* margin: auto;
+  width: 32%;
+  border: 3px solid #73AD21;
+  margin-top: 30px; 
+  padding: 10px 10px 27px 10px; */
+
+  margin: auto;
+  width: 100%;
+  /* border: 3px solid #73AD21; */
+  margin-top: 30px;
+  padding: 10px 10px 27px 168px;
+}
+.close-button {
+  margin-right: 15px !important;
+  margin-right: 15px !important;
+  padding-top: 0px !important; 
+}
+:host ::ng-deep .alert-dismissible .close {
+  margin-right: 15px;
+  margin-right: 15px;
+  padding-top: 0px; 
+}  
+.align-error-message {
+  margin-left: 20px;
+}
+.error-class {
+  color: red;
+  padding-top: 15px;
+}
+.align-form {
+  padding: 0 !important;
+  width: 181px !important;
+  margin: 0 !important;
+}
+.padd-top {
+  padding-top: 40px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 400px;
+}
+.ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 380px !important;
+  border-radius: 10px !important;
+}
+.ui-toast .ui-toast-message-content {
+  padding: 1em 2em;
+}
+.ui-toast .ui-toast-close-icon {
+  position: absolute;
+  top: 1em;
+  right: 0.25em;
+  cursor: pointer;
+  display: inline-block;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+}
+.register-form {
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px #888888;
+  margin-bottom: 40px;
+  border-radius: 10px;
+}
+.align-instruction {
+  padding-bottom: 17px;
+  font-size: 16px;
+  font-style: italic;
+}
+.align-email-error {
+  color: red;
+  padding-top: 10px;
+}

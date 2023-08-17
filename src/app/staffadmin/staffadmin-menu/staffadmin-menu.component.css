@@ -1,0 +1,40 @@
+.menu-color {
+    color: white;
+    padding-right: 10px;
+}
+.pad-right{
+    padding-right: 10px;
+}
+.align-menu{
+    padding-left: 53px;
+    padding-top: 70px;
+    padding-right: 100px;
+    float: right; 
+}
+.menu-colour {
+    color: #dfdfdf;
+}
+.align-logo {
+    padding-left: 33px;
+    height: 100px;
+}
+.align-content {
+    margin-top: -84px;
+}
+.school-name {
+    border-bottom: 1px solid beige;
+}
+:host ::ng-deep .link-color { 
+  color: white !important;
+}
+header.isso-header {
+    height: 80px;
+    background: #005b9f;
+    box-shadow: 3px 1px 6px 1px #dfdfdf;
+    margin-bottom: 30px;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+}
+
+.isso-menu{margin-top: 42px !important;padding-top: 0;}

@@ -1,0 +1,12 @@
+ 
+<div class="tab">
+  <button [ngClass]="reportLabel=='payment' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Payment</button>
+  <button [ngClass]="reportLabel=='invoice' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >Invoice</button>
+  <button [ngClass]="reportLabel=='receipt' ? 'isMenuActive' : '' "  (click)="onloadMenu(2)" class="tablinks" >Receipt</button>
+
+</div>
+ 
+<app-payment-invoice *ngIf="reportValue == 0"></app-payment-invoice>
+<app-download-invoice *ngIf="reportValue == 1"></app-download-invoice>
+<app-download-receipt *ngIf="reportValue == 2"></app-download-receipt>
+    

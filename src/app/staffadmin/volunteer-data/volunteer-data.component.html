@@ -1,0 +1,151 @@
+ 
+  <div class="event-container">
+      <div class="align-heading">VOLUNTEER ENTRIES HERE</div>
+ </div>  
+  <div class="ui-g-12 event-container align-container">
+   
+  
+    <div>
+        <div class="col-md-12 pad-left-zero">
+          <div class="form-group ui-g-6 pad-zero">
+            <label for="exampleInputEmail1">Select Year</label>
+            <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onLoadSchoolData($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-md-12 pad-left-zero">
+          <div class="form-group ui-g-6 pad-zero">
+            <label for="exampleInputEmail1">Select Event</label>
+            <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+        <!-- <div class="col-md-12 pad-left-zero">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Game</label>
+            <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-md-12 pad-left-zero">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Age</label>
+            <p-dropdown [disabled]="!ageReaadble"  [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+          </div>
+        </div> 
+        <div class="col-md-12 pad-left-zero">
+          <div class="form-group ui-g-4 pad-zero">
+            <label for="exampleInputEmail1">Select Gender</label>
+            <p-dropdown  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+          </div>
+        </div> -->
+     
+    
+        <div  *ngIf="!coachDataAvailable">
+            <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
+            
+              <div class="form-group col-md-12 pad-bot-zero">
+                <label class="form-control-label">Student Name</label>
+                <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
+                  placeholder="Student Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
+                  <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
+                    <span *ngIf="f.studentName.errors.required">Student Name is required</span>
+                  </span>
+              </div>
+              <div class="form-group col-md-12 pad-bot-zero">
+                <label class="form-control-label">Student Aadhar Number</label>
+                <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="aadharNumber" formControlName="aadharNumber"
+                  placeholder="Aadhar Number" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.aadharNumber.touched && f.aadharNumber.errors }">
+                  <span *ngIf="f.aadharNumber.touched && f.aadharNumber.errors" class="invalid-feedback">
+                    <span *ngIf="f.aadharNumber.errors.required">Student Aadhar number is required</span>
+                  </span>
+              </div>
+             
+            
+              <div class="form-group col-md-12 pad-bot-zero">
+                <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
+                <p-button *ngIf="isEdit"   label="{{submitButtonLabel}}"></p-button>
+                <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+                <button  *ngIf="coachListArray.length > 0" style="margin-left: 20px;" type="button" pButton (click)="addMoreData()" label="Add More"></button>
+
+              </div>
+            </form>
+        </div>
+
+  </div>
+
+
+  <div class="container-fluid table-pad align-table" *ngIf="coachListArray.length > 0">
+
+    <div class="">
+      <div class="table-responsive">
+
+
+        <table class="table table-bordered">
+          <thead class="table-color">
+            <tr>
+              <th scope="col">Sr. No </th>
+              <th scope="col">Event Name </th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Aadhar Number</th>
+              <th scope="col">Enrolled Date</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coachList of coachListArray; let i = index;">
+              <td>{{i+1}}</td>
+              <td class="align-event">{{coachList.eventName}}</td>
+              <td>{{coachList.studentName}}</td>
+              <td>{{coachList.aadharNumber}}</td>
+              <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
+              <td class="action">
+                  <a href="javascript: void(0)"  (click)="editStudent(i)" ><img src="assets/images/web/edit.svg"></a>
+                  <a href="javascript: void(0)" (click)="deleteStudentData($event, i)"><img src="assets/images/web/delete.svg"></a>
+
+              </td>
+          </tr>
+          </tbody>
+        </table>
+
+
+          
+      </div>
+  </div>
+
+
+
+</div>
+
+
+
+    <!-- <div class="ui-g-4">
+      <p-dropdown  [options]="feeOptions"  placeholder="Select Fee Type" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+   </div> -->
+    <!-- <div class="ui-g-4">
+      <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+   </div> -->
+    <!-- <div class="ui-g-4">
+     <p-dropdown [disabled]="!eventReadable"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div> -->
+</div>    
+<!-- <div class="ui-g-12">
+  <div class="ui-g-4">
+    <p-dropdown [disabled]="!gameReadble"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+   </div>
+</div>   -->
+ 
+<div class="ui-g-12" class="pad-left">
+<!-- <button type="button"  [disabled]="!isDataAvailble" (click)="printReport()"  pButton   label="Print Report"></button> -->
+<!-- <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null">Pay Now</a> -->
+
+<!-- [class.disabled]="!isDataAvailble ? true: null" -->
+<!-- <button [class.disabled]="!(totalAmount > 0)"  class="btn btn-primary"  type="button" (click)="payNow()">Pay Now</button> -->
+
+
+</div>  
+<p-confirmDialog key="confirm-delete-student" header="Delete Coach data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
+
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"> 
+</p-toast>
+
+
+
+ 

@@ -1,0 +1,138 @@
+<div *ngIf="isShowLoader" class="loader">
+    <img height="100" width="100" src='assets/images/loading.gif'>  
+</div>
+<div>
+   <div class="main-body">
+    <div *ngFor="let student of certificateData; let i = index;">
+            <section class="upper-body"><img src="assets/images/sp1.png" /></section>
+            <section class="certificate-section">
+                <h1>{{student.certificateContent}}</h1>
+                <div class="venue-section"><span>VENUE:</span><span>{{student.location}}</span>
+                    <div>{{student.startDate | date: 'd-MMM-y'}} - {{student.endDate  | date: 'd-MMM-y'}}</div>
+                </div>
+             
+                <h2  *ngIf="isMerit">MERIT CERTIFICATE</h2>  
+                <h2  *ngIf="!isMerit">PARTICIPATION CERTIFICATE</h2>
+                <div class="certificate-form">
+                    <div class="cert-left-section">
+                        <div class="cer-row">
+                            <div class="cer-label-section">AWARDED TO: </div>
+                            <div class="cer-value-section">{{student.studentName}}</div>
+                        </div>
+                        <div class="cer-row">
+                            <div class="cer-label-section">FATHER’S/MOTHER’S NAME: </div>
+                            <div class="cer-value-section">{{student.fatherName}}</div>
+                        </div>
+                        <div class="cer-row">
+                            <div class="cer-label-section">DATE OF BIRTH: </div>
+                            <div class="cer-value-section">{{student.dateOfBirth | date: 'd-MMM-y'}}</div>
+                        </div>
+                        <div class="cer-row">
+                            <div class="cer-label-section">CLASS: </div>
+                            <div class="cer-value-section">{{student.standardClass}}</div>
+                        </div>
+                        <!-- <div class="cer-row">
+                            <div class="cer-label-section">SCHOOL NAME: </div>
+                            <div class="cer-value-section">{{student.schoolName}}</div>
+                        </div> -->
+                    </div>
+                    <div class="cert-right-section">
+                        <div class="cer-row">
+                            <div class="cer-photo-section"><img src="https://issoindia.com/isso-php/upload/{{student.event_year}}/{{student.photo}}">
+                            <p class="merit-id"  *ngIf="isMerit">ISSO/{{student.sId}}</p>
+                            
+                        </div>
+                        </div>
+                    </div> 
+                    <div class="cer-row">
+                        <div class="cer-label-section aalign-school-label">SCHOOL NAME: </div>
+                        <div class="cer-value-section align-school-name">{{student.schoolName}}</div>
+                    </div>
+                </div>
+            
+                <div class="summary-section">
+                    <p>HAS PARTICIPATED IN <span>{{student.certificateHeader}}</span> IN "{{student.gameName}}" 
+                        <span *ngIf="isMerit && student.gameType === 'Both'">SUBGAME {{student.subGameName}}</span>
+                        "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location}}"<span *ngIf="isMerit">AND  <span *ngIf="student.subgameType === 'Team'" >TEAM</span> SECURED {{rankText}} POSITION</span>
+                    </p>
+                </div>
+            </section> 
+            <section class="lower-body">
+              
+                <img *ngIf="!isMerit && student.qrscancode" class="qr-img" src="https://issoindia.com/isso-php/upload/qrscanner/{{student.event_year}}/{{student.qrscancode}}" />
+                <img *ngIf="isMerit && student.qrscancode" class="qr-img" src="https://issoindia.com/isso-php/upload/qrscanner/{{student.event_year}}/merit/{{student.qrscancode}}" />
+                <img class="lower-bg" src="assets/images/sp3.png" />
+            </section> 
+   </div>
+</div>
+
+ 
+        
+      <!-- <div class="bg" *ngFor="let student of certificateData; let i = index;">
+  			<div class="align-certificate-heading">ISSO NATIONAL GAMES {{student.event_year}}</div>
+ 	        <div class="certificate-box"> 
+ 			    <div class="event-venue">VENUE : {{student.location}}</div> 
+                <div class="event-date">{{student.startDate | date: 'd-MMM-y'}} - {{student.endDate  | date: 'd-MMM-y'}}</div>
+           </div> 
+        <div class="participation-heading "><span>PARTICIPATION CERTIFICATE</span> </div>
+        <div class="align-table">
+            <div class="col-auto floatleft">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <td>AWARDED TO</td>
+                        <td>{{student.studentName}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>FATHER’S/MOTHER’S NAME:</td>
+                        <td>{{student.fatherName}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>DATE OF BIRTH:</td>
+                        <td>{{student.dateOfBirth | date: 'd-MMM-y'}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>CLASS:</td>
+                        <td>{{student.standardClass}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>SCHOOL NAME:</td>
+                        <td>{{student.schoolName}}</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="align-photo">
+                <img class="align-logo img-height-width"  src="https://issoindia.com/isso-php/upload/{{student.event_year}}/{{student.photo}}">
+            </div>
+        </div>
+        <div class="certificate-content">HAS PARTICIPATED IN ISSO NATIONAL GAMES  {{student.event_year}} IN "{{student.gameName}}" 
+            "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location}}"
+        </div>
+        <div class="scan-image">
+            <img class="align-logo img-height-width"  src="https://issoindia.com/isso-php/upload/qrscanner/{{student.event_year}}/{{student.qrscancode}}">
+        </div>      
+      </div>   -->
+</div>    
+   
+       
+
+ 
+    
+ 
+
+
+    
+ 
+
+
+
+
+ 
+
+  

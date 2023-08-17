@@ -1,0 +1,130 @@
+
+ 
+
+<div class="tab">
+  <button [ngClass]="reportLabel=='Print Report' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Report</button>
+  <button [ngClass]="reportLabel=='Print Certificate' ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Certificate</button>
+  <button [ngClass]="reportLabel=='Print Coach Certificate' ? 'isMenuActive' : '' " (click)="onloadMenu(2)" class="tablinks">Coach Certificate</button>
+  <button [ngClass]="reportLabel=='Print Consolidated' ? 'isMenuActive' : '' " (click)="onloadMenu(3)" class="tablinks">Consolidated Report</button>
+  <button [ngClass]="reportLabel=='Print Volunteer Certificate' ? 'isMenuActive' : '' " (click)="onloadMenu(4)" class="tablinks">Volunteer Certificate</button>
+  <button [ngClass]="reportLabel=='Print Event Report' ? 'isMenuActive' : '' " (click)="onloadMenu(5)" class="tablinks">Team Event Report</button>
+  <button [ngClass]="reportLabel=='Certificate content' ? 'isMenuActive' : '' " (click)="onloadMenu(6)" class="tablinks">Certificate Content</button>
+
+</div>
+ 
+<!-- <div class="card">
+ <div> <button type="button" pButton pRipple (click)="addMessages()" label="Show" class="mr-2"></button></div>
+<div> <button type="button" pButton pRipple (click)="clearMessages()" icon="pi pi-times" label="Clear" class="p-button-secondary"></button></div>
+  <div>
+      <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+  </div>
+</div> -->
+ 
+
+<div *ngIf="isReportShow">
+   <div class="ui-g-12">
+        <div class="ui-g-4">
+          <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+        <div class="ui-g-4">
+          <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+    </div>    
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+      <div class="ui-g-4">
+        <p-dropdown [disabled]="!schoolReadble" [options]="schoolOptions" [(ngModel)]="selectedSchool"  (onChange)="loadschoolChange($event)"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+    </div>
+</div>
+ 
+<div *ngIf="isConsolited">
+  <div class="ui-g-12">
+       <div class="ui-g-4">
+         <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+       </div>
+       <div class="ui-g-4">
+         <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+       </div>
+   </div>    
+   <div class="ui-g-12">
+     <div class="ui-g-4">
+       <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+     </div>
+     <div class="ui-g-4">
+      <p-dropdown [disabled]="!ageReadble"  [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+   </div>
+
+   <div class="ui-g-12">
+    <div class="ui-g-4">
+      <p-dropdown  [disabled]="!genderReadble"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="isEventReport">
+  <div class="ui-g-12">
+       <div class="ui-g-4">
+         <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+       </div>
+       <div class="ui-g-4">
+        <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+  </div>    
+</div>
+
+
+
+
+
+<div *ngIf="isCertificateContent">
+  
+  <form [formGroup]="certificateContentForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+          <label for="inputEmail4">Certificate Header content</label>
+          <input class="form-control" formControlName="headerName" type="text" required>
+        </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+          <label for="inputEmail4">Certificate Main content</label>
+          <input class="form-control" formControlName="mainContent" type="text" required>
+        </div>
+    </div> 
+    <input id="float-input" formControlName="id"  type="hidden"  pInputText> 
+    <button [disabled]="!certificateContentForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+  </form>
+ </div> 
+ 
+    
+
+ 
+  
+<div class="ui-g-12" style="padding-left: 12px;">
+ <!-- <button *ngIf="reportValue===1"   type="button"  [disabled]="!isDataAvailble" (click)="downloadCertificatePdf()"  pButton label="{{reportLabel}}"></button>
+ <button *ngIf="reportValue===0"  type="button"  [disabled]="!isDataAvailble" (click)="downloadReportPdf()"  pButton label="{{reportLabel}}"></button> -->
+
+ <a *ngIf="reportValue===0"  class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Report</a>
+ <a *ngIf="reportValue===1" class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Certificate</a>
+ <a *ngIf="reportValue===2" class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/coachCertificate/{{yearvalue}}/2/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Coach Certificate</a>
+ <a *ngIf="reportValue===4" class="btn btn-primary"  [class.disabled]="!schoolIdForCoach ? true: null"   href="https://issoindia.com/isso-php/tcpdf/volunteerCertificate/{{yearvalue}}/2/{{eventValue}}/{{schoolIdForCoach}}">Download Volunteer Certificate</a>
+ <!-- <a *ngIf="reportValue===5" class="btn btn-primary"  [class.disabled]="!isTeamEventReport"   href="https://issoindia.com/isso-php/tcpdf/teamEvent/{{yearvalue}}/{{eventValue}}">Download Event Report</a> -->
+
+ 
+</div>
+ 
+<div class="ui-g-12" style="padding-left: 12px;" *ngIf="isConsolited">
+  <!-- <button (click)="export()">Export!</button> -->
+  <button *ngIf="reportValue===3" type="button"  [disabled]="!isDataAvailble" (click)="exportAsXLSX()"  pButton label="{{reportLabel}}"></button>
+  <button class="align-game-button" *ngIf="reportValue===3" type="button"  [disabled]="!isConsolitedData" (click)="exportAsGameXLSX()"  pButton label="Download Game Consolidated Data"></button>
+</div>
+<!-- <img  *ngIf="!isLoader" src="assets/images/general/isso_logo.png" height="100" width="100"   alt="banner" /> -->
+
+<!-- <button pButton type="button" label="Pdf" (click)="downloadPdf()">Pdf Export</button> -->
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+<button  *ngIf="reportValue===5"  type="button"  [disabled]="!isTeamEventReport" (click)="exportTeamReportXLSX()"  pButton label="Download Event Report"></button>

@@ -1,0 +1,125 @@
+  
+ 
+   <div class="ui-g-12">
+        <div class="ui-g-4">
+          <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+        <div class="ui-g-4">
+          <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+    </div>    
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+      <div class="ui-g-4">
+        <p-dropdown [disabled]="!schoolReadble" [options]="schoolOptions" [(ngModel)]="selectedSchool"  (onChange)="loadschoolChange($event)"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+    </div>
+ 
+    <p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+
+<!-- <td> <p-checkbox  name="group1" value="{{subGame.subGameName}}"  (onChange)="onSubGameChange($event,subGame.id,subGame.subGameName)"  inputId="{{subGame.id}}"></p-checkbox>
+</td> -->
+<!-- <div *ngFor="let category of categories" class="p-field-checkbox">
+  <p-checkbox name="group2" value="category" [value]="category"  [(ngModel)]="selectedCategories" [inputId]="category.key" [disabled]="category.key === 'R'"></p-checkbox>
+  <label [for]="category.key">{{category.name}}</label>
+</div> -->
+
+<div class="table-responsive" *ngIf="isDataAvailble">  
+  <div class="ui-g-8" style="float:left;">
+  <table class="table table-bordered">
+    <thead table-color>
+      <tr>
+        <th scope="col">Sr No.</th>
+        <th scope="col">Student Id</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Game Name</th>
+        <th scope="col">Payable Amount</th>
+        <th scope="col">Paid Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of reportData;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{student.sId}}</td>
+        <td>{{student.studentName}}</td>
+        <td>{{student.gameName}}</td>
+        <td  *ngIf="student.isAffiliate == 'Yes'">{{student.price * 1}}</td>
+        <td  *ngIf="student.isAffiliate == 'No'">{{student.price * 2}}</td> 
+        <td class="paid-column" *ngIf="student.isPaid == 'Yes'">Paid</td>
+        <td class="not-paid-column" *ngIf="student.isPaid == ''">Not Paid</td>
+ 
+
+      <td class="align-checkbox" *ngIf="student.isPaid == 'Yes'">
+        <input 
+        class="largerCheckbox"
+        #saveUserNameCheckBox
+        id="saveUserNameCheckBox" 
+        type="checkbox" 
+        [checked]="true" 
+        (change)="onStudentAbsentChange(saveUserNameCheckBox.checked,student.sId,student.price)"/>
+      </td>
+          <td class="align-checkbox" *ngIf="student.isPaid ==''">
+            <input 
+            class="largerCheckbox"
+            type="checkbox" 
+            [checked]="false" 
+            (change)="onStudentChange($event,student.sId,student.price)"/>
+          </td>  
+        </tr>
+    </tbody>
+  </table>
+</div> 
+<div class="ui-g-4">
+  <div class="">
+    <div class="p-3" style="background-color: #eee;">
+      <span class="fw-bold">Payment Recap</span>
+      <div class="d-flex justify-content-between mt-2">
+        <span>Total Earnings</span> <span>{{schoolPayment}} Rs.</span>
+      </div>
+     <div class="d-flex justify-content-between mt-2">
+        <span>Total paid till now</span> <span>{{totalPaidTillNow}} Rs.</span>
+      </div>
+        <!--   <div class="d-flex justify-content-between mt-2">
+        <span>Coinsurance(0%)</span> <span>+ $0.0</span>
+      </div>
+      <div class="d-flex justify-content-between mt-2">
+        <span>Copayment </span> <span>+ 40.00</span>
+      </div> -->
+      <hr />
+      <div class="d-flex justify-content-between mt-2">
+        <span class="lh-sm">Total Paying Now<br />
+          
+        </span>
+        <span>{{totalTeamAmount}} Rs</span>
+      </div>
+      <!-- <div class="d-flex justify-content-between mt-2">
+        <span class="lh-sm">Maximum out-of-pocket <br />
+          on insurance policy</span>
+        <span>$40.00</span>
+      </div> -->
+ 
+      <!-- <div class="d-flex justify-content-between mt-2">
+        <span>Insurance Responsibility </span> <span>$71.76</span>
+      </div> 
+      <div class="d-flex justify-content-between mt-2">
+        <span>Patient Balance </span> <span>$13.24</span>
+      </div>-->
+      <hr />
+      <div class="d-flex justify-content-between mt-2">
+        <span>Total Dues </span> <span class="text-danger">{{totalDues}} Rs</span>
+      </div>
+      <hr />
+      <!-- <p-button [disabled]="!studentAttendance" class="btn btn-primary btn-block btn-lg"  label="Update Payment" (click)="saveAttendance()"></p-button> -->
+      <input [disabled]="!studentAttendance"  type="button" value="Proceed to payment" (click)="savePayment()" class="border-rad btn btn-primary btn-block btn-lg" />
+    </div>
+  </div>
+</div>
+     
+ 
+</div>
+ 
+  
+

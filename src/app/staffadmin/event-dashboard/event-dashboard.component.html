@@ -1,0 +1,77 @@
+     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap" rel="stylesheet">
+ 
+<app-loading *ngIf="showspinner"></app-loading>
+ 
+ 
+
+<div class="event-container" *ngIf="showNoEvent">
+  <!-- <p class="text-info">Sorry there is no active event now!</p> -->
+  <h2 class="animate__animated animate__bounce">Sorry there is no active event now</h2>
+
+</div>
+<p-dialog class="align-dialog" header="Terms and Conditions" [(visible)]="display" width="1000" height="400" [modal]="true" [responsive]="true"   
+[maximizable]="true" [baseZIndex]="1000">
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="dialog-center col-md-10 mx-auto" class="align-form">
+              <div class="form-group row">
+                  <div class="col-sm-6" class="align-text">
+                    <span>{{eventNote}}</span>
+                        <span class="align-checkbox ui-float-label">
+						  <p-checkbox formControlName="termsCondition"></p-checkbox>
+						  <span class="align-terms-condition">I Agree to terms and conditions</span>
+                        </span>
+                  </div>
+              </div>
+    </div>
+</form>
+<p-footer>
+	<p-button  [disabled]="!eventForm.valid"  label="I Agree" (onClick)="onSubmit()"></p-button>
+	<p-button (click)="display=false"  label="No"></p-button>
+
+    <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->
+</p-footer>
+</p-dialog>
+ 
+ 
+ 
+  <div class="wrapper">
+
+	<section class="wrapper">
+		<div class="container">
+		
+		<div class="row">
+	        <div class="col-md-4"  *ngFor="let event of eventInfo">
+				<div (click)="showDialog(event)" class="card text-white card-has-bg click-col">
+							<img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
+							<div class="card-img-overlay d-flex flex-column">
+							<div class="card-body">
+								<span class="card-meta mb-2 align-card">ISSO EVENTS</span>
+								<h4 class="align-card-title  card-title mt-0 "><a class="text-white" herf="#">
+									{{event.eventName}}
+								</a></h4>
+								<span class="date-font"><i class="far fa-clock"></i>Starting on {{event.startDate  | date: 'd MMMM , y'}}</span>
+								<div  class="date-font">Venue:{{event.location}}</div>
+								</div>
+								
+								<div class="card-footer">
+								<div class="media">
+						<img class="mr-3 rounded-circle" src="assets/images/web/male.jpg"  style="max-width:50px">
+						<div class="media-body amount-fon">
+							<h5 class="my-0 text-white d-block">Registration Charges</h5>
+							<span>{{registerFee * event.price}} Rs per player</span>
+						</div>
+					</div>
+				</div>
+				</div>
+		       </div>
+		</div>
+	  </div>
+		
+	  </div>
+	  </section>
+</div>
+
+
+ 

@@ -1,0 +1,48 @@
+<app-loading *ngIf="showspinner"></app-loading>
+<div class="align-table">
+    <div class="ui-g-12">
+         <div class="ui-g-4">
+           <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+         </div>
+         <div class="ui-g-4">
+           <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+         </div>
+     </div>    
+     <div class="ui-g-12">
+       <div class="ui-g-4">
+         <p-dropdown [disabled]="!gameReadble"   [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+       </div>
+       <div class="ui-g-4">
+        <p-dropdown [disabled]="!ageReadble"  [options]="ageOptions" (onChange)="loadAgeChange($event)"   [(ngModel)]="selectedAge"  placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      </div>
+     </div>
+  
+     <div class="ui-g-12">
+      <div class="ui-g-4"> 
+        <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+      </div>
+      <div class="ui-g-4">
+          <p-autoComplete  [disabled]="!schoolEnter"  [(ngModel)]="selectedSchool"  [style]="{'width':'100%'}"  class="p-autocomplete"  [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
+          placeholder="Enter school Name"    emptyMessage = "School Not found" [minLength]="1" (onSelect)="onPageSelect($event)">
+      </p-autoComplete> 
+      <ng-template let-brand pTemplate="item">
+        <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+            <div style="font-size:14px;float:left;margin:10px">
+                {{brand.text}}
+            </div>
+          <br/>
+        </div>
+    </ng-template>
+      
+    </div>
+  
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <button class="align-game-button"  [disabled]="!schoolId" type="button" (click)="bookEvent()"  pButton label="Book Event"></button>
+      </div>
+    </div>
+
+   
+</div>
+  <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>

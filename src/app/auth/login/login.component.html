@@ -1,0 +1,109 @@
+ <div class="limiter">
+
+<p-dialog class="align-dialog" header="Privacy and Payment Policy" [(visible)]="display"   [modal]="true" [responsive]="true"   
+        [maximizable]="true" [baseZIndex]="1000">
+         <ul>
+            <li>All the information and data shared by the school will be used by ISSO and ISSO only, data or information will not be shared under any circumstances.</li>
+            <li>Data shared will be used for communication purpose only.</li>
+            <li>Data will be shared only when a participant advance to other National Games or Tournament through ISSO.</li>
+            <li>Any such sharing of data will be done after procuring permission from the school.</li>
+            <li>ISSO will not contact any parents/guardians directly without school’s consent.</li>
+            <li>Payment made on the portal will be towards below mentioned purposes only:</li>
+            <dl>
+                <dd>- School Affiliation Fess</dd>
+                <dd>- Students Registration Fees</dd>
+                <dd>- Certificate Alteration Fees</dd>
+            </dl>
+         </ul> 
+        
+            <p-footer>
+                <p-button  (click)="display=false"  label="I Agree"></p-button> 
+                <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->
+            </p-footer>
+           
+</p-dialog>
+		<div class="container-login100" style="background-image: url('assets/images/web/first_Image.jpg');">
+			<div class="wrap-login100">
+                   <!-- <p-autoComplete [(ngModel)]="schoolName"   [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
+                        placeholder="Enter school Name"  [size]="100" emptyMessage = "School Not found" [minLength]="1" (onSelect)="onPageSelect($event)">
+                        <ng-template let-brand pTemplate="item">
+                            <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                <div style="font-size:14px;float:left;margin:10px">
+                                    {{brand.text}}
+                                </div>
+                            <br/>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete> -->
+				<form [formGroup]="loginForm"  (ngSubmit)="onSubmit()" class="login100-form validate-form">
+				     
+					<span class="login100-form-logo">
+					    <img src="assets/images/web/logo_retina.png">
+						 
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Log in
+					</span>
+
+					 
+
+                    <div class="form-group">
+                        <!-- <input type="text" formControlName="username"   class="form-control text-align" placeholder="Username" required> -->
+                        <p-autoComplete [(ngModel)]="schoolName" formControlName="username"   [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
+                        placeholder="Enter school Name"  [size]="100" emptyMessage = "School Not found" [minLength]="1" (onBlur)="checkuserName($event)" (onSelect)="onPageSelect($event)">
+                            <ng-template let-brand pTemplate="item">
+                                <div class="ui-helper-clearfix" style="padding:0;border-bottom:1px solid #D5D5D5">
+                                    <div style="padding:0;font-size:14px;float:left;margin:10px">
+                                        {{brand.text}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                       </p-autoComplete>
+                       
+                        <div class="handle-error" *ngIf="username.invalid && (username.dirty || username.touched)">
+                            Username is required.
+                        </div>
+                    </div>
+                 
+                      
+                    <div class="form-group">
+                     
+
+                        <input type="password" formControlName="password"   class="form-control text-align" placeholder="Password" required>
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="handle-error">
+                            <div *ngIf="password.errors">
+                              Password is required.
+                            </div>
+                        </div>
+                        <div *ngIf="errormessage" class="handle-error">
+                            <div>
+                                Invalid Username or password 
+                            </div>
+                          </div>
+                    </div>
+                    <span  class="align-condition" (click)="showDialog(event)">Terms and Conditions</span>
+					<div class="contact100-form-checkbox">
+					<!--	<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+						<label class="label-checkbox100" for="ckb1">
+							Remember me
+						</label>  -->
+					</div>  
+                   
+					<div class="container-login100-form-btn">
+						<button type="submit" [disabled]="!loginForm.valid"  class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+					<!--<div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							Forgot Password?
+						</a>
+					</div> -->
+				</form>
+			</div>
+		</div>
+	</div>
+ 
+<div class="overlay-bg"></div>   

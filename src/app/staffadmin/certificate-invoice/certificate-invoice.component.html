@@ -1,0 +1,187 @@
+
+ 
+<div *ngIf="isShowLoader" class="loader">
+  <img height="100" width="100" src='assets/images/loading.gif'>  
+</div>
+ <div class="event-container">
+    <div class="row">
+      <div class="flexBox align-menu-row">
+        <div  [ngClass]="isReport ? 'menu-background ' : 'menu-inactive' "  class="align-certificate-menu" (click) ="downloadReport()">DOWNLOAD CERTIFICATE</div>
+        <div  [ngClass]="!isReport ? 'menu-background ' : 'menu-inactive' "   class="align-invoice-menu" (click) ="downloadInvoice()">INVOICE/RECEIPT</div>
+      </div>
+  </div> 
+ 
+<div *ngIf="isReport">
+  <div class="container">
+    <div class="row row-border">
+      <div class="col col-border">
+            <div class="certicate-header">
+                PRINT PARTICIPATION CERTIFICATE
+            </div> 
+ 
+            <div class="certificate-row">
+              <div class="ui-g-12 event-container align-container align-drop-down">
+                  <p-dropdown  [options]="yearOptions"  [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
+              </div>
+              <div class="ui-g-12 align-drop-down">
+                  <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
+              </div>    
+              <div class="ui-g-12 align-container align-drop-down">
+                <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
+              </div> 
+              <div class="align-certificate-button">
+                  <a class="btn btn-primary"  [class.disabled]="!isDataAvailble" href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a>
+              </div>
+          </div>
+      </div>
+      <div class="col col-border">
+          <div class="certicate-header">
+            PRINT MERIT CERTIFICATE
+          </div> 
+          <div class="certificate-row">
+                <div class="ui-g-12 event-container align-container align-drop-down">
+                    <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedMeritYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
+                </div>
+                <div class="ui-g-12 align-drop-down">
+                    <p-dropdown [disabled]="!meritevent" [(ngModel)]="selectedMeritEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
+                </div>    
+                <div class="ui-g-12 align-container align-drop-down">
+                  <p-dropdown [disabled]="!meritGame" [(ngModel)]="selectedMeritGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
+                </div>
+              
+              </div>
+      </div>
+    </div>
+  </div>
+</div> 
+    
+    <!-- <div  *ngIf="!isReport"> 
+     <div class="ui-g-12" style="padding-left: 12px;">
+        <button type="button"  [disabled]="!isDataAvailble" (click)="printReport()"  pButton   label="Print Report"></button>  
+        <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a>
+        <a class="btn btn-primary"     href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a>  
+      </div>  
+    </div>  -->
+    <div *ngIf="!isReport">
+
+      <div class="container">
+        <div class="row row-border">
+          <div class="col col-border">
+                <div class="certicate-header">
+                    PRINT INVOICE
+                </div> 
+                <div class="certificate-row ">
+                  <div class="ui-g-12 event-container align-container align-drop-down">
+                      <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedInvoiceYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'invoice')" [style]="{'min-width':'140px'}"></p-dropdown>
+                  </div>
+                  <div class="ui-g-12 align-drop-down">
+                      <p-dropdown [disabled]="!invoiceEvent" [(ngModel)]="selectedInvoiceEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'invoice')" [style]="{'min-width':'140px'}"></p-dropdown>
+                  </div>    
+               
+                  <div class="align-certificate-button">
+                    <a class="btn btn-primary" [class.disabled]="!isInvoiceDataAvailble"  href="https://issoindia.com/isso-php/tcpdf/downloadInvoicePdf/{{yearvalue}}/{{eventValue}}/{{schoolId}}">Download Invoice</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col col-border">
+              <div class="certicate-header">
+                PRINT RECEIPT   
+              </div> 
+              <div class="certificate-row">
+                    <div class="ui-g-12 event-container align-container align-drop-down">
+                        <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedReceiptYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'receipt')" [style]="{'min-width':'140px'}"></p-dropdown>
+                    </div>
+                    <div class="ui-g-12 align-drop-down">
+                        <p-dropdown [disabled]="!receiptEvent" [(ngModel)]="selectedReciptEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'receipt')" [style]="{'min-width':'140px'}"></p-dropdown>
+                    </div>    
+                 
+                    <div class="align-certificate-button">
+                      <a class="btn btn-primary" [class.disabled]="!isReceiptDataAvailble"  href="https://issoindia.com/isso-php/paymentInvoice/downloadReceiptPdf/{{yearvalue}}/{{eventValue}}/{{schoolId}}">Download Receipt</a>
+
+                        <!-- <a class="btn btn-primary"     href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a> -->
+                    </div>
+                </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- <div class="ui-g-12 event-container align-container">
+          <div class="ui-g-4">
+            <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+          <div class="ui-g-4">
+            <p-dropdown [disabled]="!eventReadable"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+      </div>    
+        
+      <div class="ui-g-12" style="padding-left: 12px;"> 
+        <a class="btn btn-primary" [class.disabled]="!isDataAvailble"  href="https://issoindia.com/isso-php/tcpdf/downloadInvoicePdf/{{yearvalue}}/{{eventValue}}/{{schoolId}}">Download Invoice</a>
+      </div>   -->
+    </div>  
+ 
+  </div> 
+ 
+
+ <div *ngIf="showMeritData">
+  <div class="ui-g-12 align-merit-content">
+
+    <table class="table table-bordered">
+      <thead class="make-header">
+        <tr>
+          <th scope="col"><span class="header-span">Sr No</span></th>
+          <th scope="col"><span class="header-span">Game Name</span></th>
+          <th scope="col"><span class="header-span">Student Name</span></th>
+          <th scope="col"><span class="header-span">SubGame Name</span></th>
+          <th scope="col"><span class="header-span">Gender</span></th>
+          <th scope="col"><span class="header-span">Age</span></th>
+          <th scope="col"><span class="header-span">Rank</span></th>
+          <th scope="col"><span class="header-span">Action</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        -->   
+        <tr *ngFor="let printMerit of meritData; let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{gameName}}</td>
+          <td>{{printMerit[0]}}</td>
+          <td>{{printMerit[1]}}</td>
+          <td *ngIf="printMerit.gender =='1'">Boys</td>
+          <td *ngIf="printMerit.gender =='2'">Girls</td>
+          <td>{{printMerit.ageRange}}</td>  
+          <td>{{printMerit.rank}}</td>
+          <td class="align-center" *ngIf="printMerit.gameType =='Team'">
+             <a class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+          </td>
+          <td class="align-center" *ngIf="printMerit.gameType =='Both' && printMerit.subgameType =='Individual'">
+            <a class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+          </td>
+          <td class="align-center" *ngIf="printMerit.gameType =='Both' && printMerit.subgameType =='Team'">
+            <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+          </td>
+          <td class="align-center" *ngIf="printMerit.gameType =='Individual'">
+            <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+          </td>
+        </tr>
+      
+      </tbody>
+    </table>
+   </div>
+  </div>
+
+ 
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center">
+
+  
+</p-toast>
+
+
+ 
+    

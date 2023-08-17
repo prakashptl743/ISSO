@@ -1,0 +1,109 @@
+.align-form {
+    padding: 20px 10px 0 15px;
+}
+.align-text {
+    padding: 10px 10px 10px 10px;
+}
+.img-circle{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 10px;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
+.align-student{
+    color: #832161;
+    font-size: 16px;
+    padding-bottom: 15px;
+}
+
+.absent{
+    color: white;
+    padding-left: 5px;
+}
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+ }
+ .pad-bottom-none {
+    padding-bottom: 0;
+ } 
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+}
+.boder-b{
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid black;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+body .ui-dataview .ui-dataview-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+:host ::ng-deep .btn-style {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+:host ::ng-deep .ui-panel .ui-panel-content {
+    position: relative;
+}
+.car-detail {
+    padding: 5px;
+    float: left;
+    width: 100%;
+}
+:host ::ng-deep .car-detail .ui-button-text {
+    display: none;
+}
+:host ::ng-deep .ui-panel .ui-panel-content{
+      min-height: 660px;
+}
+:host ::ng-deep .float-input{
+    color: black;
+}
+:host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
+    vertical-align: middle;
+    font-weight: 700;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@keyframes ui-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+}

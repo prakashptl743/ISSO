@@ -1,0 +1,203 @@
+.align-form {
+    padding: 20px 10px 0 15px;
+}
+.align-text {
+    padding: 10px 10px 10px 10px;
+}
+.search-text { 
+    width: 70%;
+    margin: 0 30px 12px 91px;
+    padding: 7px;
+}
+.img-circle {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 10px;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
+.pad-bottom {
+    padding-bottom: 15px;
+}
+.align-search-button {
+    float: right;
+ }
+:host ::ng-deep  .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-list-item {
+    padding: 0 !important;
+}
+.align-subGame {
+    padding-top: 24px;
+}
+table.center {
+    margin-left: auto; 
+    margin-right: auto;
+  }
+
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+ }
+ .pad-bottom-none {
+    padding-bottom: 0;
+ } 
+/* :host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+} */
+
+
+
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+}
+.align-message {
+    padding: 8px;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+  
+    padding: 0;
+    font-size: 2em;
+    top: 11px !important;
+  }
+:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
+    margin-left: 2.5em;
+}
+
+
+
+
+.error-class {
+    color: red;
+    padding-top: 15px;
+}
+.file-hint {
+    padding-top: 10px;
+    color: green;
+}
+.boder-b{
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid black;
+}
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+body .ui-dataview .ui-dataview-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+:host ::ng-deep .btn-style {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+:host ::ng-deep .ui-panel .ui-panel-content {
+    position: relative;
+}
+.car-detail {
+    padding: 5px;
+    float: left;
+    width: 100%;
+}
+:host ::ng-deep .car-detail .ui-button-text {
+    display: none;
+}
+:host ::ng-deep .ui-panel .ui-panel-content{
+      min-height: 660px;
+}
+:host ::ng-deep .float-input{
+    color: black;
+}
+:host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
+    vertical-align: middle;
+    font-weight: 700;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.checkbox label{
+   padding-left: 0;
+}
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}

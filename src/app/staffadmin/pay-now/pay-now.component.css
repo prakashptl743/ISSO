@@ -1,0 +1,171 @@
+:host ::ng-deep .custom-toast .ui-toast {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-error {
+    width: 150%;
+    border-radius: 19px;
+}
+input.largerCheckbox {
+    transform : scale(2);
+    margin-left: 34px;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.pad-zero {
+    padding-bottom: 0;
+} 
+.margin-right {
+    margin-right: 20px;
+}
+.margin-left {
+    margin-left: 20px;
+}
+.pad-left {
+    padding-left: 30px;
+}
+.align-heading {
+    padding: 10px;
+    margin: 0;
+    color: white;
+    text-align: center;
+    background: #0d6efd;
+    border-radius: 20px;
+}
+.align-container {
+    margin-top: 30px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+}
+.align-message {
+    padding: 8px;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    position: absolute;
+    display: inline-block;
+    left: 0.5em;
+  
+    padding: 0;
+    font-size: 2em;
+    top: 11px !important;
+  }
+:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
+    margin-left: 2.5em;
+}
+.table-color {
+    color: #fff;
+    background-color: #007ad9;       
+}
+.non-paid {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+.paid-student {
+    cursor: default !important;
+    background: green;
+}
+.align-pay-button {
+    margin-left: 43px;
+}
+.not-paid-column {
+    background: red;
+    color: white;
+    text-align: center;
+}
+.paid-column {
+    background: green;
+    color: white; 
+    text-align: center;
+}
+.align-success-div {
+    border-radius:200px;
+    height:200px; width:200px;
+    background: lightgray;
+    margin:0 auto;
+}
+p {
+    color: #404F5E;
+    text-align: center;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-size:20px;
+    margin: 0;
+  }
+  h1 {
+    color: #88B04B;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+i {
+  color: #9ABC66;
+  font-size: 100px;
+  line-height: 200px;
+  margin-left: 44px;
+}
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 4px;
+  /* box-shadow: 0 2px 3px #C8D0D8; */
+  display: inline-block;
+  margin: 0 auto;
+}
+:host ::ng-deep .ui-toast .ui-toast-summary {
+    padding: 6px 0 .5em 0;
+}
+:host ::ng-deep .button {
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+  }
+:host ::ng-deep .ui-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 21px;
+    text-decoration: none;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    padding-top: 3px;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    padding-top: 4px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+    text-decoration: none;
+}

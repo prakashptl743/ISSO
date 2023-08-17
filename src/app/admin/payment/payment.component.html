@@ -1,0 +1,39 @@
+ 
+<div class="ui-g-12 ui-md-2">
+  <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear" placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+</div>
+<div id="content1" class="content-wrapper alignTbl">
+  <div  class="ui-g-12 ui-md-12" *ngIf="showPaymenData">
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Price</th>
+        <th>Schools</th>
+        <th>Total Student</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of paymentData">
+        <td>{{payment.eventName}}</td>
+        <td>{{payment.price}}</td>
+        <td>
+          <ol>
+            <li *ngFor="let subCategory of (payment.schools.split(','))">
+           {{subCategory }}
+            </li>
+         </ol> 
+        </td>
+        <td>{{payment.student}}</td>
+        <td>{{payment.amount}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="totalAmount"><span style="margin-right: 10px;">Total Earning</span>{{ paymentData | sum:'amount' |  currency:'INR' }}</div>  
+   
+  </div>
+  <div class="ui-g-12 ui-md-12" *ngIf="nopayment">
+    <span>NO Payment for this year</span>
+  </div>
+</div>

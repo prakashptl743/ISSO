@@ -1,0 +1,340 @@
+ 
+
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+
+
+<div class="wrapper">
+<div id="content1" class="content-wrapper">
+    <div class="sub-view-wrapper" *ngIf="display">
+    <h2 class="headingSubview">{{subViewTitle}}</h2>
+    <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">School Name</label>
+              <input class="form-control" formControlName="schoolname" name="schoolName" type="text" (blur)="setSchoolPassword()" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Email</label>
+              <input class="form-control"[(ngModel)]="emailOfSchool"  formControlName="schoolEmail" name="schoolEmail" (blur)="checkEmail($event)" type="text" required>
+              <span class="align-email-error" *ngIf="showEmailErrorMessage">This email already exists</span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">School Board</label>
+              <input class="form-control" formControlName="schoolBoard" type="text">
+            </div>
+            <div class="form-group col-md-6"> 
+              <label for="inputPassword4">Password</label>
+              <input class="form-control"  [(ngModel)]="setPassword"  formControlName="schoolPassword"  type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Contact Number</label>
+              <input class="form-control" id="float-input" pattern="[0-9]*" formControlName="schoolTelePhone"  type="text" size="30" numbersOnly pInputText>  
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Affilated</label>
+                <p-dropdown  [options]="options" size="30"  [(ngModel)]="schoolType" formControlName="isAffilated"></p-dropdown>
+            </div>
+        </div> 
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION:</label>
+            <input class="form-control" id="float-input"  formControlName="author1"  type="text" size="30"  [ngClass]="{ 'is-invalid': f.author1.touched && f.author1.errors }" >  
+            <div *ngIf="f.author1.touched && f.author1.errors" class="invalid-feedback">
+                <div *ngIf="f.author1.errors.required">Concerned Person Name is  required</div>
+            </div>      
+        </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">CONTACT NO.: </label>
+                <input class="form-control" id="float-input"  formControlName="designation1"  type="text" size="30" [ngClass]="{ 'is-invalid': f.designation1.touched && f.designation1.errors }">  
+                <div *ngIf="f.designation1.touched && f.designation1.errors" class="invalid-feedback">
+                    <div *ngIf="f.designation1.errors.required">Contact Number is  required</div>
+                    <div *ngIf="f.designation1.hasError('pattern')">Please enter valid contact number</div>
+                    <div *ngIf="f.designation1.hasError('min')">Contact number should be 10 digit</div>
+                    <div *ngIf="f.designation1.hasError('max')">Contact number should be 10 digit</div>
+                </div>  
+            </div>
+        </div> 
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION  :</label>
+            <input class="form-control" id="float-input"  formControlName="author2"  type="text" size="30" [ngClass]="{ 'is-invalid': f.author2.touched && f.author2.errors }">  
+            <div *ngIf="f.author2.touched && f.author2.errors" class="invalid-feedback">
+                <div *ngIf="f.author2.errors.required">Concerned Person Name is  required</div>
+            </div>     
+        </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">CONTACT NO.:  </label>
+                <input class="form-control" id="float-input"  formControlName="designation2"  type="text" size="30" [ngClass]="{ 'is-invalid': f.designation2.touched && f.designation2.errors }" numbersOnly>  
+                <div *ngIf="f.designation2.touched && f.designation2.errors" class="invalid-feedback">
+                    <div *ngIf="f.designation2.errors.required">Contact Number is  required</div>
+                    <div *ngIf="f.designation2.hasError('pattern')">Please enter valid contact number</div>
+                    <div *ngIf="f.designation2.hasError('min')">Contact number should be 10 digit</div>
+                    <div *ngIf="f.designation2.hasError('max')">Contact number should be 10 digit</div>
+                </div> 
+            </div>
+        </div> 
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Infrastructure at school</label>
+              <textarea [rows]="5" [cols]="30" class="form-control" formControlName="schoolInfra"></textarea>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">School Address</label>
+              <textarea [rows]="5" [cols]="30" class="form-control" formControlName="schoolAddress"></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">NO. OF COACHES AND THEIR SPECIALISED GAMES:</label>
+                <textarea [rows]="5" [cols]="30" class="form-control" formControlName="gameCoach"  [ngClass]="{ 'is-invalid': f.gameCoach.touched && f.gameCoach.errors }"></textarea>
+                <div *ngIf="f.gameCoach.touched && f.gameCoach.errors" class="invalid-feedback">
+                    <div *ngIf="f.gameCoach.errors.required">Coach Information is  required</div>
+                </div> 
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Volunteer</label>
+                <p-dropdown  [options]="options" size="30"  [(ngModel)]="volunteerData" formControlName="isVoulnteer"></p-dropdown>
+                <label for="inputEmail4">Zone</label>
+                <p-dropdown  [options]="zoneOptions" size="30"  [(ngModel)]="zoneData" formControlName="zone"></p-dropdown>
+          
+            </div>
+          
+        </div>
+     
+                        
+    
+
+        <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
+        <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
+
+    </form>
+   <!--  <p-footer class="btn-footer">
+        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer> -->
+</div>
+<div *ngIf="!registeredSchoolFlag">
+<p-dataView   #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="schoolData" class="no-padding" filterBy="name,address" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+               <div class="ui-g-12 ui-md-12 filter-container">
+                        <div>
+                            <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+                            <div style="float: right;">
+                                 <button *ngIf="!display" type="button" (click)="getSchoolData()" pButton label="School Data"></button>
+                                 <button *ngIf="!display" type="button" (click)="addNewSchool($event, '','add')" pButton label="Add New School"></button>
+                                 <button *ngIf="!display" type="button" (click)="importSchoolExcel()" pButton label="Import in Excel"></button>
+                                 <button *ngIf="!display" type="button" (click)="registeredSchool()" pButton label="Registerd School Data"></button>
+                            </div>
+                        </div>
+
+                </div>
+                </div>
+        </div>
+    </p-header>
+<ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
+    <div style="padding:.5em" class="ui-g-12 ui-md-6">
+        <div class="item-box">
+            <div class="item-header">
+                <h4 title="{{school.name}}">{{school.name}}</h4>
+                <div class="icons-wrap">
+                    <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
+                    </button>
+                     <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteSchoolData($event, school)">
+                    </button>
+                    
+                </div>
+            </div>
+            <div class="item-description">
+                <label>Board:</label>
+                <span class="item-value">{{school.board}}</span>
+            </div>
+             <div class="item-description">
+                <label>Address:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{school.address}}">{{school.address}}</div>
+                </div>
+            </div>
+             <div class="item-description">
+                <label>Infrastructure:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{school.schoolInfrastructure}}">{{school.schoolInfrastructure}}</div>
+                </div>
+            </div>
+             <div class="item-description">
+                <label>Email:</label>
+                <span class="item-value">{{school.email}}</span>
+            </div>
+            <div class="item-description">
+                <label>IsAffilated:</label>
+                <span class="item-value">{{school.isAffiliate}}</span>
+            </div>
+            <div class="item-description">
+                <label>isVoulnteer:</label>
+                <span class="item-value">{{school.isVoulnteer}}</span>
+            </div>
+            <div class="item-description">
+                <label>Zone:</label>
+                <span class="item-value">{{school.schoolZone}}</span>
+            </div>
+             <div class="item-description lastChild">
+                <label>Contact:</label>
+                <span class="item-value">{{school.mobile}}</span>
+            </div>
+
+
+
+            <div class="item-description lastChild" *ngIf="school.isWebVisible === '0'">
+                <label>Web Visible:</label>
+                <span class="item-value"><button class="btn btn-danger-small active" type="button" (click)="changeWebStatus(school.id,school.isWebVisible)">Yes</button></span>
+            </div>
+            <div class="item-description lastChild" *ngIf="school.isWebVisible === '1'">
+                <label>Web Visible:</label>
+                <span class="item-value"><button class="btn btn-danger-small inactive" type="button" (click)="changeWebStatus(school.id,school.isWebVisible)">No</button></span>
+            </div>
+
+
+
+            <!-- <div class="item-description lastChild">
+                <label>Web Visible:</label>
+                <span class="item-value">{{school.isWebVisible}}</span>
+            </div> -->
+        </div>
+    </div>   
+    
+</ng-template>
+</p-dataView>
+ </div>
+
+<div  *ngIf="registeredSchoolFlag">
+<p-dataView   #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="showRegisterdSchoolData" class="no-padding" filterBy="name,address" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+               <div class="ui-g-12 ui-md-12 filter-container">
+                        <div>
+                            <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+                            <div style="float: right;">
+                                 <button *ngIf="!display" type="button" (click)="getSchoolData()" pButton label="School Data"></button>
+                                 <button *ngIf="!display" type="button" (click)="addNewSchool($event, '','add')" pButton label="Add New School"></button>
+                                 <button *ngIf="!display" type="button" (click)="importSchoolExcel()" pButton label="Import in Excel"></button>
+                                 <button *ngIf="!display" type="button" (click)="registeredSchool()" pButton label="Registerd School Data"></button>
+                            </div>
+                        </div>
+
+                </div>
+                </div>
+        </div>
+    </p-header>
+<ng-template let-showRegisterdSchoolData pTemplate="gridItem"  style="word-wrap: break-word;">
+    <div style="padding:.5em" class="ui-g-12 ui-md-6" *ngIf="registeredSchoolFlag">
+        <div class="item-box">
+            <div class="item-header">
+                <h4 title="{{showRegisterdSchoolData.name}}">{{showRegisterdSchoolData.name}}</h4>
+            </div>
+            <div class="item-description">
+                <label>E-MAIL ID:</label> 
+                <span class="item-value">{{showRegisterdSchoolData.email}}</span>
+            </div>
+             <div class="item-description">
+                <label>CONTACT NO.:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{showRegisterdSchoolData.mobile}}">{{showRegisterdSchoolData.mobile}}</div>
+                </div>
+            </div>
+             <div class="item-description">
+                <label class="align-label">IB/IGCSC/OTHER INTERNATIONAL BOARD ENROLLMENT NO.:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{showRegisterdSchoolData.enrollNo}}">{{showRegisterdSchoolData.enrollNo}}</div>
+                </div>
+            </div>
+             <div class="item-description">
+                <label class="align-label">CONCERNED COMMUNICATING AUTHORITIES NAME 1:</label>
+                <span class="item-value">{{showRegisterdSchoolData.authorise1}}</span>
+            </div>
+            <div class="item-description">
+                <label class="align-label">DESIGNATION:</label>
+                <span class="item-value">{{showRegisterdSchoolData.designation1}}</span>
+            </div>
+            <div class="item-description">
+                <label class="align-label">CONCERNED COMMUNICATING AUTHORITIES NAME 2:</label>
+                <span class="item-value">{{showRegisterdSchoolData.authorise2}}</span>
+            </div>
+             <div class="item-description lastChild">
+                <label class="align-label">DESIGNATION:</label>
+                <span class="item-value">{{showRegisterdSchoolData.designation2}}</span>
+            </div>
+            <div class="item-description lastChild">
+                <label class="align-label">NO. OF COACHES AND THEIR SPECIALISED GAMES:</label>
+                <span class="item-value">{{showRegisterdSchoolData.gameCoach}}</span>
+            </div>
+            <div class="item-description lastChild">
+                <label class="align-label">ADDRESS:</label>
+                <span class="item-value">{{showRegisterdSchoolData.address}}</span>
+            </div>
+            <div class="item-description lastChild">
+                <label class="align-label">SPORTS INFRASTRUCTURE:</label>
+                <span class="item-value">{{showRegisterdSchoolData.schoolInfrastructure}}</span>
+            </div>
+            <div class="item-description lastChild"  *ngIf="showRegisterdSchoolData.document== ''">
+                <label>Document:</label>
+                <span class="doc-not-upload">Doc not uploaded</span>
+             </div>
+             <div class="item-description lastChild">
+                <label>School Zone:</label>
+                <p-dropdown [options]="zoneOptions" size="30"  [(ngModel)]="showRegisterdSchoolData.schoolZone" (onChange)="updateZone(showRegisterdSchoolData.schoolId,$event)"></p-dropdown>
+             </div>
+            <div class="item-description lastChild"  *ngIf="showRegisterdSchoolData.document !== '' ">
+                <label>Document:</label>
+                <span class="item-value"><a target="_blank" href="https://issoindia.com/isso-php/upload/school-register-doc/{{showRegisterdSchoolData.document}}"> <i class="align-icon fas fa-file-pdf"></i></a></span>
+            </div>
+            <div  *ngIf="showRegisterdSchoolData.document !== '' " > 
+                <div  class="item-description lastChild" *ngIf="showRegisterdSchoolData.approve === '1'"> 
+                    <label>Approved Status:</label> 
+                    <span class="item-value"><button class="btn btn-danger-small" style="background-color: green;color: white;"type="button">Approved</button></span>
+                </div>
+                <div class="item-description lastChild" *ngIf="showRegisterdSchoolData.approve === '0' && showRegisterdSchoolData.schoolZone!==''">
+                    <label>Approved Status:</label>
+                    <span class="item-value"><button class="btn btn-danger-small" style="background-color: red;color: white;"type="button" (click)="changeApprovedStatus(showRegisterdSchoolData.schoolId,showRegisterdSchoolData.approve)">Pending</button></span>
+                </div>
+            </div>
+            <div *ngIf="showRegisterdSchoolData.document== ''">
+                <div class="item-description lastChild">
+                    <label>Approved Status:</label>
+                    <span class="item-value">N/A</span>
+                </div>
+            </div>
+
+        </div>
+    </div>   
+
+</ng-template>
+</p-dataView>
+
+</div>
+
+
+
+
+
+
+
+<p-confirmDialog key="confirm-delete-school" header="Delete school data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>
+<p-dialog header="Add New School" [(visible)]="displayDialog"  showEffect="fade" [modal]="true" [responsive]="true"   
+    [maximizable]="true" [baseZIndex]="10000">
+    <h5>Edit school</h5>
+    <p-footer>
+        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+
+
+</p-dialog>    
+ </div>
+</div>

@@ -1,0 +1,150 @@
+ 
+
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+
+
+<div class="wrapper">
+<div id="content1" class="content-wrapper">
+    <div class="sub-view-wrapper"   >
+    <h2 class="headingSubview">{{subViewTitle}}</h2>
+    <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Title</label>
+                <input class="form-control" id="float-input" formControlName="schoolTelePhone"  type="text" >  
+              </div>
+        </div>    
+        <div class="form-row">  
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Sport Name</label>
+              <input class="form-control" formControlName="schoolname" name="schoolName" type="text" required>
+            </div>
+         </div>   
+         <div class="form-row">  
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Age Title</label>
+              <input class="form-control" formControlName="schoolEmail" name="schoolEmail"  type="text" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Venue</label>
+              <input class="form-control" formControlName="schoolBoard" name ="schoolBoard" type="text" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6"> 
+              <label for="inputEmail4">Attach PDF</label> 
+              <!-- <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control"> -->
+
+              <input type="file" id="my-input"  [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control" required>
+              <span class="file-hint">Please upload file below 100 KB</span><br/>
+              <span class="form-group" *ngIf="!isValidFile">
+                <span class="error-class">Invalid File type Please select file PDF format only</span>
+              </span><br/>
+              <span class="form-group" *ngIf="isFileBig">
+                <span class="error-class">File size too large please select image below 100 KB</span>
+              </span> 
+              <input type="hidden" [(ngModel)]="editStudentPhoto" formControlName="editStudentPhoto" class="form-control"
+              id="inputWarning1">
+            </div>
+            
+          
+        </div>
+     
+  
+           
+    
+
+        <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
+        <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
+
+    </form>
+   <!--  <p-footer class="btn-footer">
+        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer> -->
+</div>
+<p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="calenderData" class="no-padding" filterBy="title,sportName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+               <div class="ui-g-12 ui-md-12 filter-container">
+                        <div>
+                            <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+                            <!-- <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)"> -->
+                            <div style="float: right;">
+                                 <button *ngIf="!display" type="button" (click)="addNewSchool($event, '','add')" pButton label="Add New Calender Data"></button>
+                                <!-- <button type="button" *ngIf="!display" (click)="addNewEvent($event, '','add')" pButton icon="pi pi-plus" label="Add Upcoming Event"></button> -->
+                            </div>
+                        </div>
+ 
+                </div>
+    
+            </div>
+        </div>
+    </p-header>
+<ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
+    <div style="padding:.5em" class="ui-g-12 ui-md-6">
+        <div class="item-box">
+            <div class="item-header">
+                <h4 title="{{school.title}}">Event Data</h4>
+                <div class="icons-wrap">
+                    <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
+                    </button>
+                     <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteSchoolData($event, school)">
+                    </button>
+                    
+                </div>
+            </div>
+            <div class="item-description">
+                <label>Event Title:</label>
+                <span class="item-value">{{school.title}}</span>
+            </div>
+            <div class="item-description">
+                <label>Sport Name:</label>
+                <span class="item-value">{{school.sportName}}</span>
+            </div>
+             <div class="item-description">
+                <label>Age Group:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{school.address}}">{{school.ageTitle}}</div>
+                </div>
+            </div>
+             <div class="item-description">
+                <label>Venue:</label>
+                <div class="item-parent">
+                    <div class="item-value" title="{{school.schoolInfrastructure}}">{{school.sportLocation}}</div>
+                </div>
+            </div>
+            <div class="item-description">
+                <label>Attachment:</label>  
+                <div class="item-parent" *ngIf="school.eventFile !== '' ">
+                    <span class="item-value"><a target="_blank" href="https://issoindia.com/isso-php/upload/calender-doc/{{school.eventFile}}"> <i class="align-icon fas fa-file-pdf"></i></a></span>
+                </div>
+                <div class="item-parent" *ngIf="school.eventFile == '' ">
+                    <span class="item-value">Doc Not Uploaded</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>   
+   
+</ng-template>
+</p-dataView>
+ 
+<p-confirmDialog key="confirm-delete-school" header="Delete school data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>
+<p-dialog header="Add New Calender data" [(visible)]="displayDialog"  showEffect="fade" [modal]="true" [responsive]="true"   
+    [maximizable]="true" [baseZIndex]="10000">
+    <h5>Edit Calender data</h5>
+    <p-footer>
+        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+
+
+</p-dialog>    
+ </div>
+</div>

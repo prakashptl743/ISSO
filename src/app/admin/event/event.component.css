@@ -1,0 +1,121 @@
+
+.align-form {
+    padding: 20px 10px 0 15px;
+}
+.align-text {
+    padding: 10px 10px 10px 10px;
+}
+ .pad-bottom-none {
+    padding-bottom: 0;
+ }
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+.align-year-drop-down {
+    padding: 20px;
+    width: auto;
+}
+.align-dialog{
+    width: 900px;
+}
+.car-detail {
+    padding: 5px;
+}
+.boder-b{
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 1px solid black;
+}
+.no-padding {
+   padding-left: 0;
+   padding-right: 0;
+}
+.search-text { 
+    width: 100%;
+    margin: 0 30px 12px 91px;
+    padding: 7px;
+    margin-left: 0px;
+}
+.align-add-button {
+    padding-top: 25px;
+}
+
+:host ::ng-deep .car-detail .ui-button-text {
+    display: none;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+} 
+:host ::ng-deep .add-new-school-dialog .ui-dialog .ui-dialog-content {
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #c8c8c8;
+    padding: 0.571em 1em;
+}
+:host ::ng-deep .add-new-school-dialog .ui-dialog {
+    width: 700px;
+    padding: 0;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+}
+:host ::ng-deep .ui-panel .ui-panel-content{
+    min-height: 300px;
+    position: relative;
+  }
+/* ::ng-deep .ui-dialog {
+    width: 50% !important;
+    height: 50%;
+} */
+:host ::ng-deep .ui-dataview{
+    box-shadow: 0px 0px 8px #0000004D;
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    margin: 20px;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+   
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  
+  /* Change background color of buttons on hover */
+  /* .tab button:hover {
+    background-color: #ddd;
+  } */
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+.isMenuActive {
+    background: #007ad9;
+    color: white;
+}

@@ -1,0 +1,44 @@
+@keyframes ui-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #0057e7;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #ffa700;
+    }
+}
+.wraptocenter {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    background-color: #999;
+  }
+  .wraptocenter * {
+    vertical-align: middle;
+  }
+  .my_image{
+    position: absolute;
+    top: 50%;
+    margin: -50px auto;
+    left: 0;
+    right: 0;
+    z-index: 99;
+   }
+   .overlay{
+    background: rgba(0,0,0,0.3);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+   }

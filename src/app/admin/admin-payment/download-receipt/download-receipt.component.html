@@ -1,0 +1,26 @@
+<div *ngIf="isShowLoader" class="loader">
+  <img height="100" width="100" src='assets/images/loading.gif'>  
+</div>
+ 
+   <div class="ui-g-12">
+        <div class="ui-g-4">
+          <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+        <div class="ui-g-4">
+          <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>
+    </div>    
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <p-dropdown [disabled]="!schoolReadble" [options]="schoolOptions" [(ngModel)]="selectedSchool"  (onChange)="loadschoolChange($event)"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+    </div>
+ 
+    <p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>  
+    <div class="ui-g-12" style="padding-left: 12px;"> 
+      <a class="btn btn-primary" [class.disabled]="!isDataAvailble"  href="https://issoindia.com/isso-php/paymentInvoice/downloadReceiptPdf/{{yearvalue}}/{{eventValue}}/{{schoolID}}">Download Receipt</a>
+   </div>  
+ 
+  
+
+    
