@@ -3,7 +3,11 @@
 }
  
 :host ::ng-deep .ui-autocomplete .ui-autocomplete-input {
-  height: 48px;
+  height: 40px;
+  border: 1px solid #707070!important;
+  box-shadow: none!important;
+  transition: none!important;
+  background: #F5F4F4!important;
 }
 
  
@@ -11,19 +15,25 @@
     text-align: center;
     color: white;
     cursor: pointer;
+    display: none;
 }
 .align-agree {
   float: left;
 } 
 
- 
- 
+
 
  
 
 label {
-  margin: 0;
+  font-size: 12px;
+    margin-bottom: 3px;
   display: block;
+
+}
+
+.usernameLbl{
+  margin-top: 85px;
 }
 
 /*---------------------------------------------*/
@@ -67,7 +77,7 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-
+  border-radius: 21px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -88,16 +98,13 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 500px;
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 10px 55px 37px 55px;
-
-  background: #9152f8;
-  background: -webkit-linear-gradient(top, #7579ff, #b224ef);
-  background: -o-linear-gradient(top, #7579ff, #b224ef);
-  background: -moz-linear-gradient(top, #7579ff, #b224ef);
-  background: linear-gradient(top, #7579ff, #b224ef);
+  width: 400px;
+  border-radius: 21px;
+  padding: 10px 30px 37px 30px;
+  background: #FFF;
+  box-shadow: 0px 19px 18px #00000029;
+  position: relative;
+  border: 15px solid rgba(5,6,7,0.4);
 }
 
 
@@ -106,28 +113,24 @@ iframe {
 
 .login100-form {
   width: 100%;
+  position: relative;
 }
 
 .login100-form-logo {
-  font-size: 60px; 
+  font-size: 60px;
   color: #333333;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  left: 35%;
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background-color: #fff;
-  margin: 0 auto;
+  position: absolute;
+  top: -60px;
+  box-shadow:2px 8px 8px #00000052;
+  z-index: 1;
 }
 
 .login100-form-title {
-  font-family: Poppins-Medium;
   font-size: 30px;
   color: #fff;
   line-height: 1.2;
@@ -135,6 +138,15 @@ iframe {
   text-transform: uppercase;
 
   display: block;
+}
+.new-user{
+  color: #1E1F20;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+.txt1{
+  color: #EE1D23;
+    display: block;
 }
 
 
@@ -149,7 +161,6 @@ iframe {
 }
 
 .input100 {
-  font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
   line-height: 1.2;
@@ -172,9 +183,9 @@ iframe {
   pointer-events: none;
 }
 .handle-error {
-  color: white;
-  font-size: 16px;
-  padding-top: 11px;
+  color: #EE1D23;
+  font-size: 12px;
+  padding-top: 5px;
 }
 
 .focus-input100::before {
@@ -238,63 +249,43 @@ iframe {
 .has-val.input100 {
   padding-left: 5px;
 }
-
+.form-control{
+  border: 1px solid #707070!important;
+    border-radius: 4px;
+    box-shadow: none!important;
+    transition: none!important;
+    background: #F5F4F4!important;
+}
 
 /*==================================================================
 [ Restyle Checkbox ]*/
 
 .contact100-form-checkbox {
   padding-left: 5px;
-  padding-top: 5px;
-  padding-bottom: 35px;
+  float: left;
+  width: 100%;
+  margin-bottom: 15px;
 }
 .text-align {
-  height: 50px;
-  padding: 22px;
-  font-size: 15px;
+  height: 40px;
 }
 
 .input-checkbox100 {
-  display: none;
+  float:left;
 }
 
 .label-checkbox100 {
-  font-family: Poppins-Regular;
   font-size: 13px;
-  color: #fff;
   line-height: 1.2;
-
+  float: left;
   display: block;
-  position: relative;
-  padding-left: 26px;
+  padding-left: 7px;
   cursor: pointer;
+  margin-top: 2px;
 }
 
 .label-checkbox100::before {
-  content: "\f26b";
-  font-family: Material-Design-Iconic-Font;
-  font-size: 13px;
-  color: transparent;
 
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  background: #fff;
-  left: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  transform: translateY(-50%);
 }
 
 .input-checkbox100:checked + .label-checkbox100::before {
@@ -305,46 +296,20 @@ iframe {
 /*------------------------------------------------------------------
 [ Button ]*/
 .container-login100-form-btn {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  text-align: center;
 }
 
 .login100-form-btn {
-  font-family: Poppins-Medium;
   font-size: 16px;
-  color: #555555;
+  color: #fff;
   line-height: 1.2;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 0 20px;
   min-width: 120px;
-  height: 50px;
+  height: 40px;
   border-radius: 25px;
-
-  background: #9152f8;
-  background: -webkit-linear-gradient(bottom, #7579ff, #b224ef);
-  background: -o-linear-gradient(bottom, #7579ff, #b224ef);
-  background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
-  background: linear-gradient(bottom, #7579ff, #b224ef);
-  position: relative;
-  z-index: 1;
-
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
+  background: #EE1D23;
   transition: all 0.4s;
+  width: 100%;
 }
 
 .login100-form-btn::before {
@@ -410,7 +375,6 @@ iframe {
   right: 0px;
   pointer-events: none;
 
-  font-family: Poppins-Regular;
   color: #c80000;
   font-size: 13px;
   line-height: 1.4;
@@ -427,7 +391,6 @@ iframe {
 
 .alert-validate::after {
   content: "\f12a";
-  font-family: FontAwesome;
   font-size: 16px;
   color: #c80000;
 
