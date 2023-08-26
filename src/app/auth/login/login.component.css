@@ -12,15 +12,15 @@
 
  
 .align-condition {
-    text-align: center;
-    color: white;
+  text-align: center;
+    color: #080808;
     cursor: pointer;
-    display: none;
+    margin-bottom: 20px;
+    text-decoration: underline;
 }
 .align-agree {
   float: left;
 } 
-
 
 
  

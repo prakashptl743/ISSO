@@ -347,10 +347,16 @@ body .ui-paginator {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-    border: #1362A5!important;
-    background-color: #1362A5!important;
+    border: #EE1D23!important;
+    background-color: #EE1D23!important;
     color: #fff!important;
 }
+
+body .ui-button {
+    border-radius: 20px!important;
+    background-color: #EE1D23 !important;
+    border: 1px solid #EE1D23 !important;
+  }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
     color: #fff!important;
