@@ -40,30 +40,41 @@
 
 	<section class="wrapper">
 		<div class="container">
-		
+			<span class="card-meta mb-2 align-card"><span style="color:#485E88">i</span><span style="color:#EE1D23">S</span><span style="color:#00A54F">S</span><span style="color:#54C5CF">O</span> EVENTS</span>
 		<div class="row">
 	        <div class="col-md-4"  *ngFor="let event of eventInfo">
-				<div (click)="showDialog(event)" class="card text-white card-has-bg click-col">
+				<div (click)="showDialog(event)" class="card card-has-bg click-col">
 							<img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
 							<div class="card-img-overlay d-flex flex-column">
 							<div class="card-body">
-								<span class="card-meta mb-2 align-card">ISSO EVENTS</span>
-								<h4 class="align-card-title  card-title mt-0 "><a class="text-white" herf="#">
+								
+								<h4 class="align-card-title  card-title mt-0 "><a class="" herf="#">
 									{{event.eventName}}
 								</a></h4>
-								<span class="date-font"><i class="far fa-clock"></i>Starting on {{event.startDate  | date: 'd MMMM , y'}}</span>
-								<div  class="date-font">Venue:{{event.location}}</div>
-								</div>
 								
-								<div class="card-footer">
+								<span class="date-font"><i class="far fa-clock"></i>Starting on {{event.startDate  | date: 'd MMMM , y'}}</span>
+								<!-- <div  class="venue">Venue:{{event.location}}</div>-->
+								<div class="eve-sect">
+									
+									<div class="eve-val"><label>Venue:</label>{{event.location}}</div>
+								</div>
+								<div class="eve-sect">
+									
+									<div class="eve-val"><label>Registration:</label> {{registerFee * event.price}} Rs per player</div>
+								</div>
+								<div class="view-more"><a href="#" class="red-btn">ENROLL NOW</a></div>
+								</div> 
+								
+								
+								<!-- <div class="card-footer">
 								<div class="media">
 						<img class="mr-3 rounded-circle" src="assets/images/web/male.jpg"  style="max-width:50px">
 						<div class="media-body amount-fon">
-							<h5 class="my-0 text-white d-block">Registration Charges</h5>
+							<h5 class="my-0  d-block">Registration Charges</h5>
 							<span>{{registerFee * event.price}} Rs per player</span>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				</div>
 		       </div>
 		</div>

@@ -4,7 +4,7 @@
 
 /* @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"; */
 body {
-    background: #f6f6f6;
+    background: #f6f6f6!important;
 
 font-family: 'Roboto', sans-serif !important;
 background-repeat: no-repeat;
@@ -76,9 +76,9 @@ i, span {
     width: 100%;
 }
 
-#sidebarCollapse {
+/* #sidebarCollapse {
     display: none;
-}
+} */
 
 #sidebar {
     min-width: 220px;
@@ -347,16 +347,10 @@ body .ui-paginator {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-    border: #EE1D23!important;
-    background-color: #EE1D23!important;
+    border: #1362A5!important;
+    background-color: #1362A5!important;
     color: #fff!important;
 }
-
-body .ui-button {
-    border-radius: 20px!important;
-    background-color: #EE1D23 !important;
-    border: 1px solid #EE1D23 !important;
-  }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
     color: #fff!important;

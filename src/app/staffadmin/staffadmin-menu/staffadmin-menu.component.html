@@ -51,19 +51,23 @@ a:focus {
 }
 
 #sidebar {
-    width: 250px;
+    width: 0;
     position: fixed;
-    top: 0;
+    top: 60px;
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
+    background: #333437;
     color: #fff;
     transition: all 0.3s;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: none;
 }
 
 #sidebar.active {
     margin-left: -250px;
+    display: block;
 }
 
 #sidebar .sidebar-header {
@@ -144,18 +148,24 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: calc(100% - 250px);
-    padding: 40px;
+    /* width: calc(100% - 250px); */
+    /* padding: 40px; */
     min-height: 100vh;
     transition: all 0.3s;
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    right: 0;
+    right: 0; */
 }
 
 #content.active {
     width: 100%;
 }
+
+#sidebarCollapse  {
+    position: fixed;
+    background: #333437;
+    border: 1px solid #333437;
+    }
 
 /* ---------------------------------------------------
     MEDIAQUERIES
@@ -174,17 +184,19 @@ a.article:hover {
     #content.active {
         width: calc(100% - 250px);
     }
-    #sidebarCollapse span {
-        display: none;
-    }
+   
 }
 </style>
     
 <div class="wrapper">
+    <button type="button" id="sidebarCollapse" class="btn btn-info">
+        <i class="fas fa-align-left"></i>
+        
+    </button>
     <!-- Sidebar  -->
     <nav id="sidebar">
-     
-        <ul class="list-unstyled components"> 
+       
+        <ul class="list-unstyled components" > 
             <img class="align-logo" src="assets/images/web/logo_retina.png">
             <p class="school-name">{{schoolName}}</p>
             <li>
@@ -238,8 +250,10 @@ a.article:hover {
         });
   
         $('#sidebarCollapse').on('click', function () {
-            $('#sidebar, #content').toggleClass('active');
-            $('.collapse.in').toggleClass('in');
+            $('#sidebar').slideToggle();
+            // $('#sidebar').toggle();
+            // $('#sidebar, #content').toggleClass('active');
+            // $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
     });
@@ -248,6 +262,7 @@ a.article:hover {
  
     <!-- Page Content  -->
     <div class="container align-content" id="content">
+        
     <router-outlet></router-outlet>
 
 </div> 
