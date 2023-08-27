@@ -168,23 +168,21 @@ i, span {
     padding: 10px 20px;
     font-size: 1.1em;
     display: block;
-    color: #555;
+    color: #fff;
 }
 
 #sidebar ul li a:hover {
-    color: #fff;
-    background: #1362A5;
+    color: #F7B781;
 }
 
 .staff-sidebar ul li a:hover {
-    color: #fff;
-    background-color: #337ab7 !important;
+    color: #F7B781;
+    
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(156, 39, 176, .4)!important;
 }
 
 .staff-sidebar ul li a.active, a[aria-expanded="true"] {
     color: #fff;
-    background-color: #337ab7 !important;
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(156, 39, 176, .4)!important;
 }
 
@@ -193,13 +191,11 @@ i, span {
 }
 
 #sidebar ul li.active>a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #1362A5;
+    color: #F7B781;
 }
 
 #sidebar ul li a.active, a[aria-expanded="true"] {
-    color: #fff;
-    background: #1362A5;
+    color: #F7B781;
 }
 
 .staff-sidebar ul li.active>a, a[aria-expanded="true"] {

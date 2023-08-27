@@ -53,7 +53,7 @@ a:focus {
 #sidebar {
     width: 250px;
     position: fixed;
-    top: 0;
+    top: 95px;
     left: 0;
     height: 100vh;
     z-index: 999;
@@ -74,10 +74,10 @@ a:focus {
     background: #6d7fcc;
 }
 
-#sidebar ul.components {
+/* #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
-}
+} */
 
 #sidebar ul p {
     color: #fff;
@@ -91,14 +91,13 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #F7B781;
    
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: #F7B781;
 }
 
 a[data-toggle="collapse"] {
@@ -188,6 +187,13 @@ a.article:hover {
 </style>
     
 <div class="wrapper">
+    <header class="isso-header">
+        <div class="row">
+            
+        <div class="col-md-10 text-center"><img class="align-logo" src="assets/images/web/logo_retina.png"><div class="school-header">{{schoolName}}</div></div>
+        <div class="col-md-2">Welcome User<img class="logged-logo" src="assets/images/web/logo_retina.png"></div>
+        </div>
+    </header>
     <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">
         <i class="fas fa-align-left"></i>
         
@@ -196,34 +202,34 @@ a.article:hover {
     <nav id="sidebar">
        
         <ul class="list-unstyled components" > 
-            <img class="align-logo" src="assets/images/web/logo_retina.png">
-            <p class="school-name">{{schoolName}}</p>
+            
+            <!-- <p class="school-name">{{schoolName}}</p> -->
             <li>
-                <a style="color: white;" class="link-color" routerLink="./event-dashboard" routerLinkActive="active" class="menu-color"><i class="fas fa-table"></i>  <span class="left-link">Event Dashboard</span></a>
+                <a  class="link-color" routerLink="./event-dashboard" routerLinkActive="active" class="menu-color"><i class="fas fa-table"></i>  <span class="left-link">Event Dashboard</span></a>
             </li>
             <li>
-                <a style="color: white;" routerLink="./student-dashboard" routerLinkActive="active" class="menu-color"> <i class="fas fa-user"></i><span class="left-link">Student Dashboard</span></a>
+                <a  routerLink="./student-dashboard" routerLinkActive="active" class="menu-color"> <i class="fas fa-user"></i><span class="left-link">Student Dashboard</span></a>
             </li>
             <li>
-                <a style="color: white;" routerLink="./coach-entires" routerLinkActive="active" class="menu-color"> <i class="fas  fa-bookmark"></i><span class="left-link">Coach Entries</span></a>
+                <a  routerLink="./coach-entires" routerLinkActive="active" class="menu-color"> <i class="fas  fa-bookmark"></i><span class="left-link">Coach Entries</span></a>
             </li>
             <li>
-                <a style="color: white;" routerLink="./report" routerLinkActive="active" class="menu-color"> <i class="fas fa-chart-line"></i><span class="left-link">Report</span></a>
+                <a  routerLink="./report" routerLinkActive="active" class="menu-color"> <i class="fas fa-chart-line"></i><span class="left-link">Report</span></a>
             </li> 
             <li>
-                <a style="color: white;" routerLink="./certificate-invoice" routerLinkActive="active" class="menu-color"><i class="fas fa-file"></i><span class="left-link">Certificate/Invoice</span></a>
+                <a  routerLink="./certificate-invoice" routerLinkActive="active" class="menu-color"><i class="fas fa-file"></i><span class="left-link">Certificate/Invoice</span></a>
             </li>
             <li>
-                <a style="color: white;" routerLink="./pay-now" routerLinkActive="active" class="menu-color"><i class="fas fa-money-bill"></i> <span class="left-link">Pay Now</span></a>
+                <a  routerLink="./pay-now" routerLinkActive="active" class="menu-color"><i class="fas fa-money-bill"></i> <span class="left-link">Pay Now</span></a>
             </li>
             <li>
-                <a  style="color: white;" routerLink="./my-profile" routerLinkActive="active" class="menu-color"> <i class="fas fa-address-card"></i><span class="left-link">My Profile</span></a>
+                <a   routerLink="./my-profile" routerLinkActive="active" class="menu-color"> <i class="fas fa-address-card"></i><span class="left-link">My Profile</span></a>
             </li>   
             <li  *ngIf="isvolunteer == 'Yes'">
-                <a  style="color: white;" routerLink="./volunteer-entires" routerLinkActive="active" class="menu-color"><i class="fas fa-users"></i><span class="left-link">Volunteer Entries</span></a>
+                <a   routerLink="./volunteer-entires" routerLinkActive="active" class="menu-color"><i class="fas fa-users"></i><span class="left-link">Volunteer Entries</span></a>
             </li>      
             <li>
-                <a style="color: white;"[routerLink]="['/login']" routerLinkActive="active" class="menu-color"><i class="fas fa-sign-out-alt"></i> <span class="left-link">Log Out</span></a>
+                <a [routerLink]="['/login']" routerLinkActive="active" class="menu-color"><i class="fas fa-sign-out-alt"></i> <span class="left-link">Log Out</span></a>
             </li> 
         </ul>
   

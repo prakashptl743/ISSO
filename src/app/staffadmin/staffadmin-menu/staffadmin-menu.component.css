@@ -2,6 +2,11 @@
     color: white;
     padding-right: 10px;
 }
+.logged-logo{
+    width: 30px;
+    margin-left: 10px;
+}
+
 .pad-right{
     padding-right: 10px;
 }
@@ -14,9 +19,15 @@
 .menu-colour {
     color: #dfdfdf;
 }
+.school-header{
+    padding-top: 5px;
+}
 .align-logo {
-    padding-left: 33px;
-    height: 100px;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    left: 60px;
 }
 .align-content {
     margin-top: -84px;
@@ -28,8 +39,11 @@
   color: white !important;
 }
 header.isso-header {
-    height: 80px;
-    background: #005b9f;
+    float: left;
+    width: 100%;
+    background: #485E88;
+    padding: 10px;
+    color: #fff;
     box-shadow: 3px 1px 6px 1px #dfdfdf;
     margin-bottom: 30px;
     position: fixed;
