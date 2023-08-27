@@ -51,9 +51,9 @@ a:focus {
 }
 
 #sidebar {
-    width: 0;
+    width: 250px;
     position: fixed;
-    top: 60px;
+    top: 0;
     left: 0;
     height: 100vh;
     z-index: 999;
@@ -62,7 +62,6 @@ a:focus {
     transition: all 0.3s;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    display: none;
 }
 
 #sidebar.active {
@@ -148,13 +147,13 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    /* width: calc(100% - 250px); */
-    /* padding: 40px; */
+    width: calc(100% - 250px); 
+     padding: 40px; 
     min-height: 100vh;
     transition: all 0.3s;
-    /* position: absolute;
+    position: absolute;
     top: 0;
-    right: 0; */
+    right: 0; 
 }
 
 #content.active {
@@ -189,10 +188,10 @@ a.article:hover {
 </style>
     
 <div class="wrapper">
-    <button type="button" id="sidebarCollapse" class="btn btn-info">
+    <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">
         <i class="fas fa-align-left"></i>
         
-    </button>
+    </button> -->
     <!-- Sidebar  -->
     <nav id="sidebar">
        
@@ -249,13 +248,13 @@ a.article:hover {
             theme: "minimal"
         });
   
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').slideToggle();
-            // $('#sidebar').toggle();
-            // $('#sidebar, #content').toggleClass('active');
-            // $('.collapse.in').toggleClass('in');
-            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-        });
+        // $('#sidebarCollapse').on('click', function () {
+        //    // $('#sidebar').slideToggle();
+        //     // $('#sidebar').toggle();
+        //     $('#sidebar, #content').toggleClass('active');
+        //     $('.collapse.in').toggleClass('in');
+        //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        // });
     });
   </script>
    
