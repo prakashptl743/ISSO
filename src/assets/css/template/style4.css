@@ -3,6 +3,15 @@
 */
 
 /* @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"; */
+@font-face {
+    font-family: 'DejaVuSerif-Regular';
+    src: url(../fonts/DejaVuSerif.ttf);
+  }
+  @font-face {
+    font-family: 'DejaVuSerif-Bold';
+    src: url(../fonts/DejaVuSerif-Bold.ttf);
+  }
+
 body {
     background: #f6f6f6!important;
 
