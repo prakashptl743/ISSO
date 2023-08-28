@@ -92,8 +92,8 @@ i, span {
 #sidebar {
     min-width: 220px;
     max-width: 220px;
-    background: #EBEDED;
-    color: #555;
+    background: #333437;
+    color: #fff;
     transition: all 0.3s;
 }
 
@@ -148,8 +148,10 @@ i, span {
 }
 
 #sidebar .sidebar-header {
-    padding: 0 20px;
-    background: #EBEDED;
+    padding: 5px 20px;
+    background: #f6f6f6;
+    color: #080808;
+    border-right: 2px solid #080808;
 }
 
 .staff-sidebar .sidebar-header {
