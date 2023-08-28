@@ -5,7 +5,7 @@
 
 <div class="wrapper">
 <div id="content1" class="content-wrapper">
-    <div class="sub-view-wrapper"   >
+    <div class="sub-view-wrapper" *ngIf="display">
     <h2 class="headingSubview">{{subViewTitle}}</h2>
     <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
         <div class="form-row">

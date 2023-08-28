@@ -116,22 +116,7 @@ export class LoginComponent implements OnInit {
     this.userId =  this.newSchoolId;
   }
   onSubmit() {
-    //var checkEmail = /@/gi; 
-  //   const string = this.username.value;
-  //   const substring = "@";
-  //   console.log(string.includes(substring)); // true
 
-  //   if (string.includes(substring) ) { 
-  //     console.log("email" ); 
-  //  } else { 
-  //     console.log("scholl Name" ); 
-  //  }
-    // if (this.isSchoolSelect) {
-    //   console.log(this.isSchoolSelect);
-    //   this.userId =  this.newSchoolId;
-    // } else {
-    //   this.userId =  this.username.value;
-    // }
     console.log("scholl Nam this.userIde",this.userId); 
     this.submitted = true;
     this.authService.login(this.userId, this.password.value).subscribe((data) => {
@@ -141,7 +126,7 @@ export class LoginComponent implements OnInit {
           const adminredirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin/dashboard';
           const staffadminRedirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/staffadmin/event-dashboard';
           console.log('Im url==>'+staffadminRedirect);
-          if(localStorage.getItem('roleId') === '1'){
+          if(localStorage.getItem('roleId') === '1' || localStorage.getItem('roleId') === '3'){
             this.router.navigate([adminredirect]);
           } else {
             this.router.navigate([staffadminRedirect]);

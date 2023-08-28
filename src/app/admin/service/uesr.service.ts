@@ -26,7 +26,44 @@ getMenuData(userType) {
         catchError(this.handleError)
   );
 }
+ 
+getUserData(userType) {
+  return this.http.get(this.serverUrl + 'user/getUserData/'+userType).pipe(
+       catchError(this.handleError)
+ );
+}
 
+getIssoUsers() {
+  return this.http.get(this.serverUrl + 'user/getIssoUsers/').pipe(
+       catchError(this.handleError)
+ );
+}
+editUserData(id, userData) { 
+  let str = 'user/editUserData/' + id;
+  return this.http.post<any>(this.serverUrl + str, userData)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
+deleteUser(id: number) {
+  return this.http.delete(this.serverUrl + 'user/deleteUser/' + id).pipe(
+    catchError(this.handleError)
+  );
+}
+changeMenuStatus(id, menuData) { 
+  let str = 'user/changeMenuStatus/' + id;
+  return this.http.post<any>(this.serverUrl + str, menuData)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
+changeUserStatus(id, menuData) { 
+  let str = 'user/changeUserStatus/' + id;
+  return this.http.post<any>(this.serverUrl + str, menuData)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
 saveUserData(userData) { 
   return this.http.post<any>(this.serverUrl + 'user/addNewUser',userData)
   .pipe(

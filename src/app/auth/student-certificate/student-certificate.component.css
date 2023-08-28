@@ -457,11 +457,11 @@ font-size: 15px;
 .certificate-section {
   /* background-image: url('../../assets/images/sp2.png'); */
   /* background-image: url(assets/images/sp2.png) 0 0 repeat-y;   */
-  background: url("../../../assets/images/sp2.png") 0 0 repeat-y;  
+  background: url("../../../assets/images/sp2.png") 2px 0 repeat-y;  
   float: left;
   background-size: 100%;
   margin-top: -5px;
-  width: 99.7%;
+  width: 99.8%;
 }
 .certificate-section h1{
   text-align: center;

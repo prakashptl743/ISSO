@@ -26,6 +26,7 @@ export class AuthService {
         if (user && user.email) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           localStorage.setItem('roleId', (user.roleId));
+          localStorage.setItem('userId', (user.userId));
           localStorage.setItem('isAffiliate', (user.isAffiliate));          
           localStorage.setItem('schoolId', (user.schoolId));
           localStorage.setItem('schoolName', (user.schoolName));
