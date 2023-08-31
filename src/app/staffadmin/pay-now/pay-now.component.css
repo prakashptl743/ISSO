@@ -34,10 +34,11 @@ a.disabled {
 .align-heading {
     padding: 10px;
     margin: 0;
-    color: white;
+    color: #080808;
     text-align: center;
-    background: #0d6efd;
     border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 .align-container {
     margin-top: 30px;

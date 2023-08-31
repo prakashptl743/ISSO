@@ -53,15 +53,13 @@ a:focus {
 #sidebar {
     width: 250px;
     position: fixed;
-    top: 95px;
+    top: 50px;
     left: 0;
     height: 100vh;
     z-index: 999;
     background: #333437;
     color: #fff;
     transition: all 0.3s;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 #sidebar.active {
@@ -164,7 +162,9 @@ a.article:hover {
     background: #333437;
     border: 1px solid #333437;
     }
-
+.align-lhn{
+   margin-top: 50px;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -204,7 +204,7 @@ a.article:hover {
         <ul class="list-unstyled components" > 
             
             <!-- <p class="school-name">{{schoolName}}</p> -->
-            <li>
+            <li class="align-lhn">
                 <a  class="link-color" routerLink="./event-dashboard" routerLinkActive="active" class="menu-color"><i class="fas fa-table"></i>  <span class="left-link">Event Dashboard</span></a>
             </li>
             <li>

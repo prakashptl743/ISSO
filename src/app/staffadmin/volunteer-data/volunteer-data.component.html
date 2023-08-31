@@ -91,14 +91,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let coachList of coachListArray; let i = index;">
-              <td>{{i+1}}</td>
+              <td class="text-center">{{i+1}}</td>
               <td class="align-event">{{coachList.eventName}}</td>
               <td>{{coachList.studentName}}</td>
               <td>{{coachList.aadharNumber}}</td>
               <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
               <td class="action">
-                  <a href="javascript: void(0)"  (click)="editStudent(i)" ><img src="assets/images/web/edit.svg"></a>
-                  <a href="javascript: void(0)" (click)="deleteStudentData($event, i)"><img src="assets/images/web/delete.svg"></a>
+                  <a class="edit-font-icon" href="javascript: void(0)"  (click)="editStudent(i)" ><i class="fas fa-edit"></i></a>
+                  <a class="edit-font-icon" href="javascript: void(0)" (click)="deleteStudentData($event, i)"><i class="fas fa-trash"></i></a>
 
               </td>
           </tr>
