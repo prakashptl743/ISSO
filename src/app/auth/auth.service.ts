@@ -32,6 +32,16 @@ export class AuthService {
           localStorage.setItem('schoolName', (user.schoolName));
           localStorage.setItem('isVoulnteer', (user.isVoulnteer));
           localStorage.setItem('schoolZone', (user.schoolZone));
+          const adminredirect = '/admin/dashboard';
+          const staffadminRedirect = '/staffadmin/event-dashboard';
+          if(user.roleId === '1' || user.roleId === '3'){
+            this.router.navigate([adminredirect]);
+          } else {
+            this.router.navigate([staffadminRedirect]);
+          }
+
+
+
          // this.autoLogout(10);
         } else { 
           this.loginFail();

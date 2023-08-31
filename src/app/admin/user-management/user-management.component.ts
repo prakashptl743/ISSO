@@ -165,6 +165,15 @@ addNewUser(event: Event, setUserData,type:any) {
   this.menuNameArray = [];
   this.mapMenuArray  = [];
   this.showMapData = false; 
+  this.userForm = this.fb.group({
+    userId: '',
+    userName: '',
+    userEmail:'',
+    userMobile:'',
+    userPassword: '',
+  });
+
+
  }
 }
 resetForm() {

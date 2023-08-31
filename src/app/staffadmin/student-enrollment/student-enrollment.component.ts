@@ -1105,7 +1105,9 @@ loadStudentData() {
                 capaCityCount = this.newSubGameCapacity.filter((obj) => obj.subGameId === this.mapSubGameTeam[i]['subGameId']).length;
                 console.log('CAPCITY COUNT===>'+capaCityCount);
                 //if (capaCityCount < this.mapSubGameTeam[i]['minCapacity'] ) {
-                   remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
+                  // Below code was used 29 aug 2023 for remaining capacity 
+                 //  remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
+                   remainingCapacity = this.mapSubGameTeam[i]['minCapacity'] - capaCityCount;
                   this.incompleteTeamSubGame.push({
                     'subGameId':this.mapSubGameTeam[i]['subGameId'],
                     'subGameName': this.mapSubGameTeam[i]['subGameName'],

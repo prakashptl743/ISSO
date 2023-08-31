@@ -33,15 +33,14 @@ export class AdminComponent implements OnInit {
   items: MenuItem[];
   ngOnInit() {
     this.faMenu = 'fas fa-sign-out-alt';
-    this.adminMenu();
+    this.adminMenuData ='';
     console.log('Im role-->'+localStorage.getItem('roleId'));
     const roleId = localStorage.getItem('roleId');
     const userId = localStorage.getItem('userId');
     if(roleId=='3') {
-        console.log('old')
-         this.newUserMenu(userId)
+        this.newUserMenu(userId)
     } else {
-        console.log('old')
+        this.adminMenu();
     }
   }
   newUserMenu(userId) {
