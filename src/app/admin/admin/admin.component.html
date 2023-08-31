@@ -11,10 +11,10 @@
             </div>
         
             <ul class="list-unstyled components">
-                <li *ngFor="let menu of adminMenuData">
-                  <a class="pad-right" routerLink="{{menu.routing}}" routerLinkActive="active" class="menu-color"> <span class="left-link"> {{menu.menu_name}}</span> </a>
+               <li *ngFor="let menu of adminMenuData">
+                  <a class="pad-right" routerLink="{{menu.routing}}" routerLinkActive="active" class="menu-color"><i class="{{menu.menuIcon}}"></i> <span class="left-link"> {{menu.menu_name}}</span> </a>
                 </li> 
-                <li><a  class="menu-color" [routerLink]="['/login']" routerLinkActive="active"><i class="fas fa-sign-out-alt"></i><span class="left-link">Logout</span></a>
+                 <li><a  class="menu-color" [routerLink]="['/login']" routerLinkActive="active"><i class="{{faMenu}}">  </i> <span class="left-link">Logout</span></a>
                 </li> 
                 <!-- <li>
                   <a class="pad-right" routerLink="./dashboard" routerLinkActive="active" class="menu-color"> <i class="fas fa-table"></i> <span class="left-link">Dashboard</span> </a>

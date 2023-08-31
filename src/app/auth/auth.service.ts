@@ -26,11 +26,22 @@ export class AuthService {
         if (user && user.email) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           localStorage.setItem('roleId', (user.roleId));
+          localStorage.setItem('userId', (user.userId));
           localStorage.setItem('isAffiliate', (user.isAffiliate));          
           localStorage.setItem('schoolId', (user.schoolId));
           localStorage.setItem('schoolName', (user.schoolName));
           localStorage.setItem('isVoulnteer', (user.isVoulnteer));
           localStorage.setItem('schoolZone', (user.schoolZone));
+          const adminredirect = '/admin/dashboard';
+          const staffadminRedirect = '/staffadmin/event-dashboard';
+          if(user.roleId === '1' || user.roleId === '3'){
+            this.router.navigate([adminredirect]);
+          } else {
+            this.router.navigate([staffadminRedirect]);
+          }
+
+
+
          // this.autoLogout(10);
         } else { 
           this.loginFail();

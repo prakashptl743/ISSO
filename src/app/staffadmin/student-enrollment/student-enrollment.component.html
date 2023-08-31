@@ -201,7 +201,7 @@
    
       <div class="panel panel-default">
         <div class="align-game-header text-center" *ngIf="!showSubGameList">{{panelHeading}} Capacity is {{setCapacity}}
-           <div *ngIf="showStudentEnrollForm"  (click)="onCencelEvent()" class="float-right">Click here for to delete team confirmation</div> 
+           <div *ngIf="gameType == 'Team'"  (click)="onCencelEvent()" class="float-right">Click here for to delete team confirmation</div> 
         </div>
         
 

@@ -570,34 +570,55 @@ testfun(eventData: any,capacity: any, minCapcity, gender:any, ageRange) {
       this.gender = '2';
       this.setCapacity = capacity;
     }
-    if(this.eventDayDiff >= 15) {
-      this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
-        response => {
-          if(response !== "false") {
-            this.bookingId = response;
-            this.showStudentEnrollForm = true;
-            this.display = false;
-            this.testBo= true;
-            this.gameType = eventData.gameType;
-            this.showGoBack = false 
-            this.showSubGameList = false;
-            this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
-            this.yearRange = this.issoUtilService.setYearRange(ageRange);
-            this.minCapcity = minCapcity;
-            this.loadStudentData();
-            this.makeEmptyForm();
-          } else {
-            this.display = true;
-            this.showStudentEnrollForm = false;
-          }
-        },
-        error => this.error = error
-      );
+ 
+      if(eventData.gameType =="Team") {   
+        if(this.eventDayDiff >= 15) {
+          this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
+            response => {
+              if(response !== "false") {
+                this.bookingId = response;
+                this.showStudentEnrollForm = true;
+                this.display = false;
+                this.testBo= true;
+                this.gameType = eventData.gameType;
+                this.showGoBack = false 
+                this.showSubGameList = false;
+                this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
+                this.yearRange = this.issoUtilService.setYearRange(ageRange);
+                this.minCapcity = minCapcity;
+                this.loadStudentData();
+                this.makeEmptyForm();
+              } else {
+                this.display = true;
+                this.showStudentEnrollForm = false;
+              }
+            },
+            error => this.error = error
+          );
+      } else {
+          this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
+            response => {
+              if(response !== "false") {
+                this.bookingId = response;
+                this.showStudentEnrollForm = true;
+                this.display = false;
+                this.testBo= true;
+                this.gameType = eventData.gameType;
+                this.showGoBack = false 
+                this.showSubGameList = false;
+                this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
+                this.yearRange = this.issoUtilService.setYearRange(ageRange);
+                this.minCapcity = minCapcity;
+                this.loadStudentData();
+                this.makeEmptyForm();
+              } else {
+                this.messageService.add({key: 'custom', severity:'error',life:3000, summary: 'Event is not booked '});
+              }
+            },
+            error => this.error = error
+          );
+        }
   } else {
-    this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
-      response => {
-        if(response !== "false") {
-          this.bookingId = response;
           this.showStudentEnrollForm = true;
           this.display = false;
           this.testBo= true;
@@ -609,24 +630,8 @@ testfun(eventData: any,capacity: any, minCapcity, gender:any, ageRange) {
           this.minCapcity = minCapcity;
           this.loadStudentData();
           this.makeEmptyForm();
-        } else {
-          this.messageService.add({key: 'custom', severity:'error',life:3000, summary: 'Event is not booked '});
-        }
-      },
-      error => this.error = error
-    );
-
-
-
-
-   
   }
-
  
-
-  
-
-
 }
 enrollStudent(eventData: any,capacity: any, gender:any, ageRange) {
     this.showGoBack = false 
@@ -1100,7 +1105,9 @@ loadStudentData() {
                 capaCityCount = this.newSubGameCapacity.filter((obj) => obj.subGameId === this.mapSubGameTeam[i]['subGameId']).length;
                 console.log('CAPCITY COUNT===>'+capaCityCount);
                 //if (capaCityCount < this.mapSubGameTeam[i]['minCapacity'] ) {
-                   remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
+                  // Below code was used 29 aug 2023 for remaining capacity 
+                 //  remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
+                   remainingCapacity = this.mapSubGameTeam[i]['minCapacity'] - capaCityCount;
                   this.incompleteTeamSubGame.push({
                     'subGameId':this.mapSubGameTeam[i]['subGameId'],
                     'subGameName': this.mapSubGameTeam[i]['subGameName'],
@@ -1419,6 +1426,7 @@ onSubmit() {
                this.studentEnroolForm.reset();
                this.loadStudentData();
                this.selectedSubGame1 = '';
+               this.subGameButton = false;
                
              }
          },
@@ -1436,6 +1444,7 @@ onSubmit() {
             this.studentEnroolForm.reset();
             this.loadStudentData();
             this.selectedSubGame1 = '';
+            this.subGameButton = false;
             
           }
       },
