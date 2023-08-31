@@ -48,7 +48,7 @@ export class StudentDashboardComponent implements OnInit {
   schoolServiceData:any;
   showStudentCount: boolean = false;
   sortOptions: SelectItem[];
-  yearOptions: SelectItem[];
+  yearOptions: object;
   eventOptions: SelectItem[];
   schoolOptions: SelectItem[];
   ageRange;
@@ -108,8 +108,8 @@ editSchool(event: Event, car: Student) {
 onDialogHide() {
   this.selectedSchool = null;
 }
-onyeareChange(event) {
-  this.yearvalue = event.value;
+onyeareChange(val) {
+  this.yearvalue = val;
   this.setPhotoPath();
   this.isEditStudent = false;
   if(this.yearvalue !== '') {
@@ -201,119 +201,15 @@ showDialog(rowid:number) {
 initialForm() {
     this.ageRange = this.issoUtilService.setAge();
     this.standardClass = this.issoUtilService.setClass();
-    
-    this.schoolForm = this.fb.group({
-      sId:[''],
-      studentName: ['', Validators.required],
-      fatherName: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      standardClass: ['', Validators.required],
-      ageRange: ['', Validators.required],
-      aadharNumber: ['', Validators.required],
-      gameName: ['', Validators.required],
-      subGameName: [''],
-      eventName: ['', Validators.required],
-      schoolName: ['', Validators.required],
-      createdDate:['', Validators.required],
-    });
-     this.yearOptions = this.issoUtilService.setYearForStaffadmin();
-   // this.setYear();
-    this.sortOptions = [
-      {label: 'Newest First', value: '!year'},
-      {label: 'Oldest First', value: 'year'},
-      {label: 'Brand', value: 'brand'}
-   ];
+    this.yearOptions = this.issoUtilService.setYearToStaffadmin();
+  
 }
 cancelForm() {
   this.isEditStudent = false;
 }
-editStudent(event: Event, studentData: Student,type:any) {
-  console.log(studentData);
-  this.shoolName = studentData.schoolName;
-  this.eventName = studentData.eventName;
-    if(type == 'edit') {
-        this.isEditStudent = true;
-        this.schoolForm.setValue({
-          sId:studentData.sId,  
-          studentName: studentData.studentName,
-          fatherName:  studentData.fatherName,
-          dateOfBirth: new Date(studentData.dateOfBirth),
-          standardClass:  studentData.standardClass,
-          ageRange:  studentData.ageRange,
-          aadharNumber: studentData.aadharNumber,
-          gameName: studentData.gameName,
-          subGameName:  studentData.subGameName,
-          eventName: studentData.eventName,
-          schoolName: studentData.schoolName,
-          createdDate: studentData.createdDate,
-        });  
-   } else {
-       this.schoolForm.setValue({ 
-        sId:'',   
-        studentName: '',
-        fatherName: '',
-        dateOfBirth: ' ',
-        standardClass: ' ',
-        ageRange: ' ',
-        aadharNumber: ' ',
-        gameName:' ',
-        subGameName:'',
-        eventName:'',
-        schoolName:'',
-        createdDate:''
-      }); 
-    }
-    this.display = true;
-    
-}
  
-
-onSubmit() {
-      this.submitted = true;
-      const formData = new FormData();
-      let schoolID =  this.schoolForm.get('schoolId').value;
-      formData.append('schoolname', this.schoolForm.get('schoolname').value);
-      formData.append('schoolEmail', this.schoolForm.get('schoolEmail').value);
-      formData.append('schoolBoard', this.schoolForm.get('schoolBoard').value);
-      formData.append('schoolPassword', this.schoolForm.get('schoolPassword').value);
-      formData.append('schoolInfra', this.schoolForm.get('schoolInfra').value);
-      formData.append('schoolTelePhone', this.schoolForm.get('schoolTelePhone').value);
-      formData.append('schoolAddress', this.schoolForm.get('schoolAddress').value);
-     // formData.append('hiddentext', this.schoolForm.get('hiddentext').value);
-      if(schoolID == '') {
-        console.log('im add')
-      //   this.studentService.saveSchoolData(formData).subscribe(
-      //   res => {
-      //       if (res.status === 'error') {
-      //         this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
-      //       } else {
-      //         this.messageService.add({key: 'custom', severity:'success', summary: 'New School Added Successfully'});
-
-      //       }
-      //     this.display =false
-      //   },
-      //   error => this.error = error
-      // );
-
-     } else {
-       console.log('im edit')
-      // this.schoolService.editSchoolData(formData,schoolID).subscribe(
-      //   res => {
-      //       if (res.status === 'error') { 
-      //         this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
-      //       } else {
-      //         this.messageService.add({key: 'custom', severity:'success', summary: 'School Data Updated Successfully'});
-
-      //       }
-      //     this.display =false
-      //     this.getSchoolData();
-      //   },
-      //   error => this.error = error
-      //);
-
-     }
  
-}
+ 
 
 
 deleteSchoolData(event: Event, schoolData: Student) {

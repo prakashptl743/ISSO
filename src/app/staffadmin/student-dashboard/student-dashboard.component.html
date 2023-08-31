@@ -2,7 +2,11 @@
 <div class="event-container row" style="padding:0 10px 10px 10px;">
  
      <div class="ui-g-12 ui-md-2">
-        <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+         <div>
+             <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
+             <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+         </div> 
+        <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
      </div>
      <div class="ui-g-12 ui-md-5">
         <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
@@ -14,78 +18,7 @@
 <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
  <!-- <p-dialog header="Student Details" [(visible)]="display" [modal]="true" [responsive]="true"   
   [maximizable]="true" [baseZIndex]="10000"> -->
-  <div *ngIf="isEditStudent">
-  <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-
-    <div class="sub-view-wrapper" *ngIf="display">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Event Name</label> 
-              <div><span>{{eventName}}</span></div>
-              <input formControlName="eventName" name="eventName"  type="hidden" size="30" pInputText required>  
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">School Name</label>
-              <div><span>{{shoolName}}</span></div>
-              <input formControlName="schoolName" name="schoolName"  type="hidden" size="30" pInputText required>  
-            </div>
-        </div>
-      
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">Student Name</label>
-                <input formControlName="studentName" name="studentName" type="text" size="30" pInputText required>  
-            </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Father Name</label>
-                <input formControlName="fatherName" name="fatherName"  type="text" size="30" pInputText required>  
-            </div>
-          </div>
-      
-         <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">Date of Birth</label>
-                <p-calendar formControlName="dateOfBirth"   dateFormat="dd/mm/yy" showAnim="slideDown" [style]="{'width':'95%'}" [inputStyle]="{'width':'95%'}" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
-            </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Select Class</label>
-                <p-dropdown placeholder="Please Select" [options]="standardClass"  size="30" formControlName="standardClass"></p-dropdown>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Age Range</label>
-              <p-dropdown placeholder="Please Select" [options]="ageRange"  size="30" formControlName="ageRange"></p-dropdown>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Aadhar Number</label>
-              <input formControlName="aadharNumber" name="aadharNumber"  type="text" size="30" pInputText required>  
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Game Name</label>
-              <input formControlName="gameName" name="gameName"  type="text" size="30" pInputText required>  
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Sub Game Name</label>
-              <input formControlName="subGameName" name="subGameName"  type="text" size="30" pInputText required>  
-            </div>
-        </div>
-   
-        </div>
-
-        <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
-        <button class="btn btn-primary-outline" type="button" (click)="cancelForm()">Cancel</button>
  
-
-          <div class="col-md-10 mx-auto" class="align-form">
-                  
-      
-  </div>
-
-</form>
-</div>
   <!-- <p-footer>
       <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
@@ -194,16 +127,7 @@
 </p-dataView>
 
 <p-confirmDialog key="confirm-delete-school" header="Delete Student Data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
-<p-dialog header="Add New School" [(visible)]="displayDialog"  showEffect="fade" [modal]="true" [responsive]="true"   
-  [maximizable]="true" [baseZIndex]="10000">
-  <h5>Edit school</h5>
-  <p-footer>
-      <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-     <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-  </p-footer>
-
-
-</p-dialog>    
+     
 </div>
 </div>
 

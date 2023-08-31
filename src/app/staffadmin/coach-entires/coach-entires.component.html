@@ -9,7 +9,13 @@
         <div class="col-md-12 pad-left-zero">
           <div class="form-group ui-g-4 pad-zero">
             <label for="exampleInputEmail1">Select Year</label>
-            <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+
+            <div>
+              <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
+              <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+          </div> 
+
+            <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
           </div>
         </div>
         <div class="col-md-12 pad-left-zero">

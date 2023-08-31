@@ -1,18 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-coach-entires',
-//   templateUrl: './coach-entires.component.html',
-//   styleUrls: ['./coach-entires.component.css']
-// })
-// export class CoachEntiresComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-       
-// }
 import { Component, OnInit, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { ReportMeritService } from 'src/app/admin/service/report-merit.service';
@@ -57,7 +42,7 @@ base64Image:any;
 @ViewChild('reportContent', {static: false})reportContent: ElementRef;
 @ViewChild('report_Content', {static: false})report_Content: ElementRef;
 
-yearOptions: SelectItem[];
+yearOptions: object;
 feeOptions: SelectItem[];
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
@@ -170,7 +155,7 @@ ngOnInit() {
   this.ageOptions = this.issoUtilService.setAge();
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
   this.initialForm();
@@ -516,9 +501,9 @@ changeFileName(filePath, fileName) {
   control2.setValidators(null);
   control2.updateValueAndValidity();
 }
-onyeareChange(event) {
+onyeareChange(val) {
   this.isEdit = false;
-  this.yearvalue = event.value;
+  this.yearvalue = val;
   this.genderReadble = false;
   this.selectedEvent ='';
   this.selectedGame ='';

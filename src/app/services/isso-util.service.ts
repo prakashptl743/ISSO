@@ -92,6 +92,30 @@ setAgeMap(eventValue) {
    //console.log('im service'+this.ageOptions)
    return this.ageOptions;
 }
+setYearToStaffadmin() {
+  const yearArray =[];
+  let currYear = new Date().getFullYear();
+  let prevYear = currYear - 1;
+  let nextYear = currYear + 1;
+  let currYearString = prevYear+'-'+currYear;
+  let nextYearString = currYear+'-'+nextYear;
+  this.yearArray = [{year:currYearString}, {year:nextYearString}];
+  return  this.yearArray ;
+  // this.staffadminYearOptions = [];
+  // this.staffadminYearOptions.push({
+  //   label: "Select year",
+  //   value: ''
+  // });
+   
+  // this.yearArray.forEach(element => {
+  //     this.staffadminYearOptions.push({
+  //       label: element.year,
+  //       value: element.year
+  //     });
+  //   })
+  //   return this.staffadminYearOptions;
+}
+
 setYearForStaffadmin() {
   const yearArray =[];
   let currYear = new Date().getFullYear();
@@ -100,6 +124,7 @@ setYearForStaffadmin() {
   let currYearString = prevYear+'-'+currYear;
   let nextYearString = currYear+'-'+nextYear;
   this.yearArray = [{year:currYearString}, {year:nextYearString}];
+  // return  this.yearArray ;
   this.staffadminYearOptions = [];
   this.staffadminYearOptions.push({
     label: "Select year",
