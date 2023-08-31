@@ -17,13 +17,14 @@ a.disabled {
 .align-heading {
     padding: 10px;
     margin: 0;
-    color: white;
-    background: #0d6efd;
-    border-radius: 20px;
+    color: #080808;
     text-align: center;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 .align-container {
-    margin-top: 30px;
+    margin-top: 0;
 }
 .pad-left-zero {
     padding-left: 0;
@@ -116,10 +117,9 @@ a.disabled {
     border-color: #32383e;  
  
  }
-.table-color {
-    color: #fff;
-    background-color: #007ad9;
-    border-color: #32383e;   
+
+.align-photo img{
+    border-radius: 50%;
 }
  /* .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     border-top: 1px solid black;

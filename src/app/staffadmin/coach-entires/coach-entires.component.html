@@ -109,38 +109,40 @@
       <div class="table-responsive">
 
 
-        <table class="table table-bordered">
+        <table class="table">
           <thead class="table-color">
             <tr>
               <th scope="col">Sr. No </th>
+              <th scope="col">Photo</th>
               <th scope="col">Coach Name </th>
               <th scope="col">Father's/Mother's Name</th>
               <th scope="col">Age Range</th>
               <th scope="col">Enrolled Date</th>
-              <th scope="col">Photo</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let coachList of coachListArray; let i = index;">
-              <td>{{i+1}}</td>
-              <td>{{coachList.coachName}}</td>
-              <td>{{coachList.coachFatherName}}</td>
-              <td>{{coachList.ageRange}}</td>
-              <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
+              <td class="text-center">{{i+1}}</td>
               <td class="align-photo" *ngIf="coachList.photo!=''">
                
-                <img height="50" width="50" src="{{setPhotoYear}}/{{coachList.coachPhoto}}" height="60"
+                <img height="40" width="40" src="{{setPhotoYear}}/{{coachList.coachPhoto}}"
                 alt="banner" />
                 <!-- <img height="50" width="50" src="http://issoindia.com/uploads/studentphoto/{{photoUrl}}" height="60"
                   alt="banner" /> -->
               </td>
               <td *ngIf="coachList.photo ==''">
-                <img height="50" width="50" src="../../assets/images/general/defaulUser.png" height="60" alt="banner" />
+                <img height="40" width="40" src="../../assets/images/general/defaulUser.png" alt="banner" />
               </td>
+              <td>{{coachList.coachName}}</td>
+              <td>{{coachList.coachFatherName}}</td>
+              <td class="text-center">{{coachList.ageRange}}</td>
+              <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
+              
+             
               <td class="action">
-                  <a href="javascript: void(0)"  (click)="editStudent(i)" ><img src="assets/images/web/edit.svg"></a>
-                  <a href="javascript: void(0)" (click)="deleteStudentData($event, i)"><img src="assets/images/web/delete.svg"></a>
+                  <a class="edit-font-icon" href="javascript: void(0)"  (click)="editStudent(i)" ><i class="fas fa-edit"></i></a>
+                  <a class="delete-font-icon" href="javascript: void(0)" (click)="deleteStudentData($event, i)"><i class="fas fa-trash"></i></a>
 
               </td>
           </tr>
