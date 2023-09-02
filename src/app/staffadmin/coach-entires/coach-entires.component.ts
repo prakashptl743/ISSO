@@ -504,7 +504,7 @@ editStudent(i: number): void {
  
   this.submitButtonLabel = "Update";
   console.log(this.submitButtonLabel)
- 
+ // this.selectedProfile = this.coachListArray[i].coachPhoto,
   this.studentPhoto = this.coachListArray[i].coachPhoto,
   this.studentEnroolForm.setValue({
  //  schoolId: this.schoolId,
@@ -521,8 +521,8 @@ editStudent(i: number): void {
  //console.log('Form==>'+JSON.stringify(this.studentEnroolForm))
  
 // this.coachDataAvailable = false;
-   this.setFocus('studentNameText');
-  let filePath = 'http://localhost/isso-php/isso-php/upload/'+this.studentPhoto;
+  this.setFocus('studentNameText');
+  let filePath = 'https://issoindia.com/isso-php/upload/'+this.yearvalue+'/coach/'+this.studentPhoto;
   this.changeFileName(filePath, this.studentPhoto);
 }
 setFocus(id: string) {
