@@ -290,6 +290,7 @@ downloadInvoice() {
 
 onyeareChange(val) {
   this.yearvalue = val;
+  this.finalGameList = [];
   if(this.yearvalue !== '') {
   this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
   //this.meritService.loadEventByYear(this.yearvalue).subscribe(
@@ -338,7 +339,7 @@ onyeareChange(val) {
 }
 onEventChange(event) {
   this.eventValue = event.value;
-  
+  this.finalGameList = [];
   let yearVal = this.yearvalue.toString();
   let eventYear = yearVal.split("-");
   this.selectedYearVal = eventYear[1];
@@ -478,7 +479,7 @@ loadschoolChange(gameData) {
 }
  
 getGameData(gameData) {
-     console.log(gameData);
+    this.finalGameList = [];
     for(let i=0;i<= gameData.length - 1;i++) {
        console.log('Im ID--->'+gameData[i]['gameId'])
         

@@ -32,17 +32,15 @@
         
   <div class="ui-g-12" style="padding-left: 12px;">
     <!-- <button type="button"  [disabled]="!isDataAvailble" (click)="printReport()"  pButton   label="Print Report"></button> -->
-    <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a>
+    <!-- <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a> -->
     <!-- <a class="btn btn-primary"     href="http://localhost/isso-php/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a> -->
 
   </div>  
 </div>
 
-
-<div class="table-responsive">
-
-
-  <table class="table">
+ 
+<div class="table-responsive" *ngIf="finalGameList.length >= 1">
+   <table class="table">
     <thead class="table-color">
       <tr>
         <th scope="col">Sr. No </th>
