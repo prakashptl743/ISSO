@@ -132,6 +132,8 @@ schoolType: string;
   selectedGame: string;
   selectedAge: string;
   selectedGender: string;
+  display: boolean;
+  showAddbutton: boolean;
 constructor( 
   @Inject(PLATFORM_ID) private platformId: Object,
   private issoUtilService: IssoUtilService,
@@ -215,6 +217,8 @@ initialForm() {
   this.studentEnroolForm = this.fb.group({
     editStudentPhoto:[],
     studentId: '',
+    ageRange:'',
+    gender:'',
     studentName: ['', Validators.required],
     fatherName: ['', Validators.required],
     profile: ['', Validators.required],
@@ -357,6 +361,7 @@ onSubmit() {
           } else {
             this.messageService.add({key: 'custom', severity:'success', summary: 'Coach Data Added Successfully'});
             this.studentEnroolForm.reset();
+            this.display = false;
             this.loadCoachData();
           }
       },
@@ -371,6 +376,7 @@ onSubmit() {
           } else {
             this.messageService.add({key: 'custom', severity:'success', summary: 'Coach Data updated Successfully'});
             this.studentEnroolForm.reset();
+            this.display = false;
             this.loadCoachData();
           }
       },
@@ -421,9 +427,7 @@ addMoreData() {
   this.studentEnroolForm.reset();
   this.submitButtonLabel = 'Submit';
 }
- 
-
-loadCoachData() {
+loadCoachData_BK() {
   this.isEdit = false;
   this.genderReadble = true;
   this.coachDataArray = [];
@@ -453,8 +457,47 @@ loadCoachData() {
      //this.errorAlert =true;
     });
 }
-editStudent(i: number): void {
 
+loadCoachData() {
+  this.isEdit = false;
+  this.genderReadble = true;
+  this.coachDataArray = [];
+  this.coachDataArray.push(
+    this.eventValue, this.gameID, this.schoolId,
+  );
+  const formData = new FormData();
+  formData.append('coachInfo', JSON.stringify(this.coachDataArray));
+  this.studentEnrollmentService.loadCoachData(formData).subscribe(
+    response => {
+      this.coachListArray = response;
+     // if(response!=="") {
+        if(response.length > 0) {
+          this.studentId = this.coachListArray[0].id;
+          this.coachDataAvailable = false;
+         // this.submitButtonLabel= 'Update';
+        } else {
+          // this.submitButtonLabel = 'Submit';
+          this.studentEnroolForm.reset();
+          this.coachDataAvailable = false;
+        }
+        console.log(response);
+      
+    //  }
+    },
+   error => {
+     //this.errorAlert =true;
+    });
+}
+
+showDialog() {
+ 
+  this.display = true;
+ 
+  //this.sendTextValue();
+}
+
+editStudent(i: number): void {
+  this.display = true;
   this.isEdit = true;
   this.isValidFile = true;
   this.isFileBig = false;
@@ -465,19 +508,15 @@ editStudent(i: number): void {
   this.studentPhoto = this.coachListArray[i].coachPhoto,
   this.studentEnroolForm.setValue({
  //  schoolId: this.schoolId,
+   ageRange: this.coachListArray[i].ageRange,
+   gender: this.coachListArray[i].gender,
    editStudentPhoto: this.coachListArray[i].coachPhoto,
    studentId: this.coachListArray[i].id,
    studentName: this.coachListArray[i].coachName,
    fatherName: this.coachListArray[i].coachFatherName,
- 
- 
-    selectedProfile:this.coachListArray[i].coachPhoto,
+   selectedProfile:this.coachListArray[i].coachPhoto,
    profile :'',
-   //ageRange :this.coachListArray[i].ageRange,
-  //  gameId: this.gameID,
  
-   //schoolName:'',
-  // eventId: this.eventValue,
  });  
  //console.log('Form==>'+JSON.stringify(this.studentEnroolForm))
  
@@ -667,15 +706,15 @@ loadGenderChange(gender) {
  // this.ageRange = ageData.value;
   this.genderVal = gender.value;
   console.log(this.ageRange);
-  this.loadCoachData();
+ // this.loadCoachData();
 }
 loadAgeChange(ageData) {
   this.isEdit = false;
   this.ageRange = ageData.value;
-  this.genderReadble = true;
-  this.selectedGender ='';
-  this.coachDataAvailable = true;
-  this.coachListArray=[];
+  //this.genderReadble = true;
+  //this.selectedGender ='';
+  //this.coachDataAvailable = true;
+  // this.coachListArray=[];
  // console.log(this.ageRange);
  // this.loadCoachData();
 }
@@ -698,7 +737,7 @@ loadschoolChange(gameData) {
       error => {
     //this.errorAlert =true;
       });
-
+     this.loadCoachData()
 }
  
 getGameData(gameID) {
@@ -759,11 +798,13 @@ setPaymentForGame() {
           this.eventNote = this.reportData[0].note;
           this.eventDescription = this.reportData[0].description;
           this.ageReaadble = true;
+          this.showAddbutton = true;
         } else {
           this.coachDataAvailable = true;
           this.coachListArray =[];
           this.ageReaadble = false;
           this.genderReadble = false;
+          this.showAddbutton = false;
           this.messageService.add({key: 'custom', severity:'error', summary: 'You are not participating in this game'});
           this.noParticipateEvent = true;
           this.isDataAvailble = false;

@@ -29,22 +29,84 @@
             <label for="exampleInputEmail1">Select Game</label>
             <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
+          
+          <div class="form-group ui-g-4 pad-zero"  *ngIf="showAddbutton">
+             <button (click)="showDialog()" class="card card-has-bg click-col">ADD</button>
+          </div>
+
         </div>
+     
+
+<p-dialog class="align-dialog" header="Add Coach" [(visible)]="display" width="1000" height="400" [modal]="true" [responsive]="true"   
+[maximizable]="true" [baseZIndex]="1000">
+<form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
         <div class="col-md-12 pad-left-zero">
           <div class="form-group ui-g-4 pad-zero">
             <label for="exampleInputEmail1">Select Age</label>
-            <p-dropdown [disabled]="!ageReaadble"  [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+            <p-dropdown [disabled]="!ageReaadble"  formControlName="ageRange"    [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
           </div>
-        </div>
+        </div>  
         <div class="col-md-12 pad-left-zero">
           <div class="form-group ui-g-4 pad-zero">
             <label for="exampleInputEmail1">Select Gender</label>
-            <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+            <p-dropdown  [disabled]="!genderReadble"  formControlName="gender"    [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
           </div>
-        </div>
-     
-    
-        <div  *ngIf="!coachDataAvailable">
+        </div>      
+  <div class="form-group col-md-12 pad-bot-zero">
+    <label class="form-control-label">Coach Name</label>
+    <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
+      placeholder="Coach Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
+      <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
+        <span *ngIf="f.studentName.errors.required">Coach Name is required</span>
+      </span>
+
+  </div>
+  <div class="form-group col-md-12 pad-bot-zero">
+    <label class="form-control-label">Father's/Mother's Name</label> 
+    <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
+      placeholder="Coach Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
+      <div *ngIf="f.fatherName.touched && f.fatherName.errors" class="invalid-feedback">
+        <div *ngIf="f.fatherName.errors.required">Coach Father's/Mother's Name is required</div>
+      </div>
+  </div>
+
+  <input type="hidden" [(ngModel)]="studentId" formControlName="studentId" class="form-control"
+  id="inputWarning1">
+
+  <div class="form-group col-md-6 pad-bot-zero">
+    <div>
+      <label class="form-control-label">Upload Photo</label>
+      <img *ngIf="isEdit && isValidFile" height="50" width="50" src="{{setPhotoYear}}//{{studentPhoto}}">
+  
+      <img class="align-image" *ngIf="url != ''  && isValidFile" [src]="url" >
+      <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control">
+      <span class="file-hint">Please upload file below 100 KB</span>
+
+      <div *ngIf="!isValidFile">
+          <span class="error-class">Invalid File type Please select file JPEG,PNG format only</span>
+      </div>
+      <div *ngIf="isFileBig">
+          <span class="error-class">File size too large please select image below 100 KB</span>
+      </div> 
+      <input type="hidden" [(ngModel)]="editStudentPhoto" formControlName="editStudentPhoto" class="form-control"
+      id="inputWarning1">
+    </div>
+
+  
+  </div>
+
+  <div class="form-group col-md-12 pad-bot-zero">
+    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
+    <p-button *ngIf="isEdit"   label="{{submitButtonLabel}}"></p-button>
+    <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+ 
+  </div>
+</form>
+  
+</p-dialog>
+
+
+        <!-- <div  *ngIf="!coachDataAvailable">
             <form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
             
               <div class="form-group col-md-12 pad-bot-zero">
@@ -98,7 +160,7 @@
 
               </div>
             </form>
-        </div>
+        </div> -->
 
   </div>
 
