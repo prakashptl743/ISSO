@@ -361,7 +361,7 @@ onFileSelected(event) {
    const profile = event.target.files[0];
    const fileType = profile.type
  
-   if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
+   if ((ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) && !this.isMoreDot) {
      this.isValidFile = true;
    } else {
      this.isValidFile = false;
@@ -438,7 +438,7 @@ goBack() {
   // this.studentListArray.length = 0;
   // console.log(this.studentListArray);
   // this.isStudentListShow = false;
-
+  this.studentEnroolForm.reset();
   this.router.navigateByUrl('/staffadmin/event-dashboard');
 }
 
@@ -690,7 +690,7 @@ setSubGame(gameName,gameType,gameId,ageRange, gender,category) {
  // this.url = '';
   this.gameType = gameType;
   this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
-  console.log('Im min Date==>'+this.minDate)
+  console.log('HELLO Im min Date==>'+this.minDate)
   this.yearRange = this.issoUtilService.setYearRange(ageRange);
   this.makeEmptyForm()
   this.addClass = false;

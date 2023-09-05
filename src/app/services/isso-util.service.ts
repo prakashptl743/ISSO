@@ -202,16 +202,18 @@ setDateOfBirthValidation(ageRange) {
   var newdate = new Date(date);
     let setYear;
     if (ageRange === 11) {
-      setYear = newdate.getFullYear() - 11; 
+      setYear = newdate.getFullYear() - 10; 
       console.log('Im true'+setYear)
     } else if(ageRange === 14) {
-      setYear = newdate.getFullYear() - 14; 
+      console.log('im 14')
+      setYear = newdate.getFullYear() - 13; 
     }  else if(ageRange === 16) {
-      setYear = newdate.getFullYear() - 16; 
+      setYear = newdate.getFullYear() - 15; 
     } else if(ageRange === 17) {
-      setYear = newdate.getFullYear() - 17; 
+      setYear = newdate.getFullYear() - 16; 
     }  else if(ageRange === 19) {
-      setYear = newdate.getFullYear() - 20; 
+      console.log('Im 19')
+      setYear = newdate.getFullYear() - 18; 
     }
     var newdate = new Date(date);
     newdate.setDate(newdate.getDate() + 1);

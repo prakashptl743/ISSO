@@ -383,7 +383,7 @@
        
         <div class="form-group col-md-6">
           <label for="inputEmail4">Date of Birth</label>
-          <p-calendar [defaultDate]="minDate"  [showIcon]="true"  [(ngModel)]="dateOf_Birth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+          <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;"  [(ngModel)]="dateOf_Birth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
           <!-- <p-calendar [defaultDate]="minDate"  [showIcon]="true"  (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar> -->
 
            <!-- <p-calendar formControlName="dateOfBirth"  [(ngModel)]="dateOf_Birth"  dateFormat="dd/mm/yy" showAnim="slideDown" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar> -->
