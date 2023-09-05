@@ -89,9 +89,24 @@ i, span {
     display: none;
 } */
 
+.red-btn {
+    background: #EE1D23;
+    border: none;
+    padding: 10px 30px;
+    font-size: 11px;
+    color: #fff;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.al-red-bt{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
 #sidebar {
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 200px;
+    max-width: 200px;
     background: #333437;
     color: #fff;
     transition: all 0.3s;
@@ -354,9 +369,10 @@ body .ui-paginator {
 }
 
 body .ui-dialog .ui-dialog-titlebar {
-    border: #1362A5!important;
-    background-color: #1362A5!important;
-    color: #fff!important;
+    border: #fff!important;
+    background-color: #fff!important;
+    color: #080808!important;
+    font-size: 20px!important;
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
@@ -507,6 +523,7 @@ body .ui-button {
     border: 1px solid #EE1D23!important;
     font-size: 14px;
     transition: background-color 0.2s, box-shadow 0.2s;
+    border-radius: 50px!important;
 }
 th{
     font-weight: normal!important;
@@ -587,6 +604,12 @@ body .ui-dropdown {
     text-overflow: ellipsis;
 }
 
+.ui-button.second-btn {
+    background: #fff!important;
+    color: #707070!important;
+    border: 1px solid #707070!important;
+}
+
 .icons-wrap {
     float: right;
 }
@@ -620,6 +643,33 @@ body .ui-dropdown {
 
 .align-form-div {
     padding: 20px;
+}
+
+.grey-btn{
+    cursor: pointer;
+   
+    color: #646464;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+}
+.grey-btn.active{
+    background: #F58220;
+    color:#fff;
+}
+.orange-btn:hover{
+    text-decoration: underline;
+}
+.mr10{
+    margin-right: 10px;
+}
+
+.btn-nav{
+    border-bottom: 2px solid #CDCCCC;
+    margin-bottom: 15px!important;
+    padding-bottom: 15px!important;
+    padding-top: 15px;
+    box-shadow: 0px 2px 0px #fff;
 }
 
 .card {

@@ -6,75 +6,79 @@
    
   
     <div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
-            <label for="exampleInputEmail1">Select Year</label>
+        <div class="col-md-12 pad-left-zero btn-nav" style="padding: 0;">
+          <div class="ui-g-12 pad-zero">
+            <!-- <label for="exampleInputEmail1">Select Year</label> -->
 
             <div>
-              <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
-              <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+              <span  class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
+              <span  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
           </div> 
 
             <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
           </div>
         </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4 pad-left-zero">
+          <div class="form-group ui-g-12 pad-zero">
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
         </div>
-        <div class="col-md-12 pad-left-zero">
+        <div class="col-md-8 pad-left-zero">
           <div class="form-group ui-g-4 pad-zero">
             <label for="exampleInputEmail1">Select Game</label>
             <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
           
           <div class="form-group ui-g-4 pad-zero"  *ngIf="showAddbutton">
-             <button (click)="showDialog()" class="card card-has-bg click-col">ADD</button>
+             <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
           </div>
 
         </div>
      
 
-<p-dialog class="align-dialog" header="Add Coach" [(visible)]="display" width="1000" height="400" [modal]="true" [responsive]="true"   
+<p-dialog class="align-dialog" header="Add Coach" [(visible)]="display" width="775" height="400" [modal]="true" [responsive]="true"   
 [maximizable]="true" [baseZIndex]="1000">
 <form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-6 pad-left-zero">
+          <div class="form-group ui-g-12 pad-zero">
             <label for="exampleInputEmail1">Select Age</label>
             <p-dropdown [disabled]="!ageReaadble"  formControlName="ageRange"    [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
           </div>
         </div>  
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-6 pad-left-zero">
+          <div class="form-group ui-g-12 pad-zero">
             <label for="exampleInputEmail1">Select Gender</label>
             <p-dropdown  [disabled]="!genderReadble"  formControlName="gender"    [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
           </div>
-        </div>      
-  <div class="form-group col-md-12 pad-bot-zero">
-    <label class="form-control-label">Coach Name</label>
-    <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
-      placeholder="Coach Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
-      <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
-        <span *ngIf="f.studentName.errors.required">Coach Name is required</span>
-      </span>
+        </div>  
+        <div class="col-md-6 pad-left-zero">
+            <div class="form-group ui-g-12 pad-zero">
+              <label class="form-control-label">Coach Name</label>
+              <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
+                placeholder="Coach Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
+                <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
+                  <span *ngIf="f.studentName.errors.required">Coach Name is required</span>
+                </span>
 
-  </div>
-  <div class="form-group col-md-12 pad-bot-zero">
-    <label class="form-control-label">Father's/Mother's Name</label> 
-    <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
-      placeholder="Coach Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
-      <div *ngIf="f.fatherName.touched && f.fatherName.errors" class="invalid-feedback">
-        <div *ngIf="f.fatherName.errors.required">Coach Father's/Mother's Name is required</div>
-      </div>
-  </div>
+            </div>
+          </div>
+          <div class="col-md-6 pad-left-zero">
+            <div class="form-group ui-g-12 pad-zero">
+              <label class="form-control-label">Father's/Mother's Name</label> 
+              <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
+                placeholder="Coach Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
+                <div *ngIf="f.fatherName.touched && f.fatherName.errors" class="invalid-feedback">
+                  <div *ngIf="f.fatherName.errors.required">Coach Father's/Mother's Name is required</div>
+                </div>
+            </div>
+          </div>
 
   <input type="hidden" [(ngModel)]="studentId" formControlName="studentId" class="form-control"
   id="inputWarning1">
 
-  <div class="form-group col-md-6 pad-bot-zero">
-    <div>
+  <div class="col-md-6 pad-left-zero">
+    <div class="form-group ui-g-12 pad-zero">
       <label class="form-control-label">Upload Photo</label>
       <img *ngIf="isEdit && isValidFile" height="50" width="50" src="{{setPhotoYear}}//{{studentPhoto}}">
   
@@ -98,7 +102,7 @@
   <div class="form-group col-md-12 pad-bot-zero">
     <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
     <p-button *ngIf="isEdit"   label="{{submitButtonLabel}}"></p-button>
-    <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+    <button style="margin-left: 20px;" class="second-btn" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
  
   </div>
 </form>

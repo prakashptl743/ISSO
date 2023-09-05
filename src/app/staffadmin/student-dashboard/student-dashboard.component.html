@@ -1,14 +1,14 @@
 
 <div class="event-container row" style="padding:0 10px 10px 10px;">
  
-     <div class="ui-g-12 ui-md-2">
+     <div class="ui-g-12 ui-md-12 btn-nav">
          <div>
-             <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
-             <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+             <span  class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
+             <span  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
          </div> 
         <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
      </div>
-     <div class="ui-g-12 ui-md-5">
+     <div class="ui-g-12 ui-md-12">
         <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
      </div>
  </div>

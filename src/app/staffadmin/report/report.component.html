@@ -10,11 +10,11 @@
 </div> 
 <div *ngIf="isReport">
     <div class="ui-g-12 event-container align-container">
-        <div class="ui-g-4">
+        <div class="ui-g-12 btn-nav">
 
           <div>
-            <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
-            <span  style="padding-right:20px; cursor:pointer;"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+            <span  class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[0].year)">{{yearOptions[0].year}}</span>
+            <span  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
          </div> 
 
           <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
