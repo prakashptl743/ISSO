@@ -287,8 +287,9 @@ onFileSelected(event) {
   // this.blobName = this.fullFilename
    const profile = event.target.files[0];
    const fileType = profile.type
- 
-   if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
+   if ((ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) && !this.isMoreDot) {
+
+   // if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
      this.isValidFile = true;
    } else {
      this.isValidFile = false;

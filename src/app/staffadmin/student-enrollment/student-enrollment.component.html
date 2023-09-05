@@ -262,8 +262,8 @@
  
 
               <!-- <p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"></p-calendar> -->
-              <p-calendar [defaultDate]="minDate"  [showIcon]="true"  (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
-
+              <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;" (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+      
               <div *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors" class="invalid-feedback">
                 <div *ngIf="f.dateOfBirth.errors.required">Student Date of birth is required</div>
               </div>
