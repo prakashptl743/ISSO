@@ -657,6 +657,9 @@ body .ui-dropdown {
     background: #F58220;
     color:#fff;
 }
+.grey-color-text {
+    color:#F58220;
+}
 .orange-btn:hover{
     text-decoration: underline;
 }

@@ -8,8 +8,12 @@
     <div>
         <div class="col-md-12 pad-left-zero">
           <div class="form-group ui-g-6 pad-zero">
-            <label for="exampleInputEmail1">Select Year</label>
-            <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onLoadSchoolData($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          <div>
+               <span class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+          </div> 
+
+            <!-- <label for="exampleInputEmail1">Select Year</label> -->
+            <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onLoadSchoolData($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
           </div>
         </div>
         <div class="col-md-12 pad-left-zero">
@@ -17,7 +21,11 @@
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
+          <div class="form-group ui-g-4 pad-zero"  *ngIf="isShowButton" >
+            <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
+         </div>
         </div>
+      
         <!-- <div class="col-md-12 pad-left-zero">
           <div class="form-group ui-g-4 pad-zero">
             <label for="exampleInputEmail1">Select Game</label>
@@ -39,7 +47,7 @@
      
     
         <div  *ngIf="!coachDataAvailable">
-            <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
+            <!-- <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
             
               <div class="form-group col-md-12 pad-bot-zero">
                 <label class="form-control-label">Student Name</label>
@@ -66,11 +74,41 @@
                 <button  *ngIf="coachListArray.length > 0" style="margin-left: 20px;" type="button" pButton (click)="addMoreData()" label="Add More"></button>
 
               </div>
-            </form>
+            </form> -->
         </div>
 
   </div>
-
+  <p-dialog class="align-dialog" header="Add Volunteer" [(visible)]="display" width="775" height="400" [modal]="true" [responsive]="true"   
+  [maximizable]="true" [baseZIndex]="1000">
+  <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
+            
+    <div class="form-group col-md-12 pad-bot-zero">
+      <label class="form-control-label">Student Name</label>
+      <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
+        placeholder="Student Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
+        <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
+          <span *ngIf="f.studentName.errors.required">Student Name is required</span>
+        </span>
+    </div>
+    <div class="form-group col-md-12 pad-bot-zero">
+      <label class="form-control-label">Student Aadhar Number</label>
+      <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="aadharNumber" formControlName="aadharNumber"
+        placeholder="Aadhar Number" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.aadharNumber.touched && f.aadharNumber.errors }">
+        <span *ngIf="f.aadharNumber.touched && f.aadharNumber.errors" class="invalid-feedback">
+          <span *ngIf="f.aadharNumber.errors.required">Student Aadhar number is required</span>
+        </span>
+    </div>
+   
+  
+    <div class="form-group col-md-12 pad-bot-zero">
+      <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
+      <p-button *ngIf="isEdit"   label="{{submitButtonLabel}}"></p-button>
+      <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+ 
+    </div>
+  </form>
+    
+  </p-dialog>
 
   <div class="container-fluid table-pad align-table" *ngIf="coachListArray.length > 0">
 
