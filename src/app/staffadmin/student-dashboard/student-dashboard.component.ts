@@ -69,6 +69,7 @@ export class StudentDashboardComponent implements OnInit {
   today: string;
   isEditStudent: boolean;
   setPhotoYear: string;
+  isFirstYear: boolean;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -108,7 +109,12 @@ editSchool(event: Event, car: Student) {
 onDialogHide() {
   this.selectedSchool = null;
 }
-onyeareChange(val) {
+onyeareChange(val,yearText) {
+  if(yearText == 'first') {
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
   this.yearvalue = val;
   this.setPhotoPath();
   this.isEditStudent = false;

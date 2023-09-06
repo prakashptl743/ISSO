@@ -95,10 +95,26 @@ setAgeMap(eventValue) {
 setYearToStaffadmin() {
   const yearArray =[];
   let currYear = new Date().getFullYear();
+  
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth(); 
+  
+  
+  let currYearString;
+  let nextYearString;
   let prevYear = currYear - 1;
   let nextYear = currYear + 1;
-  let currYearString = prevYear+'-'+currYear;
-  let nextYearString = currYear+'-'+nextYear;
+  if (month >= 5) { 
+    currYearString = prevYear+'-'+currYear;
+    nextYearString = currYear+'-'+nextYear;
+  } else {
+    currYearString = prevYear+'-'+currYear;
+    nextYearString = currYear+'-'+nextYear;
+  }
+ 
+  
+
   this.yearArray = [{year:currYearString}, {year:nextYearString}];
   return  this.yearArray ;
   // this.staffadminYearOptions = [];

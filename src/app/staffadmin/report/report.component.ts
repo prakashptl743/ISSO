@@ -145,6 +145,7 @@ eventDescription: any;
   isShowLoader: boolean;
   isCertificateAvailable: any;
   finalGameList = [];
+  isFirstYear: boolean;
 ;
 constructor( 
   private issoUtilService: IssoUtilService,
@@ -166,6 +167,7 @@ ngOnInit() {
   // this.getBase64ImageFromURL1(imageUrl).subscribe(base64data => {    
   //   this.base64Image = 'data:image/jpg;base64,' + base64data;
   // });
+ 
   this.isReport = true;
   this.setPhotoPath();
 }
@@ -287,8 +289,13 @@ downloadInvoice() {
   console.log('im donwnload downloadInvoice');
   this.eventValue = '';
 }
-
-onyeareChange(val) {
+onyeareChange(val, yearText) {
+    if(yearText == 'first') {  
+      this.isFirstYear = true;
+    } else {
+      this.isFirstYear = false;
+    }
+ 
   this.yearvalue = val;
   this.finalGameList = [];
   if(this.yearvalue !== '') {

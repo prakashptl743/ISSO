@@ -134,6 +134,7 @@ schoolType: string;
   selectedGender: string;
   display: boolean;
   showAddbutton: boolean;
+  isFirstYear: boolean;
 constructor( 
   @Inject(PLATFORM_ID) private platformId: Object,
   private issoUtilService: IssoUtilService,
@@ -162,6 +163,7 @@ ngOnInit() {
   this.schoolId = localStorage.getItem('schoolId');
   this.initialForm();
   this.fileUpladForm();
+  
   //this.setPhotoPath();
 }
  
@@ -491,10 +493,9 @@ loadCoachData() {
 }
 
 showDialog() {
- 
   this.display = true;
- 
-  //this.sendTextValue();
+  this.initialForm();
+  this.makeEmptyForm();
 }
 
 editStudent(i: number): void {
@@ -541,7 +542,13 @@ changeFileName(filePath, fileName) {
   control2.setValidators(null);
   control2.updateValueAndValidity();
 }
-onyeareChange(val) {
+onyeareChange(val, yearText) {
+  if(yearText == 'first') {
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
+  this.coachListArray = [];
   this.isEdit = false;
   this.yearvalue = val;
   this.genderReadble = false;
