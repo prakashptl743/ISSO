@@ -11,11 +11,11 @@
   <h2 class="animate__animated animate__bounce">Sorry there is no active event now</h2>
 
 </div>
-<p-dialog class="align-dialog" header="Terms and Conditions" [(visible)]="display" width="1000" height="400" [modal]="true" [responsive]="true"   
+<p-dialog class="align-dialog" header="Terms and Conditions" [(visible)]="display" width="600"  [modal]="true" [responsive]="true"   
 [maximizable]="true" [baseZIndex]="1000">
 <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-        <div class="dialog-center col-md-10 mx-auto" class="align-form">
-              <div class="form-group row">
+        <div class="" >
+              <div class="">
                   <div class="col-sm-6" class="align-text">
                     <span>{{eventNote}}</span>
                         <span class="align-checkbox ui-float-label">
@@ -27,8 +27,8 @@
     </div>
 </form>
 <p-footer>
-	<p-button  [disabled]="!eventForm.valid"  label="I Agree" (onClick)="onSubmit()"></p-button>
-	<p-button (click)="display=false"  label="No"></p-button>
+	<p-button  [disabled]="!eventForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+	<button (click)="display=false" class="btn secondory-btn" >Cancel</button>
 
     <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->
 </p-footer>

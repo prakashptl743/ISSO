@@ -292,8 +292,6 @@ a.article, a.article:hover {
 }
 
 .content-wrapper {
-    background: #fff;
-    box-shadow: 0px 0px 8px #0000004D;
     width: 100%;
     float: left;
 }
@@ -360,12 +358,14 @@ body .ui-button.ui-button-text-icon-left .ui-button-text {
 
 body .ui-dataview .ui-dataview-header {
     background-color: #F6F8F9!important;
+    padding: 0!important;
+    border: none!important;
 }
 
 body .ui-paginator {
-    background-color: #fff!important;
-    border: 1px solid #c8c8c8;
-    padding: 0;
+    background-color: #F6F8F9!important;
+    padding: 0!important;
+    border: none!important;
 }
 
 body .ui-dialog .ui-dialog-titlebar {
@@ -373,6 +373,10 @@ body .ui-dialog .ui-dialog-titlebar {
     background-color: #fff!important;
     color: #080808!important;
     font-size: 20px!important;
+    padding: 1.5rem!important;
+}
+body .ui-dialog .ui-dialog-footer{
+    padding: 1em!important;
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
@@ -455,6 +459,7 @@ body .ui-dropdown {
 body .ui-dataview .ui-dataview-content {
     background-color: #F6F8F9!important;
     padding: 0!important;
+    border: none!important;
 }
 
 .item-box {
@@ -464,6 +469,10 @@ body .ui-dataview .ui-dataview-content {
     padding: 0 15px 0;
     float: left;
     width: 100%;
+}
+#content1 .item-box {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .hero-img{
     display: flex;
@@ -484,14 +493,14 @@ body .ui-dataview .ui-dataview-content {
     justify-content: center;
 }
 .stud-name{
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     float: left;
     margin: 0 10px 0 0;
 }
 .present{
     float: left;
-    font-size: 9px;
+    font-size: 15px;
     background: #74BB56;
     padding: 3px;
     border-radius: 5px;
@@ -501,7 +510,7 @@ body .ui-dataview .ui-dataview-content {
 }
 .absent{
     float: left;
-    font-size: 9px;
+    font-size: 15px;
     background: #74BB56;
     padding: 3px;
     border-radius: 5px;
@@ -577,7 +586,7 @@ body .ui-dropdown {
     float: left;
     width: 100%;
     margin-bottom: 10px;
-    font-size: 11px;
+    font-size: 15px;
 }
 
 .item-description label {
@@ -608,6 +617,13 @@ body .ui-dropdown {
     background: #fff!important;
     color: #707070!important;
     border: 1px solid #707070!important;
+}
+.secondory-btn {
+    background: #fff!important;
+    color: #707070!important;
+    border: 1px solid #707070!important;
+    border-radius: 50px!important;
+    padding: 5px 15px!important;
 }
 
 .icons-wrap {

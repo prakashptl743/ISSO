@@ -11,8 +11,8 @@
     background-color: red;color: white;
 }
 .search-text { 
-    width: 40%;
-    margin: 0 30px 12px 91px;
+    width: 35%;
+    margin: 0 30px 12px 0;
     padding: 7px;
 } 
 :host ::ng-deep button {
