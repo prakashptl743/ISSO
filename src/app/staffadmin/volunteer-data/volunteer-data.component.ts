@@ -56,7 +56,7 @@ base64Image:any;
 
  
 
-yearOptions: SelectItem[];
+yearOptions: object;
 feeOptions: SelectItem[];
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
@@ -147,6 +147,8 @@ schoolType: string;
   selectedAge: string;
   selectedGender: string;
   aadharNumber: string;
+  display: boolean;
+  isShowButton: boolean;
 constructor( 
   @Inject(PLATFORM_ID) private platformId: Object,
   private issoUtilService: IssoUtilService,
@@ -170,7 +172,7 @@ ngOnInit() {
   this.ageOptions = this.issoUtilService.setAge();
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
   this.initialForm();
@@ -243,6 +245,7 @@ onSubmit() {
             this.messageService.add({key: 'custom', severity:'success', summary: 'Volunteer Data Added Successfully'});
             this.studentEnroolForm.reset();
             this.loadCoachData();
+            this.display = false;
           }
       },
       error => this.error = error
@@ -257,6 +260,7 @@ onSubmit() {
             this.messageService.add({key: 'custom', severity:'success',summary: 'Volunteer Data updated Successfully'});
             this.studentEnroolForm.reset();
             this.loadCoachData();
+            this.display = false;
           }
       },
       error => this.error = error
@@ -327,6 +331,7 @@ loadCoachData() {
          // this.submitButtonLabel= 'Update';
         } else {
           // this.submitButtonLabel = 'Submit';
+          this.messageService.add({key: 'custom',severity:'error', summary: 'Data not found for this event!'});
           this.studentEnroolForm.reset();
           this.coachDataAvailable = false;
         }
@@ -340,6 +345,7 @@ loadCoachData() {
 }
 editStudent(i: number): void {
   this.isEdit = true;
+  this.display = true;
   this.submitButtonLabel = "Update";
  
   this.studentEnroolForm.setValue({
@@ -412,12 +418,16 @@ onLoadSchoolData(event) {
     });
   } 
 }
+showDialog() {
+  this.display = true;
+  this.initialForm();
+  this.makeEmptyForm();
+}
 
 
-
-onyeareChange(event) {
+onyeareChange(val) {
   this.isEdit = false;
-  this.yearvalue = event.value;
+  this.yearvalue = val;
   this.genderReadble = false;
   this.selectedEvent ='';
   this.selectedGame ='';
@@ -490,7 +500,11 @@ onEventChange(event) {
   this.eventValue = this.eventArray[0];
   this.eventName =  this.eventArray[1];
   this.loadCoachData();
-  // if(this.eventValue !== '') {
+   if(this.eventValue !== '') {
+    this.isShowButton = true;
+   } else {
+    this.isShowButton = false;
+   }
   // this.meritService.loadGameForStaff(this.eventValue).subscribe(
   //   response => {
   //     if(response!=="") {
