@@ -342,6 +342,7 @@ onEventChange(event,type) {
       this.gameReadble = false;
       this.selectedGame = '';
       this.isDataAvailble = false;
+      
       this.messageService.add({key: 'custom',severity:'error', summary: 'Certificate not Uploaded!'});
     }
   }
@@ -350,10 +351,12 @@ onEventChange(event,type) {
       this.getGameForReport(type);
       this.setAgeMap(this.eventValue);
       this.genderOptions =this.issoUtilService.setGender();
-    } else {
+    } else { 
       this.meritGame = false;
       this.isMeritDataAvailble = false;
        this.selectedMeritGame = '';
+       this.gameReadble = false;
+       this.selectedGame = '';
       this.messageService.add({key: 'custom',severity:'error', summary: 'Certificate not Uploaded!'});
     }
   }
