@@ -6,12 +6,47 @@
  <div class="event-container">
     <div class="row">
       <div class="flexBox align-menu-row">
+
+        <div class="col-md-12 pad-left-zero btn-nav">
+          <span [ngClass]="isFirstYear ? 'active' : '' "  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span>
+          <span [ngClass]="!isFirstYear ? 'active' : ''"  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
+        </div> 
+        <div class="col-md-12 pad-left-zero btn-nav">
+         
+          <span [ngClass]="isPartCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('certificate')"> PARTICIPATION CERTIFICATE</span>
+          <span [ngClass]="isMeritCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('merit')"> MERIT CERTIFICATE</span>
+      
+          <span [ngClass]="isInvoiceCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('invoice')">INVOICE</span>
+          <span [ngClass]="isReceiptCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('receipt')"> RECEIPT</span>
+        </div> 
+
+        <div class="ui-g-12 align-drop-down">
+          <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div>   
+        <div class="ui-g-12 align-container align-drop-down">
+          <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
+        </div> 
+          <!-- 
         <div  [ngClass]="isReport ? 'menu-background ' : 'menu-inactive' "  class="align-certificate-menu" (click) ="downloadReport()">DOWNLOAD CERTIFICATE</div>
         <div  [ngClass]="!isReport ? 'menu-background ' : 'menu-inactive' "   class="align-invoice-menu" (click) ="downloadInvoice()">INVOICE/RECEIPT</div>
+       -->
       </div>
   </div> 
  
-<div *ngIf="isReport">
+  <div class="align-certificate-button" *ngIf="certType == 'certificate'">
+    <a class="btn btn-primary"  [class.disabled]="!isDataAvailble" href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a>
+  </div>
+
+  <div class="align-certificate-button" *ngIf="certType == 'invoice'">
+    <a class="btn btn-primary" [class.disabled]="!isInvoiceDataAvailble"  href="https://issoindia.com/isso-php/paymentInvoice/downloadInvoicePdf/{{yearvalue}}/{{eventValue}}/{{schoolId}}">Download Invoice</a>
+  </div>
+
+  <div class="align-certificate-button" *ngIf="certType == 'receipt'">
+    <a class="btn btn-primary" [class.disabled]="!isReceiptDataAvailble"  href="https://issoindia.com/isso-php/paymentInvoice/downloadReceiptPdf/{{yearvalue}}/{{eventValue}}/{{schoolId}}">Download Receipt</a>
+  </div>
+   
+
+<!-- <div *ngIf="isReport">
   <div class="container">
     <div class="row row-border">
       <div class="col col-border">
@@ -53,7 +88,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>  -->
     
     <!-- <div  *ngIf="!isReport"> 
      <div class="ui-g-12" style="padding-left: 12px;">

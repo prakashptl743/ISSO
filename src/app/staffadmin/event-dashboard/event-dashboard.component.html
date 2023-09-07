@@ -13,7 +13,7 @@
 </div>
 <p-dialog class="align-dialog" header="Terms and Conditions" [(visible)]="display" width="600"  [modal]="true" [responsive]="true"   
 [maximizable]="true" [baseZIndex]="1000">
-<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="eventForm">
         <div class="" >
               <div class="">
                   <div class="col-sm-6" class="align-text">
@@ -27,7 +27,7 @@
     </div>
 </form>
 <p-footer>
-	<button [disabled]="!eventForm.valid" class="btn red-btn"  (onClick)="onSubmit()">SUBMIT</button>
+	<button [disabled]="!eventForm.valid" class="btn red-btn"  (click)="onSubmit()">SUBMIT</button>
 	<button (click)="display=false" class="btn secondory-btn" >Cancel</button>
 
     <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->
