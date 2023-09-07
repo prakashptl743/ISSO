@@ -104,9 +104,9 @@
 .align-photo {
     text-align: center;
 }
-.align-back {
+/* .align-back {
     margin-top: 40px;
-}
+} */
 .align-game-header{
     background: #fff !important;
     font-size: 18px;
@@ -241,9 +241,15 @@ td.action a {
    color: white !important; 
 }
 
-.row{
+/* .row{
     margin-top:40px;
     padding: 0 10px;
+} */
+.game-name{
+    position: absolute;
+    top: -50px;
+    right: 0;
+    left: 0;
 }
 .panel-primary {
     border-color: white !important;

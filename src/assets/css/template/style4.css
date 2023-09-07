@@ -364,6 +364,13 @@ body .ui-dataview .ui-dataview-header {
     border: none!important;
 }
 
+.pi-window-maximize{
+    display: none!important;
+}
+.ui-widget-header .ui-dialog-titlebar-close{
+    display: none!important;
+}
+
 body .ui-paginator {
     background-color: #F6F8F9!important;
     padding: 0!important;
@@ -374,8 +381,8 @@ body .ui-dialog .ui-dialog-titlebar {
     border: #fff!important;
     background-color: #fff!important;
     color: #080808!important;
-    font-size: 20px!important;
-    padding: 1.5rem!important;
+    font-size: 16px!important;
+    padding: 1.2rem!important;
 }
 body .ui-dialog .ui-dialog-footer{
     padding: 1em!important;
@@ -414,6 +421,37 @@ body .ui-inputtext {
 .floatLeft {
     float: left;
 }
+
+.capsule-btn{
+    background-color: #333437!important;
+    border: 1px solid #333437!important;
+    border-radius: 50px!important;
+    border-top-right-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+    color: #fff!important;
+    margin-right: 0!important;
+    float: left;
+    height: 35px;
+}
+.capsule-right{
+    background-color: #EE1D23!important;
+    border: 1px solid #EE1D23!important;
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+    color: #fff!important;
+    float: left;
+    height: 35px;
+    border-radius: 50px;
+}
+.capsule-right .fa-arrow-right{
+    font-size: 27px!important;
+    margin-top: 2px;
+    padding: 5px;
+}
+.caps-b{
+    margin-bottom: 20px;
+}
+
 
 /* body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link{
     padding: 0!important;

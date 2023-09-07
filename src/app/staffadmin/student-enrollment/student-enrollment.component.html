@@ -19,7 +19,7 @@
                       <div class="event-namebox">
 
                         <span class="back align-back">
-                          <a *ngIf="showGoBack" (click)="goBack()"> <img src="assets/images/web/back.svg" /> Back </a>
+                          <a *ngIf="showGoBack" (click)="goBack()"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a>
                           <a *ngIf="!showGoBack" (click)="goBackToGameList()"> <img src="assets/images/web/back.svg" />
                             Back </a>
                         </span>
@@ -42,12 +42,12 @@
                            
                           </div>
                           <div class="row" *ngFor="let game of gameData">
-                            <div class="col-md-6">
+                            <div class="col-md-6 border-right-dark">
                               <div class="category-box">
                                 <div *ngIf="game.gameType !== 'Both'">
-                                  <img
+                                  <!-- <img
                                     *ngIf="game.eleven_boys > '0' || game.fourteen_boys > '0' || game.sixteen_boys > '0' || game.seventeen_boys > '0' || game.ninteen_boys > '0' "
-                                    src="assets/images/web/boys.svg" />
+                                    src="assets/images/web/boys.svg" /> -->
                                   <h2
                                     *ngIf="game.eleven_boys > '0' || game.fourteen_boys > '0' || game.sixteen_boys > '0' || game.seventeen_boys > '0' || game.ninteen_boys > '0' ">
                                     Boys Tournaments</h2>
@@ -56,25 +56,40 @@
                                   <!-- <p-messages [(value)]="messages1" [enableService]="false" [closable]="false"></p-messages> -->
 
                                   <!-- <p-messages [(value)]="messages1" [enableService]="false"></p-messages> -->
-
-                                  <button *ngIf="game.eleven_boys > '0'  && game.gameType != 'Both' && gameData[0].elevenAgeMap == 11"
-                                    (click)="testfun(game,game.eleven_boys,game.min_eleven_boys,'boy',11)" type="button"
-                                    class="btn btn-primary isso-btn">Under 11</button>
-                                  <button *ngIf="game.fourteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].fourteenAgeMap == 14"
-                                    (click)="testfun(game,game.fourteen_boys,game.min_fourteen_boys,'boy',14)" type="button"
-                                    class="btn btn-primary isso-btn">Under 14</button>
-
-                                    <button *ngIf="game.sixteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].sixteenAgeMap == 16"
-                                      (click)="testfun(game,game.sixteen_boys,game.min_sixteen_boys,'boy',16)" type="button"
-                                      class="btn btn-primary isso-btn">Under 16</button>
-
-
-                                  <button *ngIf="game.seventeen_boys > '0'  && game.gameType != 'Both'  && gameData[0].seventeenAgeMap == 17"
-                                    (click)="testfun(game,game.seventeen_boys,game.min_seventeen_boys,'boy',17)" type="button"
-                                    class="btn btn-primary isso-btn">Under 17</button>
-                                  <button *ngIf="game.ninteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].ninteenAgeMap == 19"
-                                    (click)="testfun(game,game.ninteen_boys,game.min_ninteen_boys,'boy',19)" type="button"
-                                    class="btn btn-primary isso-btn">Under 19</button>
+                                  <div class="col-md-4 caps-b" *ngIf="game.eleven_boys > '0'  && game.gameType != 'Both' && gameData[0].elevenAgeMap == 11"
+                                    (click)="testfun(game,game.eleven_boys,game.min_eleven_boys,'boy',11)">
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 11</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
+                                 
+                                    <div class="col-md-4 caps-b" *ngIf="game.fourteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].fourteenAgeMap == 14"
+                                      (click)="testfun(game,game.fourteen_boys,game.min_fourteen_boys,'boy',14)">
+                                      <button  type="button"
+                                        class="btn capsule-btn">Under 14</button>
+                                        <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>
+                                  
+                                    <div class="col-md-4 caps-b" *ngIf="game.sixteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].sixteenAgeMap == 16"
+                                      (click)="testfun(game,game.sixteen_boys,game.min_sixteen_boys,'boy',16)">
+                                      <button  type="button"
+                                        class="btn capsule-btn">Under 16</button>
+                                        <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>
+                                    
+                                      <div class="col-md-4 caps-b" *ngIf="game.seventeen_boys > '0'  && game.gameType != 'Both'  && gameData[0].seventeenAgeMap == 17"
+                                        (click)="testfun(game,game.seventeen_boys,game.min_seventeen_boys,'boy',17)">
+                                        <button  type="button"
+                                          class="btn capsule-btn">Under 17</button>
+                                          <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                      </div>
+                                 
+                                    <div class="col-md-4 caps-b" *ngIf="game.ninteen_boys > '0'  && game.gameType != 'Both'  && gameData[0].ninteenAgeMap == 19" (click)="testfun(game,game.ninteen_boys,game.min_ninteen_boys,'boy',19)">
+                                      <button 
+                                       type="button"
+                                      class="btn capsule-btn">Under 19</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>
                                 </div>
                               </div>
                             </div>
@@ -82,85 +97,119 @@
                             <div class="col-md-6">
                               <div class="category-box">
                                 <div *ngIf="game.gameType !== 'Both'">
-                                  <img
+                                  <!-- <img
                                     *ngIf="game.eleven_girls > '0' || game.fourteen_girls > '0' || game.sixteen_girls > '0' || game.seventeen_girls > '0' || game.ninteen_girls > '0'"
-                                    src="assets/images/web/boys.svg" />
+                                    src="assets/images/web/boys.svg" /> -->
                                   <h2
                                     *ngIf="game.eleven_girls > '0' || game.fourteen_girls > '0' || game.sixteen_girls > '0'  || game.seventeen_girls > '0' || game.ninteen_girls > '0'">
                                     Girls Tournaments</h2>
                                 </div>
                                 <div class="categories">
-                                  <button *ngIf="game.eleven_girls > '0' && game.gameType != 'Both'  && gameData[0].elevenGirlsMap == 11"
-                                    (click)="testfun(game,game.eleven_girls,game.min_eleven_girls,'girl',11)" type="button"
-                                    class="btn isso-btn-pink">Under 11</button>
-                                  <button *ngIf="game.fourteen_girls > '0' && game.gameType != 'Both'  && gameData[0].fourteenGirlsMap == 14"
-                                    (click)="testfun(game,game.fourteen_girls,game.min_fourteen_girls,'girl',14)" type="button"
-                                    class="btn isso-btn-pink">Under 14</button>
+                                  <div class="col-md-4 caps-b" *ngIf="game.eleven_girls > '0' && game.gameType != 'Both'  && gameData[0].elevenGirlsMap == 11"
+                                    (click)="testfun(game,game.eleven_girls,game.min_eleven_girls,'girl',11)">
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 11</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
 
-                                    <button *ngIf="game.sixteen_girls > '0' && game.gameType != 'Both'  && gameData[0].sixteenGilrsMap == 16"
-                                      (click)="testfun(game,game.sixteen_girls,game.min_sixteen_girls,'girl',16)" type="button"
-                                      class="btn isso-btn-pink">Under 16</button>
+                                  <div class="col-md-4 caps-b" *ngIf="game.fourteen_girls > '0' && game.gameType != 'Both'  && gameData[0].fourteenGirlsMap == 14"
+                                    (click)="testfun(game,game.fourteen_girls,game.min_fourteen_girls,'girl',14)" >
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 14</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
+                                  
+                                  <div class="col-md-4 caps-b" *ngIf="game.sixteen_girls > '0' && game.gameType != 'Both'  && gameData[0].sixteenGilrsMap == 16"
+                                    (click)="testfun(game,game.sixteen_girls,game.min_sixteen_girls,'girl',16)">
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 16</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
 
-                                  <button *ngIf="game.seventeen_girls > '0' && game.gameType != 'Both'  && gameData[0].seventeenGirlsMap == 17"
-                                    (click)="testfun(game,game.seventeen_girls,game.min_seventeen_girls,'girl',17)" type="button"
-                                    class="btn isso-btn-pink">Under 17</button>
-                                  <button *ngIf="game.ninteen_girls > '0' && game.gameType != 'Both' && gameData[0].ninteenGilrsMap == 19"
-                                    (click)="testfun(game,game.ninteen_girls,game.min_ninteen_girls,'girl',19)" type="button"
-                                    class="btn isso-btn-pink">Under 19</button>
+                                  <div class="col-md-4 caps-b" *ngIf="game.seventeen_girls > '0' && game.gameType != 'Both'  && gameData[0].seventeenGirlsMap == 17"
+                                    (click)="testfun(game,game.seventeen_girls,game.min_seventeen_girls,'girl',17)">
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 17</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
+                                  <div class="col-md-4 caps-b" *ngIf="game.ninteen_girls > '0' && game.gameType != 'Both' && gameData[0].ninteenGilrsMap == 19"
+                                    (click)="testfun(game,game.ninteen_girls,game.min_ninteen_girls,'girl',19)">
+                                    <button  type="button"
+                                      class="btn capsule-btn">Under 19</button>
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                  </div>
+                                  
+                                
                                 </div>
                               </div>
                             </div>
                             <div *ngIf="game.gameType === 'Both'">
-                              <div class="col-md-6">
+                              <div class="col-md-6 border-right-dark">
                                 <div class="category-box">
-                                  <img src="assets/images/web/boys.svg" />
+                                  <!-- <img src="assets/images/web/boys.svg" /> -->
                                   <h2>Boys Tournaments</h2>
-                                  <div class="categories"> 
-                                      <button *ngIf="gameData[0].elevenAgeMap == 11 && gameData[0].elevenAgeMap == 11"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'boy','eleven_boys')"
-                                      type="button" class="btn btn-primary isso-btn">Under 11</button> 
-                                   
-                                    <button *ngIf="gameData[0].fourteenAgeMap == 14 && gameData[0].fourteenAgeMap == 14"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 14,'boy','fourteen_boys')"
-                                      type="button" class="btn btn-primary isso-btn">Under 14</button>
+                                  <div class="categories">
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].elevenAgeMap == 11 && gameData[0].elevenAgeMap == 11"
+                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'boy','eleven_boys')">
+                                      <button type="button" class="btn capsule-btn">Under 11</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div> 
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].fourteenAgeMap == 14 && gameData[0].fourteenAgeMap == 14"
+                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 14,'boy','fourteen_boys')">
+                                      <button type="button" class="btn capsule-btn">Under 14</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].sixteenAgeMap == 16 && gameData[0].sixteenAgeMap == 16"
+                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 16,'boy','sixteen_boys')">
+                                      <button type="button" class="btn capsule-btn">Under 16</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].seventeenAgeMap == 17  && gameData[0].seventeenAgeMap == 17"
+                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 17,'boy','seventeen_boys')">
+                                      <button type="button" class="btn capsule-btn">Under 17</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].ninteenAgeMap == 19 && gameData[0].ninteenAgeMap == 19"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 19,'boy','ninteen_boys')">
+                                      <button type="button" class="btn capsule-btn">Under 19</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
 
-                                      <button *ngIf="gameData[0].sixteenAgeMap == 16 && gameData[0].sixteenAgeMap == 16"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 16,'boy','sixteen_boys')"
-                                      type="button" class="btn btn-primary isso-btn">Under 16</button>
-
-                                    <button *ngIf="gameData[0].seventeenAgeMap == 17  && gameData[0].seventeenAgeMap == 17"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 17,'boy','seventeen_boys')"
-                                      type="button" class="btn btn-primary isso-btn">Under 17</button>
-                                    <button *ngIf="gameData[0].ninteenAgeMap == 19 && gameData[0].ninteenAgeMap == 19"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 19,'boy','ninteen_boys')"
-                                      type="button" class="btn btn-primary isso-btn">Under 19</button>
                                   </div>
                                 </div>
                               </div>
 
                               <div class="col-md-6">
                                 <div class="category-box">
-                                  <img src="assets/images/web/boys.svg" />
+                                  <!-- <img src="assets/images/web/boys.svg" /> -->
                                   <h2>Girls Tournaments</h2>
                                   <div class="categories">
-                                    <button *ngIf="gameData[0].elevenGirlsMap == 11"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'girl','eleven_girls')"
-                                      type="button" class="btn isso-btn-pink">Under 11</button>
-                                    <button *ngIf="gameData[0].fourteenGirlsMap == 14"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 14,'girl','fourteen_girls')"
-                                      type="button" class="btn  isso-btn-pink">Under 14</button>
-
-                                      <button *ngIf="gameData[0].sixteenGilrsMap == 16"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 16,'girl','sixteen_girls')"
-                                      type="button" class="btn  isso-btn-pink">Under 16</button>
-
-
-                                    <button *ngIf="gameData[0].seventeenGirlsMap == 17"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 17,'girl','seventeen_girls')"
-                                      type="button" class="btn isso-btn-pink">Under 17</button>
-                                    <button *ngIf="gameData[0].ninteenGilrsMap == 19"
-                                      (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 19,'girl','ninteen_girls')"
-                                      type="button" class="btn isso-btn-pink">Under 19</button>
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].elevenGirlsMap == 11"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'girl','eleven_girls')">
+                                      <button type="button" class="btn capsule-btn">Under 11</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].fourteenGirlsMap == 14"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 14,'girl','fourteen_girls')">
+                                      <button type="button" class="btn capsule-btn">Under 14</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].sixteenGilrsMap == 16"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 16,'girl','sixteen_girls')">
+                                      <button type="button" class="btn capsule-btn">Under 16</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>  
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].seventeenGirlsMap == 17"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 17,'girl','seventeen_girls')">
+                                      <button type="button" class="btn capsule-btn">Under 17</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div> 
+                                    <div class="col-md-4 caps-b" *ngIf="gameData[0].ninteenGilrsMap == 19"
+                                    (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 19,'girl','ninteen_girls')">
+                                      <button type="button" class="btn capsule-btn">Under 19</button> 
+                                      <div class="capsule-right"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                    </div>     
+                                
                                   </div>
                                 </div>
                               </div>
