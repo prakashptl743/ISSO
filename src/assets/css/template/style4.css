@@ -195,6 +195,8 @@ i, span {
     font-size: 1.1em;
     display: block;
     color: #fff;
+    border-bottom: 1px solid #515151;
+    box-shadow: 4px 1px 2px #00000029;
 }
 
 #sidebar ul li a:hover {
@@ -347,7 +349,7 @@ body .ui-button.ui-state-active {
 }
 
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
-    background-color: #1362A5!important;
+    background-color: #333437!important;
     color: #ffffff;
 }
 
@@ -384,7 +386,7 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
 }
 
 body .ui-inputtext {
-    border: 1px solid #CBD0D3!important;
+    border: 1px solid #485E88!important;
     width: 100%;
 }
 

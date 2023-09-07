@@ -8,9 +8,7 @@
          </div> 
         <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
      </div>
-     <div class="ui-g-6 ui-md-6">
-        <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-     </div>
+    
  </div>
 <div *ngIf="showStudentCount" class="align-student">Total number of student's:{{studentCount}}</div>
 <div class="wrapper">
@@ -29,6 +27,9 @@
   <p-header>
       <div class="ui-helper-clearfix">
           <div class="ui-g">
+            <div class="ui-g-6 ui-md-6">
+              <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+           </div>
               <div class="ui-g-6 ui-md-6 filter-container">
                   <div style="position:relative">
                       <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
