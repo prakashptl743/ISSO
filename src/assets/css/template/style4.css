@@ -469,10 +469,12 @@ body .ui-dataview .ui-dataview-content {
     padding: 0 15px 0;
     float: left;
     width: 100%;
-}
-#content1 .item-box {
     padding-top: 20px;
     padding-bottom: 20px;
+}
+.item-card {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .hero-img{
     display: flex;

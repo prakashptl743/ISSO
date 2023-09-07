@@ -27,7 +27,7 @@
     </div>
 </form>
 <p-footer>
-	<p-button  [disabled]="!eventForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
+	<button [disabled]="!eventForm.valid" class="btn red-btn"  (onClick)="onSubmit()">SUBMIT</button>
 	<button (click)="display=false" class="btn secondory-btn" >Cancel</button>
 
     <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->

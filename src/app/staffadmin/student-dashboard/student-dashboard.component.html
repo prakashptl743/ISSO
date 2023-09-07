@@ -8,7 +8,7 @@
          </div> 
         <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
      </div>
-     <div class="ui-g-6 ui-md-12">
+     <div class="ui-g-6 ui-md-6">
         <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
      </div>
  </div>
@@ -47,7 +47,7 @@
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
    
   <div style="padding:.5em" class="ui-g-12 ui-md-12">
-        <div class="item-box">
+        <div class="item-box item-card">
            
             <div class="row">
               <div class="col-md-2 hero-img">
