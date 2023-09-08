@@ -26,6 +26,12 @@ export class PaymentInvoiceService {
     this.http = new HttpClient(handler);
 }
 
+getPaymentData(yearVal){ 
+  let str = 'paymentInvoice/getPaymentData/' + yearVal +'/';
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
 
 public exportAsExcelFile(json: any[], excelFileName: string): void {
     

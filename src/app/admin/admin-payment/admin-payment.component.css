@@ -84,6 +84,14 @@ input.largerCheckbox {
     border: 1px solid #ccc;
     border-top: none;
   }
+  .totalAmount{
+    color: green;
+    font-weight:bold;
+    float: right;
+  }
+  .float-right {
+    float: right;
+  }
 :host ::ng-deep .ui-toast .ui-toast-icon {
     padding-top: 4px;
 }
@@ -95,4 +103,12 @@ input.largerCheckbox {
 
 :host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
     margin-left: 2.5em;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th {
+  background: #007ad9;
+  color: white;
 }

@@ -3,10 +3,39 @@
   <button [ngClass]="reportLabel=='payment' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Payment</button>
   <button [ngClass]="reportLabel=='invoice' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >Invoice</button>
   <button [ngClass]="reportLabel=='receipt' ? 'isMenuActive' : '' "  (click)="onloadMenu(2)" class="tablinks" >Receipt</button>
+  <button [ngClass]="reportLabel=='affilationfee' ? 'isMenuActive' : '' "  (click)="onloadMenu(3)" class="tablinks" >Affilation Fee</button>
 
 </div>
  
 <app-payment-invoice *ngIf="reportValue == 0"></app-payment-invoice>
 <app-download-invoice *ngIf="reportValue == 1"></app-download-invoice>
 <app-download-receipt *ngIf="reportValue == 2"></app-download-receipt>
-    
+  
+
+<div class="ui-g-12" *ngIf="reportValue == 3">
+  <div class="ui-g-4">
+    <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+  </div>
+  <table class="table"  *ngIf="isDataAvailble">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>School Name</th>
+        <th>Payment ID</th>
+        <th>Paid Date</th>
+        <th>Paid Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of paymentData;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{event.schoolName}}</td>
+        <td>{{event.paymentId}}</td>
+        <td>{{event.paydate | date: 'd MMMM , y'}}</td>
+        <td><span class="float-right">{{event.payAmount}}</span></td>
+     </tr>
+    </tbody>
+  </table>
+  <div *ngIf="isDataAvailble" class="totalAmount"><span style="margin-right: 10px;">Total Earning</span>{{ paymentData | sum:'payAmount' |  currency:'INR' }}</div>  
+</div>  
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>  
