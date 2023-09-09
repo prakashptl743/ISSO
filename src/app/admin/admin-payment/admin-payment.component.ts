@@ -12,93 +12,74 @@ import { PaymentInvoiceService } from '../service/payment-invoice.service';
 })
 export class AdminPayment implements OnInit { 
   yearOptions: SelectItem[];
-  eventOptions: SelectItem[];
-  gameOptions: SelectItem[];
-  schoolOptions: SelectItem[];
-  ageOptions: SelectItem[];
-  genderOptions: SelectItem[];
-  studentAttendanceArray=[];
-  studentAbsentArray=[];
-  attendanceArray=[];
-
-  gameIdList:any;
-  gameNameList:any;
-  myObjArray: any;
-
-  eventValue:number;
-  yearvalue:number;
-  schoolvalue:number;
-  eventData: any;
-  schoolDataArray =[];
-  eventReadable: boolean = false;
-  gameReadble: boolean = false;
-  schoolReadble: boolean = false;
-  selectedEvent:string;
-  schoolList: any;
-  gameList: any;
-  public gameID: number;
-  public schoolID: any;
-  certificateData: any;
-  reportData: any;
-  coachData: any;
-  isCertificate: boolean = false;
-  isDataAvailble: boolean = false;
-  schooName:string;
-  mapStudentPaymentData = [];
-  totalTeamAmount: number;
-  showspinner: boolean = false;
-  reportDataLength: number;
-  selectedGame: string;
-  selectedSchool: string;
-  selectedYear: string;
-  imageData: any;
   isConsolited: boolean;
-  genderReadble: boolean;
-  ageValue: any;
-  genderVal: any;
-  consolidatedData: any;
-  consoliDatedLength: any;
-  checked1: boolean = true;
-  consolateFileName: any;
-  gameType: any;
-  selectedYearVal: string;
-  studentAttendance: boolean;
-
-  selectedCities: string[] = [];
-
-  selectedCategories: any[] = ['Technology', 'Sports'];
-
-  categories: any[] = [{name: 'Accounting', key: 'A'}, {name: 'Marketing', key: 'M'}, {name: 'Production', key: 'P'}, {name: 'Research', key: 'R'}];
-
-  checked: boolean = false;
-  gameArray= [];
   reportValue: any;
   reportLabel: string;
-  schoolType: any;
-  schoolPayment: number;
-  totalDues: any;
-  totalPaidTillNow: number;
+  yearvalue: any;
+  isDataAvailble: boolean;
+  paymentData: any;
+  selectedYear: any;
+  constructor( 
+    private issoUtilService: IssoUtilService, 
+    private paymentInvoiceService: PaymentInvoiceService,
+    private messageService: MessageService, 
+    private meritService: ReportMeritService) { }
 
-   constructor( private issoUtilService: IssoUtilService, private paymentInvoiceService: PaymentInvoiceService,private messageService: MessageService, private meritService: ReportMeritService) { }
-
-    ngOnInit() {
-      this.reportLabel = 'payment';
-      this.reportValue = 0;
+  ngOnInit() {
+    this.reportLabel = 'payment';
+    this.reportValue = 0;
+    this.yearOptions = this.issoUtilService.setYear();
+    this.getPaymentData();
+  }
+  onloadMenu(index) {
+    this.reportValue = index;
+    if(index == '0') {
+      this.isConsolited = false;
+      this.reportLabel = "payment"
+    } else if(index == '1') {
+      this.reportLabel = "invoice"
+    } else if(index == '2') {
+      this.reportLabel = "receipt"
+    } else if(index == '3') {
+      this.reportLabel = "affilationfee"
     }
-    onloadMenu(index) {
-      this.reportValue = index;
-      if(index == '0') {
-        this.isConsolited = false;
-        this.reportLabel = "payment"
-      } else if(index == '1') {
-        this.reportLabel = "invoice"
-      } else if(index == '2') {
-        this.reportLabel = "receipt"
-      }
+  }
+  getPaymentData() {
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    if(month >= 5) {
+      this.yearvalue = year +'-'+ (year + 1)
+    } else {
+      this.yearvalue  =(year - 1)  +'-'+ year
     }
+    this.selectedYear = this.yearvalue;
+    this.loadPaymentData()
+  }
+  onyeareChange(event) {
+    this.yearvalue = event.value;
+    this.selectedYear = this.yearvalue;
+    this.loadPaymentData()
+  }
  
- 
- 
- 
+  loadPaymentData() {
+    this.paymentInvoiceService.getPaymentData(this.yearvalue).subscribe(
+      response => {
+        if(response!=="") {
+          this.paymentData =response;
+          if(this.paymentData.length > 0 ){
+             this.isDataAvailble = true;
+          } else {
+            this.isDataAvailble = false;
+            this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found for this year'});    
+          }
+        } else {
+        console.log('Data is blannk from service')
+        }
+  
+    } ,
+    error => {
+      //this.errorAlert =true;
+      });
+  }
  
 }
