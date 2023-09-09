@@ -280,7 +280,7 @@ header .user-dropbox img {
 }
 .event-container .tournament-box {
   box-shadow: 0px 0px 7px 1px #dadada;
-  padding: 20px;
+  padding: 20px 0 0;
   margin-bottom: 60px;
   background: #ffffff;
   border-radius: 15px;
@@ -291,6 +291,8 @@ header .user-dropbox img {
 .border-right-dark{
   border-right: 1px solid #BBBEBF;
 }
+
+
 .game-name h2 {
 
   background: #FFCE38!important;
@@ -331,7 +333,7 @@ header .user-dropbox img {
   
 }
 .category-box h2{font-size: 18px;
-  margin-bottom: 20px;}
+  margin-bottom: 20px;margin-top: 0;}
 .categories button {
   margin-right: 5px;
 }

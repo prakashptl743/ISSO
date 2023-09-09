@@ -37,10 +37,17 @@
                        
                       
                         <div class="tournament-box">
-                          <div class="game-name">
+                          <div class="box-wrapper">
+                            <img src="assets/images/top-corner.png" class="top-corner">
+                            <div class="middle-data">
+                                <img src="assets/images/ic_stars_24px.svg" classs="star">
+                                <p>{{gameData[0].gameName}}</p>
+                            </div>
+                            <img src="assets/images/bottom-corner.png" class="bottom-corner"></div>
+                          <!-- <div class="game-name">
                             <h2>{{gameData[0].gameName}}  </h2>
                            
-                          </div>
+                          </div> -->
                           <div class="row" *ngFor="let game of gameData">
                             <div class="col-md-6 border-right-dark">
                               <div class="category-box">
@@ -52,7 +59,7 @@
                                     *ngIf="game.eleven_boys > '0' || game.fourteen_boys > '0' || game.sixteen_boys > '0' || game.seventeen_boys > '0' || game.ninteen_boys > '0' ">
                                     Boys Tournaments</h2>
                                 </div>
-                                <div class="categories">
+                                <div class="categories" style=" padding-left: 70px;">
                                   <!-- <p-messages [(value)]="messages1" [enableService]="false" [closable]="false"></p-messages> -->
 
                                   <!-- <p-messages [(value)]="messages1" [enableService]="false"></p-messages> -->
@@ -148,7 +155,7 @@
                                 <div class="category-box">
                                   <!-- <img src="assets/images/web/boys.svg" /> -->
                                   <h2>Boys Tournaments</h2>
-                                  <div class="categories">
+                                  <div class="categories" style=" padding-left: 70px;">
                                     <div class="col-md-4 caps-b" *ngIf="gameData[0].elevenAgeMap == 11 && gameData[0].elevenAgeMap == 11"
                                       (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'boy','eleven_boys')">
                                       <button type="button" class="btn capsule-btn">Under 11</button> 

@@ -432,6 +432,7 @@ body .ui-inputtext {
     margin-right: 0!important;
     float: left;
     height: 35px;
+    font-size: 11px!important;
 }
 .capsule-right{
     background-color: #EE1D23!important;
@@ -450,6 +451,17 @@ body .ui-inputtext {
 }
 .caps-b{
     margin-bottom: 20px;
+    padding: 0!important;
+    width: 105px!important;
+}
+.top-corner{
+    position: absolute;
+    right: -18px;
+}
+.bottom-corner{
+    position: absolute;
+    right: -20px;
+    bottom: -6px;
 }
 
 

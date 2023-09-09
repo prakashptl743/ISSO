@@ -107,6 +107,27 @@
 /* .align-back {
     margin-top: 40px;
 } */
+.box-wrapper{
+    background: #00A54F;
+    width: 75px;
+    height: 86%;
+    position: absolute;
+    top: -22px;
+    left: 0;
+    z-index: 1;
+    box-shadow: 1px -6px 17px #000;
+}
+.middle-data{
+    padding-top: 60%;
+    color: #fff;
+    font-size: 10px;
+}
+.middle-data p{
+    color: #fff;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
 .align-game-header{
     background: #fff !important;
     font-size: 18px;
