@@ -367,9 +367,9 @@ body .ui-dataview .ui-dataview-header {
 .pi-window-maximize{
     display: none!important;
 }
-.ui-widget-header .ui-dialog-titlebar-close{
+/* .ui-widget-header .ui-dialog-titlebar-close{
     display: none!important;
-}
+} */
 
 body .ui-paginator {
     background-color: #F6F8F9!important;
