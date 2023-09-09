@@ -13,8 +13,8 @@
           <p><a [routerLink]="" (click)="onGoBack()">click here</a> to go back </p>
     </div>
     <div *ngIf="showPayemntScreen">
-    <div class="col-md-12">
-        <div class="form-group ui-g-4 pad-zero">
+    <div class="col-md-4">
+        <div class="form-group pad-zero">
           <label for="exampleInputEmail1">Select Fee Type</label>
           <p-dropdown  [options]="feeOptions"  [(ngModel)]="feeType" placeholder="Select Fee Type" (onChange)="onPaymentTypeChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -25,41 +25,41 @@
          <span class="align-message">You have alredy done this payment.</span>
      </div>
     <div *ngIf="isAffilated == '2'">
-        <div class="col-md-12">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group pad-zero">
             <label for="exampleInputEmail1">Select Year</label>
             <p-dropdown  [options]="yearOptions"  [(ngModel)]="slectedYear" placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
         </div>
-        <div class="col-md-12">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group pad-zero">
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="slectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
         </div>
-        <div class="col-md-12">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group pad-zero">
             <label for="exampleInputEmail1">Select Game</label>
             <p-dropdown [disabled]="!gameReadble"  [(ngModel)]="slectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
         </div>
     </div>
     <div *ngIf="isAffilated == '1' && showPayment">
-      <div class="col-md-12">
-        <div class="form-group ui-g-4 pad-zero">
+      <div class="col-md-4">
+        <div class="form-group pad-zero">
           <label for="exampleInputEmail1">Total amount</label>
            <input [(ngModel)]="affilateAmounnt" numbersOnly type="text" (keyup)="onKeypressEvent($event.target.value)" (blur)="setAffiliateAmount()"    placeholder="Total amount to pay" class="form-control" id="inputWarning1">
          </div>
       </div>
     </div> 
-   <div class="col-md-12" *ngIf="showPayment" >
-      <div class="form-group ui-g-4 pad-zero">
+   <div class="col-md-4" *ngIf="showPayment" >
+      <div class="form-group pad-zero">
         <label for="exampleInputEmail1">Total Payable Amount</label>
         <div><h3>{{totalAmount}} Rs.</h3></div>
        </div>
    </div> 
-   <div class="col-md-12" *ngIf="showPayment" >
-    <div class="form-group ui-g-4 pad-zero">
+   <div class="col-md-4" *ngIf="showPayment" >
+    <div class="form-group pad-zero">
       <button [class.disabled]="!(totalAmount > 0)"  class="btn btn-primary"  type="button" (click)="payNow(totalAmount,'','affliate')">Pay Now</button>
      </div>
      <!-- <div class="m-4">

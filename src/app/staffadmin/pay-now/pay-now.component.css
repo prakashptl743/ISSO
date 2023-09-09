@@ -41,7 +41,7 @@ a.disabled {
     font-weight: bold;
 }
 .align-container {
-    margin-top: 30px;
+    margin-top: 0px;
 }
 :host ::ng-deep .custom-toast .ui-toast-message {
     color: #ffffff;
