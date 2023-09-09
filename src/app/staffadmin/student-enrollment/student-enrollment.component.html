@@ -256,8 +256,9 @@
     <div class="container-fluid">
    
       <div class="panel panel-default">
-        <div class="align-game-header text-center" *ngIf="!showSubGameList">{{panelHeading}} Capacity is {{setCapacity}}
-           <div *ngIf="gameType == 'Team'"  (click)="onCencelEvent()" class="float-right">Click here for to delete team confirmation</div> 
+        <div class="align-game-header text-center row" *ngIf="!showSubGameList">
+          <div class="col-md-6 enroll-head">{{panelHeading}} Capacity is {{setCapacity}}</div>
+           <div *ngIf="gameType == 'Team'"  (click)="onCencelEvent()" class="delete-confim col-md-6">Click here for to delete team confirmation</div> 
         </div>
         
 
@@ -291,11 +292,11 @@
           </div>
 
 
-          <form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
+          <form [formGroup]="studentEnroolForm" class="row" (ngSubmit)="onSubmit()">
 
     
            
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <label class="form-control-label">Student Name</label>
               <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
                 placeholder="Student Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
@@ -304,7 +305,7 @@
                  </span>
 
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <label class="form-control-label">Father's/Mother's Name</label>
               <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
                 placeholder="Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
@@ -318,7 +319,7 @@
  
 
               <!-- <p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"></p-calendar> -->
-              <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;" (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+              <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;" (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}"   [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
       
               <div *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors" class="invalid-feedback">
                 <div *ngIf="f.dateOfBirth.errors.required">Student Date of birth is required</div>

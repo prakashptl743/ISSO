@@ -98,3 +98,9 @@ body .ui-dataview .ui-dataview-content {
     color: red;
     padding-top: 10px;
   }
+.school-title-head{
+    float: left;
+    margin-top: 0;
+    font-size: 15px;
+    font-weight: bold;
+} 

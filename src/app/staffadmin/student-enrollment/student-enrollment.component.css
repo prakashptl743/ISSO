@@ -128,11 +128,12 @@
 }
 
 .align-game-header{
-    background: #fff !important;
+    background: transparent !important;
     font-size: 18px;
-    text-align: left !important;
+    text-align: center!important;
     color: #000 !important;
-    border-bottom: solid 3px orange;
+    border-bottom: solid 1px #AEABAB;
+    font-weight: bold;
 }
 .align-nri {
     margin-top: -13px !important;
@@ -434,11 +435,38 @@ body {background:#ccc}
    }
   
    :host ::ng-deep  .panel-body {
-    padding: 15px;
+    padding: 0;
     box-shadow: none;
+    margin-top: 20px;
   }
+  :host ::ng-deep .panel-default {
+    border: 0;
+    background: transparent;
+}
+:host ::ng-deep .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
+    width: 2em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    position: absolute;
+    right: 0;
+    margin: 5px;
+    height: 2em;
+    top: -2px;
+}
   /* .table-pad {
     padding-top: 20px;
   } */
  
- 
+ .delete-confim{
+    background: #707070;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    clear: both;
+ }
+ .enroll-head{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+ }
