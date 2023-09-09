@@ -106,15 +106,25 @@
   </div>
 </div>
 
+<div class="align-game-header text-center row">
+  <div class="col-md-10">
+    <div class="profile-wrapper">
+      <div class="">My Profile</div>
+      <img class="profile-logo" src="assets/images/web/logo_retina.png">
+      <a href="javascript: void(0)" class="edit-icon-profile" (click)="editProfile('isEdit')"><img style="width: 15px;" src="assets/images/ic_create_24px.png"></a>
+      </div>
+  </div>
+  <div class="col-md-2"><button (click)="editProfile('isPasswordChange')" class="btn btn-primary pull-right">Change Password</button> </div>
+  
+ </div>
 
-
-  <div class="panel panel-default">
-    <div class="align-game-header text-center">Profile Information</div>
-      <div class="panel-body"> 
-          <div class="editCancel">
+  <div class="">
+    
+      <div class=""> 
+          <!-- <div class="editCancel">
             <a href="javascript: void(0)"  (click)="editProfile('isEdit')" class="editSetting link-primary">Edit Profile</a>
-            <a href="javascript: void(0)"  (click)="editProfile('isPasswordChange')" class="link-primary">Change Password</a>  
-          </div>
+            
+          </div> -->
           <div *ngIf="isEditProfile">
             <form [formGroup]="schoolForm" (ngSubmit)="onSchoolSubmit">
               <div class="col-md-6">
@@ -204,8 +214,34 @@
               </form>
           </div>
 
-          <div *ngIf="!isEditProfile && !showPasswordScrren">
-            <table class="table table-bordered">
+          <div *ngIf="!isEditProfile && !showPasswordScrren" class="profile-form">
+            <div class="row">
+                <div class="col-md-12 profile-row" style="border-top: 1px solid #CBCBCB; margin-top: 20px; padding-top: 20px;">
+                    <label>School Name:</label>
+                    <div>{{schoolName}}</div>
+                </div>
+                <div class="col-md-12 profile-row">
+                  <label>School Address:</label>
+                  <div>{{schoolAddress}}</div>
+              </div>
+              <div class="col-md-12 profile-row">
+                <label>Email:</label>
+                <div>{{schoolEmail}}</div>
+              </div>
+              <div class="col-md-12 profile-row">
+                <label>Telephone Number:</label>
+                <div>{{schoolNumber}}</div>
+              </div>
+              <div class="col-md-12 profile-row">
+                <label>School Board:</label>
+                <div>{{schoolBoard}}</div>
+              </div>
+              <div class="col-md-12 profile-row">
+                  <label>Infrastructure at school:</label>
+                  <div>{{schoolInfra}}</div>
+              </div>
+            </div>
+            <!-- <table class="table table-bordered">
               <tbody>
                 <tr>
                   <th scope="row">School Name:</th>
@@ -232,7 +268,7 @@
                   <td>{{schoolInfra}}</td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
       </div>
 
