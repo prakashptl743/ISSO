@@ -146,8 +146,8 @@
 <ng-template let-event pTemplate="gridItem"  style="word-wrap: break-word;">
         <div style="padding:.5em" class="ui-g-12 ui-md-6">
         <div class="item-box">
-            <div class="item-header">
-                <span title="{{event.eventName}}"><b>{{event.eventName}}</b></span>
+            <div class="item-header1">
+                <div class="ev-name" title="{{event.eventName}}"><b>{{event.eventName}}</b></div>
                 <div class="icons-wrap">
                     <button *ngIf="event.event_status === '1' && event.startDate > today" class="glyphicon glyphicon-edit item-icons" (click)="addNewEvent($event, event,'edit')">
                     </button>

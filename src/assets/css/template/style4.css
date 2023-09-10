@@ -349,7 +349,7 @@ body .ui-button.ui-state-active {
 }
 
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
-    background-color: #333437!important;
+    background-color: #F58220!important;
     color: #ffffff;
 }
 
@@ -547,14 +547,14 @@ body .ui-dataview .ui-dataview-content {
     justify-content: center;
 }
 .stud-name{
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     float: left;
     margin: 0 10px 0 0;
 }
 .present{
     float: left;
-    font-size: 15px;
+    font-size: 13px;
     background: #74BB56;
     padding: 3px;
     border-radius: 5px;
@@ -564,7 +564,7 @@ body .ui-dataview .ui-dataview-content {
 }
 .absent{
     float: left;
-    font-size: 15px;
+    font-size: 13px;
     background: #74BB56;
     padding: 3px;
     border-radius: 5px;
@@ -640,7 +640,7 @@ body .ui-dropdown {
     float: left;
     width: 100%;
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .item-description label {
@@ -823,7 +823,19 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
 .isso-menu .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem {
     border: none;
 }
-
+.item-header1 {
+    border-bottom: 2px solid #CBD0D3;
+    float: left;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+.ev-name{
+    width:85%;
+}
 .isso-menu .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-icon {color: orange;}
 .isso-menu .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-active .ui-menuitem-link .ui-menuitem-icon {
     color: orange;

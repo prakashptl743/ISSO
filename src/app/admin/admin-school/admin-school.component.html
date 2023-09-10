@@ -140,7 +140,7 @@
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
     <div style="padding:.5em" class="ui-g-12 ui-md-6">
         <div class="item-box">
-            <div class="">
+            <div class="item-header1">
                 <h4 class="school-title-head" title="{{school.name}}">{{school.name}}</h4>
                 <div class="icons-wrap">
                     <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
@@ -235,7 +235,7 @@
 <ng-template let-showRegisterdSchoolData pTemplate="gridItem"  style="word-wrap: break-word;">
     <div style="padding:.5em" class="ui-g-12 ui-md-6" *ngIf="registeredSchoolFlag">
         <div class="item-box">
-            <div class="item-header">
+            <div class="item-header1">
                 <h4 title="{{showRegisterdSchoolData.name}}">{{showRegisterdSchoolData.name}}</h4>
             </div>
             <div class="item-description">

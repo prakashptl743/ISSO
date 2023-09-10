@@ -11,19 +11,19 @@
           <span [ngClass]="isFirstYear ? 'active' : '' "  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span>
           <span [ngClass]="!isFirstYear ? 'active' : ''"  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
         </div> 
-        <div class="col-md-12 pad-left-zero btn-nav">
+        <div class="col-md-12 pad-left-zero btn-nav" style="padding-top: 0;">
          
-          <span [ngClass]="isPartCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('certificate')"> PARTICIPATION CERTIFICATE</span>
-          <span [ngClass]="isMeritCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('merit')"> MERIT CERTIFICATE</span>
+          <span [ngClass]="isPartCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('certificate')"><b>PARTICIPATION CERTIFICATE</b></span>
+          <span [ngClass]="isMeritCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('merit')"> <b>MERIT CERTIFICATE</b></span>
       
-          <span [ngClass]="isInvoiceCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('invoice')">INVOICE</span>
-          <span [ngClass]="isReceiptCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('receipt')"> RECEIPT</span>
+          <span [ngClass]="isInvoiceCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('invoice')"><b>INVOICE</b></span>
+          <span [ngClass]="isReceiptCssEnable ? 'grey-color-text' : '' "  class="grey-btn mr10"  (click)="makeCssEnable('receipt')"> <b>RECEIPT</b></span>
         </div> 
 
-        <div class="ui-g-12 align-drop-down">
+        <div class="ui-g-6 align-drop-down">
           <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
         </div>   
-        <div class="ui-g-12 align-container align-drop-down">
+        <div class="ui-g-6 align-container align-drop-down">
           <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
         </div> 
           <!-- 
@@ -106,10 +106,10 @@
                     PRINT INVOICE
                 </div> 
                 <div class="certificate-row ">
-                  <div class="ui-g-12 event-container align-container align-drop-down">
+                  <div class="ui-g-6 event-container align-container align-drop-down">
                       <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedInvoiceYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'invoice')" [style]="{'min-width':'140px'}"></p-dropdown>
                   </div>
-                  <div class="ui-g-12 align-drop-down">
+                  <div class="ui-g-6 align-drop-down">
                       <p-dropdown [disabled]="!invoiceEvent" [(ngModel)]="selectedInvoiceEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'invoice')" [style]="{'min-width':'140px'}"></p-dropdown>
                   </div>    
                
@@ -123,10 +123,10 @@
                 PRINT RECEIPT   
               </div> 
               <div class="certificate-row">
-                    <div class="ui-g-12 event-container align-container align-drop-down">
+                    <div class="ui-g-6 event-container align-container align-drop-down">
                         <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedReceiptYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'receipt')" [style]="{'min-width':'140px'}"></p-dropdown>
                     </div>
-                    <div class="ui-g-12 align-drop-down">
+                    <div class="ui-g-6 align-drop-down">
                         <p-dropdown [disabled]="!receiptEvent" [(ngModel)]="selectedReciptEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'receipt')" [style]="{'min-width':'140px'}"></p-dropdown>
                     </div>    
                  
