@@ -749,27 +749,39 @@ export class MeritComponent implements OnInit {
     accept: () => { this.deleteAddedMeritData(merit_id); },
   });
 
-
-  //  this.confirmation.confirm({
-  //   key: 'confirm-delete-student',
-  //   icon: 'pi pi-info-circle',
-  //   message: 'Are you sure to delete student data?',
-  //   accept: () => { 
-      
-  //     this.deleteAddedMeritData(merit_id);
-  //     // this.studentListArray.splice(i, 1); 
-  //     // this.makeEmptyForm();
  
-  //     //  if(this.studentListArray.length > 0) {
-  //     //    this.isStudentListShow = true
-  //     //  } else {
-  //     //    this.isStudentListShow = false;
-  //     //  }
-      
-  //     //this.deleteSchool(eventData);
-  //    },
-  //   });
   }
+  deleteTeamQr(eventId,schoolId,gameId,subgameId) {
+    let subGameVal;
+     if(subgameId == '') {
+      console.log('hello Im blank submage');
+      subGameVal = 'N'
+     } else {
+      subGameVal =subgameId;
+      console.log('hello Im not blank submage');
+     }
+   
+
+    this.meritService.deleteTeamQr(eventId,schoolId,gameId,subGameVal).subscribe(
+      res => {
+         // this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Deleted Successfully'});
+          //this.checkAlreadyMeritData();
+      },
+      error => this.error = error
+    );
+  }
+  deleteIndividualQr(studentId) {
+    this.meritService.deleteIndividualQr(studentId).subscribe(
+      res => {
+         // this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Deleted Successfully'});
+          //this.checkAlreadyMeritData();
+      },
+      error => this.error = error
+    );
+  }
+  
+
+
   
   deleteAddedMeritData(merit_id: any) {
       this.meritService.deleteAddedMeritData(merit_id).subscribe(

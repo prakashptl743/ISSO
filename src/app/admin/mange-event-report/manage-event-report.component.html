@@ -24,7 +24,7 @@
             <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">Approved</button></span>
         </td>
         <td *ngIf="event.isMerit == 0"> 
-            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'merit')">Pending</button></span>
+            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isMerit,'merit')">Pending</button></span>
         </td>
         <td *ngIf="event.isMerit == 1"> 
             <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isMerit,'merit')">Approved</button></span>

@@ -167,7 +167,7 @@ ngOnInit() {
   // this.getBase64ImageFromURL1(imageUrl).subscribe(base64data => {    
   //   this.base64Image = 'data:image/jpg;base64,' + base64data;
   // });
- 
+  this.onyeareChange(this.yearOptions[1].year,'second')
   this.isReport = true;
   this.setPhotoPath();
 }

@@ -102,6 +102,18 @@ deleteAddedMeritData(id){
       catchError(this.handleError)
     );
 }
+deleteTeamQr(eventId,schoolId,gameId,subGameVal){
+  return this.http.delete(this.serverUrl + 'merit/deleteTeamQr/' + eventId  +'/' + schoolId +'/' + gameId +'/' + subGameVal).pipe(
+    catchError(this.handleError)
+  );
+}
+
+deleteIndividualQr(studentId){
+  return this.http.delete(this.serverUrl + 'merit/deleteIndividualQr/' + studentId).pipe(
+    catchError(this.handleError)
+  );
+}
+
 showAlreadyMeritData(eventValue,gameId,selectedAge,genderVal,subGameId) {
   let apiUrl = 'merit/showAlreadyMeritData/' + eventValue +'/' +gameId +'/' + selectedAge +'/' + genderVal+'/'+subGameId;
   return this.http.get(this.serverUrl + apiUrl).pipe(

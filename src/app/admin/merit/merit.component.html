@@ -81,7 +81,7 @@
             <td>{{school.schoolName}}</td>
             <td>{{school.rank}}</td> 
              <td>
-              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id);deleteIndividualQr(school.studentID);">
               </p-button>
                 <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
              </td> 
@@ -101,7 +101,7 @@
             <td>{{school.schoolName}}</td>
             <td>{{school.rank}}</td> 
              <td>
-              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id);deleteTeamQr(school.eventId,school.schoolId,school.gameId,school.subgameId);">
               </p-button>
                 <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
              </td> 
@@ -253,7 +253,7 @@
             <td>{{school.rank}}</td> 
              <td> 
                 <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">Print Certificate</a>
-             </td> 
+             </td>
           </tr>
         </tbody>
       </table>
