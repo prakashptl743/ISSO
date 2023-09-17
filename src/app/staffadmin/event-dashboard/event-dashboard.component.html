@@ -6,10 +6,9 @@
  
  
 
-<div class="event-container" *ngIf="showNoEvent">
-  <!-- <p class="text-info">Sorry there is no active event now!</p> -->
-  <h2 class="animate__animated animate__bounce">Sorry there is no active event now</h2>
-
+<div class="event-container pos-relative" *ngIf="showNoEvent">
+	<img class="img-center"  src="assets/images/nodata.svg">
+    <span class="no-event"><i class="fas fa-smile"></i><b> SORRY THERE IS NO ACTIVE NOW !</b></span>
 </div>
 <p-dialog class="align-dialog" header="Terms and Conditions" [(visible)]="display" width="600"  [modal]="true" [responsive]="true"   
 [maximizable]="true" [baseZIndex]="1000">
@@ -29,60 +28,40 @@
 <p-footer>
 	<button [disabled]="!eventForm.valid" class="btn red-btn"  (click)="onSubmit()">SUBMIT</button>
 	<button (click)="display=false" class="btn secondory-btn" >Cancel</button>
-
-    <!-- <button type="button" pButton  (click)="display=false" label="No" class="ui-button-secondary"></button> -->
 </p-footer>
 </p-dialog>
  
  
  
-  <div class="wrapper">
-
+ <div class="wrapper">
 	<section class="wrapper">
 		<div class="container">
 			<span class="card-meta mb-2 align-card"><span style="color:#485E88">i</span><span style="color:#EE1D23">S</span><span style="color:#00A54F">S</span><span style="color:#54C5CF">O</span> EVENTS</span>
 		<div class="row">
-	        <div class="col-md-4"  *ngFor="let event of eventInfo">
+			<div class="col-md-4"  *ngFor="let event of eventInfo">
 				<div (click)="showDialog(event)" class="card card-has-bg click-col">
-							<img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-							<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								
-								<h4 class="align-card-title  card-title mt-0 "><a class="" herf="#">
-									{{event.eventName}}
-								</a></h4>
-								
-								<span class="date-font"><i class="far fa-clock"></i>Starting on {{event.startDate  | date: 'd MMMM , y'}}</span>
-								<!-- <div  class="venue">Venue:{{event.location}}</div>-->
-								<div class="eve-sect">
-									
-									<div class="eve-val"><label>Venue:</label>{{event.location}}</div>
-								</div>
-								<div class="eve-sect">
-									
-									<div class="eve-val"><label>Registration:</label> {{registerFee * event.price}} Rs per player</div>
-								</div>
-								 <div class="view-more"><span (click)="showDialog(event)" class="red-btn">ENROLL NOW</span></div>
-								</div> 
-								
-								
-								<!-- <div class="card-footer">
-								<div class="media">
-						<img class="mr-3 rounded-circle" src="assets/images/web/male.jpg"  style="max-width:50px">
-						<div class="media-body amount-fon">
-							<h5 class="my-0  d-block">Registration Charges</h5>
-							<span>{{registerFee * event.price}} Rs per player</span>
+					<img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
+					<div class="card-img-overlay d-flex flex-column">
+					<div class="card-body">
+						<h4 class="align-card-title  card-title mt-0 "><a class="" herf="#">
+							{{event.eventName}}
+						</a></h4>
+						<span class="date-font"><i class="far fa-clock"></i>Starting on {{event.startDate  | date: 'd MMMM , y'}}</span>
+						<div class="eve-sect">
+							<div class="eve-val"><label>Venue:</label>{{event.location}}</div>
 						</div>
-					</div>
-				</div> -->
+						<div class="eve-sect">
+							<div class="eve-val"><label>Registration:</label> {{registerFee * event.price}} Rs per player</div>
+						</div>
+							<div class="view-more"><span (click)="showDialog(event)" class="red-btn">ENROLL NOW</span></div>
+					</div> 
 				</div>
-		       </div>
+			</div>
+			</div>
 		</div>
-	  </div>
-		
-	  </div>
-	  </section>
-</div>
+	</div>
+	</section>
+</div>  
 
 
  

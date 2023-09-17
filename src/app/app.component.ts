@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AutoLogoutService } from './services/autologout.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,5 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'blogger';
   checked: boolean;
-  constructor(public router: Router) {}
+  constructor(public router: Router,private service: AutoLogoutService) {}
 }

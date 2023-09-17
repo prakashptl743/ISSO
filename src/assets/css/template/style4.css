@@ -565,13 +565,50 @@ body .ui-dataview .ui-dataview-content {
 .absent{
     float: left;
     font-size: 13px;
-    background: #74BB56;
+    background: #F58220;
     padding: 3px;
     border-radius: 5px;
     margin-top: -5px;
     color: #fff;
     margin-bottom: 5px;
 }
+
+
+.paid {
+    float: left;
+    font-size: 13px;
+    background: #74BB56;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: -5px;
+    color: #fff;
+    margin-bottom: 5px;
+    margin-top: 3px;
+    width: 76px;
+    text-align: center;
+    height: 28px;
+}
+.not-paid {
+    float: left;
+    font-size: 13px;
+    background: #F58220;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: -5px;
+    color: #fff;
+    margin-bottom: 5px;
+    margin-top: 3px;
+    width: 76px;
+    text-align: center;
+    height: 28px;
+}
+.pay-now-button { 
+    background: white !important;
+    color: #EE1D23 !important;
+    border: 2px solid #EE1D23 !important;
+}
+
+
 .edit-font-icon{
     color: #485E88;
     margin-right: 15px;

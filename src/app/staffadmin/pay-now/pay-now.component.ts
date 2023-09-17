@@ -34,7 +34,7 @@ base64Image:any;
 @ViewChild('reportContent', {static: false})reportContent: ElementRef;
 @ViewChild('report_Content', {static: false})report_Content: ElementRef;
 
-yearOptions: SelectItem[];
+yearOptions: object;
 feeOptions: SelectItem[];
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
@@ -108,6 +108,7 @@ rzp1;
   showPayemntScreen: boolean = true;
   paymentTypeInfo: any;
   showAlredayPaidMessage: boolean;
+  isFirstYear: boolean;
 //options;
   // options: {
   //   key: string; // Enter the Key ID generated from the Dashboard
@@ -134,9 +135,11 @@ console.log(this.schoolType)
   // this.time = this.datePipe.transform(new Date());
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
+  // this.yearOptions = this.issoUtilService.setYearForStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
+  this.yearvalue = this.yearOptions[1].year;
   // let imageUrl = '../../assets/images/general/1568798071IMG_8449214933993.jpg';
   // this.getBase64ImageFromURL1(imageUrl).subscribe(base64data => {    
   //   this.base64Image = 'data:image/jpg;base64,' + base64data;
@@ -379,6 +382,7 @@ onPaymentTypeChange(event) {
   this.reportDataLength = 0;
   this.feeType =  event.value;
   this.mapStudentPaymentData = [];
+  this.slectedEvent = '';
   this.paymentType = event.value;
   console.log(this.paymentType);
   this.totalAmount = 0;
@@ -395,10 +399,51 @@ onPaymentTypeChange(event) {
       this.showPayment = false;
       this.showAlredayPaidMessage = false;
       this.isAffilated = '2';
+      this.loadEvents();
     }
   } else {
     this.isAffilated = '0';
   }
+}
+loadEvents() {
+  this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
+    //this.meritService.loadEventByYear(this.yearvalue).subscribe(
+      response => {
+        if(response!=="") {
+          this.eventData =response;
+          console.log(this.eventData)
+          this.gameReadble =false;
+          this.schoolReadble  = false;
+          if(this.eventData.length > 0 ){
+            this.eventOptions = [];
+            this.eventReadable = true;
+            this.isDataAvailble = false;
+            this.eventOptions.push({
+              label: "Please Select",
+              value: ''
+            });
+            this.eventData.forEach(element => {
+              const eventIdAndName = element.eventId +','+ element.eventName;
+              this.eventOptions.push({
+                label: element.eventName,
+                value: eventIdAndName
+              });
+            })
+          } else {
+            this.isDataAvailble = true;
+            this.eventReadable = false;
+            this.gameReadble =false;
+            this.schoolReadble = false;
+            this.messageService.add({key: 'custom',severity:'error', summary: 'Event not found for this year!'});
+          }
+        } else {
+         console.log('Data is blannk from service')
+        }
+  
+     } ,
+     error => {
+       //this.errorAlert =true;
+      });
 }
 checkAlreadypaid(){
   this.payemntService.checkAlreadypaid(this.schoolId).subscribe( 
@@ -416,52 +461,25 @@ checkAlreadypaid(){
   //this.errorAlert =true;
     });
 }
-onyeareChange(event) {
+onyeareChange(val,yearText) {
+  if(yearText == 'first') {
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
+  this.feeType = '';
+  this.slectedEvent = '';
+  this.slectedGame = '';
+  this.eventReadable = false;
+  this.gameReadble = false;
   this.reportDataLength = 0;
   this.totalTeamAmount = 0;
-  this.yearvalue = event.value;
+  this.yearvalue = val;
   this.showPayment = false;
   this.totalAmount=0;
   this.mapStudentPaymentData = [];
   if(this.yearvalue !== '') {
-  this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
-  //this.meritService.loadEventByYear(this.yearvalue).subscribe(
-    response => {
-      if(response!=="") {
-        this.eventData =response;
-        console.log(this.eventData)
-        this.gameReadble =false;
-        this.schoolReadble  = false;
-        if(this.eventData.length > 0 ){
-          this.eventOptions = [];
-          this.eventReadable = true;
-          this.isDataAvailble = false;
-          this.eventOptions.push({
-            label: "Please Select",
-            value: ''
-          });
-          this.eventData.forEach(element => {
-            const eventIdAndName = element.eventId +','+ element.eventName;
-            this.eventOptions.push({
-              label: element.eventName,
-              value: eventIdAndName
-            });
-          })
-        } else {
-          this.isDataAvailble = true;
-          this.eventReadable = false;
-          this.gameReadble =false;
-          this.schoolReadble = false;
-          this.messageService.add({key: 'custom',severity:'error', summary: 'Event not found for this year!'});
-        }
-      } else {
-       console.log('Data is blannk from service')
-      }
 
-   } ,
-   error => {
-     //this.errorAlert =true;
-    });
   } else {
     this.eventOptions = [];
     this.gameOptions = [];

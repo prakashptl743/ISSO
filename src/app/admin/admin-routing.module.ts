@@ -25,38 +25,163 @@ import { AdminPayment } from './admin-payment/admin-payment.component';
 import { ManageEventReport } from './mange-event-report/manage-event-report.component';
 import { ManageTeamReport } from './manage-team-report/manage-team-report.component';
 import { UserManagementComponent } from './user-management/user-management.component';
- 
+import { PermissionGuard } from '../services/permission.guard';
+import { AdminPermission } from '../services/user.service';   
 const routes: Routes = [
   {
-    path: 'admin',component: AdminComponent,canActivate: [AuthGuard],
+     path: 'admin',
+     component: AdminComponent,
+     canActivate: [AuthGuard],
     
     children: [
       {
       path: '',
       children: [
-        { path: 'blogs', component: ManageBlogsComponent },
-        { path: 'blogs/create', component: BlogFormComponent },
-        { path: 'blogs/edit/:id', component: BlogFormComponent },
-        { path: 'categories', component: ManageCategoriesComponent },
-        { path: 'pages', component: ManagePagesComponent },
-        // { path: 'dashboard', component: AdminComponent },
-        { path: 'game', component: GameComponent },
-        { path: 'dashboard', component: TestComponent },
-        { path: 'subgame', component: SubGameComponent },
-        { path: 'upcomingevent', component: UpcomingEventComponent },
-        { path: 'manageeventreport', component: ManageEventReport },   
-        { path: 'ManageTeamReport', component: ManageTeamReport },          
-        { path: 'student', component: StudentComponent },
-        { path: 'payment', component: PaymentComponent },
-        { path: 'report', component: ReportComponent },
-        { path: 'merit', component: MeritComponent },
-        { path: 'event', component: EventComponent },
-        { path: 'coach-data', component: CoachDataComponent },
-        { path: 'attendance', component: StudentAttendanceComponent },
-        { path: 'admin-payment', component: AdminPayment },
-        { path: 'admin-school', component: AdminSchoolComponent },
-        { path: 'webData', component: WebDataComponent },
-        { path: 'user-mgt', component: UserManagementComponent },
+
+        {
+          path: 'dashboard',
+          pathMatch: 'full',
+          component: TestComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Dashboard }
+        },  
+        {
+          path: 'game',
+          pathMatch: 'full',
+          component: GameComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Game }
+        },  
+        {
+          path: 'dashboard',
+          pathMatch: 'full',
+          component: TestComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Dashboard }
+        },  
+        {
+          path: 'subgame',
+          pathMatch: 'full',
+          component: SubGameComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.SubGame }
+        }, 
+        {
+          path: 'upcomingevent',
+          pathMatch: 'full',
+          component: UpcomingEventComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.UpcomingEvent }
+        }, 
+        {
+          path: 'manageeventreport',
+          pathMatch: 'full',
+          component: ManageEventReport,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.EventReport }
+        }, 
+        {
+          path: 'ManageTeamReport',
+          pathMatch: 'full',
+          component: ManageTeamReport,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.TeamReport }
+        }, 
+        {
+          path: 'student',
+          pathMatch: 'full',
+          component: StudentComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Student }
+        }, 
+        {
+          path: 'payment',
+          pathMatch: 'full',
+          component: PaymentComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Payment }
+        }, 
+        {
+          path: 'report',
+          pathMatch: 'full',
+          component: ReportComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.AdminReport }
+        }, 
+        {
+          path: 'merit',
+          pathMatch: 'full',
+          component: MeritComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Merit }
+        }, 
+        {
+          path: 'event',
+          pathMatch: 'full',
+          component: EventComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Event }
+        }, 
+        {
+          path: 'event',
+          pathMatch: 'full',
+          component: EventComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Event }
+        }, 
+        {
+          path: 'attendance',
+          pathMatch: 'full',
+          component: StudentAttendanceComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.Attendance }
+        }, 
+        {
+          path: 'admin-payment',
+          pathMatch: 'full',
+          component: AdminPayment,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.AdminPayment }
+        }, 
+        {
+          path: 'admin-school',
+          pathMatch: 'full',
+          component: AdminSchoolComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.AdmiSchool }
+        }, 
+        {
+          path: 'webData',
+          pathMatch: 'full',
+          component: WebDataComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.WebData }
+        }, 
+        {
+          path: 'user-mgt',
+          pathMatch: 'full',
+          component: UserManagementComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.UserMgt }
+        }, 
+
+       // { path: 'game', component: GameComponent },
+       // { path: 'dashboard', component: TestComponent },
+       // { path: 'subgame', component: SubGameComponent },
+     //   { path: 'upcomingevent', component: UpcomingEventComponent },
+       // { path: 'manageeventreport', component: ManageEventReport },   
+       // { path: 'ManageTeamReport', component: ManageTeamReport },          
+       // { path: 'student', component: StudentComponent },
+     //   { path: 'payment', component: PaymentComponent },
+      //  { path: 'report', component: ReportComponent },
+      //  { path: 'merit', component: MeritComponent },
+      //  { path: 'event', component: EventComponent },
+      //  { path: 'coach-data', component: CoachDataComponent },
+      //  { path: 'attendance', component: StudentAttendanceComponent },
+       // { path: 'admin-payment', component: AdminPayment },
+       // { path: 'admin-school', component: AdminSchoolComponent },
+        //{ path: 'webData', component: WebDataComponent },
+       // { path: 'user-mgt', component: UserManagementComponent },
         // { path: 'dashboard', component: AdminDashboardComponent }
       ],
     }
