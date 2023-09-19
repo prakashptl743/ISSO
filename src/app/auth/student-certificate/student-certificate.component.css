@@ -231,6 +231,9 @@ body {
   border: 1px solid black;
   margin: 0 10%;
 }
+.time-distance {
+  font-size: 12px;
+}
 .event-venue {
   padding-top: 1%;
   font-size: 15px;

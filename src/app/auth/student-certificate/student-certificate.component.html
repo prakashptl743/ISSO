@@ -2,7 +2,7 @@
     <img height="100" width="100" src='assets/images/loading.gif'>  
 </div>
 <div>
-   <div class="main-body certificate-font">
+   <div class="main-body certificate-font"> 
     <div *ngFor="let student of certificateData; let i = index;">
             <section class="upper-body"><img src="assets/images/sp1.png" /></section>
             <section class="certificate-section">
@@ -53,9 +53,10 @@
                 <div class="summary-section">
                     <p>HAS PARTICIPATED IN <span>{{student.certificateHeader}}</span> IN "{{student.gameName}}" 
                         <span *ngIf="isMerit && student.gameType === 'Both'">SUBGAME {{student.subGameName}}</span>
-                        "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location}}"<span *ngIf="isMerit">AND  <span *ngIf="student.subgameType === 'Team'" >TEAM</span> SECURED {{rankText}} POSITION</span>
+                        "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location}}"<span *ngIf="isMerit">AND  <span *ngIf="student.subgameType === 'Team'" >TEAM</span> SECURED {{rankText}} POSITION</span><br/>
+                        <span *ngIf="showTime" class="time-distance">TIME/DISTANCE/POINT {{student.timeDistance}}</span>
                     </p>
-                </div>
+                </div>             
             </section> 
             <section class="lower-body">
               

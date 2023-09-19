@@ -103,13 +103,23 @@
 
                             <div class="col-md-6">
                               <div class="category-box">
-                                <div *ngIf="game.gameType !== 'Both'">
+                                <div *ngIf="game.gameType !== 'Both'"> 
                                   <!-- <img
                                     *ngIf="game.eleven_girls > '0' || game.fourteen_girls > '0' || game.sixteen_girls > '0' || game.seventeen_girls > '0' || game.ninteen_girls > '0'"
                                     src="assets/images/web/boys.svg" /> -->
                                   <h2
-                                    *ngIf="game.eleven_girls > '0' || game.fourteen_girls > '0' || game.sixteen_girls > '0'  || game.seventeen_girls > '0' || game.ninteen_girls > '0'">
+                                    *ngIf="(game.eleven_girls > '0' && game.gameType != 'Both'  && gameData[0].elevenGirlsMap == 11 ) ||
+                                    ( game.fourteen_girls > '0' && game.gameType != 'Both'  && gameData[0].fourteenGirlsMap == 14 ) ||
+                                    ( game.sixteen_girls > '0' && game.gameType != 'Both'  && gameData[0].sixteenGilrsMap == 16 ) || 
+                                    ( game.seventeen_girls > '0' && game.gameType != 'Both'  && gameData[0].seventeenGirlsMap == 17 ) || 
+                                    (game.ninteen_girls > '0' && game.gameType != 'Both' && gameData[0].ninteenGilrsMap == 19) ">
                                     Girls Tournaments</h2>
+
+
+                                    <!-- <h2
+                                    *ngIf="game.eleven_girls > '0' || game.fourteen_girls > '0' || game.sixteen_girls > '0'  || game.seventeen_girls > '0' || game.ninteen_girls > '0'">
+                                    Girls Tournaments Hello</h2> -->
+
                                 </div>
                                 <div class="categories">
                                   <div class="col-md-4 caps-b" *ngIf="game.eleven_girls > '0' && game.gameType != 'Both'  && gameData[0].elevenGirlsMap == 11"
@@ -189,7 +199,9 @@
                               <div class="col-md-6">
                                 <div class="category-box">
                                   <!-- <img src="assets/images/web/boys.svg" /> -->
-                                  <h2>Girls Tournaments</h2>
+                                  <h2
+                                  *ngIf="gameData[0].elevenGirlsMap == 11 || gameData[0].fourteenGirlsMap == 14 || gameData[0].sixteenGilrsMap == 16  || gameData[0].seventeenGirlsMap == 17 || gameData[0].ninteenGilrsMap == 19">
+                                  Girls Tournaments</h2>
                                   <div class="categories">
                                     <div class="col-md-4 caps-b" *ngIf="gameData[0].elevenGirlsMap == 11"
                                     (click)="setSubGame(gameData[0].gameName,gameData[0].gameType,gameIdArray[i], 11,'girl','eleven_girls')">

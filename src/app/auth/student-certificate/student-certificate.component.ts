@@ -43,6 +43,7 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
   subgameId: string;
   isMerit: boolean = false;
   rankText: string;
+  showTime: boolean;
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
@@ -89,6 +90,14 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
         this.certificateData =response;
         console.log('Helllo'+this.certificateData);
         this.loading = false;
+        let timeDistanceVal = this.certificateData[0]['timeDistance'];
+        console.log('timeDistanceVal'+timeDistanceVal);
+        if(timeDistanceVal === undefined) {
+          this.showTime = false;
+        } else {
+          this.showTime = true;
+          console.log('Im  timee');
+        }
         //this.schoolServiceData =response;
         //this.schoolData = this.schoolServiceData;
       } else {
