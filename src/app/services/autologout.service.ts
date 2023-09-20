@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 //import { School } from './school';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router'
-const MINUTES_UNITL_AUTO_LOGOUT = 10 // in mins
+const MINUTES_UNITL_AUTO_LOGOUT = 20 // in mins
 const CHECK_INTERVAL = 5000 // in ms
 const STORE_KEY =  'lastAction';
 
