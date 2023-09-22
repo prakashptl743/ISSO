@@ -53,3 +53,12 @@ header.isso-header {
 }
 
 .isso-menu{margin-top: 42px !important;padding-top: 0;}
+
+.footer{
+    background: #333437;
+    color: #fff;
+    padding: 10px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}

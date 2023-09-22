@@ -556,7 +556,7 @@ body .ui-dataview .ui-dataview-content {
     float: left;
     font-size: 13px;
     background: #74BB56;
-    padding: 3px;
+    padding: 3px 10px;
     border-radius: 5px;
     margin-top: -5px;
     color: #fff;
@@ -566,7 +566,7 @@ body .ui-dataview .ui-dataview-content {
     float: left;
     font-size: 13px;
     background: #F58220;
-    padding: 3px;
+    padding: 3px 10px;
     border-radius: 5px;
     margin-top: -5px;
     color: #fff;

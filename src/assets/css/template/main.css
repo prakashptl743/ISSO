@@ -224,7 +224,7 @@ header .user-dropbox img {
   margin-top: 100px;
 }
 .event-container .event-namebox {
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   display: inline-block;
 }
 .event-container .event-namebox .event-locaton {

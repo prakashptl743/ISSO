@@ -308,7 +308,7 @@
 
     
            
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="form-control-label">Student Name</label>
               <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
                 placeholder="Student Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
@@ -317,7 +317,7 @@
                  </span>
 
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="form-control-label">Father's/Mother's Name</label>
               <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
                 placeholder="Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
@@ -325,7 +325,7 @@
                   <div *ngIf="f.fatherName.errors.required">Student Father's/Mother's Name is required</div>
                 </div>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="form-control-label">Date of Birth</label><br/>
 
   
@@ -340,19 +340,19 @@
                 dateFormat="dd/mm/yy"  [minDate]="minDate" [maxDate]="maxDate" showAnim="slideDown" [style]="{'width':'105%'}" [inputStyle]="{'width':'95%'}"
                 ></p-calendar>   -->
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="form-control-label">Admission No.</label>
               <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="admissionNo" formControlName="admissionNo"
                 placeholder="Admission Number" class="form-control" id="inputWarning1">
                 <span class="file-hint">Please enter in this format (IB/1234)</span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label class="form-control-label">Select Class</label>
               <p-dropdown [(ngModel)]="selectedClass" placeholder="Please Select" [options]="standardClass" size="30"
                 formControlName="standardClass"></p-dropdown>
             </div>
 
-            <div class="checkbox form-group col-md-6" *ngIf="!showNRI">
+            <div class="checkbox form-group col-md-4" *ngIf="!showNRI">
               <!-- <div class="float-left"> -->
                 <label>
                   <input type="checkbox" data-md-icheck (change)="toggleVisibility($event,'aadhar')" #checkboxes>
@@ -368,7 +368,7 @@
               <!-- </div> -->
             </div>
            
-            <div class="checkbox form-group col-md-6" *ngIf="showNRI">
+            <div class="checkbox form-group col-md-4" *ngIf="showNRI">
                 <label>
                     <input type="checkbox" [checked]="showNRI" (change)="toggleVisibility($event,'passport')" #checkboxes>
                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
@@ -378,7 +378,7 @@
                 <input type="text" [(ngModel)]="passport" placeholder="Passport Holder" formControlName="passPort"
                   class="form-control" id="inputWarning1">
             </div>
-             <div class="form-group col-md-6">
+             <div class="form-group col-md-4">
               <label class="form-control-label">Contact No</label>
               <input type="text" [(ngModel)]="contactNo" placeholder="Enter mobile number" formControlName="contactNo"
                   class="form-control" id="inputWarning1">
@@ -387,8 +387,8 @@
                    
              
                <!-- <p-dropdown  [(ngModel)]="rootGameName"  [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="rootGameoptions"  size="30" ></p-dropdown> -->
-               <div class="form-group col-md-6" *ngIf="showSubGameList">
-                 <div class="form-group float-left">
+               <div class="form-group col-md-4" *ngIf="showSubGameList">
+                 <div class="form-group">
                     <label class="form-control-label">Select SubGame</label>
                     <p-dropdown  [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSubGame1" (onChange)="loadGameChange($event)" [options]="subGameoptions"  size="30" ></p-dropdown>
                  </div>
@@ -398,7 +398,7 @@
                 </div>
  
          
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
            
               <div>
                 <label class="form-control-label">Upload Player Photo</label>
@@ -678,7 +678,7 @@
   </div>
  </div> 
 </div>-->
-    <!-- <div class="form-group col-md-6">
+    <!-- <div class="form-group col-md-4">
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit1()">
   <label class="form-control-label">Upload Photo</label>
   <input type="text" formControlName="name">
@@ -700,23 +700,23 @@
 
           <div class="panel-body">
             <form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="form-control-label">Student Name</label>
                 <input [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
                   placeholder="Student Name" class="form-control" id="inputSuccess1">
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="form-control-label">Father's/Mother's Name</label>
                 <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
                   placeholder="Father Name" class="form-control" id="inputWarning1">
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="form-control-label">Date of Birth</label>
                 <p-calendar [(ngModel)]="datOfBirth" formControlName="dateOfBirth" placeholder="Date of Birth"
                   dateFormat="dd/mm/yy" showAnim="slideDown" [style]="{'width':'105%'}" [inputStyle]="{'width':'95%'}"
                   [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-4">
                 <label class="form-control-label">Select Class</label>
                 <p-dropdown [(ngModel)]="selectedClass" placeholder="Please Select" [options]="standardClass" size="30"
                   formControlName="standardClass"></p-dropdown>
@@ -725,7 +725,7 @@
           <label class="form-control-label">Select Age</label>
           <p-dropdown placeholder="Please Select" [options]="ageRange"  size="30" formControlName="ageRange"></p-dropdown>
         </div> --> 
-              <div class="checkbox align-nri form-group col-md-6">
+              <div class="checkbox align-nri form-group col-md-4">
                 <label>
                   <input type="checkbox" data-md-icheck (change)="toggleVisibility($event)" #checkboxes>
                   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
