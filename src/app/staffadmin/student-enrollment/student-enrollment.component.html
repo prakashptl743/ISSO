@@ -23,6 +23,8 @@
                           <a *ngIf="!showGoBack" (click)="goBackToGameList()"> <img src="assets/images/web/back.svg" />
                             Back </a>
                         </span>
+                        <div class="align-game-header text-center" *ngIf="showSubGameList">{{panelHeading}}</div>
+
                         <div class="event-container"  *ngIf="noGameAvailable">
                           <h2 class="animate__animated animate__bounce"> No Game Registered for this Event</h2>
                         </div>
@@ -274,7 +276,6 @@
         </div>
         
 
-        <div class="align-game-header text-center" *ngIf="showSubGameList">{{panelHeading}}</div>
 
         <div class="panel-body">
       

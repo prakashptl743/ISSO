@@ -226,6 +226,8 @@ header .user-dropbox img {
 .event-container .event-namebox {
   margin-bottom: 30px;
   display: inline-block;
+  float: left;
+    width: 100%;
 }
 .event-container .event-namebox .event-locaton {
   color: #000;
@@ -240,6 +242,7 @@ header .user-dropbox img {
   background: transparent;
   padding: 10px;
   box-shadow: none;
+  float: left;
   cursor: pointer;
 }
 .event-container .event-namebox span.back a {
