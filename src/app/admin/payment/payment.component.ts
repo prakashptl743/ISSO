@@ -211,12 +211,18 @@ export class PaymentComponent implements OnInit {
         this.paymentInvoiceService.getStudentData(this.eventValue, gameId,this.rootGameType).subscribe(
           response => {
             if(response!=="") {
-              this.paymentData = response
+              this.paymentData = response;
               this.showspinner = false;
-              this.isDataAvailble = true;
+              if(this.paymentData.length > 0 ){
+                this.isDataAvailble = true;
+               
+             } else {
+               this.isDataAvailble = false;
+               this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found for this game'});    
+             }
             } else {
               console.log('Data is blannk from service')
-            }
+             }
       
         } ,
         error => {

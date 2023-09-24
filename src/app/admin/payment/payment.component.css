@@ -54,3 +54,22 @@ table{
 .text-center {
 	text-align: center;
 }
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 150%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    position: absolute;
+    font-size: 2em;
+    top: 11px;
+    text-decoration: none;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+    padding-top: 4px;
+}
+:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
+    margin-left: 2.5em;
+}
