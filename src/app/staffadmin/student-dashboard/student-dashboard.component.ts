@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 //import { SchoolService } from '../service/school.service';
 import { StudentService } from '../service/student.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Student } from '../staffadmin-interfaces';
 import { IssoUtilService } from '../../services/isso-util.service'; 
 import { StudentEnrollmentService } from '../service/student-enrollment.service';
 import { environment } from '../../../environments/environment';
-
+ 
 @Component({
   selector: 'app-student-dashboard',
   templateUrl: './student-dashboard.component.html',
@@ -70,6 +70,7 @@ export class StudentDashboardComponent implements OnInit {
   isEditStudent: boolean;
   setPhotoYear: string;
   isFirstYear: boolean;
+  selectedEvent: string;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -110,6 +111,9 @@ onDialogHide() {
   this.selectedSchool = null;
 }
 onyeareChange(val,yearText) {
+  this.schoolData = [];
+  this.selectedEvent ='';
+  this.showStudentCount = false;
   if(yearText == 'first') {
     this.isFirstYear = true;
   } else {
@@ -164,7 +168,7 @@ onEventChange(event) {
   this.eventValue = event.value;
   this.isEditStudent = false;
   console.log('this.eventValue'+this.eventValue);
-
+ 
   this.schoolvalue = event.value;
   console.log('this.eventValue'+this.schoolvalue);
   this.loadStudentData()

@@ -75,8 +75,8 @@ saveStudentAttendance(studentInfo){
   );
 }
 
-getStudentData(evenId,gameId){
-  let str = 'payment/getStudentData/' + evenId +'/' +gameId;
+getStudentData(evenId,gameId,gameType){
+  let str = 'payment/getStudentData/' + evenId +'/' +gameId +'/' +gameType;
  return this.http.get(this.serverUrl + str).pipe(
    catchError(this.handleError)
 );

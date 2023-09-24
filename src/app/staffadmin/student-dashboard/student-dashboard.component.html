@@ -28,7 +28,7 @@
       <div class="ui-helper-clearfix">
           <div class="ui-g">
             <div class="ui-g-6 ui-md-6">
-              <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+              <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
            </div>
               <div class="ui-g-6 ui-md-6 filter-container">
                   <div style="position:relative">
@@ -63,7 +63,7 @@
                         <h4 class="stud-name" title="{{school.name}}">{{school.studentName}}</h4>
                        
                       </div>
-                      <div class="col-md-9 mt-top">
+                      <div class="col-md-3 mt-top">
                         <span *ngIf="school.isPresent =='0'"  class="item-value present">Present</span>
                         <span *ngIf="school.isPresent =='1'" class="item-value absent">Absent</span>
                         <div class="icons-wrap">
