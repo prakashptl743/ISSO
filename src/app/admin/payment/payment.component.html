@@ -1,39 +1,64 @@
  
-<div class="ui-g-12 ui-md-2">
-  <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear" placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-</div>
-<div id="content1" class="content-wrapper alignTbl">
-  <div  class="ui-g-12 ui-md-12" *ngIf="showPaymenData">
-    <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Event Name</th>
-        <th>Event Price</th>
-        <th>Schools</th>
-        <th>Total Student</th>
-        <th>Total Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let payment of paymentData">
-        <td>{{payment.eventName}}</td>
-        <td>{{payment.price}}</td>
-        <td>
-          <ol>
-            <li *ngFor="let subCategory of (payment.schools.split(','))">
-           {{subCategory }}
-            </li>
-         </ol> 
-        </td>
-        <td>{{payment.student}}</td>
-        <td>{{payment.amount}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="totalAmount"><span style="margin-right: 10px;">Total Earning</span>{{ paymentData | sum:'amount' |  currency:'INR' }}</div>  
-   
+ 
+<div class="ui-g-12">
+  <div class="ui-g-4">
+    <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
   </div>
-  <div class="ui-g-12 ui-md-12" *ngIf="nopayment">
-    <span>NO Payment for this year</span>
+  <div class="ui-g-4">
+    <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
   </div>
+</div>    
+<div class="ui-g-12">
+<div class="ui-g-4">
+  <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
 </div>
+ 
+</div>
+
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+
+<app-loading *ngIf="showspinner"></app-loading>
+<div class="table-responsive" *ngIf="isDataAvailble">  
+<div class="ui-g-12">
+<table class="table table-bordered">
+ 
+<tbody>
+  <tr class="table-row-color">
+    <td  rowspan="1">Sr No.</td>
+    <td>SchooolName</td>
+    <td>11 Boys</td><td>14 Boys</td>
+    <td>16 Boys</td><td>17 Boys</td>
+    <td>19 Boys</td><td>11 Girls</td>
+    <td>14 Girls</td><td>16 Girls</td>
+    <td>17 Girls</td><td>19 Girls</td>
+    <td>Paid</td> 
+  </tr>
+  <tr *ngFor="let student of paymentData;let i = index;">
+    
+    <td>{{i+1}}</td>
+    <td>{{student.schoolName}}</td>
+    <td class="text-center"  [ngClass]="student.elevenBcount >0 ? 'boys-color' : '' " >{{student.elevenBcount}}</td>
+    <td class="text-center"  [ngClass]="student.fourBcount >0 ? 'boys-color' : '' ">{{student.fourBcount}}</td>
+    <td class="text-center"  [ngClass]="student.sixBcount >0 ? 'boys-color' : '' ">{{student.sixBcount}}</td>
+    <td class="text-center"  [ngClass]="student.sevenBcount >0 ? 'boys-color' : '' ">{{student.sevenBcount}}</td>
+    <td class="text-center"  [ngClass]="student.nineBcount >0 ? 'boys-color' : '' ">{{student.nineBcount}}</td>
+    <td class="text-center"  [ngClass]="student.elevenGcount >0 ? 'girls-color' : '' ">{{student.elevenGcount}}</td>
+    <td class="text-center"  [ngClass]="student.fourGcount >0 ? 'girls-color' : '' ">{{student.fourGcount}}</td>
+    <td class="text-center"  [ngClass]="student.sixGcount >0 ? 'girls-color' : '' ">{{student.sixGcount}}</td>
+    <td class="text-center"  [ngClass]="student.sevenGcount >0 ? 'girls-color' : '' ">{{student.sevenGcount}}</td>
+    <td class="text-center"  [ngClass]="student.nineGcount >0 ? 'girls-color' : '' ">{{student.nineGcount}}</td>
+    <td class="text-center" [ngClass]="student.paidStudent >0 ? 'paid-color' : 'not-paid-color' ">{{student.paidStudent}}</td>
+    
+  </tr> 
+
+</tbody>
+
+</table>
+</div> 
+ 
+
+
+</div>
+
+
+
