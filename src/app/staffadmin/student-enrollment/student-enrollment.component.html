@@ -309,7 +309,7 @@
     
            
             <div class="form-group col-md-4">
-              <label class="form-control-label">Student Name</label>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_face_24px.png">Student Name</label>
               <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
                 placeholder="Student Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
                  <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
@@ -318,7 +318,7 @@
 
             </div>
             <div class="form-group col-md-4">
-              <label class="form-control-label">Father's/Mother's Name</label>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_account_circle_24px.png">Father's/Mother's Name</label>
               <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
                 placeholder="Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
                 <div *ngIf="f.fatherName.touched && f.fatherName.errors" class="invalid-feedback">
@@ -326,7 +326,7 @@
                 </div>
             </div>
             <div class="form-group col-md-4">
-              <label class="form-control-label">Date of Birth</label><br/>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_face_24px.png">Date of Birth</label><br/>
 
   
 
@@ -341,13 +341,13 @@
                 ></p-calendar>   -->
             </div>
             <div class="form-group col-md-4">
-              <label class="form-control-label">Admission No.</label>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_account_balance_24px.png">Admission No.</label>
               <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="admissionNo" formControlName="admissionNo"
                 placeholder="Admission Number" class="form-control" id="inputWarning1">
                 <span class="file-hint">Please enter in this format (IB/1234)</span>
             </div>
             <div class="form-group col-md-4">
-              <label class="form-control-label">Select Class</label>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_perm_contact_calendar_24px.png">Select Class</label>
               <p-dropdown [(ngModel)]="selectedClass" placeholder="Please Select" [options]="standardClass" size="30"
                 formControlName="standardClass"></p-dropdown>
             </div>
@@ -362,7 +362,7 @@
               <!-- </div> -->
            
               <!-- <div class="float-right"> -->
-                <label class="form-control-label align-label">Aadhar Number</label>
+                <label class="form-control-label align-label"><img _ngcontent-exj-c2="" class="form-icon" src="assets/images/ic_pan_tool_24px.png" style="width: 15px;position: relative;top: -3px;">Aadhar Number</label>
                 <input type="text" [(ngModel)]="aadharNumber" placeholder="Enter Aadhar Number" maxlength="12" numbersOnly
                   formControlName="aadharNumber" class="form-control" id="inputWarning1">
               <!-- </div> -->
@@ -374,12 +374,12 @@
                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                     Passport
                 </label>  
-                <label class="form-control-label align-label">Passport</label>
+                <label class="form-control-label align-label"><img _ngcontent-exj-c2="" class="form-icon" src="assets/images/ic_pan_tool_24px.png" style="width: 15px;position: relative;top: -3px;">Passport</label>
                 <input type="text" [(ngModel)]="passport" placeholder="Passport Holder" formControlName="passPort"
                   class="form-control" id="inputWarning1">
             </div>
              <div class="form-group col-md-4">
-              <label class="form-control-label">Contact No</label>
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_ring_volume_24px.png">Contact No</label>
               <input type="text" [(ngModel)]="contactNo" placeholder="Enter mobile number" formControlName="contactNo"
                   class="form-control" id="inputWarning1">
                   <span class="file-hint">Please enter mobile number registered to whattsapp.</span>
@@ -389,7 +389,7 @@
                <!-- <p-dropdown  [(ngModel)]="rootGameName"  [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="rootGameoptions"  size="30" ></p-dropdown> -->
                <div class="form-group col-md-4" *ngIf="showSubGameList">
                  <div class="form-group">
-                    <label class="form-control-label">Select SubGame</label>
+                    <label class="form-control-label"><img class="form-icon" src="assets/images/ic_group_work_24px.png">Select SubGame</label>
                     <p-dropdown  [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSubGame1" (onChange)="loadGameChange($event)" [options]="subGameoptions"  size="30" ></p-dropdown>
                  </div>
                  <div class="form-group align-subGame"> 

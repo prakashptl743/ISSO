@@ -2,7 +2,9 @@
 ::ng-deep body .ui-datepicker table td {
     padding: 0rem !important; 
 }
- 
+.form-icon{
+    margin-right: 10px;
+} 
   
 
 .cusror-pointer {
