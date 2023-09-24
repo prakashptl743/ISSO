@@ -432,26 +432,29 @@
                   id="inputWarning1">
               </div>
             </div>
-            <table class="table"  *ngIf="showMapData">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Sub Game Name</th>
-                  <th scope="col" *ngIf="!isEdit">Sub Game Type</th>
-                  <th scope="col" *ngIf="!isEdit">Sub Game Capacity</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let mapGame of mapGameArray; let i = index;">
-                  <td>{{mapGame.subGameName}}</td>
-                  <td *ngIf="!isEdit">{{mapGame.subGameType}}</td>
-                  <td *ngIf="!isEdit">{{mapGame.subGameCapacity}}</td>
-                  <td>  
-                    <button class="btn btn-primary" type="button" (click)="removeMappedData(i)">Delete</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="form-group col-md-12">
+              <table class="table sub-table"  *ngIf="showMapData">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sub Game Name</th>
+                    <th scope="col" *ngIf="!isEdit">Sub Game Type</th>
+                    <th scope="col" *ngIf="!isEdit">Sub Game Capacity</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let mapGame of mapGameArray; let i = index;">
+                    <td>{{mapGame.subGameName}}</td>
+                    <td *ngIf="!isEdit">{{mapGame.subGameType}}</td>
+                    <td *ngIf="!isEdit">{{mapGame.subGameCapacity}}</td>
+                    <td>  
+                      <button class="btn btn-primary" type="button" (click)="removeMappedData(i)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
             <div class="form-group col-md-12" *ngIf="!showSubGameList">
               <p-button class="align-submit" [disabled]="!studentEnroolForm.valid " label="{{submitButtonLabel}}"></p-button>
               <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
@@ -467,41 +470,51 @@
           </form>
        
 
-    <div class="container-fluid table-pad" *ngIf="isStudentListShow && !showSubGameErrorMsg">
+    <div class="table-pad" *ngIf="isStudentListShow && !showSubGameErrorMsg">
   
             <div class="">
               <div class="table-responsive">
 
 
-                <table class="table table-bordered">
+                <table class="table">
                   <thead class="table-color">
                     <tr>
                       <th scope="col">Sr. No </th>
+                      <th scope="col">Photo</th>
                       <th scope="col">Student Name </th>
                       <th scope="col">Father's/Mother's Name</th>
                       <th scope="col">Admission No</th>
                       <th scope="col">Date of birth</th>
                       <!-- <th scope="col">Contact No.</th> -->
                       <th scope="col">Class</th>
-                      <th scope="col">Age Range</th>
+                      <!-- <th scope="col">Age Range</th> -->
                       <th scope="col">Aadhar No</th>
                       <th scope="col">Passport</th>
                       <th scope="col" *ngIf="showSubGameList">Sub Game Name</th>
                       <!-- <th scope="col">Enrolled Date</th> -->
-                      <th scope="col">Photo</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let studentList of studentListArray; let i = index;">
-                      <td>{{i+1}}</td>
+                      <td class="text-center">{{i+1}}</td>
+                      <td class="align-photo" *ngIf="studentList.photo!=''">
+                       
+                        <img class="stud-circle" height="50" width="50" src="{{setPhotoYear}}/{{studentList.photo}}" 
+                        alt="banner" />
+                        <!-- <img height="50" width="50" src="http://issoindia.com/uploads/studentphoto/{{photoUrl}}" height="60"
+                          alt="banner" /> -->
+                      </td>
+                      <td *ngIf="studentList.photo ==''">
+                        <img class="stud-circle" height="50" width="50" src="../../assets/images/general/defaulUser.png" alt="banner" />
+                      </td>
                       <td>{{studentList.studentName}}</td>
                       <td>{{studentList.fatherName}}</td>
                       <td>{{studentList.admissionNumber}}</td>
                       <td>{{studentList.dateOfBirth | date: 'MMM d, y'}}</td>
                       <!-- <td>{{studentList.contactNo}}</td> -->
                       <td>{{studentList.standardClass}}</td>
-                      <td>{{studentList.ageRange}}</td>
+                      <!-- <td>{{studentList.ageRange}}</td> -->
                       <td *ngIf="studentList.aadharNumber !==''">{{studentList.aadharNumber}}</td>
                       <td *ngIf="studentList.aadharNumber =='' ">N/A</td>
                       <td *ngIf="studentList.passport !==''">{{studentList.passport}}</td>
@@ -516,19 +529,10 @@
                       </td>
 
                       <!-- <td>{{studentList.createdDate | date: 'MMM d, y'}}</td> -->
-                      <td class="align-photo" *ngIf="studentList.photo!=''">
-                       
-                        <img height="50" width="50" src="{{setPhotoYear}}/{{studentList.photo}}" height="60"
-                        alt="banner" />
-                        <!-- <img height="50" width="50" src="http://issoindia.com/uploads/studentphoto/{{photoUrl}}" height="60"
-                          alt="banner" /> -->
-                      </td>
-                      <td *ngIf="studentList.photo ==''">
-                        <img height="50" width="50" src="../../assets/images/general/defaulUser.png" height="60" alt="banner" />
-                      </td>
+                      
                       <td class="action">
-                          <a href="javascript: void(0)"  (click)="editStudent(i)" ><img src="assets/images/web/edit.svg"></a>
-                          <a href="javascript: void(0)" (click)="deleteStudentData($event, i)"><img src="assets/images/web/delete.svg"></a>
+                        <a class="edit-font-icon" href="javascript: void(0)"  (click)="editStudent(i)" ><i class="fas fa-edit"></i></a>
+                          <a class="delete-font-icon" href="javascript: void(0)" (click)="deleteStudentData($event, i)"><i class="fas fa-trash"></i></a>
 
                       </td>
                   </tr>
