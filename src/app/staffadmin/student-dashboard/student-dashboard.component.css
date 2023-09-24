@@ -18,7 +18,15 @@
 .wrapper{
     margin-top: 0;
 }
-
+.align-heading {
+    padding: 10px;
+    margin: 0;
+    color: #080808;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
 .absent{
     color: white;
     padding-left: 5px;
