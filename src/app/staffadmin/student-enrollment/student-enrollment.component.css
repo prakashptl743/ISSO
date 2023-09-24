@@ -98,7 +98,7 @@
   padding-left: 5px;
 }
 
-:host ::ng-deep .table {   width: 1200px;  }
+:host ::ng-deep .table {   margin: 0 15px 15px;  }
   
 .table-color {
     color: #fff;
