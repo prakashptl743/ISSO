@@ -1,7 +1,7 @@
 
 
 
-<div class="col-md-12 event-container">
+<div class="col-md-12 profile-container">
 
 
 <!-- main app container -->
@@ -129,7 +129,7 @@
             <form [formGroup]="schoolForm" (ngSubmit)="onSchoolSubmit">
               <div class="col-md-6">
                   <div class="form-group">
-                    <label for="email">School Name:</label>
+                    <label for="email"><img class="form-icon" src="assets/images/ic_account_balance_24px.png">School Name:</label>
                     <input type="hidden"  [(ngModel)]="schoolId" id="schoolName" formControlName="schoolId">
 
                     <input type="text" class="form-control"  (blur)="onSchoolSubmit()" id="schoolName" [(ngModel)]="schoolName"
@@ -141,103 +141,109 @@
 
                   </div>
                   <div class="form-group">
-                    <label for="pwd">School Address:</label>
+                    <label for="pwd"><img class="form-icon" src="assets/images/ic_add_location_24px.png">School Address:</label>
                     <input type="text" class="form-control" id="pwd" [(ngModel)]="schoolAddress"
                       placeholder="Enter School Address" formControlName="schoolAddress">
                   </div>
                   <div class="form-group">
-                    <label for="pwd">Infrastructure at school:</label>
+                    <label for="comment"><img class="form-icon" src="assets/images/ic_dashboard_24px.png">Infrastructure at school:</label>
                     <textarea class="form-control" rows="5" [(ngModel)]="schoolInfra" formControlName="schoolInfra"
                       id="comment"></textarea>
                   </div>
               </div>
               <div class="col-md-6 floatReight">
                 <div class="form-group">
-                  <label for="email">Email:</label>
+                  <label for="email"><img class="form-icon" src="assets/images/ic_email_24px.png">Email:</label>
                   <input type="text" class="form-control" id="email" [(ngModel)]="schoolEmail" placeholder="Enter Email"
                     formControlName="schoolEmail">
                 </div>
                 <div class="form-group">
-                  <label for="pwd">Telephone Number:</label>
+                  <label for="phone"><img class="form-icon" src="assets/images/ic_ring_volume_24px.png">Telephone Number:</label>
                   <input type="text" class="form-control" id="phone" [(ngModel)]="schoolNumber"
                     placeholder="Enter Telephone Number" formControlName="mobile">
                 </div>
                 <div class="form-group">
-                  <label for="email">School Board:</label>
+                  <label for="schoolBoard"><img class="form-icon" src="assets/images/ic_verified_user_24px.png">School Board:</label>
                   <input type="text" class="form-control" id="schoolBoard" [(ngModel)]="schoolBoard"
                     placeholder="Enter School Board" formControlName="schoolBoard">
                 </div>
               </div>
 
-              <div class="col-md-6" style="float:left">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
-                  <button type="reset" class="align-cancel-button btn btn-default" (click)="editProfile('isView')">Cancel</button>
+              <div class="col-md-12 profile-form-btn-section">
+                <div class="form-group text-right">
+                  <button type="reset" style="    margin-right: 15px;" class="align-cancel-button btn btn-default" (click)="editProfile('isView')">Cancel</button>
+                  <button type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
+
                 </div>
               </div>
             </form>
           </div>
-
-          <div *ngIf="showPasswordScrren">
-             <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
-                <div class="col-md-6">
-                  <!-- <div class="form-group">
-                    <label for="email">Old Password:</label>
-                    <input type="text" formControlName="oldPassword" class="form-control">
-                    <div *ngIf="f.oldPassword.errors" class="invalid-feedback">
-                      <div *ngIf="f.oldPassword.errors.required">Title is required</div>
-                    </div>
-                  </div> -->
-                  
-                  <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="hidden"  [(ngModel)]="schoolId"   formControlName="schoolId">
-                    <input type="password" formControlName="password" [(ngModel)]="password" (blur)="onPasswordSubmit()" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                    <div *ngIf="submitted && f.password.errors" class="error-message invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
-                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="pwd">Confirm Password:</label>
-                      <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-                      <div *ngIf="submitted && f.confirmPassword.errors" class="error-message invalid-feedback">
-                          <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-                          <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <button [disabled]="!passwordForm.valid"   type="submit" class="btn btn-primary">Submit</button>
-                      <button type="reset" class="align-cancel-button btn btn-default" (click)="editProfile('isView')">Cancel</button>
-                    </div>
+          <p-dialog class="align-dialog" header="Change Password" [(visible)]="showPasswordScrren" [modal]="true" [responsive]="true"   
+          [maximizable]="true" [baseZIndex]="1000">
+          <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="profile-forms">
+            <div class="col-md-12">
+              <!-- <div class="form-group">
+                <label for="email">Old Password:</label>
+                <input type="text" formControlName="oldPassword" class="form-control">
+                <div *ngIf="f.oldPassword.errors" class="invalid-feedback">
+                  <div *ngIf="f.oldPassword.errors.required">Title is required</div>
                 </div>
-              </form>
-          </div>
+              </div> -->
+              
+              <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="hidden"  [(ngModel)]="schoolId"   formControlName="schoolId">
+                <input type="password" formControlName="password" [(ngModel)]="password" (blur)="onPasswordSubmit()" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="error-message invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label for="pwd">Confirm Password:</label>
+                  <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                  <div *ngIf="submitted && f.confirmPassword.errors" class="error-message invalid-feedback">
+                      <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                      <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                  </div>
+                </div>
+                <div class="form-group text-right">
+                  <button type="reset" class="align-cancel-button btn btn-default" (click)="editProfile('isView')">Cancel</button>
+                  <button [disabled]="!passwordForm.valid"   type="submit" class="btn btn-primary">Save</button>
+
+                </div>
+            </div>
+          </form>
+                  
+                 
+                    
+          </p-dialog>
+          
 
           <div *ngIf="!isEditProfile && !showPasswordScrren" class="profile-form">
             <div class="row">
                 <div class="col-md-12 profile-row" style="border-top: 1px solid #CBCBCB; margin-top: 20px; padding-top: 20px;">
-                    <label>School Name:</label>
+                    <label><img class="form-icon" src="assets/images/ic_account_balance_24px.png">School Name:</label>
                     <div>{{schoolName}}</div>
                 </div>
                 <div class="col-md-12 profile-row">
-                  <label>School Address:</label>
+                  <label><img class="form-icon" src="assets/images/ic_add_location_24px.png">School Address:</label>
                   <div>{{schoolAddress}}</div>
               </div>
               <div class="col-md-12 profile-row">
-                <label>Email:</label>
+                <label><img class="form-icon" src="assets/images/ic_email_24px.png">Email:</label>
                 <div>{{schoolEmail}}</div>
               </div>
               <div class="col-md-12 profile-row">
-                <label>Telephone Number:</label>
+                <label><img class="form-icon" src="assets/images/ic_ring_volume_24px.png">Telephone Number:</label>
                 <div>{{schoolNumber}}</div>
               </div>
               <div class="col-md-12 profile-row">
-                <label>School Board:</label>
+                <label><img class="form-icon" src="assets/images/ic_verified_user_24px.png">School Board:</label>
                 <div>{{schoolBoard}}</div>
               </div>
               <div class="col-md-12 profile-row">
-                  <label>Infrastructure at school:</label>
+                  <label><img class="form-icon" src="assets/images/ic_dashboard_24px.png">Infrastructure at school:</label>
                   <div>{{schoolInfra}}</div>
               </div>
             </div>

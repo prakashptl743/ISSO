@@ -11,8 +11,9 @@
 .floatReight {
     float: right;
 }
+
 .align-cancel-button {
-    margin-left: 20px;
+    margin-right: 10px;
 } 
 .editCancel {
     padding: 20px 0 20px 15px;
@@ -62,7 +63,7 @@
     margin-bottom: 20px;
 }
 .profile-logo{
-    width: 70px;
+    width: 100px;
     margin-top: 10px;
 }
 .edit-icon-profile{
@@ -77,4 +78,19 @@
 .profile-wrapper{
     width: 100px;
     margin: 0 auto;
+}
+.profile-container{
+    margin-top: 50px;
+}
+.form-icon{
+    margin-right: 20px;
+    margin-top: -5px;
+}
+.profile-form-btn-section{
+    border-top: 1px solid #cbcbcb;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+.profile-forms{
+    width: 400px;
 }
