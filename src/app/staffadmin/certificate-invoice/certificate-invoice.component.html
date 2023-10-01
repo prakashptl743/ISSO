@@ -162,7 +162,7 @@
  <div *ngIf="showMeritData">
   <div class="ui-g-12 align-merit-content">
 
-    <table class="table table-bordered">
+    <table class="table">
       <thead class="make-header">
         <tr>
           <th scope="col"><span class="header-span">Sr No</span></th>
@@ -193,16 +193,16 @@
           <td>{{printMerit.ageRange}}</td>  
           <td>{{printMerit.rank}}</td>
           <td class="align-center" *ngIf="printMerit.gameType =='Team'">
-             <a class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+             <a class="" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
           </td>
           <td class="align-center" *ngIf="printMerit.gameType =='Both' && printMerit.subgameType =='Individual'">
-            <a class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+            <a class="" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
           </td>
           <td class="align-center" *ngIf="printMerit.gameType =='Both' && printMerit.subgameType =='Team'">
-            <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+            <a  class="" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{yearvalue}}/{{printMerit.gender}}/1/{{printMerit.eventId}}/{{printMerit.gameId}}/{{printMerit.subgameId}}/{{printMerit.schoolId}}/{{printMerit.ageRange}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
           </td>
           <td class="align-center" *ngIf="printMerit.gameType =='Individual'">
-            <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
+            <a  class="" href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{printMerit.schoolId}}/{{printMerit.eventId}}/{{printMerit.gameId}}/N/{{printMerit.ageRange}}/{{printMerit.gender}}/{{printMerit.studentID}}/{{printMerit.rank}}"><i class="fas fa-download"></i></a>
           </td>
         </tr>
       

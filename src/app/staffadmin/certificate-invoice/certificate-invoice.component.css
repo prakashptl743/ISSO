@@ -142,9 +142,9 @@ a.disabled {
     /* border-color: #32383e; */
     /* border-bottom: 1px solid black; */
 }
-table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+/* table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     border: 1px solid;
-}
+} */
 :host ::ng-deep .custom-toast .ui-toast-message {
     color: #ffffff;
     background:blue;
@@ -152,6 +152,9 @@ table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .
     padding-top: 8px;
     width: 120%;
  
+}
+.align-merit-content{
+    padding: 0!important;
 }
 .make-header {
     background-color: dimgrey;

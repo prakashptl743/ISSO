@@ -69,6 +69,15 @@ i, span {
 .table-responsive{
     border-radius: 9px;
 }
+table td{
+    padding: 20px 8px!important;
+    text-align: center;
+}
+table th{
+    padding: 15px 8px!important;
+    text-align: center;
+    background-color: #32383e!important;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -615,9 +624,14 @@ body .ui-dataview .ui-dataview-content {
 .edit-font-icon{
     color: #485E88;
     margin-right: 15px;
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
 }
 .delete-font-icon{
     color: #485E88;
+}
+.fa-download{
+    color:#485E88;
 }
 body .ui-button {
     margin: 0;

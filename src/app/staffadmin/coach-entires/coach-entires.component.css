@@ -398,6 +398,7 @@ a.disabled {
  }
  .align-photo {
      text-align: center;
+     padding: 8px!important;
  }
  .error-class {
      color: red;
