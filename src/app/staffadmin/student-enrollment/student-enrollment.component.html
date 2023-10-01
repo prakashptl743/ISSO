@@ -363,7 +363,7 @@
               <!-- </div> -->
            
               <!-- <div class="float-right"> -->
-                <label class="form-control-label align-label"><img _ngcontent-exj-c2="" class="form-icon" src="assets/images/ic_pan_tool_24px.png" style="width: 15px;position: relative;top: -3px;">Aadhar Number</label>
+                <label class="form-control-label align-label"><img _ngcontent-exj-c2="" class="form-icon" src="assets/images/ic_pan_tool_24px.png" style="width: 20px;">Aadhar Number</label>
                 <input type="text" [(ngModel)]="aadharNumber" placeholder="Enter Aadhar Number" maxlength="12" numbersOnly
                   formControlName="aadharNumber" class="form-control" id="inputWarning1">
               <!-- </div> -->
@@ -433,13 +433,13 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <table class="table sub-table"  *ngIf="showMapData">
+              <table class="table sub-table"  *ngIf="showMapData" style="margin-bottom: 0;">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">Sub Game Name</th>
+                    <th style="border-top-left-radius: 9px;" scope="col">Sub Game Name</th>
                     <th scope="col" *ngIf="!isEdit">Sub Game Type</th>
                     <th scope="col" *ngIf="!isEdit">Sub Game Capacity</th>
-                    <th scope="col">Action</th>
+                    <th style="border-top-right-radius: 9px;" scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -447,23 +447,23 @@
                     <td>{{mapGame.subGameName}}</td>
                     <td *ngIf="!isEdit">{{mapGame.subGameType}}</td>
                     <td *ngIf="!isEdit">{{mapGame.subGameCapacity}}</td>
-                    <td>  
-                      <button class="btn btn-primary" type="button" (click)="removeMappedData(i)">Delete</button>
+                    <td>
+                      <a class="delete-font-icon" href="javascript: void(0)" (click)="removeMappedData(i)"><i class="fas fa-trash"></i></a>  
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             
-            <div class="form-group col-md-12" *ngIf="!showSubGameList">
+            <div class="form-group col-md-12 text-right" *ngIf="!showSubGameList && showMapData">
               <p-button class="align-submit" [disabled]="!studentEnroolForm.valid " label="{{submitButtonLabel}}"></p-button>
-              <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+              <button class="second-btn" style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Cancel"></button>
             </div>
 
-            <div class="form-group col-md-12" *ngIf="showSubGameList">
+            <div class="form-group col-md-12 text-right" *ngIf="showSubGameList && showMapData">
               <p-button class="align-submit" [disabled]="(!studentEnroolForm.valid || !subGameButton)" label="{{submitButtonLabel}}">
               </p-button>
-              <button style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+              <button class="second-btn" style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Cancel"></button>
             </div>
 
 
@@ -476,7 +476,7 @@
               <div class="table-responsive">
 
 
-                <table class="table">
+                <table class="table" style="margin-bottom: 0;">
                   <thead class="table-color">
                     <tr>
                       <th scope="col">Sr. No </th>

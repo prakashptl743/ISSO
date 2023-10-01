@@ -66,6 +66,9 @@ i, span {
     position: absolute;
     right: 0;
 }
+.table-responsive{
+    border-radius: 9px;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

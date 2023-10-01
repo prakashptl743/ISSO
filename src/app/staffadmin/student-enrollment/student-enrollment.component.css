@@ -4,12 +4,23 @@
 }
 .form-icon{
     margin-right: 10px;
+    margin-top: -5px;
 } 
 
 ::ng-deep .pi-calendar{
     color: #485E88;
 } 
-
+table td{
+    padding: 20px 8px;
+    text-align: center;
+}
+table th{
+    padding: 15px 8px;
+    text-align: center;
+    background-color: #32383e!important;
+}.table-pad{
+    margin-top: 20px;
+}
 .cusror-pointer {
    cursor: pointer;
 }
@@ -25,7 +36,9 @@
 .align-sub-game {
     padding-left: 10px;
 }
-
+.form-control-label{
+    margin-bottom:8px!important;
+}
 .align-submit {
     padding-left: 0px;
 }
@@ -89,9 +102,9 @@
 .align-dob {
     width: 30%;
 }
-.align-subgame {
+/* .align-subgame {
     width: 30%;
-}
+} */
 :host ::ng-deep .table>thead>tr>th { 
     vertical-align: top !important;
 }
@@ -119,6 +132,7 @@
 }
 .align-photo {
     text-align: center;
+    padding: 8px!important;
 }
 /* .align-back {
     margin-top: 40px;
