@@ -153,12 +153,19 @@ a.disabled {
     width: 120%;
  
 }
+table td{
+    padding: 20px 8px!important;
+    text-align: center;
+}
+table th{
+    padding: 15px 8px!important;
+    text-align: center;
+    background-color: #32383e!important;
+}
 .align-merit-content{
     padding: 0!important;
 }
-.make-header {
-    background-color: dimgrey;
-}
+
 .align-center {
     text-align: center;
 }

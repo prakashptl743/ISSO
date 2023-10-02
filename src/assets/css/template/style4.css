@@ -69,15 +69,7 @@ i, span {
 .table-responsive{
     border-radius: 9px;
 }
-table td{
-    padding: 20px 8px!important;
-    text-align: center;
-}
-table th{
-    padding: 15px 8px!important;
-    text-align: center;
-    background-color: #32383e!important;
-}
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -122,6 +114,7 @@ table th{
     background: #333437;
     color: #fff;
     transition: all 0.3s;
+    float: left;
 }
 
 .staff-sidebar {
@@ -298,11 +291,11 @@ a.article, a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: 100%;
-    padding: 20px 25px;
+    width: calc(100% - 180px);
+    padding: 40px;
     min-height: 100vh;
     transition: all 0.3s;
-    /* background: #F6F8F9; */
+    margin-left: 180px;
 }
 
 .content-wrapper {

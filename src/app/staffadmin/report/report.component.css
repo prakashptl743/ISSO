@@ -23,7 +23,15 @@ a.disabled {
     font-size: 18px;
     font-weight: bold;
 }
-
+table td{
+    padding: 20px 8px!important;
+    text-align: center;
+}
+table th{
+    padding: 15px 8px!important;
+    text-align: center;
+    background-color: #32383e!important;
+}
 .align-container {
     margin-top: 0;
     padding-left: 0;
