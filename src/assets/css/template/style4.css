@@ -115,6 +115,8 @@ i, span {
     color: #fff;
     transition: all 0.3s;
     float: left;
+    height: 100vh;
+    position: fixed;
 }
 
 .staff-sidebar {
