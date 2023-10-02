@@ -163,6 +163,7 @@ ngOnInit() {
   this.schoolId = localStorage.getItem('schoolId');
   this.initialForm();
   this.fileUpladForm();
+  this.onyeareChange(this.yearOptions[1].year,'second')
   
   //this.setPhotoPath();
 }

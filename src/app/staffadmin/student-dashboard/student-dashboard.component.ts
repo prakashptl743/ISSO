@@ -89,6 +89,7 @@ ngOnInit() {
    this.loading = true;
    this.seCurrenttDate();
    this.setPhotoPath();
+   this.onyeareChange(this.yearOptions[1].year,'second')
 }
 setPhotoPath () { 
   // this.setPhotoYear = this.issoUtilService.setPhotoYear();
