@@ -1,6 +1,6 @@
 
 <div class="event-container row" style="padding:0 10px 10px 10px;">
-  <div  class="align-heading">Students Dashboard</div>
+  <div  class="align-heading">Student Dashboard</div>
 
      <div class="ui-g-12 ui-md-12 btn-nav">
          <div>
@@ -23,28 +23,23 @@
      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
   </p-footer> -->
 <!-- </p-dialog> -->
-<p-dataView #dv [paginator]="true" paginatorPosition="bottom"  *ngIf="!isEditStudent" [rows]="10" [value]="schoolData" class="no-padding" filterBy="studentName,gameName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
- 
-  <p-header>
-      <div class="ui-helper-clearfix">
-          <div class="ui-g">
-            <div class="ui-g-6 ui-md-6">
-              <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-           </div>
-              <div class="ui-g-6 ui-md-6 filter-container">
-                  <div style="position:relative">
-                      <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-                  </div>
-              </div>
-          </div>
-      </div>
-  </p-header>
-  <!-- <p-header>
-      <span class="ui-md-2"  style="word-wrap: break-word;"  *ngFor="let data of gridHeader"> 
-             <span> {{data.name}}</span>
-      </span>
-  </p-header> -->
 
+
+
+<div class="ui-g">
+  <div class="ui-g-6 ui-md-6">
+    <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+ </div>
+    <div class="ui-g-6 ui-md-6 filter-container">
+        <div style="position:relative">
+            <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+        </div>
+    </div>
+</div>
+
+<p-dataView #dv [paginator]="true" paginatorPosition="bottom"  *ngIf="showStudentCount" [rows]="10" [value]="schoolData" class="no-padding" filterBy="studentName,gameName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+  
+ 
  
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
    
@@ -89,13 +84,7 @@
                         <span class="item-value" *ngIf="school.gender =='2'" >Girl</span>
                       </div>
                     </div>
-                    <!-- <div class="col-md-3"> -->
-                      <!-- <div class="item-description"  *ngIf="school.isPresent =='1'">
-                        <label>Present Status:</label>
-                        <span [ngClass]="{'student-absent': school.isPresent =='1'}" class="item-value absent">Absent</span>
-                      </div>  -->
-                      
-                   <!-- </div> -->
+               
                    <div class="col-md-3">
                     <div class="item-description">
                         <label>Date of Birth:</label>
