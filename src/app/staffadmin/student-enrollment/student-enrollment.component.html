@@ -454,13 +454,13 @@
                 </tbody>
               </table>
             </div>
-            
-            <div class="form-group col-md-12 text-right" *ngIf="!showSubGameList && showMapData">
+       
+            <div class="form-group col-md-12 text-right" *ngIf="!showSubGameList">
               <p-button class="align-submit" [disabled]="!studentEnroolForm.valid " label="{{submitButtonLabel}}"></p-button>
               <button class="second-btn" style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Cancel"></button>
             </div>
 
-            <div class="form-group col-md-12 text-right" *ngIf="showSubGameList && showMapData">
+            <div class="form-group col-md-12 text-right" *ngIf="showSubGameList">
               <p-button class="align-submit" [disabled]="(!studentEnroolForm.valid || !subGameButton)" label="{{submitButtonLabel}}">
               </p-button>
               <button class="second-btn" style="margin-left: 20px;" type="button" pButton (click)="makeEmptyForm()" label="Cancel"></button>
