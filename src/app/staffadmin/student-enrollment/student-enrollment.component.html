@@ -329,10 +329,10 @@
             <div class="form-group col-md-4">
               <label class="form-control-label"><img class="form-icon" src="assets/images/ic_face_24px.png">Date of Birth</label><br/>
 
-  
+              <!-- appendTo="body" -->
 
               <!-- <p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"></p-calendar> -->
-              <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;" (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'50%'}"  [monthNavigator]="true"  [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+              <p-calendar appendTo="body" [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;" (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'50%'}"  [monthNavigator]="true"  [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
       
               <div *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors" class="invalid-feedback">
                 <div *ngIf="f.dateOfBirth.errors.required">Student Date of birth is required</div>
