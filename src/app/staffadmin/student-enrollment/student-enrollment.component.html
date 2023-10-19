@@ -326,6 +326,15 @@
                   <div *ngIf="f.fatherName.errors.required">Student Father's/Mother's Name is required</div>
                 </div>
             </div>
+       
+            <div class="form-group col-md-4">
+              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_account_balance_24px.png">Admission No.</label>
+              <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="admissionNo" formControlName="admissionNo"
+                placeholder="Admission Number" class="form-control" id="inputWarning1">
+                <span class="file-hint">Please enter in this format (IB/1234)</span>
+            </div>
+         
+
             <div class="form-group col-md-4">
               <label class="form-control-label"><img class="form-icon" src="assets/images/ic_face_24px.png">Date of Birth</label><br/>
 
@@ -342,31 +351,22 @@
                 ></p-calendar>   -->
             </div>
             <div class="form-group col-md-4">
-              <label class="form-control-label"><img class="form-icon" src="assets/images/ic_account_balance_24px.png">Admission No.</label>
-              <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="admissionNo" formControlName="admissionNo"
-                placeholder="Admission Number" class="form-control" id="inputWarning1">
-                <span class="file-hint">Please enter in this format (IB/1234)</span>
-            </div>
-            <div class="form-group col-md-4">
               <label class="form-control-label"><img class="form-icon" src="assets/images/ic_perm_contact_calendar_24px.png">Select Class</label>
               <p-dropdown [(ngModel)]="selectedClass" placeholder="Please Select" [options]="standardClass" size="30"
                 formControlName="standardClass"></p-dropdown>
             </div>
 
             <div class="checkbox form-group col-md-4" *ngIf="!showNRI">
-              <!-- <div class="float-left"> -->
                 <label>
                   <input type="checkbox" data-md-icheck (change)="toggleVisibility($event,'aadhar')" #checkboxes>
                   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                   Passport
                 </label> 
-              <!-- </div> -->
-           
-              <!-- <div class="float-right"> -->
+         
                 <label class="form-control-label align-label"><img _ngcontent-exj-c2="" class="form-icon" src="assets/images/ic_pan_tool_24px.png" style="width: 20px;">Aadhar Number</label>
                 <input type="text" [(ngModel)]="aadharNumber" placeholder="Enter Aadhar Number" maxlength="12" numbersOnly
                   formControlName="aadharNumber" class="form-control" id="inputWarning1">
-              <!-- </div> -->
+           
             </div>
            
             <div class="checkbox form-group col-md-4" *ngIf="showNRI">
@@ -379,6 +379,14 @@
                 <input type="text" [(ngModel)]="passport" placeholder="Passport Holder" formControlName="passPort"
                   class="form-control" id="inputWarning1">
             </div>
+
+
+
+        
+
+
+
+
              <div class="form-group col-md-4">
               <label class="form-control-label"><img class="form-icon" src="assets/images/ic_ring_volume_24px.png">Contact No</label>
               <input type="text" [(ngModel)]="contactNo" placeholder="Enter mobile number" formControlName="contactNo"
