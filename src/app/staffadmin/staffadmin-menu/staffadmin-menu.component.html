@@ -181,13 +181,15 @@ a.article:hover {
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+        display: none;
     }
     #sidebar.active {
         margin-left: 0;
     }
-    #content {
+   #content {
         width: 100%;
+        margin-left: 0;
+        padding: 20px;
     }
     #content.active {
         width: calc(100% - 180px);
@@ -201,7 +203,7 @@ a.article:hover {
         <div class="row">
             
         <div class="col-md-10 text-center"><img class="align-logo" src="assets/images/web/logo_retina.png"><div class="school-header">{{schoolName}}</div></div>
-        <div class="col-md-2 text-right">Welcome User<img class="logged-logo" src="assets/images/web/logo_retina.png"></div>
+        <div class="col-md-2 text-right usertitle">Welcome User<img class="logged-logo" src="assets/images/web/logo_retina.png"></div>
         </div>
     </header>
     <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">

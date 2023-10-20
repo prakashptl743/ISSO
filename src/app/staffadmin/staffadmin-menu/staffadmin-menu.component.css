@@ -62,3 +62,15 @@ header.isso-header {
     text-align: center;
     width: 100%;
 }
+@media (max-width: 768px) {
+    .align-logo {
+        height: 50px;
+        position: absolute;
+        top: 0;
+        z-index: 99;
+        left: 20px;
+    }
+    .usertitle{
+        font-size: 11px;
+    }
+}
