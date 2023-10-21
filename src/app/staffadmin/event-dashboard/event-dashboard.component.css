@@ -153,7 +153,7 @@
     transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
     overflow: hidden;
     border-radius: 20px;
-    min-height: 230px;
+    min-height: 250px;
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -240,7 +240,7 @@
 
 @media (max-width: 768px) {
     .wrapper {
-        margin-top: 75px;
+        margin-top: 88px;
     }
     .align-card-title {
         font-size: 14px;

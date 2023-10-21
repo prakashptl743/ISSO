@@ -117,6 +117,7 @@ i, span {
     float: left;
     height: 100vh;
     position: fixed;
+    overflow-y: auto;
 }
 
 .staff-sidebar {
@@ -899,9 +900,9 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
 @media (max-width: 768px) {
     #sidebar {
         min-width: 80px;
-        max-width: 80px;
+       
         text-align: center;
-        margin-left: -80px !important;
+        margin-left: 0px !important;
     }
     .dropdown-toggle::after {
         top: auto;
@@ -942,4 +943,5 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
     #sidebarCollapse span {
         display: none;
     }
+    
 }
