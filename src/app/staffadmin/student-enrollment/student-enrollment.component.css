@@ -509,7 +509,59 @@ body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
     justify-content: center;
  }
 
-
- @media (max-width: 768px) {
-
+ @media (min-width: 768px) and (max-width: 1023px) {
+    .event-container .tournament-box {
+        box-shadow: 0px 0px 7px 1px #dadada;
+        padding: 20px 0 0;
+        margin-bottom: 60px;
+        background: #ffffff;
+        border-radius: 15px;
+        margin-top: 80px;
+    }
+    .categories{
+        padding-left: 80px!important;
+    }
+    .caps-b{
+        margin-bottom: 50px;
+    }
+    .box-wrapper {
+        background: #00A54F;
+        width: 75px;
+        height: 108%;
+        position: absolute;
+        top: -22px;
+        left: 0;
+        z-index: 1;
+    }
+    .border-right-dark {
+        border-right: 0;
+    }
+}
+ @media (max-width: 767px) {
+    .event-container .tournament-box {
+        box-shadow: 0px 0px 7px 1px #dadada;
+        padding: 20px 0 0;
+        margin-bottom: 60px;
+        background: #ffffff;
+        border-radius: 15px;
+        margin-top: 80px;
+    }
+    .categories{
+        padding-left: 80px!important;
+    }
+    .caps-b{
+        margin-bottom: 50px;
+    }
+    .box-wrapper {
+        background: #00A54F;
+        width: 75px;
+        height: 108%;
+        position: absolute;
+        top: -22px;
+        left: 0;
+        z-index: 1;
+    }
+    .border-right-dark {
+        border-right: 0;
+    }
  }

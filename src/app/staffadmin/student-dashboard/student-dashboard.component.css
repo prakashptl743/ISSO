@@ -119,7 +119,7 @@ body .ui-dataview .ui-dataview-content {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .img-circle {
         border-radius: 50%;
         width: 50px;

@@ -51,7 +51,7 @@
                            
                           </div> -->
                           <div class="row" *ngFor="let game of gameData">
-                            <div class="col-md-6 border-right-dark">
+                            <div class="col-md-6 col-sm-12 border-right-dark">
                               <div class="category-box">
                                 <div *ngIf="game.gameType !== 'Both'">
                                   <!-- <img
@@ -103,7 +103,7 @@
                               </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-12">
                               <div class="category-box">
                                 <div *ngIf="game.gameType !== 'Both'"> 
                                   <!-- <img
@@ -162,8 +162,8 @@
                                 </div>
                               </div>
                             </div>
-                            <div *ngIf="game.gameType === 'Both'">
-                              <div class="col-md-6 border-right-dark">
+                            <div class="row" *ngIf="game.gameType === 'Both'">
+                              <div class="col-md-6 col-sm-12 border-right-dark">
                                 <div class="category-box">
                                   <!-- <img src="assets/images/web/boys.svg" /> -->
                                   <h2>Boys Tournaments</h2>
@@ -198,7 +198,7 @@
                                 </div>
                               </div>
 
-                              <div class="col-md-6">
+                              <div class="col-md-6 col-sm-12">
                                 <div class="category-box">
                                   <!-- <img src="assets/images/web/boys.svg" /> -->
                                   <h2

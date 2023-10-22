@@ -899,7 +899,7 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
 }
 .isso-menu .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-text{color: #fff;}
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     #sidebar {
         min-width: 80px;
        
@@ -956,6 +956,8 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
         margin-top: 0;
         margin-left: 10px;
     }
-
+    body .ui-dialog {
+        padding: 0 20px!important;
+    }
     
 }

@@ -62,8 +62,17 @@ header.isso-header {
     text-align: center;
     width: 100%;
 }
-
-@media (max-width: 768px) {
+@media (min-width: 801px) and (max-width: 1180px) {
+    .align-content {
+        margin-top: 40px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1023px){
+    .align-content {
+        margin-top: 45px;
+    }
+}
+@media (max-width: 767px) {
     .align-logo {
         height: 50px;
         position: absolute;
