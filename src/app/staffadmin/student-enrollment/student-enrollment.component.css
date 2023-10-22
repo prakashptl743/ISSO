@@ -115,9 +115,9 @@ table th{
 .ui-inputtext{
     border-radius: 4px!important;
 }
-.event-container {
+/* .event-container {
     margin-top: 100px;
-  }
+  } */
 .stud-circle{
     width: 50px;
     height: 50px;
@@ -507,4 +507,9 @@ body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
     align-items: center;
     display: flex;
     justify-content: center;
+ }
+
+
+ @media (max-width: 768px) {
+
  }

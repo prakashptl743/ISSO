@@ -1,8 +1,8 @@
 
-<div class="event-container row" style="padding:0 10px 10px 10px;">
+<div class="event-container">
   <div  class="align-heading">Student Dashboard</div>
 
-     <div class="ui-g-12 ui-md-12 btn-nav">
+     <div class=" btn-nav">
          <div>
              <span [ngClass]="isFirstYear ? 'active' : '' "  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span>
              <span [ngClass]="!isFirstYear ? 'active' : ''"  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
@@ -26,11 +26,11 @@
 
 
 
-<div class="ui-g">
-  <div class="ui-g-6 ui-md-6">
+<div class="row align-mar">
+  <div class="col-md-6 form-group">
     <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
  </div>
-    <div class="ui-g-6 ui-md-6 filter-container">
+    <div class="col-md-6 form-group filter-container">
         <div style="position:relative">
             <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
         </div>
@@ -43,7 +43,7 @@
  
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
    
-  <div style="padding:.5em" class="ui-g-12 ui-md-12">
+  <div style="padding:0" class="ui-g-12 ui-md-12">
         <div class="item-box item-card">
            
             <div class="row">

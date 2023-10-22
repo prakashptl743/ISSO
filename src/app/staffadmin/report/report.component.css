@@ -36,7 +36,10 @@ table th{
     margin-top: 0;
     padding-left: 0;
 }
-
+.align-margin-top{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 :host ::ng-deep .custom-toast .ui-toast-message {
     color: #ffffff;
     background:blue;

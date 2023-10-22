@@ -2,12 +2,12 @@
   <div class="event-container">
       <div class="align-heading">COACH ENTRIES HERE</div>
  </div>  
-  <div class="ui-g-12 event-container align-container">
+  <div class="event-container align-container">
    
   
-    <div>
-        <div class="col-md-12 pad-left-zero btn-nav" style="padding: 0;">
-          <div class="ui-g-12 pad-zero">
+    <div class="row">
+        <div class="col-md-12">
+          <div class="ui-g-12 btn-nav">
             <!-- <label for="exampleInputEmail1">Select Year</label> -->
 
             <div>
@@ -18,19 +18,20 @@
             <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
           </div>
         </div>
-        <div class="col-md-4 pad-left-zero">
-          <div class="form-group ui-g-12 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group">
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
            </div>
         </div>
-        <div class="col-md-8 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group">
             <label for="exampleInputEmail1">Select Game</label>
             <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
-          
-          <div class="form-group ui-g-4 pad-zero"  *ngIf="showAddbutton">
+          </div>
+        <div class="col-md-4">
+          <div class="form-group"  *ngIf="showAddbutton">
              <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
           </div>
 
@@ -169,9 +170,9 @@
   </div>
 
 
-  <div class="container-fluid table-pad" *ngIf="coachListArray.length > 0">
+  <div class="table-pad" *ngIf="coachListArray.length > 0">
 
-    <div class="" style="margin-left: -10px;">
+    <div class="" >
       <div class="table-responsive">
 
 

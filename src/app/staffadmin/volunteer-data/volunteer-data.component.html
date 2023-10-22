@@ -2,27 +2,22 @@
   <div class="event-container">
       <div class="align-heading">VOLUNTEER ENTRIES HERE</div>
  </div>  
-  <div class="ui-g-12 event-container align-container">
-   
-  
-    <div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-6 pad-zero">
-          <div>
+  <div class="row">
+        <div class="col-md-12">
+          <div class="btn-nav">
                <span class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
           </div> 
 
             <!-- <label for="exampleInputEmail1">Select Year</label> -->
             <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onLoadSchoolData($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
-          </div>
         </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-6 pad-zero">
+        <div class="col-md-6">
+          <div class="form-group">
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
-          <div class="form-group ui-g-4 pad-zero"  *ngIf="isShowButton" >
-            <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
+          <div class="form-group"  *ngIf="isShowButton" >
+            <button (click)="showDialog()" class="red-btn click-col">ADD</button>
          </div>
         </div>
       
@@ -77,7 +72,6 @@
             </form> -->
         </div>
 
-  </div>
   <p-dialog class="align-dialog" header="Add Volunteer" [(visible)]="display" width="775" height="400" [modal]="true" [responsive]="true"   
   [maximizable]="true" [baseZIndex]="1000">
   <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
@@ -110,13 +104,13 @@
     
   </p-dialog>
 
-  <div class="container-fluid table-pad align-table" *ngIf="coachListArray.length > 0">
+  <div class="col-md-12 table-pad" *ngIf="coachListArray.length > 0">
 
     <div class="">
       <div class="table-responsive">
 
 
-        <table class="table table-bordered">
+        <table class="table">
           <thead class="table-color">
             <tr>
               <th scope="col">Sr. No </th>

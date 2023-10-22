@@ -31,7 +31,7 @@
     left: 60px;
 }
 .align-content {
-    margin-top: -84px;
+    margin-top: 15px;
 }
 .school-name {
     border-bottom: 1px solid beige;
@@ -62,6 +62,7 @@ header.isso-header {
     text-align: center;
     width: 100%;
 }
+
 @media (max-width: 768px) {
     .align-logo {
         height: 50px;
@@ -72,5 +73,8 @@ header.isso-header {
     }
     .usertitle{
         font-size: 11px;
+    }
+    .align-content {
+        margin-top: 100px;
     }
 }

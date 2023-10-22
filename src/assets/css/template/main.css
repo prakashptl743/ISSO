@@ -220,9 +220,9 @@ header .user-dropbox img {
   border: none;
 }
 
-.event-container {
+/* .event-container {
   margin-top: 100px;
-}
+} */
 .event-container .event-namebox {
   margin-bottom: 30px;
   display: inline-block;

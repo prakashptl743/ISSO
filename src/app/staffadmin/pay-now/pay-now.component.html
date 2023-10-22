@@ -12,11 +12,11 @@
           <p>Your Transaction id is <b>{{generatedpaymentId}}</b></p>
           <p><a [routerLink]="" (click)="onGoBack()">click here</a> to go back </p>
     </div>
-    <div *ngIf="showPayemntScreen">
+    <div class="row" *ngIf="showPayemntScreen">
 
 
-      <div class="ui-g-12 ui-md-12 btn-nav">
-        <div>
+      <div class="col-md-12 ">
+        <div class="btn-nav">
             <span [ngClass]="isFirstYear ? 'active' : '' "  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span>
             <span [ngClass]="!isFirstYear ? 'active' : ''"  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
         </div> 

@@ -105,7 +105,6 @@ i, span {
 
 .al-red-bt{
     margin-top: 20px;
-    margin-left: 10px;
 }
 
 #sidebar {
@@ -623,6 +622,9 @@ body .ui-dataview .ui-dataview-content {
     border-right: 1px solid #ccc;
     padding-right: 10px;
 }
+.edit-font-icon:last-child{
+    border-right: 0;
+}
 .delete-font-icon{
     color: #485E88;
 }
@@ -943,5 +945,17 @@ ui-tabmenu-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all
     #sidebarCollapse span {
         display: none;
     }
+    .hero-img {
+        display: flex;
+        background: rgba(51,52,55,0.7);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 5px;
+    }
+    .al-red-bt {
+        margin-top: 0;
+        margin-left: 10px;
+    }
+
     
 }

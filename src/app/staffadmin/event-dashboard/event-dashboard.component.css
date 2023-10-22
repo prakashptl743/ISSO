@@ -103,17 +103,17 @@
     padding-bottom: 10px;
     font-weight: bold;
 }
-.wrapper{
+/* .wrapper{
     margin-top: 55px;
-}
+} */
 .eve-sect{
     float: left;
     width: 100%;
     margin-bottom:10px;
 }
-.event-container {
+/* .event-container {
     margin-top: 70px;
-  }
+  } */
 .eve-sect .eve-val{ line-height: 1;
     font-size: 13px;  }
     .red-btn {
@@ -239,9 +239,9 @@
 
 
 @media (max-width: 768px) {
-    .wrapper {
+    /* .wrapper {
         margin-top: 88px;
-    }
+    } */
     .align-card-title {
         font-size: 14px;
     }

@@ -135,6 +135,7 @@ a.disabled {
     /* padding: 0; */
     /* padding-top: 20px; */
     padding-bottom: 20px;
+    margin-top: 10px;
 } 
 .table .thead-dark th {
     color: #fff;
