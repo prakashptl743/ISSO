@@ -62,14 +62,25 @@ header.isso-header {
     text-align: center;
     width: 100%;
 }
+.f-logo{
+    margin: 0 auto;width: 55%;
+}
 @media (min-width: 801px) and (max-width: 1180px) {
     .align-content {
         margin-top: 40px;
+    }
+    .f-logo {
+        margin: 0 auto 0 25%;
+        width: 65%;
     }
 }
 @media (min-width: 768px) and (max-width: 1023px){
     .align-content {
         margin-top: 45px;
+    }
+    .f-logo {
+        margin: 0 auto 0 29%;
+        width: 65%;
     }
 }
 @media (max-width: 767px) {
@@ -85,5 +96,8 @@ header.isso-header {
     }
     .align-content {
         margin-top: 100px;
+    }
+    .f-logo{
+        margin: 0 auto;width: 90%;
     }
 }
