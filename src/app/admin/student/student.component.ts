@@ -495,6 +495,8 @@ cancelForm() {
     this.showDropDown = false;
     this.goBackBUtton = true;
   } else {
+    this.eventReadable = true;
+    this.schoolReadble = true;
     this.showDropDown = true;
   }
 }
@@ -1364,6 +1366,7 @@ setFiletrSubGame(event) {
   }
 }
 addNewStudent(event: Event, studentData: Student,type:any) {
+  this.displaySearch = false;
   this.selectedEvent = '';
   this.selectedGame = '';
   this.gameReadble = false;

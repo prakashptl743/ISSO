@@ -494,7 +494,13 @@ body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
   /* .table-pad {
     padding-top: 20px;
   } */
- 
+ .manage-alert {
+    margin: 0;
+    margin-bottom: 20px;
+ }
+ :host ::ng-deep .ui-dialog-footer .ui-button + .ui-button {
+    background: green !important
+}
  .delete-confim{
     background: #707070;
     color: #fff;

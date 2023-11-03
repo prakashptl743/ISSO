@@ -296,7 +296,7 @@
 
           <div  *ngIf="studentListArray.length > 0 && gameType ==='Both'">
             <div *ngFor="let gameData of incompleteTeamSubGame">
-              <div *ngIf="gameData.remainingCapacity" class="alert alert-danger alert-dismissible">
+              <div *ngIf="gameData.remainingCapacity < gameData.minCapacity" class="manage-alert alert alert-danger alert-dismissible">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <strong >Warning!</strong> 
               <span class="align-message">Your <b>{{gameData.subGameName}}</b> team is incomplete you have to add  <b>{{gameData.remainingCapacity}}</b> student's to participate in this game</span>
@@ -568,8 +568,22 @@
   
   
               <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteStudentList(i)"></button> -->
-  <p-confirmDialog key="confirm-delete-student" header="Delete Student data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
+  <!-- <p-confirmDialog key="confirm-delete-student" header="Delete Student data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog> -->
   <p-confirmDialog key="confirm-team-delete" header="Delete team confirmation" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
+
+
+
+  <p-confirmDialog  key="confirm-delete-student"  #cd>
+    <p-footer>
+ 
+        <button class="btn btn-primary"   label="Yes" type="button" (click)="cd.accept()">Yes</button>
+        <button class="second-btn" type="button" pButton (click)="makeEmptyForm()" label="No" (click)="cd.reject()"></button>
+
+        <!-- <button class="btn red-btn" type="button" pButton icon="fa-close" label="Fuhgheddaboudid" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="fa-check" label="Take him out!" (click)="cd.accept()"></button> -->
+    </p-footer>
+</p-confirmDialog>
+
 
       <!-- <button type="button" pButton pRipple (click)="showError()" label="Error" class="p-button-danger"></button> -->
 

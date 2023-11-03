@@ -1096,24 +1096,24 @@ loadStudentData() {
               });
             }
             console.log('HELLOO++++>'+JSON.stringify(this.newSubGameCapacity));
+            console.log('MAP SUBGAME-->'+JSON.stringify(this.mapSubGameTeam));
             let  capaCityCount = 0;
             if (this.mapSubGameTeam.length > 0 ) {
               for(let i=0;i <=this.mapSubGameTeam.length - 1;i++) {
+                if(this.mapSubGameTeam[i]['subGameType'] == "Team") {
                 console.log('I value===>'+i);
-                
                 let  remainingCapacity = 0;
                 capaCityCount = this.newSubGameCapacity.filter((obj) => obj.subGameId === this.mapSubGameTeam[i]['subGameId']).length;
+               
                 console.log('CAPCITY COUNT===>'+capaCityCount);
-                //if (capaCityCount < this.mapSubGameTeam[i]['minCapacity'] ) {
-                  // Below code was used 29 aug 2023 for remaining capacity 
-                 //  remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
-                   remainingCapacity = this.mapSubGameTeam[i]['minCapacity'] - capaCityCount;
+                  remainingCapacity = this.mapSubGameTeam[i]['minCapacity'] - capaCityCount;
                   this.incompleteTeamSubGame.push({
                     'subGameId':this.mapSubGameTeam[i]['subGameId'],
                     'subGameName': this.mapSubGameTeam[i]['subGameName'],
-                    'remainingCapacity': remainingCapacity
+                    'remainingCapacity': remainingCapacity,
+                    'minCapacity':this.mapSubGameTeam[i]['minCapacity']
                   })
-                //}
+                }
               }
              }
              console.log('incompleteTeamSubGame===>',JSON.stringify(this.incompleteTeamSubGame))

@@ -403,7 +403,7 @@
           <label>
              <input type="checkbox" data-md-icheck (change)="toggleVisibility($event,'aadhar')" #checkboxes>
              <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-             IsNRI
+             Passport
            </label>
          <label class="form-control-label align-aadhar">Aadhar Number</label>
          <input class="form-control" [(ngModel)]="aadharNumber" placeholder="Aadhar Number" formControlName="aadharNumber" name="aadharNumber"  type="text" required>
@@ -414,7 +414,7 @@
            <label>
              <input type="checkbox" [checked]="showNRI" (change)="toggleVisibility($event,'passport')" #checkboxes>
              <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-             IsNRI
+             Passport
            </label>
            <label class="form-control-label">Passport</label>
            <input type="text" [(ngModel)]="passport" placeholder="Passport" formControlName="passPort"

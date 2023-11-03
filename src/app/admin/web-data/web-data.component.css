@@ -85,3 +85,8 @@ body .ui-dataview .ui-dataview-content {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.ev-name1 {
+    width: 85%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
