@@ -1,0 +1,176 @@
+   
+
+<div id="content1" class="content-wrapper">
+    <div class="add-new-school-dialog" *ngIf="currentEvent && display">
+      <div class="form-group col-md-3 float-inherit">
+        <button class="btn btn-primary-outline" type="button" (click)="display=false">Go Back</button>
+      </div>
+
+
+
+      <form [formGroup]="certificateContentForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label for="inputEmail4">Certificate Header content</label>
+              <input class="form-control" formControlName="headerName" type="text" required>
+            </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label for="inputEmail4">Certificate Main content</label>
+              <input class="form-control" formControlName="mainContent" type="text" required>
+            </div>
+        </div> 
+        <input id="float-input" formControlName="id"  type="hidden"  pInputText> 
+        <button [disabled]="!certificateContentForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+      </form>
+
+
+
+      <form [formGroup]="eventForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+          <div class="form-group col-md-6">
+              <label for="inputEmail4">Event List</label>
+              <p-dropdown
+                  [options]="options"
+                  size="30"
+                  [(ngModel)]="eventList"
+                  (onChange)="loadEventChange($event)"
+                  formControlName="eventList">
+              </p-dropdown>
+          
+          </div> 
+          <div class="form-group col-md-6">
+              <label for="inputEmail4" class="game-list">Game List</label>
+              <p-dropdown
+                  [options]="gameOptions"
+                  size="30"
+                  [(ngModel)]="seletectedGameList"
+                  (onChange)="mapGameChange($event)"
+                  formControlName="gameList">
+              </p-dropdown>
+             
+           </div> 
+          <div  class="form-group col-md-12">
+            <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td *ngFor="let item of list | slice:0:5; let i=index"> 
+                        <span  class="boys-span" >{{item.title}}</span>
+                        <br/>
+                       <span class="align-check"><input type="checkbox" class="checkbox-width chk" (change) ="onChange($event,item.id)"></span>
+                    </td>
+                    <td *ngFor="let item of list  | slice:5:10; let i=index">
+                      <span class="girls-span">{{item.title}}</span>
+                      <br/>
+                      <span class="align-check">
+                        <input type="checkbox" class="checkbox-width chk"   (change) ="onChange($event,item.id)" >
+                      </span>
+                    </td> 
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        
+          <div class="form-group col-md-2">
+               <div>
+                <button  [disabled]="!eventForm.valid" class="btn btn-primary" type="button" (click)="addMapEvent()">Add</button>
+            </div>
+          </div>  
+     
+         
+       
+        <table class="table"  *ngIf="showMapData">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Event Name</th>
+              <th scope="col">Game Name</th>
+              <th scope="col">Game Type</th>
+              <th scope="col">Age Range</th>
+              <!-- <th scope="col">Gender</th> -->  
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mapEvent of mapEventArray; let i = index;">
+              <td>{{mapEvent.eventName}}</td>
+              <td>{{mapEvent.gameName}}</td>
+              <td>{{mapEvent.gameType}}</td>
+              <td> 
+                <div>Boys Under {{mapEvent.ageRange}}</div>
+                <div>Girls Under {{mapEvent.genderVal}}</div>
+              </td>
+                <!-- <td>{{mapEvent.genderVal}}</td> -->
+              <td>  
+                <button class="btn btn-primary" type="button" (click)="removeMappedData(i)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      
+       
+          <input id="float-input1" formControlName="eventId"  type="hidden"  pInputText>  
+        <div class="form-row col-md-12 align-button"  *ngIf="showMapData"> 
+          <button   class="btn btn-primary" type="button" (click)="onSubmit()">{{submitLabel}}</button>
+          <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
+        </div>    
+     
+     </form>
+    </div>
+    
+    
+    <p-dataView *ngIf="currentEvent && !display" #dv  [paginator]="true" [rows]="10" paginatorPosition="bottom"  [value]="magGameResponse" class="no-padding clearBoth" filterBy="eventName,location" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+      <p-header>
+          <div class="ui-helper-clearfix">
+            <div class="form-group col-md-4"> 
+              <label for="inputEmail4">Select Year</label> 
+              <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+              <div class="ui-g">
+                    <div class="add-newmap">
+                        <button type="button" class="map-button"  *ngIf="!display" (click)="addNewEvent($event, 'add')" pButton  label="Map New Event"></button>
+                    </div>
+                </div>
+          </div>
+      </p-header>
+      
+    <app-loading *ngIf="showspinner"></app-loading>
+    
+    <ng-template let-event pTemplate="gridItem"  style="word-wrap: break-word;">
+          <div style="padding:.5em" class="ui-g-12 ui-md-6">
+          <div class="item-box">
+              <div class="item-header">
+                  <span title="{{event.eventName}}"><b>{{event.eventName}}</b></span>
+                   
+                  <div class="icons-wrap">
+                      <button  *ngIf="event.event_status === '1' && event.startDate > today" class="glyphicon glyphicon-edit item-icons" (click)="addNewEvent(event,'edit')">
+                      </button>
+                       <button *ngIf="event.event_status === '1' && event.startDate > today" class="glyphicon glyphicon-trash item-icons" (click)="deleteMapEvent($event, event)">
+                      </button>
+                  </div>
+              </div>
+              <div>
+ 
+                 <label for="inputEmail4" class="map-game-list">Game List          
+                    <span class="align-gender">Boys</span>
+                    <span class="align-gender">Girls</span>
+                 </label>
+                <div *ngFor="let data of mapEventResponse">
+                    <div class="mapgame" *ngIf="data.eventId === event.eventId">
+                      <span  [innerHTML]="data.game_name | texttransform: data.gameComma">   </span>
+                       <span  [innerHTML]="data.ageRange |  texttransform: data.ageComma"></span>
+                       <span  [innerHTML]="data.girlsageRange |  texttransform: data.ageComma"></span>
+                    </div>
+                </div>  
+              </div>
+        
+          </div>
+      </div>   
+    
+    </ng-template>
+    </p-dataView>
+    </div>
+    <p-confirmDialog key="confirm-map-event" header="Delete game map data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
+    <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+    <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+    
+     

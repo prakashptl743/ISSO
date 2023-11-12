@@ -48,6 +48,7 @@ export class MeritComponent implements OnInit {
   eventArray =[];
   subgameArray=[];
   addMeritDataArray =[];
+  ageMeritArray =[];
   eventValue:number;
   yearvalue:number;
   schoolvalue:number;
@@ -329,7 +330,7 @@ export class MeritComponent implements OnInit {
     // } else {
     //   console.log('im less')
 
-    this.setAgeMap(this.eventValue);
+   // this.setAgeMap(this.eventValue);
     this.meritService.loadGameByEvent(this.eventValue,this.meritFlagForGame).subscribe(
       response => {
         if(response!=="") {
@@ -364,24 +365,33 @@ export class MeritComponent implements OnInit {
       });
    // }
   }
-  setAgeMap(evenVal) {
-    this.meritService.setAgeMap(evenVal).subscribe(
+  setAgeMap() {
+    this.meritService.setAgeMap(this.eventValue,this.gameId).subscribe(
       response => {
-       const myArray = response[0].ageRange.split(" ");
-       const ageList = response[0].ageRange;
-       var spaceCount = (ageList.split(" ").length - 1);
-       console.log(spaceCount);
-       this.ageOptions =[];
-       this.ageOptions.push({
+ 
+      const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+      this.ageMeritArray= ageList.split(" ");
+      const x = Array.from(new Set(ageList.split(" "))).toString();
+      
+      var myarray = x.split(',');
+      let ageArrayLength =  myarray.length;
+ 
+      this.ageOptions =[];
+      this.ageOptions.push({
         label: "Please Select",
         value: ''
       });
-       for(let i=0;i<=spaceCount;i++) {
-          this.ageOptions.push({
-            label: myArray[i],
-            value: myArray[i]
-          });
-        } 
+
+      for(var i = 0; i < ageArrayLength; i++) {
+        if(myarray[i] !==''){
+        this.ageOptions.push({
+          label: myarray[i],
+          value: myarray[i]
+        });
+      }
+      }
+
+ 
       } ,
       error => {
         //this.errorAlert =true;
@@ -497,7 +507,7 @@ export class MeritComponent implements OnInit {
     } else {
       this.individualAlreadyAddedMerit = false;
     }
-
+    this.setAgeMap()
 
   }
   loadSubGameChange(subgame) {

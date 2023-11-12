@@ -1,0 +1,74 @@
+ 
+ .game-list {
+    width: 100%;
+ }
+ .map-game-list {
+    width: 100%;
+    border: 1px solid;
+    padding: 5px 15px;
+    color: white;
+    background-color: #007ad9;
+ }
+ .search-text { 
+    width: 65%;
+    margin: 10px 26px 2px 25px;
+    padding: 7px;
+}
+.add-newmap {
+    float: right;
+}
+.align-gender {
+    padding: 0 55px;
+}
+.mapgame {
+    border: 1px solid;
+    padding: 10px 10px;
+}
+.boys-span {
+    display: block;
+    background: blue;
+    padding: 3px;
+    margin: -8px;
+    color: white;
+    text-align: center;
+}
+.girls-span {
+    display: block;
+    background: pink;
+    padding: 3px;
+    margin: -8px;
+    color: black;
+    text-align: center;
+}
+.align-check {
+    padding-left: 30px;
+    padding-top: 5px;
+}
+.checkbox-width {
+    width: 20px;
+    height: 20px;
+}
+ul {
+    list-style: none;
+}
+.align-button {
+   padding-top: 20px;
+   padding-bottom: 30px;
+}
+.map-button {
+    margin: 10px;
+}
+.width-auto {
+    width: auto;
+}
+.float-inherit {
+    float:inherit;
+    padding-top: 30px ;
+    padding-left: 35px;
+}
+/* :host ::ng-deep body ui-multiselect {
+    width: inherit !important;
+} */
+::ng-deep .ui-multiselect {
+    width: inherit !important;
+}
