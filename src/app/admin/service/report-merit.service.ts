@@ -158,8 +158,14 @@ checkGameCapacityForStudent(eventVal, ageRange, gender, gameId, newSchoolId) {
     catchError(this.handleError)
  );
 }
-setAgeMap(eventVal,gameId){
+setAgeMapForMerit(eventVal,gameId){
   let str = 'student/setAgeMap/' + eventVal +'/' +gameId;
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
+setAgeMap(eventVal){
+  let str = 'student/setAgeMap/' + eventVal;
   return this.http.get(this.serverUrl + str).pipe(
     catchError(this.handleError)
  );

@@ -366,7 +366,7 @@ export class MeritComponent implements OnInit {
    // }
   }
   setAgeMap() {
-    this.meritService.setAgeMap(this.eventValue,this.gameId).subscribe(
+    this.meritService.setAgeMapForMerit(this.eventValue,this.gameId).subscribe(
       response => {
  
       const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
