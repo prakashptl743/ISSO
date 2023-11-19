@@ -28,19 +28,7 @@
  <div id="content1" class="content-wrapper">
 <div class="add-new-school-dialog" *ngIf="currentEvent && display">
 
-
-    <!-- <form [formGroup]="form">
-
-        <p-multiSelect [options]="cities" formControlName="selectedCities" 
-        defaultLabel="Select a City" optionLabel="name"
-          display="chip">
-        </p-multiSelect>
-      
-      </form>  
-      <p-button (click)="patchForm()">Click to PatchValue with Paris</p-button> -->
-
-
-  <form [formGroup]="eventForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+   <form [formGroup]="eventForm"  class="align-form-div" (ngSubmit)="onSubmit()">
      <div class="form-row">
         <div class="form-group col-md-6">
             <label for="inputEmail4">Event Name</label>
@@ -77,6 +65,7 @@
               </p-dropdown>
           </div>
       </div>
+      
       <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputEmail4">Terms and Condition</label>
@@ -88,15 +77,23 @@
           </div>
       </div>
       <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Certificate Header content</label>
+          <textarea [rows]="5" [cols]="30" class="form-control"  formControlName="certificateHeaderContent">
+             
+          </textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Certificate Main content</label>
+          <textarea [rows]="5" [cols]="30" class="form-control" formControlName="certificateMainContent">
+            
+          </textarea>
+        </div>
+    </div>
+      <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputPassword4">Event Zone</label> 
             <div>
- 
-                <!-- <p-multiSelect [options]="cities" formControlName="eventZone" 
-                defaultLabel="Select Zone" optionLabel="name"
-                  display="chip">
-                </p-multiSelect>  -->
-
                 <p-multiSelect 
                     [options]="zoneOptions"
                     (onChange)="zoneChange($event)"
@@ -105,17 +102,11 @@
                     [panelStyle]="{minWidth:'12em'}">
                </p-multiSelect>   
             </div>
-             <!-- <p-dropdown
-                  [options]="zoneOptions"
-                  size="30"
-                  formControlName="eventZone" 
-                  >
-              </p-dropdown> -->
-          </div>
+           </div>
       </div> 
       <input id="float-input1" formControlName="eventId"  type="hidden"  pInputText>  
 
-       <button [disabled]="!eventForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+        <button [disabled]="!eventForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
         <button class="btn btn-primary-outline" type="button" (click)="resetform();display=false">Cancel</button>
               
    </form>
@@ -192,6 +183,7 @@
                     <div class="item-value" title="{{event.eventNote}}">{{event.eventZone}}</div>
                 </div>
             </div> 
+            
              <div class="item-description lastChild" *ngIf="event.event_status === '1' && event.startDate > today ">
                 <label>Status:</label>
                 <span class="item-value"><button class="btn btn-danger-small" style="background-color: green;color: white;"type="button" (click)="changeEventStatus(event)">Active</button></span>

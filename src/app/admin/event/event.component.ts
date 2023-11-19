@@ -64,7 +64,7 @@ export class EventComponent implements OnInit {
   manageReport: boolean;
   zoneValue: any;
   //eventZoneVal: [];
-  cities;
+ 
   public form: FormGroup;
    eventZoneVal: any[];
   eventType: string;
@@ -80,39 +80,16 @@ export class EventComponent implements OnInit {
     private fb: FormBuilder,
   )  {
     setTimeout(()=>{this.disable = true}, 5000)
-    this.cities = [
-      { name: "EAST", code: "EAST" },
-      { name: "WEST", code: "WEST" },
-      { name: "NORTH", code: "NORTH" },
-      { name: "SOUTH", code: "SOUTH" },
-    
-    ];
-   }
+  }
 
   ngOnInit() {
-    // this.eventForm = this.fb.group({
-    //   eventZone: [[{ name: "EAST", code: "EAST" }], Validators.required]
-    // });
-    // this.form = this.fb.group({
-    //   selectedCities: [[ { name: "Istanbul", code: "IST" }], Validators.required]
-    // });
-
-     // let arrayOfValues=['EAST','EAST'];
-    //this.eventZoneVal = this.zoneOptions.filter(a => arrayOfValues.includes(a.value.cityCode)).map(a => a.value);
     this.minDate = new Date();
     this.maxDate = new Date();
     this.isUpcomingEvent = false;
     this.initialiseForm();
     this.getEventData()
- 
-  this.items2 = [
-      {label: 'Event', icon: 'fa fa-fw fa-bar-chart'},
-      {label: 'Upcoming Event', icon: 'fa fa-fw fa-calendar'},
-      {label: 'Map game', icon: 'fa fa-fw fa-calendar'},
-  ];
-  this.activeItem = this.items2[0];
-  this.seCurrenttDate();
-  this.loadInitialData()
+    this.seCurrenttDate();
+    this.loadInitialData()
 }
 loadInitialData() {
   this.yearOptions = this.issoUtilService.setYear();
@@ -131,12 +108,6 @@ onyeareChange(event) {
       this.showspinner = false;
       this.eventServiceData =response;
       this.eventInfo = this.eventServiceData;
-     // const currentDate = new Date();
-      // if(new Date(this.eventInfo[1].startDate) > currentDate) {
-      //     console.log('true');
-      // } else {
-      //   console.log('false');
-      // }
     } else {
       alert('im blankl=')
     }
@@ -200,13 +171,7 @@ onloadMenu(index){
 }
 
 zoneChange(event) {
- 
   this.zoneValue = event.value
-  console.log('Hiiii==>'+this.zoneValue);
-  // this.eventArray =  eventval.split(","); 
-  // this.eventValue = this.eventArray[0];
-  // this.eventName =  this.eventArray[1];
-
 }
 getEventData() {
   this.showspinner = true;
@@ -259,7 +224,9 @@ initialiseForm() {
     eventType: ['', Validators.required],
     eventZone: ['', Validators.required],
     eventDesc: ['', Validators.required],
-    eventNote: ['', Validators.required]
+    eventNote: ['', Validators.required],
+    certificateHeaderContent: ['', Validators.required],
+    certificateMainContent: ['', Validators.required],
   });
   this.options = [
     {label: "Please select", value: ''},
@@ -334,9 +301,7 @@ addNewEvent(event: Event, eventInfo: Event,type:any) {
       // this.eventZoneVal = (this.zoneOptions.slice(0).map(a => a.value));
     }
  
-    // let myArray = myString.split(',');
-    // console.log('Hello--->'+myArray)
-  // this.eventZoneVal = (this.zoneOptions.slice(0).map(a => a.value));
+ 
  
       this.eventForm.setValue({ 
           eventId: eventInfo.eventId,  
@@ -349,7 +314,9 @@ addNewEvent(event: Event, eventInfo: Event,type:any) {
           eventZone:  eventInfo.eventZone,
           eventDesc: eventInfo.description,
           eventNote:  eventInfo.note,
-      });  
+          certificateHeaderContent: eventInfo.certifiacteHeaderContent,
+          certificateMainContent:  eventInfo.certifiacteMainContent
+        });  
       this.subViewTitle = 'Edit Event';
  } else {
         this.eventForm.setValue({ 
@@ -362,7 +329,9 @@ addNewEvent(event: Event, eventInfo: Event,type:any) {
           eventEndDate: ' ',
           eventLocation: ' ',
           eventDesc:' ',
-          eventNote:''
+          eventNote:'',
+          certificateHeaderContent: 'ISSO NATIONAL GAMES  2023-24',
+          certificateMainContent: 'ISSO NATIONAL GAMES  2023-24'
         }); 
   }
   this.display = true;
@@ -422,7 +391,8 @@ onSubmit() {
   formData.append('eventZone', this.zoneValue);
   formData.append('eventNote', this.eventForm.get('eventNote').value);
   formData.append('eventDesc', this.eventForm.get('eventDesc').value);
- 
+  formData.append('certificateHeaderContent', this.eventForm.get('certificateHeaderContent').value);
+  formData.append('certificateMainContent', this.eventForm.get('certificateMainContent').value);
 
   if(eventId == '') {
       this.eventService.saveEventData(formData).subscribe(

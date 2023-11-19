@@ -32,7 +32,7 @@ export class WebCalender {
     girlsageRange:string;
     preventDefault() {
       throw new Error("Method not implemented.");
-}
+    }
     eventId:number;
     eventName:string;
     price:number;
@@ -46,6 +46,8 @@ export class WebCalender {
     event_status:string;
     note:string;
     defaultPrevented: any;
+    certifiacteHeaderContent:string; 
+    certifiacteMainContent:string; 
 }
 export class Game {
     gameId:number;  
