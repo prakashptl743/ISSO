@@ -23,7 +23,6 @@
        <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
     </div>
 
-
     <div class="col-md-4">
         <div class="form-group pad-zero">
           <label for="exampleInputEmail1">Select Fee Type</label>
@@ -34,7 +33,7 @@
      <div *ngIf="showAlredayPaidMessage" class="margin-left col-md-12 alert alert-success alert-dismissible">
           <button type="button" class="margin-right close" data-dismiss="alert">&times;</button>
          <span class="align-message">You have alredy done this payment.</span>
-     </div> 
+     </div>
     <div *ngIf="isAffilated == '2'"> 
        <!-- <div class="col-md-4">
           <div class="form-group pad-zero">
@@ -55,30 +54,27 @@
           </div>
         </div>
     </div>
-    <div *ngIf="isAffilated == '1' && showPayment">
-      <div class="col-md-4">
+    <div  *ngIf="showPayment" class="align-payment-box">
+      <div>
+        <div>
+          <div class="form-group pad-zero">
+            <label for="exampleInputEmail1">Total amount</label>
+            <input [(ngModel)]="affilateAmounnt" numbersOnly type="text" (keyup)="onKeypressEvent($event.target.value)" (blur)="setAffiliateAmount()"    placeholder="Total amount to pay" class="form-control payment-text-box" id="inputWarning1">
+          </div>
+        </div>
+      </div> 
+    <div >
         <div class="form-group pad-zero">
-          <label for="exampleInputEmail1">Total amount</label>
-           <input [(ngModel)]="affilateAmounnt" numbersOnly type="text" (keyup)="onKeypressEvent($event.target.value)" (blur)="setAffiliateAmount()"    placeholder="Total amount to pay" class="form-control" id="inputWarning1">
-         </div>
-      </div>
+          <label for="exampleInputEmail1">Total Payable Amount</label>
+          <div><h3>{{totalAmount| number: '.2'}} Rs.</h3></div>
+        </div>
     </div> 
-   <div class="col-md-4" *ngIf="showPayment" >
+    <div>
       <div class="form-group pad-zero">
-        <label for="exampleInputEmail1">Total Payable Amount</label>
-        <div><h3>{{totalAmount}} Rs.</h3></div>
-       </div>
-   </div> 
-   <div class="col-md-4" *ngIf="showPayment" >
-    <div class="form-group pad-zero">
-      <button [class.disabled]="!(totalAmount > 0)"  class="btn pay-now-button"  type="button" (click)="payNow(totalAmount,'','affliate')">PAY NOW</button>
-     </div>
-     <!-- <div class="m-4">
-      <p class="text-start">Don't forget to <a [routerLink]="" (click)="checkPaymentStatus()">click here</a> once payment is done.</p>
-   </div> -->
-   </div>  
-   <!-- {{reportDataLength}}  -->
-  <!-- <span (click)="testFun()">Hello clcik</span> -->
+         <button [class.disabled]="!(totalAmount > 0)"  class="btn pay-now-button"  type="button" (click)="payNow(totalAmount,'',paymentType)">PAY NOW</button>
+      </div>
+    </div>  
+  </div>
     <div class="container-fluid table-pad align-table" *ngIf="reportDataLength > 0">
 
       <div class="">

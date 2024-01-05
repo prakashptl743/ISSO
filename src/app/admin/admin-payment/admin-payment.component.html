@@ -3,7 +3,7 @@
   <button [ngClass]="reportLabel=='payment' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Payment</button>
   <button [ngClass]="reportLabel=='invoice' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >Invoice</button>
   <button [ngClass]="reportLabel=='receipt' ? 'isMenuActive' : '' "  (click)="onloadMenu(2)" class="tablinks" >Receipt</button>
-  <button [ngClass]="reportLabel=='affilationfee' ? 'isMenuActive' : '' "  (click)="onloadMenu(3)" class="tablinks" >Affilation Fee</button>
+  <button [ngClass]="reportLabel=='affilationfee' ? 'isMenuActive' : '' "  (click)="onloadMenu(3)" class="tablinks" >Online Fee</button>
 
 </div>
  
@@ -21,6 +21,7 @@
       <tr>
         <th>Sr No.</th>
         <th>School Name</th>
+        <th>Payment Type</th>
         <th>Payment ID</th>
         <th>Paid Date</th>
         <th>Paid Amount</th>
@@ -30,6 +31,11 @@
       <tr *ngFor="let event of paymentData;let i = index;">
         <td>{{i+1}}</td>
         <td>{{event.schoolName}}</td>
+        <td>
+          <span *ngIf="event.paymentType == 'affilation'">Affilation</span>
+          <span *ngIf="event.paymentType == 'kit'">KIT</span>
+          <span *ngIf="event.paymentType == 'misc'">Miscellaneous</span>
+        </td>
         <td>{{event.paymentId}}</td>
         <td>{{event.paydate | date: 'd MMMM , y'}}</td>
         <td><span class="float-right">{{event.payAmount}}</span></td>

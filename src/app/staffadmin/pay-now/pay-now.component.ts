@@ -128,6 +128,7 @@ constructor(
 
 ngOnInit() {
 this.showPaidSuccess = false;
+
 this.showPayemntScreen = true;
 this.schoolType = localStorage.getItem('isAffiliate');
 console.log(this.schoolType)
@@ -146,7 +147,7 @@ console.log(this.schoolType)
   // });
   this.setPhotoPath();
   this.setPaymentJson();
-  
+
 //  console.log(this.testFun1());
 }
 testFun1() {
@@ -168,6 +169,7 @@ onGoBack() {
 //   console.log('Running change detection ',this.affilateAmounnt);
 //   this.totalAmount = this.affilateAmounnt;
 // }
+ 
 payNow(amt,studentId,paymentType) {
   this.totalAmount = amt;
   this.studentId = studentId;
@@ -240,7 +242,7 @@ paymentCapture1() {
     this.generatedpaymentId = "dffff@sdf$%";
    // this.generatedpaymentId = paymentId;
     if(paymentId !=='') {
-      if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affliate') {
+      if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
         this.savePaymentData();
       } else {
          this.saveTeamPaymentData();
@@ -293,7 +295,7 @@ let paymentId = response.razorpay_payment_id;
     //   this.showPayemntScreen = false;
     // }, 0);
    
-    if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affliate') {
+    if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
       this.savePaymentData();
     } else {
       this.showPaidSuccess = true;
@@ -304,7 +306,7 @@ let paymentId = response.razorpay_payment_id;
 }
 savePaymentData() {
   const formData = new FormData();
-  if (this.paymentTypeInfo == 'affliate') {
+  if (this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
     let paidAmount =(this.totalAmount).toString();
     formData.append('paymentTypeInfo', this.paymentTypeInfo);
     formData.append('schoolId', this.schoolId);
@@ -378,6 +380,7 @@ setAffiliateAmount() {
     // this.totalAmount= 50000;
   }
 }
+
 onPaymentTypeChange(event) {
   this.reportDataLength = 0;
   this.feeType =  event.value;
@@ -389,12 +392,12 @@ onPaymentTypeChange(event) {
  
   console.log('affilateAmounnt===>'+this.totalAmount);
   if (this.paymentType !== '') {    
-    if (this.paymentType == '1') {
+    if (this.paymentType == 'affilation' || this.paymentType == 'kit'|| this.paymentType == 'misc' ) {
       this.showPayment = true;
       this.isAffilated = '1';
-      // this.affilateAmounnt = 50000;
-      // this.totalAmount= 50000;
-     // this.checkAlreadypaid();
+      this.totalAmount = 0;
+      this.affilateAmounnt = '';
+       
     } else {
       this.showPayment = false;
       this.showAlredayPaidMessage = false;
@@ -467,6 +470,8 @@ onyeareChange(val,yearText) {
   } else {
     this.isFirstYear = false;
   }
+  this.isAffilated = '0';
+  this.showPayment = false;
   this.feeType = '';
   this.slectedEvent = '';
   this.slectedGame = '';

@@ -173,3 +173,9 @@ i {
     top: 11px;
     text-decoration: none;
 }
+.payment-text-box {
+    width: 32%;
+}
+.align-payment-box {
+   padding-left: 15px; 
+}

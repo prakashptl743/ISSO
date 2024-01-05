@@ -171,8 +171,10 @@ setAge() {
 setFeeType() {
   this.feeType = [
     {label: "Select Type", value: ''},
-    {label: 'Affilation Fee', value: '1'},
-    {label: 'Participation Fee', value: '2'},
+    {label: 'Affilation Fee', value: 'affilation'},
+    {label: 'Participation Fee', value: 'participation'},
+    {label: 'Kit Amount', value: 'kit'},
+    {label: 'Miscellaneous Fee', value: 'misc'},
  
   ];
   return this.feeType;
@@ -218,18 +220,18 @@ setDateOfBirthValidation(ageRange) {
   var newdate = new Date(date);
     let setYear;
     if (ageRange === 11) {
-      setYear = newdate.getFullYear() - 10; 
+      setYear = newdate.getFullYear() - 11; 
       console.log('Im true'+setYear)
     } else if(ageRange === 14) {
       console.log('im 14')
-      setYear = newdate.getFullYear() - 13; 
+      setYear = newdate.getFullYear() - 14; 
     }  else if(ageRange === 16) {
-      setYear = newdate.getFullYear() - 15; 
-    } else if(ageRange === 17) {
       setYear = newdate.getFullYear() - 16; 
+    } else if(ageRange === 17) {
+      setYear = newdate.getFullYear() - 17; 
     }  else if(ageRange === 19) {
       console.log('Im 19')
-      setYear = newdate.getFullYear() - 18; 
+      setYear = newdate.getFullYear() - 19; 
     }
     var newdate = new Date(date);
     newdate.setDate(newdate.getDate() + 1);
