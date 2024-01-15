@@ -49,11 +49,22 @@ export class IssoUtilService {
   setYear() {
     let setYearVal = 2021;
     let currYear = new Date().getFullYear();
-    let yearCount = currYear - setYearVal + 2
+    let month = new Date().getMonth(); 
+    let nextYear;
+    let yearCount
+    if(month >= 5 ) {
+      yearCount = currYear - setYearVal + 2
+    } else {
+      yearCount = currYear - setYearVal + 1
+    }
+
+    //let yearCount = currYear - setYearVal + 2
     this.yearArray.length = 0; 
     for(let i=1;i< yearCount; i++) {
+     
       let nextYear = setYearVal + 1;
       let currYearString = setYearVal+'-'+nextYear;
+      
       this.yearArray.push({year:currYearString});
         this.yearOptions = [];
         this.yearOptions.push({
@@ -67,7 +78,8 @@ export class IssoUtilService {
           });
         })
         setYearVal= nextYear;
-    }
+  
+  }
     return this.yearOptions;
 }
 setAgeMap(eventValue) {
@@ -103,33 +115,30 @@ setYearToStaffadmin() {
   
   let currYearString;
   let nextYearString;
+ 
   let prevYear = currYear - 1;
   let nextYear = currYear + 1;
+ 
+  // if (month >= 5) { 
+  //   currYearString = prevYear+'-'+currYear;
+  //   nextYearString = currYear+'-'+nextYear;
+  // } else {
+  //   currYearString = prevYear+'-'+currYear;
+  //   nextYearString = currYear+'-'+nextYear;
+  // }
+ 
+ 
   if (month >= 5) { 
     currYearString = prevYear+'-'+currYear;
     nextYearString = currYear+'-'+nextYear;
   } else {
-    currYearString = prevYear+'-'+currYear;
-    nextYearString = currYear+'-'+nextYear;
-  }
- 
-  
+    currYearString = (prevYear -1 )+'-'+prevYear;
+    nextYearString = prevYear+'-'+currYear;
+  } 
 
   this.yearArray = [{year:currYearString}, {year:nextYearString}];
   return  this.yearArray ;
-  // this.staffadminYearOptions = [];
-  // this.staffadminYearOptions.push({
-  //   label: "Select year",
-  //   value: ''
-  // });
-   
-  // this.yearArray.forEach(element => {
-  //     this.staffadminYearOptions.push({
-  //       label: element.year,
-  //       value: element.year
-  //     });
-  //   })
-  //   return this.staffadminYearOptions;
+ 
 }
 
 setYearForStaffadmin() {
@@ -323,6 +332,78 @@ setYearRange(ageRange) {
   this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
   return  this.yearRange;
 }
+
+
+setYearRangeForAdmin_BK(ageRange,eventYear) {
+  var splitYear = eventYear.split("-");
+  var lastTwoDigitOfYear = Number(splitYear[1] % 100);
+  console.log('last digit-->'+lastTwoDigitOfYear)
+  let setMinYear = 0;
+  let setMaxYear;
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth();
+  
+  if (Number(ageRange) === 11) {
+    //setMinYear = 12; 
+    setMinYear = lastTwoDigitOfYear - 12;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 14) {
+    // setMinYear = 15; 
+    setMinYear = lastTwoDigitOfYear - 9;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 17) {
+      // setMinYear = 18; 
+    setMinYear = lastTwoDigitOfYear - 6;
+    console.log('Im new min Year-->'+setMinYear)
+    setMaxYear = 0
+  }  else if(Number(ageRange) === 19) {
+    // setMinYear = 20; 
+    setMinYear = lastTwoDigitOfYear - 4;
+    setMaxYear = 0 
+  }
+ 
+  this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
+
+  return  this.yearRange;
+}
+
+
+setYearRangeForAdmin(ageRange,eventYear) {
+  var splitYear = eventYear.split("-");
+  var lastTwoDigitOfYear = Number(splitYear[1] % 100);
+  console.log('last digit-->'+lastTwoDigitOfYear)
+  let setMinYear = 0;
+  let setMaxYear;
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth();
+  
+  if (Number(ageRange) === 11) {
+    setMinYear = 12; 
+    //setMinYear = lastTwoDigitOfYear - 12;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 14) {
+     setMinYear = 15; 
+   //setMinYear = lastTwoDigitOfYear - 9;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 17) {
+    setMinYear = 18; 
+   // setMinYear = lastTwoDigitOfYear - 6;
+    console.log('Im new min Year-->'+setMinYear)
+    setMaxYear = 0
+  }  else if(Number(ageRange) === 19) {
+     setMinYear = 20; 
+    //setMinYear = lastTwoDigitOfYear - 4;
+    setMaxYear = 0 
+  }
+ 
+  this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
+
+  return  this.yearRange;
+}
+
+
 setRank() {
   this.genderOptions = [
   {label: "Select Rank", value: ''},

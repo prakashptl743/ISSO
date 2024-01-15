@@ -347,6 +347,39 @@ setFiletr() {
       this.loading = false;
   });
 }
+checkAge(gameId){
+ 
+  this.meritService.setAgeMapForMerit(this.eventValue,gameId).subscribe(
+    response => {
+      this.showAgeFilter = true;
+    const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+    const ageMeritArray= ageList.split(" ");
+    const x = Array.from(new Set(ageList.split(" "))).toString();
+    
+    var myarray = x.split(',');
+    let ageArrayLength =  myarray.length;
+
+    this.ageOptions =[];
+    this.ageOptions.push({
+      label: "Please Select",
+      value: ''
+    });
+
+    for(var i = 0; i < ageArrayLength; i++) {
+      if(myarray[i] !==''){
+      this.ageOptions.push({
+        label: myarray[i],
+        value: myarray[i]
+      });
+    }
+    }
+
+
+    } ,
+    error => {
+      //this.errorAlert =true;
+   })
+}
  filterStudent() {
   this.display = true;
  }
@@ -814,6 +847,7 @@ hideFilterTextBox() {
 
 }
 onEventChange(event) {
+  this.schoolvalue ='';
   this.schoolEnter= false;
   this.customers = [];
   this.hideFilterTextBox();
@@ -1084,9 +1118,19 @@ checkSubGameCapacityForStudent(event) {
   //  }
  
 }
+setGender() {
+  this.genderGameFilter = true;
+}
 loadStudentData(event) {
   this.newSubGameCapacity = [];
   this.schoolvalue = event.value;
+  // this.hideFilterTextBox();  
+  this.filter_game ='';
+  this.showAgeFilter = false;
+  this.filter_age ='';
+  this.filter_sub_game ='';
+  this.filter_Gender = '';
+  this.genderGameFilter = false;
   if(this.schoolvalue !== '') {
  
     this.studentService.loadStudentDataByEvent(this.eventValue,this.schoolvalue).subscribe(response => {
@@ -1094,11 +1138,8 @@ loadStudentData(event) {
           this.showIdBox = true;
           this.nameBox = true;
           this.showGameFilter = true;
-          this.showAgeFilter = true;
-          this.genderGameFilter = true;
           this.schoolServiceData =response;
-          //this.studentListArray = response;
-          this.schoolData = this.schoolServiceData;
+           this.schoolData = this.schoolServiceData;
           if(response[0].gameType=='Both') {
             this.showSubGameList = true;
           }  else {
@@ -1331,7 +1372,8 @@ loadAgeChange() {
   this.printmeritData = false;
   this.isAddNewStudent = false;
   this.minDate = this.issoUtilService.setDateOfBirthValidation(Number(this.selectedAge));
-  this.yearRange = this.issoUtilService.setYearRange(Number(this.selectedAge));
+  this.yearRange = this.issoUtilService.setYearRangeForAdmin(this.selectedAge,this.yearvalue);
+  console.log('Im raeayrabge--->'+this.yearRange)
 }
 setFiletrSubGame(event) {
     if(event !== null) {
@@ -1392,12 +1434,13 @@ addNewStudent(event: Event, studentData: Student,type:any) {
         this.isEditStudent = true;
         this.studentPhoto = studentData.photo,
         this.minDate = this.issoUtilService.setDateOfBirthValidation(Number(studentData.ageRange));
-        this.yearRange = this.issoUtilService.setYearRange(Number(studentData.ageRange));
+        this.yearRange = this.issoUtilService.setYearRangeForAdmin(studentData.ageRange,this.yearvalue);
         this.isAddNewStudent = true;
         this.isShowSubGame = false;
         this.mapGameArray =[];
      
         this.eventYear = studentData.event_year;
+        console.log('Im year--->'+this.eventYear);
         this.eventName = studentData.eventName;
         this.ageValue = studentData.ageRange;
         this.editStudentPhoto = studentData.photo,
@@ -1566,6 +1609,8 @@ goBack() {
   this.showDropDown = true;
   this.displaySearch = false;
   this.showSearchResult = false;
+  this.eventReadable = true;
+  this.schoolReadble = true;
 }
 removeMappedData(i: number): void {
   this.mapGameArray.splice(i, 1);

@@ -814,7 +814,7 @@ setPaymentForGame() {
           this.ageReaadble = false;
           this.genderReadble = false;
           this.showAddbutton = false;
-          this.messageService.add({key: 'custom', severity:'error', summary: 'You are not participating in this game'});
+          this.messageService.add({key: 'custom', severity:'error', summary: 'You have not participated in this game'});
           this.noParticipateEvent = true;
           this.isDataAvailble = false;
           this.showPayment = false;
