@@ -5,7 +5,7 @@
      </div>
   
      <div class="ui-g-12 ui-md-5">
-        <p-dropdown [disabled]="!globalSchoolReadble" [options]="globalSchoolOption" formControlName="globalSelectedSchool" [(ngModel)]="globalSelectedSchool"  placeholder="Select School"  [style]="{'min-width':'140px'}"></p-dropdown>
+        <p-dropdown [disabled]="!globalSchoolReadble" [options]="globalSchoolOption" formControlName="globalSelectedSchool" [(ngModel)]="globalSelectedSchool"  (onChange)="onLoadSchool($event)"  placeholder="Select School"  [style]="{'min-width':'140px'}"></p-dropdown>
     </div>
     <div class="ui-g-12  col-md-5">
         <input class="form-control" [(ngModel)]="search_text" placeholder="Enter student ID,Name or Aadhar number" formControlName="search_text" name="studentName"  type="text" required>
@@ -286,6 +286,18 @@
  
     </div>
     <div class="form-row">
+
+
+      <div class="form-group col-md-6" *ngIf="!isEditStudent">
+        <label for="inputEmail4">Select Game</label>
+        <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+      <div class="form-group col-md-6" *ngIf="isEditStudent">
+        <label for="inputEmail4">Game Name</label>
+        <div><span>{{gameNameForEditStudent}}</span></div>
+      </div>
+
+
       <div class="form-group col-md-6"   *ngIf="!isEditStudent">
         <label for="inputEmail4">Select Age</label>
         <p-dropdown  [disabled]="!ageReadble" formControlName="studentAge" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
@@ -294,16 +306,20 @@
         <label for="inputEmail4">Age Range</label>
         <div><span>{{ageValue}}</span></div>    
       </div>
-      <div class="form-group col-md-6" *ngIf="!isEditStudent">
-        <label for="inputPassword4">Select Gender</label>
-        <p-dropdown  [disabled]="!genderReadble"  formControlName="studentGender" [(ngModel)]="selectedGender"  [options]="genderOptions" (onChange)="loadGenerChange()"   placeholder="Select Gender"  [style]="{'min-width':'20px'}"></p-dropdown>
-      </div>
-      <div class="form-group col-md-6"  *ngIf="isEditStudent">
-        <label for="inputPassword4">Gender</label>
-        <div><span>{{genderValue}}</span></div>
-       </div>
+
+    
   </div>
    <div class="form-row">
+
+    <div class="form-group col-md-6" *ngIf="!isEditStudent">
+      <label for="inputPassword4">Select Gender</label>
+      <p-dropdown  [disabled]="!genderReadble"  formControlName="studentGender" [(ngModel)]="selectedGender"  [options]="genderOptions" (onChange)="loadGenerChange()"   placeholder="Select Gender"  [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+    <div class="form-group col-md-6"  *ngIf="isEditStudent">
+      <label for="inputPassword4">Gender</label>
+      <div><span>{{genderValue}}</span></div>
+     </div>
+
         <div class="form-group col-md-6" *ngIf="!isEditStudent">
           <label for="inputEmail4">Select School</label>
           <p-autoComplete [disabled]="!schoolEnter" [(ngModel)]="schoolName" [style]="{'width':'100%'}"  class="p-autocomplete"   formControlName="schoolName"  [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
@@ -320,17 +336,7 @@
           <!-- <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
         </div>
 
-        <div class="form-group col-md-6" *ngIf="!isEditStudent">
-          <label for="inputEmail4">Select Game</label>
-      
-
-
-          <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-        </div>
-        <div class="form-group col-md-6" *ngIf="isEditStudent">
-          <label for="inputEmail4">Game Name</label>
-          <div><span>{{gameNameForEditStudent}}</span></div>
-        </div>
+     
     
     </div>
     <div class="form-row" *ngIf="isShowSubGame">

@@ -21,7 +21,21 @@ import { DatePipe } from '@angular/common';
   providers: [MessageService,ConfirmationService]
 })
 export class MeritComponent implements OnInit {
-
+  disabledButtons= [0,1, 2]
+  buttons = [
+    {
+      actionName: 'action1',
+      title: 'button1'
+    },
+    {
+      actionName: 'action2',
+      title: 'button2'
+    },
+    {
+      actionName: 'action3',
+      title: 'button3'
+    }
+  ]
   yearOptions: SelectItem[];
   eventOptions: SelectItem[];
   gameOptions: SelectItem[];
@@ -125,6 +139,8 @@ export class MeritComponent implements OnInit {
   isAlreadyAddedMerit: boolean =false;
   timeAndDistance: boolean;
   timeAndDistanceValue: string;
+  isTimeDistance: any;
+  indexVal: any;
 
   constructor( 
     private confirmation: ConfirmationService,
@@ -149,6 +165,7 @@ export class MeritComponent implements OnInit {
     //   // this is the image as dataUrl
     //   this.base64Image = 'data:image/jpg;base64,' + base64data;
     // });
+   // this.isTimeDistance = true;
     this.setPhotoPath();
   } 
   setPhotoPath () { 
@@ -368,7 +385,8 @@ export class MeritComponent implements OnInit {
   setAgeMap() {
     this.meritService.setAgeMapForMerit(this.eventValue,this.gameId).subscribe(
       response => {
- 
+   
+       if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
       const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
       this.ageMeritArray= ageList.split(" ");
       const x = Array.from(new Set(ageList.split(" "))).toString();
@@ -391,7 +409,7 @@ export class MeritComponent implements OnInit {
       }
       }
 
- 
+    }
       } ,
       error => {
         //this.errorAlert =true;
@@ -1337,8 +1355,37 @@ rankChange(rankVal) {
     //   this.timeAndDistance = false;
     // }
 }
-onKeypressEvent(val) {
-   this.timeAndDistanceValue =  val;
+onKeypressEvent(userEnterValue,val) {
+    let usrEnteredVal = userEnterValue.replace(/\s/g, "");
+    let actualVal = (this.showAlreadyMeritData[val].timeDistance).replace(/\s/g, "");
+    this.timeAndDistanceValue =  usrEnteredVal;
+   if(usrEnteredVal !== actualVal && userEnterValue !== '') {
+     this.indexVal = val;
+   } else {
+    this.indexVal = 5;
+   }
+}
+ 
+upDateTimeDistance(meritId) {
+ 
+  const formData = new FormData();
+  formData.append('meritId', JSON.stringify(meritId));
+  formData.append('timeDistance', JSON.stringify(this.timeAndDistanceValue).replace(/\s/g, ""));
+
+  // formData.append('meritId', JSON.stringify(2275));
+  // formData.append('timeDistance', JSON.stringify(456));
+
+  this.meritService.updateMeritData(formData).subscribe(
+    res => {
+      if (res.status === 'error') {
+        console.log('error occured');
+        this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+      } else {
+        this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Updated Successfully'});
+       // this.makeEmptyForm();
+      }
+    });
+
 }
 deleteIndividualMeritData(i: number): void {
   this.individualMeritArray.splice(i, 1);

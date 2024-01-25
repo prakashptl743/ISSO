@@ -10,11 +10,18 @@
 <app-payment-invoice *ngIf="reportValue == 0"></app-payment-invoice>
 <app-download-invoice *ngIf="reportValue == 1"></app-download-invoice>
 <app-download-receipt *ngIf="reportValue == 2"></app-download-receipt>
-  
+
+
 
 <div class="ui-g-12" *ngIf="reportValue == 3">
   <div class="ui-g-4">
     <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
+  </div>
+  <!-- <div class="ui-g-4">
+    <p-dropdown  [options]="monthOptions"  placeholder="Select Month" (onChange)="onyeareChange($event)" [(ngModel)]="selectedMonth" [style]="{'min-width':'140px'}"></p-dropdown>
+  </div> -->
+  <div class="ui-g-4">
+    <p-calendar [(ngModel)]="date" view="month" dateFormat="mm/yy"  (ngModelChange)="onMonthChange(date)"  [readonlyInput]="true"></p-calendar>
   </div>
   <table class="table"  *ngIf="isDataAvailble">
     <thead>

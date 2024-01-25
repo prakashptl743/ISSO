@@ -127,7 +127,11 @@ deleteSchool(id: number) {
     catchError(this.handleError)
   );
 }
-
+deleteRegisteredSchool(id: number) {
+  return this.http.delete(this.serverUrl + 'schoolRegistration/deleteRegisteredSchool/' + id).pipe(
+    catchError(this.handleError)
+  );
+}
 loginFail(){
   return true;
 }

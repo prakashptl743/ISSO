@@ -236,7 +236,13 @@
     <div style="padding:.5em" class="ui-g-12 ui-md-6" *ngIf="registeredSchoolFlag">
         <div class="item-box">
             <div class="item-header1">
-                <h4 title="{{showRegisterdSchoolData.name}}">{{showRegisterdSchoolData.name}}</h4>
+                <!-- <h4 class="school-title-head" title="{{school.name}}">{{school.name}}</h4> -->
+                <h4 class="school-title-head" title="{{showRegisterdSchoolData.name}}">{{showRegisterdSchoolData.name}}</h4>
+                <div class="icons-wrap">
+                     <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteRegisteredSchoolData(showRegisterdSchoolData.schoolId )">
+                    </button>
+                    
+                </div>
             </div>
             <div class="item-description">
                 <label>E-MAIL ID:</label> 

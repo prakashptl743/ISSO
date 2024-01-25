@@ -72,6 +72,7 @@
             <th scope="col">Student Name</th>
             <th scope="col">School Name</th>
             <th scope="col">Rank</th>
+            <th scope="col">Time / Distance</th>
             <th scope="col">Action</th>
          </tr>
         </thead>
@@ -80,6 +81,18 @@
             <td>{{school.studentName}}</td>
             <td>{{school.schoolName}}</td>
             <td>{{school.rank}}</td> 
+            <td>
+              <div class="col-md-12">
+                <div class="col-md-9">
+                 <input class="form-control" name="gameName" value="{{school.timeDistance}}" (keyup)="onKeypressEvent($event.target.value,i)"  type="text" required>
+               </div>
+               
+               <div class="col-md-3">
+                <p-button  [disabled]="disabledButtons.indexOf(i) !== indexVal"   class="align-submit" label="Update" (click)="upDateTimeDistance(school.merit_id);"></p-button>  
+               </div>
+ 
+            </div>
+            </td> 
              <td>
               <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id);deleteIndividualQr(school.studentID);">
               </p-button>

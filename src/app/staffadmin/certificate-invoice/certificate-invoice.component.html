@@ -25,7 +25,7 @@
         <div class="col-md-6 align-drop-down">
           <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
         </div>   
-        <div class="col-md-6 align-drop-down">
+        <div class="col-md-6 align-drop-down" *ngIf="(certType !== 'invoice' && certType !== 'receipt')" >
           <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
         </div> 
           <!-- 

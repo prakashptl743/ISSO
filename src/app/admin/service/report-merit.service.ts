@@ -85,6 +85,14 @@ saveMeritData(meritInfo) {
     catchError(this.handleError)
   );
 }
+updateMeritData(meritInfo) {
+  return this.http.post<any>(this.serverUrl + 'merit/updateMeritData/',meritInfo)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
+
+
 checkDuplicateMeritData(eventValue,gameId,selectedAge,genderVal,subGameId,schoolId,studentId,rankValue) {
   // return this.http.post<any>(this.serverUrl + 'merit/checkDuplicateMeritData/',meritInfo)
   // .pipe(

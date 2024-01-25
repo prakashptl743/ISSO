@@ -82,6 +82,42 @@ export class IssoUtilService {
   }
     return this.yearOptions;
 }
+setMonth() {
+  let setYearVal = 2021;
+  let currYear = new Date().getFullYear();
+  let month = new Date().getMonth(); 
+  let nextYear;
+  let yearCount
+  if(month >= 5 ) {
+    yearCount = currYear - setYearVal + 2
+  } else {
+    yearCount = currYear - setYearVal + 1
+  }
+
+  //let yearCount = currYear - setYearVal + 2
+  this.yearArray.length = 0; 
+  for(let i=1;i< yearCount; i++) {
+   
+    let nextYear = setYearVal + 1;
+    let currYearString = setYearVal+'-'+nextYear;
+    
+    this.yearArray.push({year:currYearString});
+      this.yearOptions = [];
+      this.yearOptions.push({
+        label: "Select year",
+        value: ''
+      });
+      this.yearArray.forEach(element => {
+        this.yearOptions.push({
+          label: element.year,
+          value: element.year
+        });
+      })
+      setYearVal= nextYear;
+
+}
+  return this.yearOptions;
+}
 setAgeMap(eventValue) {
   console.log('im service')
   this.studentService.setAgeMap(eventValue).subscribe(

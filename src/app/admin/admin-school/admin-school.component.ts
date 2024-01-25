@@ -405,7 +405,16 @@ onSubmit() {
      }
  
 }
-
+deleteRegisteredSchoolData(schoolId) {
+  if (event.defaultPrevented) return;
+  event.preventDefault();
+  this.confirmation.confirm({
+    key: 'confirm-delete-school',
+    icon: 'pi pi-info-circle',
+    message: 'Are you sure to delete school data?',
+    accept: () => { this.deleteRegisteredSchool(schoolId); },
+  });
+}
 
 deleteSchoolData(event: Event, schoolData: School) {
     if (event.defaultPrevented) return;
@@ -439,7 +448,23 @@ deleteSchool(School) {
    error => this.error = error
  );
 }
+deleteRegisteredSchool(schoolId) {
+ 
+  this.schoolService.deleteRegisteredSchool(schoolId).subscribe(
+   res => {
+     //  if (res.status !== 'error') {
+     //    this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+     //  } else {
+         this.messageService.add({key: 'custom', severity:'success', summary: 'School Data Deleted Successfully'});
 
+     //  }
+
+     this.display =false
+     this.getSchoolData();
+   },
+   error => this.error = error
+ );
+}
 importSchoolExcel() {
   this.meritService.exportAsExcelFile(this.schoolData, 'school-data');
 }

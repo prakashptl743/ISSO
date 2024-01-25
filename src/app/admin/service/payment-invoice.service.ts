@@ -32,6 +32,12 @@ getPaymentData(yearVal){
     catchError(this.handleError)
  );
 }
+getPaymentDataMonthWise(monthVal){ 
+  let str = 'paymentInvoice/getPaymentDataMonthWise/' + monthVal +'/';
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
 
 public exportAsExcelFile(json: any[], excelFileName: string): void {
     
