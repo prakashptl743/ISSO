@@ -542,6 +542,7 @@ export class MeritComponent implements OnInit {
     this.printmeritData = false;
     this.selectedSchool = '';
     this.selectedStudent= '';
+    this.indexVal = 5;
     // this.schoolOptions = [];
     const eventval = subgame.value;
     this.subgameArray =  eventval.split(","); 

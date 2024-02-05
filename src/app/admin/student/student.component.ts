@@ -1169,7 +1169,7 @@ initialForm() {
      
     }); 
     this.searchForm = this.fb.group({
-      globalSelectedYear:[''],
+      globalSelectedYear:['', Validators.required],
       globalSelectedSchool:[''],
       search_text: ['', Validators.required],
      
@@ -1944,7 +1944,7 @@ onSubmit() {
         subGameName = this.subGameNameArray.toString();
     }
       this.studentDataArray.push(
-          this.eventIdForStudent,
+          this.eventValue,
           this.gameId,
           this.subGameId,
           this.selectedAge,

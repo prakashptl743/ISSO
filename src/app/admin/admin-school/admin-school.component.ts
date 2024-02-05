@@ -189,6 +189,7 @@ getSchoolData(){
       this.registeredSchoolFlag =  false;
       this.schoolService.getSchoolList().subscribe(response => {
         if(response!=="") {
+         console.log('Im resp--->'+response)
           this.schoolServiceData =response;
           this.schoolData = this.schoolServiceData;
         } else {
