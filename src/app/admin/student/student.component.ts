@@ -1351,7 +1351,7 @@ addNewStudent(event: Event, studentData: Student,type:any) {
         this.isAddNewStudent = true;
         this.isShowSubGame = false;
         this.mapGameArray =[];
-     
+        this.eventIdForStudent = studentData.eventId;
         this.eventYear = studentData.event_year;
         console.log('Im year--->'+this.eventYear);
         this.eventName = studentData.eventName;
@@ -1937,6 +1937,7 @@ onSubmit() {
    this.submitted = true;
    this.studentDataArray= [];
    console.log(this.eventValue);
+   this.eventValue= this.eventIdForStudent
    let subGameId;
    let subGameName;
    if (this.subGameIdArray.length > 0) {

@@ -139,6 +139,7 @@ export class Student {
   subGameName: string;
   gameId: number;
   gameType:string;
+  eventId:number;
 }
 export class coachData {
   ageRange: number;

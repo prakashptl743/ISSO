@@ -11,6 +11,7 @@ import { ConfirmationService } from 'primeng/api';
 import { School, WebCalender } from '../admin-interfaces';
 import { Table } from 'primeng/components/table/table';
 import { WebcalenderService } from '../service/webcalender.service';
+import { IssoUtilService } from 'src/app/services/isso-util.service';
 
 @Component({
   selector: 'app-web-data',
@@ -69,8 +70,10 @@ export class WebDataComponent implements OnInit {
   fileName: number;
   isMoreDot: boolean;
   url: any;
-
-
+  yearRange: any;
+  eventStartDate: Date;
+  eventEndDate: Date;
+  minimumDate = new Date();
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -79,6 +82,7 @@ export class WebDataComponent implements OnInit {
     private schoolService: WebcalenderService,
     private webcalenderService: WebcalenderService,
     private pb:FormBuilder,
+    private issoUtilService: IssoUtilService
   ) {
     setTimeout(()=>{this.disable = true}, 5000)
    }
@@ -88,7 +92,8 @@ ngOnInit() {
     this.fileUpladForm();
     this.loading = true;
     setTimeout(()=> {this.placeholderText = 'It has changed'}, 5000)
-    this.getCalderData()
+    this.getCalderData();
+  //  this.yearRange = this.issoUtilService.setYearRangeForAdmin(this.selectedAge,this.yearvalue);
 }
 fileUpladForm() {
   this.profileForm= this.pb.group({
@@ -153,6 +158,8 @@ initialForm() {
       schoolname: ['', Validators.required],
       schoolEmail: ['', Validators.required],
       schoolBoard: ['', Validators.required],
+      startDate:['', Validators.required],
+      endDate:['', Validators.required],
       profile: ['', Validators.required],
       editStudentPhoto:[],
       schoolId: '',
@@ -252,6 +259,8 @@ addNewSchool(event: Event, calenderData: WebCalender,type:any) {
             schoolname: '',
             schoolEmail: '',
             schoolBoard: ' ',
+            startDate:'',
+            endDate:'',
             schoolTelePhone:' ',
             profile:' ', 
             editStudentPhoto:' ', 
@@ -271,10 +280,19 @@ hideExtraView() {
 onSubmit() {
       this.submitted = true;
       const formData = new FormData();
+      let selectedStartDate = this.schoolForm.get('startDate').value
+      let eventStartDate = selectedStartDate.getFullYear()+ "-" + (selectedStartDate.getMonth() + 1)+ "-"+selectedStartDate.getDate() 
+
+      let selectedEndDate = this.schoolForm.get('endDate').value
+      let eventEndDate = selectedEndDate.getFullYear()+ "-" + (selectedEndDate.getMonth() + 1)+ "-"+selectedEndDate.getDate() 
+
+
       let schoolID =  this.schoolForm.get('schoolId').value;
       formData.append('schoolname', this.schoolForm.get('schoolname').value);
       formData.append('schoolEmail', this.schoolForm.get('schoolEmail').value);
       formData.append('schoolBoard', this.schoolForm.get('schoolBoard').value);
+      formData.append('eventStartDate', eventStartDate);
+      formData.append('eventEndDate', eventEndDate);
       formData.append('schoolTelePhone', this.schoolForm.get('schoolTelePhone').value);
       if(this.fullFilename =='') {
        // this.fullFilename = 'edit'
