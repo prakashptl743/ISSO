@@ -296,6 +296,7 @@ export class StudentComponent implements OnInit {
   filter_Gender: string;
   filter_game: string;
   filter_sub_game: string;
+  isCancelForm: boolean;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -530,16 +531,19 @@ onyeareChange(event) {
 }
 
 cancelForm() {
-  this.display = false;
-  this.showDropDown = true;
-  if (this.displaySearch) {
-    this.showDropDown = false;
-    this.goBackBUtton = true;
-  } else {
+ // this.display = false;
+ // this.showDropDown = true;
+  if(this.isCancelForm){
+    this.displaySearch = true
+    this.display = false;
+    this.goBackBUtton =true;
+  } else  {
+    this.display = false;
     this.eventReadable = true;
     this.schoolReadble = true;
     this.showDropDown = true;
   }
+
 }
 onEventChangeForStudent(event) {
  
@@ -1321,6 +1325,12 @@ setFiletrSubGame(event) {
   }
 }
 addNewStudent(event: Event, studentData: Student,type:any) {
+ 
+  if(this.displaySearch){
+    this.isCancelForm =true;
+  } else {
+    this.isCancelForm =false;
+  }
   this.displaySearch = false;
   this.selectedEvent = '';
   this.selectedGame = '';

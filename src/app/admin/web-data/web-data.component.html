@@ -8,12 +8,12 @@
     <div class="sub-view-wrapper" *ngIf="display">
     <h2 class="headingSubview">{{subViewTitle}}</h2>
     <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-        <div class="form-row">
+        <!-- <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputPassword4">Title</label>
                 <input class="form-control" id="float-input" formControlName="schoolTelePhone"  type="text" >  
               </div>
-        </div>    
+        </div>     -->
         <div class="form-row">  
             <div class="form-group col-md-6">
               <label for="inputEmail4">Sport Name</label>
@@ -118,13 +118,18 @@
                 </div>
             </div>
             <div class="item-description">
-                <label>Event Title:</label>
-                <span class="item-value">{{school.title}}</span>
-            </div>
-            <div class="item-description">
                 <label>Sport Name:</label>
                 <span class="item-value">{{school.sportName}}</span>
             </div>
+            <div class="item-description">
+                <label>Event Start Date:</label>
+                <span class="item-value">{{school.eventStartDate  | date: 'd MMMM , y'}}</span>
+            </div>
+            <div class="item-description">
+                <label>Event End Date:</label>
+                <span class="item-value">{{school.eventEndDate  | date: 'd MMMM , y'}}</span>
+            </div>
+          
              <div class="item-description">
                 <label>Age Group:</label>
                 <div class="item-parent">

@@ -90,3 +90,11 @@ body .ui-dataview .ui-dataview-content {
     margin-top: 0;
     margin-bottom: 0;
 }
+:host ::ng-deep .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
+    position:absolute;
+    background-color: gray;
+ 
+}
+:host ::ng-deep .body .ui-button {
+    border-radius: none;
+}

@@ -362,7 +362,7 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 
 body .ui-button.ui-button-text-icon-left .ui-button-text {
     padding: 0.429em 1em 0.429em 2em;
-    background-color: #1362A5!important;
+    /* background-color: #1362A5!important; */
 }
 
 body .ui-dataview .ui-dataview-header {
@@ -638,7 +638,6 @@ body .ui-button {
     border: 1px solid #EE1D23!important;
     font-size: 14px;
     transition: background-color 0.2s, box-shadow 0.2s;
-    border-radius: 50px!important;
 }
 th{
     font-weight: normal!important;
@@ -669,7 +668,7 @@ body .ui-dropdown {
     color: #fff;
     background-color: #EE1D23!important;
     border-color: #EE1D23!important;
-    border-radius: 20px!important;
+    /* border-radius: 20px!important; */
 }
 .btn-default {
     color: #333;

@@ -154,7 +154,6 @@ initialForm() {
   this.selectedProfile ='';
  
     this.schoolForm = this.fb.group({
-      schoolTelePhone: ['', Validators.required],
       schoolname: ['', Validators.required],
       schoolEmail: ['', Validators.required],
       schoolBoard: ['', Validators.required],
@@ -237,16 +236,17 @@ changeFileName(filePath, fileName) {
 addNewSchool(event: Event, calenderData: WebCalender,type:any) {
   this.fullFilename='';
     if(type == 'edit') {
-      
       this.editStudentPhoto =  calenderData.eventFile,
       this.selectedProfile= calenderData.eventFile,
+      
        // this.schoolType = schoolData.isAffiliate;
         this.schoolForm.setValue({
             schoolId:calenderData.id,  
             schoolname: calenderData.sportName,
             schoolEmail:  calenderData.ageTitle,
             schoolBoard:  calenderData.sportLocation,
-            schoolTelePhone:  calenderData.title,
+            startDate: new Date(calenderData.eventStartDate),
+            endDate: new Date(calenderData.eventEndDate),
             profile:' ', 
             editStudentPhoto:calenderData.eventFile,
            // schoolId:'edit'        
@@ -261,7 +261,6 @@ addNewSchool(event: Event, calenderData: WebCalender,type:any) {
             schoolBoard: ' ',
             startDate:'',
             endDate:'',
-            schoolTelePhone:' ',
             profile:' ', 
             editStudentPhoto:' ', 
           }); 
@@ -293,7 +292,7 @@ onSubmit() {
       formData.append('schoolBoard', this.schoolForm.get('schoolBoard').value);
       formData.append('eventStartDate', eventStartDate);
       formData.append('eventEndDate', eventEndDate);
-      formData.append('schoolTelePhone', this.schoolForm.get('schoolTelePhone').value);
+ 
       if(this.fullFilename =='') {
        // this.fullFilename = 'edit'
        // formData.append('editFile',  this.editStudentPhoto);

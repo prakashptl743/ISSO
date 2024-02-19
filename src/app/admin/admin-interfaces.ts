@@ -23,6 +23,8 @@ export class WebCalender {
     sportName:string;
     title:string;
     eventFile:string;
+    eventStartDate:string;
+    eventEndDate:string
 }
   export class Event {
     gameId: any;
