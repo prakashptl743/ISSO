@@ -144,3 +144,8 @@ fieldset {
     margin-top: 0;
     margin-bottom: 0;
 }
+.align-game-info {
+    margin-left: 18px;
+    margin-right: 20px;
+    height: 35px;
+}

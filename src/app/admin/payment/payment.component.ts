@@ -67,13 +67,7 @@ export class PaymentComponent implements OnInit {
   gameType: any;
   selectedYearVal: string;
   studentAttendance: boolean;
-
-  selectedCities: string[] = [];
-
-  selectedCategories: any[] = ['Technology', 'Sports'];
-
-  categories: any[] = [{name: 'Accounting', key: 'A'}, {name: 'Marketing', key: 'M'}, {name: 'Production', key: 'P'}, {name: 'Research', key: 'R'}];
-
+ 
   checked: boolean = false;
   gameArray= [];
   reportValue: any;
@@ -84,7 +78,17 @@ export class PaymentComponent implements OnInit {
   totalPaidTillNow: number;
   rootGameType: any;
   loading: boolean;
-
+  eleVenBCount: any =0;
+  eleVenGCount: any =0;
+  fourBcount:any =0;
+  fourGcount: any =0;
+  sixGcount: any =0;
+  sixBcount: any =0;
+  sevenGcount: any =0;
+  sevenBcount: any =0;
+  nineGcount: any =0;
+  nineBcount: any =0;
+  totalPaid: any =0;
    constructor( private issoUtilService: IssoUtilService, 
      private paymentInvoiceService: PaymentInvoiceService,
      private messageService: MessageService, 
@@ -213,6 +217,7 @@ export class PaymentComponent implements OnInit {
             if(response!=="") {
               this.paymentData = response;
               this.showspinner = false;
+              this.calculateTotalStutdent()
               if(this.paymentData.length > 0 ){
                 this.isDataAvailble = true;
                
@@ -235,7 +240,33 @@ export class PaymentComponent implements OnInit {
 
     }
   
-  
+    calculateTotalStutdent() {
+      this.eleVenBCount =0;
+      this.eleVenGCount =0;
+      this.fourBcount =0;
+      this.fourGcount =0;
+      this.sixBcount =0;
+      this.sixGcount =0;
+      this.sevenBcount =0;
+      this.sevenGcount =0;
+      this.nineBcount =0;
+      this.nineGcount =0;
+      this.totalPaid =0;
+      for(let i=0;i<= this.paymentData.length-1;i++) {
+       this.eleVenBCount +=  Number(this.paymentData[i].elevenBcount);
+       this.eleVenGCount +=  Number(this.paymentData[i].elevenGcount);
+       this.fourBcount +=   Number(this.paymentData[i].fourBcount);
+       this.fourGcount +=   Number(this.paymentData[i].fourGcount);
+       this.sixBcount +=   Number(this.paymentData[i].sixBcount);
+       this.sixGcount +=   Number(this.paymentData[i].sixGcount);
+       this.sevenBcount +=   Number(this.paymentData[i].sevenBcount);
+       this.sevenGcount +=   Number(this.paymentData[i].sevenGcount);
+       this.nineBcount +=   Number(this.paymentData[i].nineBcount);
+       this.nineGcount +=   Number(this.paymentData[i].nineGcount);
+       this.totalPaid +=   Number(this.paymentData[i].paidStudent);
+      }
+      console.log(this.eleVenBCount)
+    }
  
  
 }

@@ -51,6 +51,10 @@ table{
 	color: black;
 	text-align: center;
 }
+.total-row {
+    background: crimson !important;
+    color: white;
+}
 .text-center {
 	text-align: center;
 }

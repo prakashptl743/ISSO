@@ -98,6 +98,7 @@ export class SubGameComponent implements OnInit {
   minNinteenboys:any;
   minNinteengirls:any;
   selectedGame: string;
+  gameId: any;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -113,7 +114,7 @@ export class SubGameComponent implements OnInit {
     this.initialForm();
     this.loading = true;
     this.loadRootGame();
-    this.getGameData()
+    //this.getGameData()
     this.options = [
       {label: "Please select", value: ''},
       {label: "Team", value: 'Team'},
@@ -175,7 +176,7 @@ hideExtraView() {
 loadGameChange(gameData) {
   const gameval = gameData.value
   // this.gameArray =  gameval.split(","); 
-  // this.gameId = this.gameArray[0];
+   this.gameId = gameData.value;
   // this.gameName =  this.gameArray[1];
   // this.gameType =  this.gameArray[2];
     console.log("Game Type"+gameval)
@@ -299,61 +300,7 @@ editGame(game: Event, GameData: SubGame, type:any) {
     this.minNinteenboys=GameData.min_ninteen_boys;
     this.minNinteengirls=GameData.min_ninteen_girls;
   }
- // this.gameId = GameData.gameName;
-  // this.subgameId = GameData.subgameId;
-  // this.rootGameName = GameData.gameId;
-  // this.gameType = GameData.gameType;
-  // this.subgame_name = GameData.subGameName;
-  // this.eleven_boys = GameData.eleven_boys;
-  // this.eleven_girls = GameData.eleven_girls;
-  // this.fourteen_boys = GameData.fourteen_boys;
-  // this.fourteen_girls = GameData.fourteen_girls;
-  // this.seventeen_boys = GameData.seventeen_boys;
-  // this.seventeen_girls = GameData.seventeen_girls;
-  // this.ninteen_boys = GameData.ninteen_boys;
-  // this.ninteen_girls = GameData.ninteen_girls;
-  // this.gameForm.setValue({
-  //   gameId: GameData.gameId,  
-  //   gameName: GameData.gameName,
-  //   gameType:  GameData.gameType,
-  //   eleven_boys: GameData.eleven_boys,
-  //   eleven_girls:GameData.eleven_girls,
-  //   fourteen_boys: GameData.fourteen_boys,
-  //   fourteen_girls:GameData.fourteen_girls,
-  //   seventeen_boys:GameData.seventeen_boys,
-  //   seventeen_girls: GameData.seventeen_girls,
-  //   ninteen_boys:GameData.ninteen_boys,
-  //   ninteen_girls:GameData.ninteen_girls,
-  //  });  
-
-
-  // this.gameService.editSubGame(gameId).subscribe(
-  //   response => {
-  //     if(response!=="") {
-  //       this.gameServiceDATA =response;
-  //       console.log('afafa==>'+this.gameServiceDATA.gameInfo[0].id)
-  //       this.gameForm.setValue({
-  //         gameId: this.gameServiceDATA.gameInfo[0].id,  
-  //         gameName: this.gameServiceDATA.gameInfo[0].subGameName,
-  //         gameType:  this.gameServiceDATA.gameInfo[0].gameType,
-  //         eleven_boys: this.gameServiceDATA.capacity[0].eleven_boys,
-  //         eleven_girls: this.gameServiceDATA.capacity[0].eleven_girls,
-  //         fourteen_boys: this.gameServiceDATA.capacity[0].fourteen_boys,
-  //         fourteen_girls:this.gameServiceDATA.capacity[0].fourteen_girls,
-  //         seventeen_boys:this.gameServiceDATA.capacity[0].seventeen_boys,
-  //         seventeen_girls: this.gameServiceDATA.capacity[0].seventeen_girls,
-  //         ninteen_boys:this.gameServiceDATA.capacity[0].ninteen_boys,
-  //         ninteen_girls:this.gameServiceDATA.capacity[0].ninteen_girls,
-  //        });  
  
-  //     } else {
-  //       alert('im blankl=')
-  //     }
-
-  //  } ,
-  // error => {
-  //    //this.errorAlert =true;
-  // });
     this.display = true;
 }
   
@@ -515,7 +462,7 @@ onSubmit() {
 
             }
           this.display =false
-          this.getGameData();
+          this.loadSubGameData()
         },
         error => this.error = error
       );
@@ -528,10 +475,10 @@ onSubmit() {
               this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
             } else {
               this.messageService.add({key: 'custom', severity:'success', summary: 'Sub Game Updated Successfully'});
-
+              this.loadSubGameData()
             }
           this.display =false
-          this.getGameData();
+         //this.getGameData();
         },
         error => this.error = error
       );
@@ -539,7 +486,26 @@ onSubmit() {
     }
  
 }
+loadSubGameData() {
+  this.GameData =[];
+  this.gameServiceDATA =[];
+  this.gameService.subGameListById(this.gameId).subscribe(
+    response => {
 
+  // this.gameService.getSubGameList().subscribe(response => {
+    if(response!=="") {
+      this.showspinner = false;
+      this.gameServiceDATA =response;
+      this.GameData = this.gameServiceDATA;
+    } else {
+      alert('im blankl=')
+    }
+
+ } ,
+ error => {
+   //this.errorAlert =true;
+  }); 
+}
 
 deleteSubGameData(event: Event, subGameData: SubGame) {
     if (event.defaultPrevented) return;
@@ -564,9 +530,9 @@ deleteGame(subGameData) {
          this.messageService.add({key: 'custom', severity:'success', summary: 'Sub Game Data Deleted Successfully'});
 
      //  }
-
+    this.loadSubGameData()
      this.display =false
-     this.getGameData();
+     //this.getGameData();
    },
    error => this.error = error
  );
