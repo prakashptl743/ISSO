@@ -397,7 +397,7 @@
              
                <!-- <p-dropdown  [(ngModel)]="rootGameName"  [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="rootGameoptions"  size="30" ></p-dropdown> -->
                <div class="form-group col-md-4" *ngIf="showSubGameList">
-                 <div class="form-group">
+                 <div class="form-group align-subGameList">
                     <label class="form-control-label"><img class="form-icon" src="assets/images/ic_group_work_24px.png">Select SubGame</label>
                     <p-dropdown  [ngModelOptions]="{standalone: true}"  [(ngModel)]="selectedSubGame1" (onChange)="loadGameChange($event)" [options]="subGameoptions"  size="30" ></p-dropdown>
                  </div>

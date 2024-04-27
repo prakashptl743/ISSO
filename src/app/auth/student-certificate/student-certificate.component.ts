@@ -81,9 +81,9 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
     }
    // this.getCertificateData('2022-2023','5','9','143')
     this.isShowLoader = true;
-    //this.authService.getCertificateData(this.eventId,this.gameId,this.schoolId,this.studentId,this.subgameId,this.rank).subscribe(response => {
+    this.authService.getCertificateData(this.eventId,this.gameId,this.schoolId,this.studentId,this.subgameId,this.rank).subscribe(response => {
 
-     this.authService.getCertificateData(27,1,30,7075,'nosubgame','norank').subscribe(response => {
+    // this.authService.getCertificateData(27,1,30,7075,'nosubgame','norank').subscribe(response => {
       if(response!=="") {
         this.isShowLoader = false;
         this.certificateData =response;

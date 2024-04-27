@@ -12,18 +12,22 @@ import { Router } from '@angular/router';
 })
 
 export class AdminComponent implements OnInit {
+  currentTime: Date = new Date();
     today= new Date();
     todaysDataTime = '';
     CurrentTime: any;
     adminMenuData: Object;
     faMenu:string;
+    public todayDate: any;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
     private userSerview: UserService
   ) { 
- 
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
     this.todaysDataTime = formatDate(new Date(), 'dd-MMM-yyyy', 'en');
     // this.todaysDataTime = formatDate(this.today, 'dd-MMM-yyyy hh:mm:ss a', 'en-US', '+0530');
     setInterval(() => {
@@ -32,6 +36,7 @@ export class AdminComponent implements OnInit {
   }
   items: MenuItem[];
   ngOnInit() {
+    this.todayDate = new Date();
     this.faMenu = 'fas fa-sign-out-alt';
     this.adminMenuData ='';
     console.log('Im role-->'+localStorage.getItem('roleId'));

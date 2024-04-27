@@ -301,10 +301,16 @@
         <label for="inputEmail4">Select Age</label>
         <p-dropdown  [disabled]="!ageReadble" formControlName="studentAge" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
       </div>
-      <div class="form-group col-md-6" *ngIf="isEditStudent">
+
+      <div class="form-group col-md-6"   *ngIf="isEditStudent">
+        <label for="inputEmail4">Select Age</label>
+        <p-dropdown  formControlName="studentAge" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="changeAge($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      </div>
+
+      <!-- <div class="form-group col-md-6" *ngIf="isEditStudent">
         <label for="inputEmail4">Age Range</label>
         <div><span>{{ageValue}}</span></div>    
-      </div>
+      </div> -->
 
     
   </div>

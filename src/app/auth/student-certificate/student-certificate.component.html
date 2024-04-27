@@ -4,7 +4,7 @@
 <div>
    <div class="main-body certificate-font"> 
     <div *ngFor="let student of certificateData; let i = index;">
-            <section class="upper-body"><img src="assets/images/sp1.png" /></section>
+            <section class="upper-body"><img src="assets/images/newImages/sp1.png" /></section>
             <section class="certificate-section">
                 <h1>{{student.certifiacteHeaderContent}}</h1>
                 <div class="venue-section"><span>VENUE:</span><span>{{student.location}}</span>
@@ -62,7 +62,7 @@
               
                 <img *ngIf="!isMerit && student.qrscancode" class="qr-img" src="https://issoindia.com/isso-php/upload/qrscanner/{{student.event_year}}/{{student.qrscancode}}" />
                 <img *ngIf="isMerit && student.qrscancode" class="qr-img" src="https://issoindia.com/isso-php/upload/qrscanner/{{student.event_year}}/merit/{{student.qrscancode}}" />
-                <img class="lower-bg" src="assets/images/sp3.png" />
+                <img class="lower-bg" src="assets/images/newImages/sp3.png" />
             </section> 
    </div>
 </div>

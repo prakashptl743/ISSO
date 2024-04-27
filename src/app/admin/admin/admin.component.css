@@ -13,3 +13,20 @@
 :host ::ng-deep .small-box[_ngcontent-jsk-c2] > .small-box-footer[_ngcontent-jsk-c2] {
     font-size: 20px;
 }
+.watch {
+    text-align: center;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .watch h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .watch p {
+    font-size: 24px;
+    font-weight: bold;
+  }

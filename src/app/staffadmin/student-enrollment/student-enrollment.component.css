@@ -189,8 +189,10 @@ table th{
   display: none;
 }
 .align-subGame {
-    float: left;
-    padding: 25px 37px;
+    /* float: left;
+    padding: 25px 37px; */
+    float: right;
+    padding-top: 30px;
 }
  .studentsAdd-box {
     display: inline-block; 
@@ -433,7 +435,10 @@ body {
     /* height: 40px;
     width: 100px;    */
 }
- 
+ .align-subGameList {
+    width: 60%;
+    float: left;
+ }
 .icons-wrap{
  float: left;
 }

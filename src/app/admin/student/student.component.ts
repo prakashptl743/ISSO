@@ -1267,7 +1267,11 @@ addMapSubGame() {
      this.toalSubGameSelected = false;
    }
 }
-
+changeAge(event) {
+  const ageVal = event.value;
+  console.log('ageval--->'+ageVal);
+  this.selectedAge = ageVal;
+}
 
 loadAgeChange() {
   this.selectedGender ='';
@@ -1478,7 +1482,6 @@ addNewStudent(event: Event, studentData: Student,type:any) {
          subGameNames:[''],
          profile :''
         });  
-        console.log('Printing school Form'+JSON.stringify(this.schoolForm));
         this.subViewTitle = 'Edit Student';
    } else {
        this.isAddNewStudent = false;
@@ -1996,7 +1999,7 @@ onSubmit() {
 
 
 
-      formData.append('ageRange', this.ageValue);
+      formData.append('ageRange', this.selectedAge);
       formData.append('gender', this.selectedGender);
       formData.append('gameId', this.gameValue);
       formData.append('eventId', this.eventValue);
