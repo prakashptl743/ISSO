@@ -29,6 +29,8 @@ export class ReportComponent implements OnInit {
   messages: Message[];
     isEventReport: boolean;
     isTeamEventReport: boolean;
+    isTshirtReport:boolean;
+    istshirtReport: boolean;
 
   addMessages() {
     this.messages = [
@@ -54,6 +56,7 @@ clearMessages() {
   gameOptions: SelectItem[];
   schoolOptions: SelectItem[];
   ageOptions: SelectItem[];
+  ageArray: string[];
   genderOptions: SelectItem[];
   certificateContentForm: FormGroup;
   gameIdList:any;
@@ -93,6 +96,9 @@ clearMessages() {
   school_Name: string;
   event_name: string;
   selectedGame: string;
+  selectedAge: string;
+  selectedGender: string;
+ 
   selectedSchool: string;
     selectedEvent: string;
     selectedYear: string;
@@ -171,7 +177,7 @@ clearMessages() {
   }
  
   initialiseData() {
-    this.ageOptions = this.issoUtilService.setAge();
+  //  this.ageOptions = this.issoUtilService.setAge();
     this.genderOptions =this.issoUtilService.setGender();
   }
   initialForm() {
@@ -245,9 +251,10 @@ clearMessages() {
       this.isCertificateContent = true;
       this.isReportShow = false
       this.reportLabel = "Certificate content";
+      this.istshirtReport = false;
       this.getCertificateData();
       this.initialForm();
-    }
+    }  
   }
   makeEmptyDropdown() { 
     this.isReportShow =true;
@@ -760,6 +767,12 @@ downloadCertificatePdf() {
 
   onyeareChange(event) {
     this.yearvalue = event.value;
+    this.selectedGender = '';
+    this.selectedAge = '';
+    this.genderReadble = false;
+    this.ageReadble = false;
+    this.selectedGame ='';
+    if(this.yearvalue) {
     this.meritService.loadEventByYearForReport(this.yearvalue,this.reportValue).subscribe(
       response => {
         if(response!=="") {
@@ -788,19 +801,37 @@ downloadCertificatePdf() {
             this.messageService.add({key: 'custom', severity:'error', summary: 'Event not found for this year'});
           }
         } else {
-         console.log('Data is blannk from service')
+ 
         }
   
      } ,
      error => {
        //this.errorAlert =true;
       });
+    } else {
+      this.selectedEvent = '';
+      this.selectedGame = '';
+      this.selectedSchool = '';
+      this.isConsolitedData = false;
+      this.isDataAvailble = false;
+      this.eventReadable = false;
+      this.schoolReadble = false;
+      this.gameReadble = false;
+      this.schoolIdForCoach = false;
+      this.isTeamEventReport = false;
+    }
   }
   onEventChange(event) {
     let yearVal = this.yearvalue.toString();
     let eventYear = yearVal.split("-");
     this.selectedYearVal = eventYear[1];
     this.eventValue = event.value;
+    this.genderReadble = false;
+    this.ageOptions = [];
+    this.ageReadble = false;
+    this.selectedGender = '';
+    this.selectedAge = '';
+    //this.genderOptions = [];
     if (this.isEventReport) {
       this.checkTeamEventData();
     } else {
@@ -809,6 +840,7 @@ downloadCertificatePdf() {
     } else {
     this.gameOptions =[];
     this.selectedGame =''; 
+    if(this.eventValue) {
     this.meritService.loadGameByEvent(this.eventValue, false).subscribe(
       response => {
         if(response!=="") {
@@ -838,10 +870,46 @@ downloadCertificatePdf() {
      error => {
        //this.errorAlert =true;
     });
+  } else {
+     
+    this.selectedGame = '';
+    this.selectedSchool = '';
+    this.isConsolitedData = false;
+    this.isDataAvailble = false;
+    this.schoolReadble = false;
+    this.gameReadble = false;
+  }
    }
   }
   }
-
+  checkTshirtEventData() {
+    if(this.eventValue) {
+      this.meritService.checkTeamEventData(this.yearvalue,this.eventValue).subscribe(
+        response => {
+          if(response!=="false") {
+              this.teamEventReport = response;
+              this.teamEventReportLength = this.teamEventReport.length;
+              if(this.teamEventReport.length > 0) {
+                this.isTeamEventReport = true;
+              } else {
+                this.isTeamEventReport = false;
+               // this.isDataAvailble = false;
+                this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found'});
+              }
+            } else {
+              this.isTeamEventReport = false;
+              this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found'});
+            
+          }
+    
+       } ,
+       error => {
+         //this.errorAlert =true;
+        });
+      } else {
+        this.isTeamEventReport = false;
+      }
+  }
   checkTeamEventData() {
     if(this.eventValue) {
     this.meritService.checkTeamEventData(this.yearvalue,this.eventValue).subscribe(
@@ -889,7 +957,8 @@ downloadCertificatePdf() {
 
     this.gameOptions =[];
     this.selectedGame =''; 
-    this.meritService.loadGameForStaff(this.eventValue).subscribe(
+    if(this.eventValue) {
+      this.meritService.loadGameForStaff(this.eventValue).subscribe(
       response => {
         if(response!=="") {
           this.gameList =response;
@@ -931,6 +1000,14 @@ downloadCertificatePdf() {
      error => {
        //this.errorAlert =true;
     });
+  } else {
+    this.selectedGame = '';
+    this.selectedSchool = '';
+    this.isConsolitedData = false;
+    this.isDataAvailble = false;
+    this.schoolReadble = false;
+    this.gameReadble = false;
+  }
   }
   gameConsolitedData() {
     this.meritService.gameConsolatedData(this.eventValue, this.gameID).subscribe(
@@ -958,10 +1035,59 @@ downloadCertificatePdf() {
       });
   }
   loadGameChange(gameData) {
-    if(this.reportValue == 4){
-      this.getVoluenteerSchool(gameData);
+    this.selectedGender = '';
+    this.selectedAge = '';
+    this.genderReadble = false;
+    if(gameData.value!='') {
+      if(this.reportValue == 4){
+        this.getVoluenteerSchool(gameData);
+      } else {
+        this.getSchoolData(gameData);
+        this.meritService.setAgeMapForMerit(this.eventValue,gameData.value).subscribe(
+        response => {
+          this.ageReadble = true;
+          this.genderReadble = false;
+          if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
+          const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+          this.ageArray= ageList.split(" ");
+          const x = Array.from(new Set(ageList.split(" "))).toString();
+          
+          var myarray = x.split(',');
+          let ageArrayLength =  myarray.length;
+      
+          this.ageOptions =[];
+          this.ageOptions.push({
+            label: "Please Select",
+            value: ''
+          });
+  
+        for(var i = 0; i < ageArrayLength; i++) {
+          if(myarray[i] !==''){
+          this.ageOptions.push({
+            label: myarray[i],
+            value: myarray[i]
+          });
+        }
+        }
+      }
+   
+        } ,
+        error => {
+          //this.errorAlert =true;
+       });
+  
+      }  
     } else {
-      this.getSchoolData(gameData);
+      this.gameID = null;
+      this.ageReadble = false;
+      this.isDataAvailble = false;
+      this.schoolReadble = false;
+      this.genderReadble = false;
+      this.isConsolitedData = false;
+      this.schoolIdForCoach = false;
+      this.selectedSchool = '';
+      this.selectedGender = '';
+      this.selectedAge = '';
     }
   }
   getVoluenteerSchool(gameData) {
@@ -1062,6 +1188,11 @@ downloadCertificatePdf() {
   loadAgeChange(ageVal) {
     this.genderReadble = true;
     this.ageValue = ageVal.value;
+    if(!this.ageValue) {
+     this.selectedGender = '';
+     this.genderReadble = false;
+     this.isDataAvailble = false;
+    }
   }
   
 
@@ -1162,8 +1293,8 @@ downloadCertificatePdf() {
      //this.errorAlert =true;
     });
   } else {
-    this.isDataAvailble = false;
-  }
+    this.isDataAvailble = false; 
+   }
 
   }
 
@@ -1174,6 +1305,9 @@ downloadCertificatePdf() {
     this.meritService.exportAsExcelFile(this.gameConsoltedData, this.gameConsolateFileName);
   }
   exportTeamReportXLSX() {
+    this.meritService.exportAsExcelFile(this.teamEventReport, 'team-event-report');
+  }
+  exportTshirtReport() {
     this.meritService.exportAsExcelFile(this.teamEventReport, 'team-event-report');
   }
 }

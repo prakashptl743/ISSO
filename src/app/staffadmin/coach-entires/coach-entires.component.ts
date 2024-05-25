@@ -610,6 +610,7 @@ onyeareChange(val, yearText) {
 
 onEventChange(event) {
   this.isEdit = false;
+  this.gameID = '';
   this.selectedGame ='';
   this.genderReadble = false;
   this.selectedAge='';

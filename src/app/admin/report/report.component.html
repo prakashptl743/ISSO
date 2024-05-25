@@ -9,7 +9,7 @@
   <button [ngClass]="reportLabel=='Print Volunteer Certificate' ? 'isMenuActive' : '' " (click)="onloadMenu(4)" class="tablinks">Volunteer Certificate</button>
   <button [ngClass]="reportLabel=='Print Event Report' ? 'isMenuActive' : '' " (click)="onloadMenu(5)" class="tablinks">Team Event Report</button>
   <button [ngClass]="reportLabel=='Certificate content' ? 'isMenuActive' : '' " (click)="onloadMenu(6)" class="tablinks">Certificate Content</button>
-
+ 
 </div>
  
 <!-- <div class="card">
@@ -19,7 +19,7 @@
       <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
   </div>
 </div> -->
- 
+
 
 <div *ngIf="isReportShow">
    <div class="ui-g-12">
@@ -54,13 +54,13 @@
        <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
      </div>
      <div class="ui-g-4">
-      <p-dropdown [disabled]="!ageReadble"  [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge"  [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
     </div>
    </div>
 
    <div class="ui-g-12">
     <div class="ui-g-4">
-      <p-dropdown  [disabled]="!genderReadble"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+      <p-dropdown  [disabled]="!genderReadble" [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
     </div>
   </div>
 
@@ -120,5 +120,6 @@
 <!-- <img  *ngIf="!isLoader" src="assets/images/general/isso_logo.png" height="100" width="100"   alt="banner" /> -->
 
 <!-- <button pButton type="button" label="Pdf" (click)="downloadPdf()">Pdf Export</button> -->
-<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
-<button  *ngIf="reportValue===5"  type="button"  [disabled]="!isTeamEventReport" (click)="exportTeamReportXLSX()"  pButton label="Download Event Report"></button>
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast> 
+<button class="align-report-button"  *ngIf="reportValue===5"  type="button"  [disabled]="!isTeamEventReport" (click)="exportTeamReportXLSX()"  pButton label="Download Event Report"></button>
+ 

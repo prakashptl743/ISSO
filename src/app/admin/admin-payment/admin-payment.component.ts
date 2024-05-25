@@ -46,6 +46,8 @@ export class AdminPayment implements OnInit {
       this.reportLabel = "receipt"
     } else if(index == '3') {
       this.reportLabel = "affilationfee"
+    } else if(index == '4') {
+      this.reportLabel = "sgfi"
     }
   }
   getPaymentData() {

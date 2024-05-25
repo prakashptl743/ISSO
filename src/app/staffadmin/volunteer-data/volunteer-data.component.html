@@ -5,7 +5,7 @@
   <div class="row">
         <div class="col-md-12">
           <div class="btn-nav">
-               <span class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
+               <span  [ngClass]="!isFirstYear ? 'active' : '' "  class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[1].year)">{{yearOptions[1].year}}</span>
           </div> 
 
             <!-- <label for="exampleInputEmail1">Select Year</label> -->
@@ -72,7 +72,7 @@
             </form> -->
         </div>
 
-  <p-dialog class="align-dialog" header="Add Volunteer" [(visible)]="display" width="775" height="400" [modal]="true" [responsive]="true"   
+  <p-dialog class="align-dialog" header="Add Volunteer" [(visible)]="display" width="775"   [modal]="true" [responsive]="true"   
   [maximizable]="true" [baseZIndex]="1000">
   <form [formGroup]="studentEnroolForm"   (ngSubmit)="onSubmit()">
             

@@ -64,6 +64,12 @@ getCertificateData(){
     catchError(this.handleError)
  );
 }
+getAmountData(){ 
+  let str = 'merit/getAmountData/';
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
 loadAllSchool() {
   let str = 'student/loadSchoolList/';
   return this.http.get(this.serverUrl + str).pipe(
@@ -78,7 +84,13 @@ updateCertificateData(id, employee) {
     catchError(this.handleError)
   )
 }
-
+updateSgfilAmount(id, employee) { 
+  let str = 'merit/updateSgfilAmount/' + id;
+  return this.http.post<any>(this.serverUrl + str, employee)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
 saveMeritData(meritInfo) {
   return this.http.post<any>(this.serverUrl + 'merit/addMerit/',meritInfo)
   .pipe(

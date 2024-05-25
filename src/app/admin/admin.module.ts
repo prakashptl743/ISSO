@@ -40,7 +40,8 @@ import { DownloadReceipt } from './admin-payment/download-receipt/download-recei
 import { ManageTeamReport } from './manage-team-report/manage-team-report.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CertificateContentComponent } from '../certificate-content/certificate-content.component';
-
+import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-payment/configure-sgfi-payment.component';
+ 
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { CertificateContentComponent } from '../certificate-content/certificate-
     WebDataComponent,
     UserManagementComponent,
     AdminPayment,
-    CertificateContentComponent
+    CertificateContentComponent,
+    ConfigureSgfiPaymentComponent
   ],
   providers: [SumPipeModule,DatePipe,TextTransformPipeModule,AutoCompleteModule]
  

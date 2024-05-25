@@ -158,6 +158,13 @@ const routes: Routes = [
           data: { adminpermission: AdminPermission.WebData }
         }, 
         {
+          path: 'coach-data',
+          pathMatch: 'full',
+          component: CoachDataComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.WebData }
+        }, 
+        {
           path: 'user-mgt',
           pathMatch: 'full',
           component: UserManagementComponent,

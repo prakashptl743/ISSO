@@ -15,31 +15,36 @@
 <div class="wrapper">
 <div id="content1" class="content-wrapper">
 <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
- <!-- <p-dialog header="Student Details" [(visible)]="display" [modal]="true" [responsive]="true"   
-  [maximizable]="true" [baseZIndex]="10000"> -->
  
-  <!-- <p-footer>
-      <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-     <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-  </p-footer> -->
-<!-- </p-dialog> -->
-
 
 
 <div class="row align-mar">
   <div class="col-md-6 form-group">
     <p-dropdown [disabled]="!eventReadable"  [(ngModel)]="selectedEvent" [options]="eventOptions"  placeholder="Please Select" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
  </div>
-    <div class="col-md-6 form-group filter-container">
-        <div style="position:relative">
-            <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-        </div>
-    </div>
-</div>
-
-<p-dataView #dv [paginator]="true" paginatorPosition="bottom"  *ngIf="showStudentCount" [rows]="10" [value]="schoolData" class="no-padding" filterBy="studentName,gameName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-  
  
+</div>
+ 
+  <p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="showStudentCount"  [rows]="10" [value]="schoolData" class="no-padding" filterBy="studentName,gameName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+    <p-header>
+       <div class="ui-helper-clearfix">
+           <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 filter-container">
+                     <div>
+                         <input class="search-text" type="search" pInputText placeholder="Search by student name and game name" (input)="dv.filter($event.target.value, 'studentName,gameName', 'contains')">
+                      
+                     </div>
+   
+               </div>
+           </div>
+       </div>
+   </p-header>
+    
+
+
+
+
+
  
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
    

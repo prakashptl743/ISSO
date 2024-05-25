@@ -139,7 +139,7 @@ schoolType: string;
   studentId: string;
   isEdit: boolean;
   isMoreDot: boolean;
-
+  isFirstYear: boolean;
   genderOptions: SelectItem[];
   genderVal: any;
   selectedEvent: string;
@@ -175,6 +175,7 @@ ngOnInit() {
   this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
+  this.onyeareChange(this.yearOptions[1].year,'second')
   this.initialForm();
   this.fileUpladForm();
   //this.setPhotoPath();
@@ -425,7 +426,12 @@ showDialog() {
 }
 
 
-onyeareChange(val) {
+onyeareChange(val, yearText) {
+  if(yearText == 'first') {  
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
   this.isEdit = false;
   this.yearvalue = val;
   this.genderReadble = false;

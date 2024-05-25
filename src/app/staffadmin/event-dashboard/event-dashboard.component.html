@@ -36,7 +36,7 @@
  <div class="wrapper">
 	<section class="wrapper">
 		<div class="row">
-			<span class="card-meta mb-2 align-card"><span style="color:#485E88">i</span><span style="color:#EE1D23">S</span><span style="color:#00A54F">S</span><span style="color:#54C5CF">O</span> EVENTS</span>
+			<span class="card-meta mb-2 align-card" *ngIf="!showNoEvent"><span style="color:#485E88">i</span><span style="color:#EE1D23">S</span><span style="color:#00A54F">S</span><span style="color:#54C5CF">O</span> EVENTS</span>
 			<div class="col-md-4 col-sm-6"  *ngFor="let event of eventInfo">
 				<div (click)="showDialog(event)" class="card card-has-bg click-col">
 					<img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">

@@ -42,7 +42,7 @@ export class IssoUtilService {
   genderOptions: { label: string; value: string; }[];
   gameOptions: { label: string; value: string; }[];
   standardClass: { label: string; value: string; }[];
-
+  tShirtSize: { label: string; value: string; }[];
   // constructor(private http: HttpClient) { }
 
   
@@ -493,6 +493,21 @@ setClass() {
     ];
     return this.standardClass;
 }
+setTshirtSize () {
+  this.tShirtSize = [
+    {label: "Please select", value: ''},
+    {label: '32', value: '32'},
+    {label: '34', value: '34'},
+    {label: 'S', value: 'S'},
+    {label: 'M', value: 'M'},
+    {label: 'L', value: 'L'},
+    {label: 'XL', value: 'XL'},
+    {label: 'XXL', value: 'XXL'}
+   
+];
+return this.tShirtSize;
+}
+ 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

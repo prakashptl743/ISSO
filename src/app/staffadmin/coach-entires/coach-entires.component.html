@@ -30,8 +30,8 @@
             <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
           </div>
-        <div class="col-md-4">
-          <div class="form-group"  *ngIf="showAddbutton">
+        <div class="col-md-4"> 
+          <div class="form-group"  *ngIf="showAddbutton && eventValue!='' && gameID !=''">
              <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
           </div>
 

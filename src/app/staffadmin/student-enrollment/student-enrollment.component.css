@@ -503,22 +503,25 @@ body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
     margin: 0;
     margin-bottom: 20px;
  }
- :host ::ng-deep .ui-dialog-footer .ui-button + .ui-button {
+ /* :host ::ng-deep .ui-dialog-footer .ui-button + .ui-button {
     background: green !important
-}
+} */
  .delete-confim{
-    background: #707070;
+    background: red;
     color: #fff;
     padding: 10px;
     border-radius: 10px;
     font-size: 13px;
     clear: both;
-    width: 300px;
+    cursor: pointer;
+ 
+ }
+ .align-enroll-checkbox {
+    margin-top: 0 !important;
  }
  .enroll-head{
     align-items: center;
-    display: flex;
-    justify-content: center;
+    display: flex; 
  }
 
  @media (min-width: 768px) and (max-width: 1023px) {
@@ -577,3 +580,30 @@ body .ui-calendar.ui-calendar-w-btn .ui-inputtext {
         border-right: 0;
     }
  }
+
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .container1 {
+    text-align: center;
+  }
+  
+  .error-code {
+    font-size: 5em;
+ 
+    color: red;
+    margin-bottom: 20px;
+  }
+  
+  .message {
+    font-size: 1.5em;
+    color: #666;
+  }
