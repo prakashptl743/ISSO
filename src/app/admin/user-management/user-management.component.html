@@ -1,18 +1,18 @@
 <div class="tab-menu">
   <div class="tab">
-      <button [ngClass]="isMenu ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Menu</button>
-      <button [ngClass]="!isMenu ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Users</button>
-      
+      <button [ngClass]="isMenu && !showChangePassword ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Menu</button>
+      <button [ngClass]="!isMenu && !showChangePassword ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Users</button>
+      <button [ngClass]="showChangePassword ? 'isMenuActive' : '' " (click)="onloadMenu(2)"  class="tablinks">Change Password</button>
+
   </div>
 </div>  
-
-<table class="table table-bordered" *ngIf="isMenu">
+<app-change-pass *ngIf="showChangePassword"></app-change-pass>
+<table class="table table-bordered" *ngIf="isMenu && !showChangePassword">
   <thead>
     <tr class="table-row ">
       <th>Sr No.</th>
       <th>Menu Name</th>
       <th>Menu Status</th>
-      <!-- <th>Merit certificate</th> -->
     </tr>
   </thead>
   <tbody>
@@ -28,7 +28,7 @@
    </tr>
   </tbody>
 </table>
-<div *ngIf="isUser">
+<div *ngIf="isUser && !showChangePassword">
 
   <form [formGroup]="userForm"  class="align-form-div">
       <div class="form-row">
@@ -88,7 +88,7 @@
 
 </div>
 <span class="test-text ">sffdsdg </span>
-<div *ngIf="!isMenu"> 
+<div *ngIf="!isMenu && !showChangePassword"> 
 <p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!isUser"  [rows]="10" [value]="issoUserrData" class="no-padding" filterBy="name,email" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
   <p-header>
       <div class="ui-helper-clearfix">

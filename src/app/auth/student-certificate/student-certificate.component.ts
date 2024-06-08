@@ -25,7 +25,7 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
   returnUrl: string;
   error: {errorTitle: '', errorDesc: ''};
   loginError: string;
-  certificateData: Object;
+  certificateData: any;
 
 
   name = 'Google Font Tester';
@@ -44,6 +44,7 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
   isMerit: boolean = false;
   rankText: string;
   showTime: boolean;
+  showNoQrData: boolean = false;
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
@@ -82,21 +83,24 @@ export class StudentCertificateComponent implements OnInit {  StudentCertificate
    // this.getCertificateData('2022-2023','5','9','143')
     this.isShowLoader = true;
     this.authService.getCertificateData(this.eventId,this.gameId,this.schoolId,this.studentId,this.subgameId,this.rank).subscribe(response => {
-
+      
     // this.authService.getCertificateData(27,1,30,7075,'nosubgame','norank').subscribe(response => {
       if(response!=="") {
         this.isShowLoader = false;
         this.certificateData =response;
-        console.log('Helllo'+this.certificateData);
-        this.loading = false;
-        let timeDistanceVal = this.certificateData[0]['timeDistance'];
-        console.log('timeDistanceVal'+timeDistanceVal);
-        if(timeDistanceVal === undefined) {
-          this.showTime = false;
+        this.certificateData.length;
+        if(this.certificateData.length == 1) {
+          let timeDistanceVal = this.certificateData[0]['timeDistance'];
+          if(timeDistanceVal === undefined) {
+            this.showTime = false;
+          } else {
+            this.showTime = true;
+          }
         } else {
-          this.showTime = true;
-          console.log('Im  timee');
+          this.showNoQrData = true;
         }
+      
+       
         //this.schoolServiceData =response;
         //this.schoolData = this.schoolServiceData;
       } else {

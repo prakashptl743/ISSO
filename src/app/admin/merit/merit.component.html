@@ -32,7 +32,7 @@
       <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
     </div>
     <div class="ui-g-4">
-      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
     </div>
 </div> 
 <div class="ui-g-12" *ngIf="!isConsolited">

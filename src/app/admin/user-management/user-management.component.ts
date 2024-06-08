@@ -39,6 +39,7 @@ export class UserManagementComponent implements OnInit {
   usereData: Object;
   setUserData: any;
   issoUserrData: any;
+  showChangePassword: boolean = false;
   constructor(
     private userService: UserService,
     private confirmation: ConfirmationService,
@@ -328,13 +329,15 @@ removeMappedData(i: number): void {
 onloadMenu(index) {
   if(index == '0') {
     this.isMenu =true;
+    this.showChangePassword = false;
   } else if(index =='1') {
     this.isMenu =false;
     this.isUser = false;
+    this.showChangePassword = false;
     this.getUsers();
-  
-
-  }  
+  } else {
+    this.showChangePassword = true;
+  }
  }
  getUsers() {
   this.userService.getIssoUsers().subscribe(response => {

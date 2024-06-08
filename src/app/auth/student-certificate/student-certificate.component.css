@@ -204,6 +204,19 @@ body {
  
  
 }
+.no-data {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.align-logo {
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
 .certificate-font {
   font-family: 'DejaVuSerif-Bold';
 }

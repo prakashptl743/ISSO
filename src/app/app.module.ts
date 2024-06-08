@@ -19,7 +19,7 @@ import { httpInterceptorProviders } from './http-interceptors/index';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { PrimengModule } from './primeng-module';
- 
+  
  
    
 @NgModule({
@@ -29,7 +29,7 @@ import { PrimengModule } from './primeng-module';
     FooterComponent,
     BannerComponent,
     PageNotFoundComponent,
- 
+  
  
  
   //  LoadingComponent

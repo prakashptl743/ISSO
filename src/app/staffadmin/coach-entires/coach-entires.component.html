@@ -82,11 +82,9 @@
     <div class="form-group ui-g-12 pad-zero">
       <label class="form-control-label">Upload Photo</label>
       <img *ngIf="isEdit && isValidFile" height="50" width="50" src="{{setPhotoYear}}//{{studentPhoto}}">
-  
-      <img class="align-image" *ngIf="url != ''  && isValidFile" [src]="url" >
+      <!-- <img class="align-image" *ngIf="!isValidFile" [src]="url" > -->
       <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control">
       <span class="file-hint">Please upload file below 100 KB</span>
-
       <div *ngIf="!isValidFile">
           <span class="error-class">Invalid File type Please select file JPEG,PNG format only</span>
       </div>
@@ -100,9 +98,9 @@
   
   </div>
 
-  <div class="form-group col-md-12 pad-bot-zero">
-    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
-    <p-button *ngIf="isEdit"   label="{{submitButtonLabel}}"></p-button>
+  <div class="form-group col-md-12 pad-bot-zero">Hii {{isButtonEnabled}}
+    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}">1111</p-button>
+    <p-button *ngIf="isEdit" [disabled]="!studentEnroolForm.valid && isFileBig && isValidFile"   label="{{submitButtonLabel}}">asfffffasf</p-button>
     <button style="margin-left: 20px;" class="second-btn" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
  
   </div>

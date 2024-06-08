@@ -135,6 +135,7 @@ schoolType: string;
   display: boolean;
   showAddbutton: boolean;
   isFirstYear: boolean;
+  isButtonEnabled = false;
 constructor( 
   @Inject(PLATFORM_ID) private platformId: Object,
   private issoUtilService: IssoUtilService,
@@ -213,6 +214,7 @@ onKeypressEvent(amount) {
 }
 get f() { return this.studentEnroolForm.controls; }
 initialForm() {
+ //this.isFileBig = false;
   this.genderOptions =this.issoUtilService.setGender();
   this.url = '';
   this.isValidFile = true;
@@ -220,8 +222,8 @@ initialForm() {
   this.studentEnroolForm = this.fb.group({
     editStudentPhoto:[],
     studentId: '',
-    ageRange:'',
-    gender:'',
+    ageRange:['', Validators.required],
+    gender:['', Validators.required],
     studentName: ['', Validators.required],
     fatherName: ['', Validators.required],
     profile: ['', Validators.required],
@@ -231,43 +233,20 @@ initialForm() {
 }
 
 makeEmptyForm() {
-  // this.selectedSubGame ='' ;
-  // this.isFileBig = false;
-  // this.showMapData = false;
-  // this.mapGameArray= [];
-  // this.studentDataArray= [];
-  // this.mapGameArray =[];
-  // this.showMapData = false;
-  // this.subGameIdArray =[];
-  // this.subGameNameArray= [];
-  // this.newSubGameCapacity = [];
-  // this.testArray = [];
-  // this.checkSubGameCapacity =[];
   this.isEdit = false;
   this.studentName ='';
   this.fatherName ='';
-  // this.datOfBirth ='';
-  // this.selectedClass ='';
-   this.selectedProfile ='';
-  // this.passport ='';
-  // this.aadhar='';
-  // this.passport ='';
-   this.studentId= ''
-    this.editStudentPhoto = '';
-  // this.admissionNo='';
-  // this.aadharNumber = null;
+  this.selectedProfile ='';
+  this.studentId= ''
+  this.editStudentPhoto = '';
   this.submitButtonLabel = "Submit"
- 
- 
-this.url= '';
- 
-
-    if(document.getElementById('my-input')) {
+  this.url= '';
+  if(document.getElementById('my-input')) {
      let control2 = this.studentEnroolForm.get('profile');
         control2.setValue(null);
         control2.setValidators([Validators.required]);
          control2.updateValueAndValidity();
-    }
+  }
 }
 onFileSelected(event) {    
   if(event.target.files) { 
@@ -498,7 +477,9 @@ showDialog() {
   this.initialForm();
   this.makeEmptyForm();
 }
-
+// hideDialog(){
+//   console.log('im')
+// }
 editStudent(i: number): void {
   this.display = true;
   this.isEdit = true;
@@ -507,7 +488,7 @@ editStudent(i: number): void {
  
   this.submitButtonLabel = "Update";
   console.log(this.submitButtonLabel)
- // this.selectedProfile = this.coachListArray[i].coachPhoto,
+  //this.selectedProfile = this.coachListArray[i].coachPhoto,
   this.studentPhoto = this.coachListArray[i].coachPhoto,
   this.studentEnroolForm.setValue({
  //  schoolId: this.schoolId,
@@ -524,7 +505,7 @@ editStudent(i: number): void {
  //console.log('Form==>'+JSON.stringify(this.studentEnroolForm))
  
 // this.coachDataAvailable = false;
-  this.setFocus('studentNameText');
+  //this.setFocus('studentNameText');
   let filePath = 'https://issoindia.com/isso-php/upload/'+this.yearvalue+'/coach/'+this.studentPhoto;
   this.changeFileName(filePath, this.studentPhoto);
 }
@@ -711,22 +692,22 @@ loadGameChange(gameData) {
 
    
 }
+
 loadGenderChange(gender) {
-  this.isEdit = false;
+  //this.isEdit = false; 
  // this.ageRange = ageData.value;
   this.genderVal = gender.value;
   console.log(this.ageRange);
  // this.loadCoachData();
 }
 loadAgeChange(ageData) {
-  this.isEdit = false;
+ // this.isEdit = false;
   this.ageRange = ageData.value;
-  //this.genderReadble = true;
-  //this.selectedGender ='';
-  //this.coachDataAvailable = true;
-  // this.coachListArray=[];
- // console.log(this.ageRange);
- // this.loadCoachData();
+ if(this.ageRange) {
+   this.isButtonEnabled = true;
+ } else {
+  this.isButtonEnabled = false;
+ }
 }
 loadschoolChange(gameData) {
  //   this.gameID = gameData.value;

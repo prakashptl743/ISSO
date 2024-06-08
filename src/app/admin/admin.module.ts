@@ -41,6 +41,7 @@ import { ManageTeamReport } from './manage-team-report/manage-team-report.compon
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CertificateContentComponent } from '../certificate-content/certificate-content.component';
 import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-payment/configure-sgfi-payment.component';
+import { ChangePassComponent } from '../change-pass/change-pass.component';
  
 
 @NgModule({
@@ -88,7 +89,8 @@ import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-pa
     UserManagementComponent,
     AdminPayment,
     CertificateContentComponent,
-    ConfigureSgfiPaymentComponent
+    ConfigureSgfiPaymentComponent,
+    ChangePassComponent
   ],
   providers: [SumPipeModule,DatePipe,TextTransformPipeModule,AutoCompleteModule]
  

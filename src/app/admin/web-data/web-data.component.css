@@ -85,6 +85,19 @@ body .ui-dataview .ui-dataview-content {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.submenu {
+    /* Remove right alignment */
+    text-align: left; /* or use any other alignment value you prefer */
+}
+@media all and (min-width: 992px) {
+    .navbar .dropdown-menu-end { right: 0; left: auto; }
+    .navbar .nav-item .dropdown-menu { display: block; opacity: 0; visibility: hidden; transition: .7s; margin-top: 0; }
+    .navbar .nav-item:hover .nav-link { color: #fff; }
+    .navbar .dropdown-menu.fade-down { top: 80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
+    .navbar .dropdown-menu.fade-up { top: 100%; }
+    .navbar .nav-item:hover .dropdown-menu { transition: .7s; opacity: 1; visibility: visible; top: 100%; transform: rotateX(0deg); }
+  }
+
 .ev-name1 {
     width: 85%;
     margin-top: 0;
@@ -98,3 +111,15 @@ body .ui-dataview .ui-dataview-content {
 :host ::ng-deep .body .ui-button {
     border-radius: none;
 }
+:host ::ng-deep .ui-tieredmenu .ui-menuitem.ui-menuitem-active:hover > .ui-menuitem-link {
+    background-color: #f0f0f0; /* Change background color on hover */
+    color: #000; /* Change text color on hover */
+  }
+.custom-menubar .p-tieredmenu .p-menuitem {
+    color: red; /* Default color */
+  }
+  
+  .custom-menubar .p-tieredmenu .p-menuitem:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+    color: #000; /* Change text color on hover */
+  }

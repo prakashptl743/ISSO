@@ -70,7 +70,12 @@ saveUserData(userData) {
     catchError(this.handleError)
   );
 }
- 
+changePassword(userData) { 
+  return this.http.post<any>(this.serverUrl + 'user/changePassword',userData)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
 
 private handleError(error: HttpErrorResponse) {
    if (error.error instanceof ErrorEvent) {

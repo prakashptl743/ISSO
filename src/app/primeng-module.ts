@@ -19,6 +19,7 @@ import {AccordionModule} from 'primeng/accordion';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { MessagesModule } from 'primeng/messages';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   exports: [
@@ -42,6 +43,8 @@ import { MessagesModule } from 'primeng/messages';
     MultiSelectModule,
     ProgressSpinnerModule,
     MessagesModule,
+    MenubarModule,
+    
     
  
   ]

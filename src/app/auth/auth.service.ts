@@ -91,7 +91,7 @@ export class AuthService {
     return currentUser.token;
   }
   
-  logout() {
+  logout() { 
     console.log('Im logout')
     localStorage.removeItem('currentUser');
     localStorage.removeItem('roleId');

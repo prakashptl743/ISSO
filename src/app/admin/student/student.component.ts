@@ -1292,7 +1292,8 @@ loadAgeChange() {
   this.isShowStudent = false;
   this.printmeritData = false;
   this.isAddNewStudent = false;
-  this.minDate = this.issoUtilService.setDateOfBirthValidation(Number(this.selectedAge));
+ // this.minDate = this.issoUtilService.setDateOfBirthValidation(Number(this.selectedAge));
+  this.minDate = this.issoUtilService.setDateOfBirthValidationForAdmin(Number(this.selectedAge),this.yearvalue);
   this.yearRange = this.issoUtilService.setYearRangeForAdmin(this.selectedAge,this.yearvalue);
   console.log('Im raeayrabge--->'+this.yearRange)
 }
@@ -1360,7 +1361,7 @@ addNewStudent(event: Event, studentData: Student,type:any) {
         this.isValidFile = true;
         this.isEditStudent = true;
         this.studentPhoto = studentData.photo,
-        this.minDate = this.issoUtilService.setDateOfBirthValidation(Number(studentData.ageRange));
+        this.minDate = this.issoUtilService.setDateOfBirthValidationForAdmin(Number(studentData.ageRange),this.yearvalue);
         this.yearRange = this.issoUtilService.setYearRangeForAdmin(studentData.ageRange,this.yearvalue);
         this.isAddNewStudent = true;
         this.isShowSubGame = false;
