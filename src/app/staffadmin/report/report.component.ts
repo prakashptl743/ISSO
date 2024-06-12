@@ -295,20 +295,25 @@ onyeareChange(val, yearText) {
     } else {
       this.isFirstYear = false;
     }
- 
+  this.eventReadable = false;
   this.yearvalue = val;
   this.finalGameList = [];
+ 
   if(this.yearvalue !== '') {
   this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
   //this.meritService.loadEventByYear(this.yearvalue).subscribe(
-    response => {
-      if(response!=="") {
+    response => { 
+      let objectLength = Object.keys(response).length;
+  
+      if(objectLength > 0) {
+       
         this.eventData =response;
         this.gameReadble =false;
         this.schoolReadble  = false;
         this.isCertificateAvailable =  this.eventData[0]['isCertificate'];
         console.log(this.isCertificateAvailable);
         if(this.eventData.length > 0 ){
+          console.log('im if ')
           this.eventOptions = [];
           this.eventReadable = true;
           this.isDataAvailble = false;

@@ -105,6 +105,9 @@ export class StudentComponent implements OnInit {
   profileForm:FormGroup;
   ageRange;
   standardClass;
+  tShirtSize:any;
+  curriculum;
+  selectedtShirtSize:string;
   sortKey: string;
   sortKey1: string;
   eventIdForStudent:number;
@@ -1147,6 +1150,7 @@ initialForm() {
     this.editStudentPhoto = '';
    // this.ageRange = this.issoUtilService.setAge();
    // this.ageOptions = this.issoUtilService.setAge();
+   this.tShirtSize = this.issoUtilService.setTshirtSize();
     this.standardClass = this.issoUtilService.setClass();
  //   this.genderOptions =this.issoUtilService.setGender();
     this.schoolForm = this.fb.group({
@@ -1166,6 +1170,8 @@ initialForm() {
       admissionNumber: ['', Validators.required],
       standardClass: ['', Validators.required],
       aadharNumber: ['', Validators.required],
+      tShirtSize:['', Validators.required],
+      curriculum:['', Validators.required],
       studentPhoto:[''],
       subGameID: [''],
       subGameNames:[''],
@@ -1271,6 +1277,12 @@ changeAge(event) {
   const ageVal = event.value;
   console.log('ageval--->'+ageVal);
   this.selectedAge = ageVal;
+  if(this.isEditStudent) {
+    if(this.gameType == 'Both') {
+      this.setSubGame();
+      this.loadStudentDataForSubGame();
+    }
+  }
 }
 
 loadAgeChange() {
@@ -1296,6 +1308,7 @@ loadAgeChange() {
   this.minDate = this.issoUtilService.setDateOfBirthValidationForAdmin(Number(this.selectedAge),this.yearvalue);
   this.yearRange = this.issoUtilService.setYearRangeForAdmin(this.selectedAge,this.yearvalue);
   console.log('Im raeayrabge--->'+this.yearRange)
+
 }
 setFiletrSubGame(event) {
     if(event !== null) {
@@ -1374,7 +1387,10 @@ addNewStudent(event: Event, studentData: Student,type:any) {
         this.editStudentPhoto = studentData.photo,
         this.selectedAge = this.ageValue;
         this.genderValue = studentData.gender;
+      //  this.tShirtSize: studentData.tShirtSize,
+       // this.curriculum: studentData.curruclm;
         this.selectedGender = studentData.gender;
+        this.gameType = studentData.gameType
         if(studentData.gender == '1') {
           this.genderValue = 'Boy';
           this.genderForSubGame = 'boy';
@@ -1415,17 +1431,7 @@ addNewStudent(event: Event, studentData: Student,type:any) {
             this.subGameNameArray.push(subGameNameArray[i]);
            }
 
-          // for(let i=0; i<this.newGameArray.length;i++) {
-          //     for(let j=0; j< this.newSubGameArray.length;j++) {
-          //       if (this.newSubGameArray.indexOf(this.newSubGameArray['subGameId'])==-1)  {
-          //         this.mapGameArray.push({
-          //           'subGameId': Number(this.newGameArray[i]),
-          //           'subGameName': this.newSubGameArray[j],
-          //         });
-          //      }
-          //     }
-          // }
-          console.log("DATE=====>",this.mapGameArray);
+       
           if (studentData.gameType == 'Team' || studentData.gameType == 'Individual' )  {
               if (this.mapGameArray.length > 0 ) {
                 this.showMapData = true;
@@ -1448,20 +1454,9 @@ addNewStudent(event: Event, studentData: Student,type:any) {
         this.selectedClass = studentData.standardClass;
         this.aadharNumber = studentData.aadharNumber;
         this.schoolName = studentData.schoolName;
+        this.selectedtShirtSize= studentData.tShirtSize,
+        this.curriculum =  studentData.curruclm,
         this.schoolForm.setValue({
-          // sId:studentData.sId,  
-          // studentYear:'',  
-          // studentName: studentData.studentName,
-          // fatherName:  studentData.fatherName,
-          // studentEvent:  '',
-          // dateOfBirth: new Date(studentData.dateOfBirth),
-          // standardClass:  studentData.standardClass,
-          // ageRange:  studentData.ageRange,
-          // aadharNumber: studentData.aadharNumber,
-          // studentGame: studentData.studentGame,
-          // studentSubGame:  studentData.studentSubGame,
-          // eventName: studentData.studentEvent,
-          // schoolName: studentData.schoolName 
          schoolId:studentData.schoolId,
          studentYear:'',
          sId:studentData.sId,  
@@ -1477,6 +1472,8 @@ addNewStudent(event: Event, studentData: Student,type:any) {
          admissionNumber:  '',
          standardClass: studentData.standardClass,
          aadharNumber:studentData.aadharNumber,
+         tShirtSize:studentData.tShirtSize,
+         curriculum:studentData.curruclm,
          studentPhoto:'',
          editStudentPhoto:[],
          subGameID: [''],
@@ -1980,7 +1977,8 @@ onSubmit() {
       formData.append('fatherName', this.schoolForm.get('fatherName').value);
       formData.append('dateOfBirth', formatted_DOB);
       formData.append('editStudentPhoto', this.schoolForm.get('editStudentPhoto').value);
-
+      formData.append('tShirtSize', this.schoolForm.get('tShirtSize').value);
+      formData.append('curriculum', this.schoolForm.get('curriculum').value);
       
       if(this.schoolForm.get('profile').value == '' || this.schoolForm.get('profile').value == 'C:\\fakepath\\'+this.studentPhoto || this.schoolForm.get('profile').value == this.studentPhoto) {
         formData.append('fileNoChange', '1');

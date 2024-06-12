@@ -181,7 +181,9 @@ loadGameChange(gameData) {
   // this.gameType =  this.gameArray[2];
     console.log("Game Type"+gameval)
 
-    this.showspinner = true;
+   // 
+    if(gameData.value!='') {
+      this.showspinner = true;
     this.gameService.subGameListById(gameval).subscribe(
       response => {
 
@@ -198,6 +200,7 @@ loadGameChange(gameData) {
    error => {
      //this.errorAlert =true;
     });
+  }
 }
 initialForm() {
     this.gameForm = this.fb.group({

@@ -27,6 +27,7 @@ import { ManageTeamReport } from './manage-team-report/manage-team-report.compon
 import { UserManagementComponent } from './user-management/user-management.component';
 import { PermissionGuard } from '../services/permission.guard';
 import { AdminPermission } from '../services/user.service';   
+import { SgfiEntriesComponent } from '../sgfi-entries/sgfi-entries.component';
 const routes: Routes = [
   {
      path: 'admin',
@@ -170,6 +171,13 @@ const routes: Routes = [
           component: UserManagementComponent,
           canActivate: [PermissionGuard],  
           data: { adminpermission: AdminPermission.UserMgt }
+        }, 
+        {
+          path: 'sgfi-entries',
+          pathMatch: 'full',
+          component: SgfiEntriesComponent,
+          canActivate: [PermissionGuard],  
+          data: { adminpermission: AdminPermission.SgfiEntries }
         }, 
 
        // { path: 'game', component: GameComponent },

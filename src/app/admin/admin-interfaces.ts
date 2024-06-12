@@ -142,6 +142,8 @@ export class Student {
   gameId: number;
   gameType:string;
   eventId:number;
+  tShirtSize:string;
+  curruclm:string
 }
 export class coachData {
   ageRange: number;

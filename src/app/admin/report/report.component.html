@@ -106,13 +106,13 @@
  
   
 <div class="ui-g-12" style="padding-left: 12px;">
- <a *ngIf="reportValue===0"  class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Report </a>
+ <a *ngIf="reportValue===0"  class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="http://localhost/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Report </a>
  <a *ngIf="reportValue===1" class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Certificate</a>
  <a *ngIf="reportValue===2" class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/coachCertificate/{{yearvalue}}/2/{{eventValue}}/{{gameID}}/{{schoolIdForCoach}}">Download Coach Certificate</a>
  <a *ngIf="reportValue===4" class="btn btn-primary"  [class.disabled]="!schoolIdForCoach ? true: null"   href="https://issoindia.com/isso-php/tcpdf/volunteerCertificate/{{yearvalue}}/2/{{eventValue}}/{{schoolIdForCoach}}">Download Volunteer Certificate</a>
 </div>
  
-<div class="ui-g-12" style="padding-left: 12px;" *ngIf="isConsolited">  
+<div class="ui-g-12" style="padding-left: 12px;" *ngIf="isConsolited">   
   <!-- <button (click)="export()">Export!</button> -->
   <button *ngIf="reportValue===3" type="button"  [disabled]="!isDataAvailble" (click)="exportAsXLSX()"  pButton label="{{reportLabel}}"></button>
   <button class="align-game-button" *ngIf="reportValue===3" type="button"  [disabled]="!isConsolitedData" (click)="exportAsGameXLSX()"  pButton label="Download Game Consolidated Data"></button>

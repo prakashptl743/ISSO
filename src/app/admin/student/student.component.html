@@ -438,6 +438,25 @@
          </div>
        </div>
     </div>
+
+    <div class="form-row">
+       
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">T Shirt Size</label>
+        <p-dropdown [(ngModel)]="selectedtShirtSize" placeholder="Please Select" [options]="tShirtSize" size="30"
+        formControlName="tShirtSize"></p-dropdown>
+       </div>
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Curriculm</label>
+        <input class="form-control" [(ngModel)]="curriculum" formControlName="curriculum" name="curriculum"  type="text">
+      </div>
+  </div>
+
+
+
+
+
+
     <div class="form-row">
    
         <div class="form-group col-md-6">

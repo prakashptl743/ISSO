@@ -27,7 +27,8 @@ export enum AdminPermission {
     AdminPayment = "AdminPayment",
     AdmiSchool = "AdmiSchool",
     WebData = "WebData",
-    UserMgt = "UserMgt"
+    UserMgt = "UserMgt",
+    SgfiEntries="SgfiEntries"
 
 }
 @Injectable({
@@ -69,7 +70,7 @@ export class UserService {
     AdminPermission.AdmiSchool ,
     AdminPermission.WebData,
     AdminPermission.UserMgt,
-   
+    AdminPermission.SgfiEntries
   
   ];
   public isAuthorizedFor(permissions: Permission): boolean {
