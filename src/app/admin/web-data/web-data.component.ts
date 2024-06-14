@@ -11,7 +11,8 @@ import { ConfirmationService } from 'primeng/api';
 import { School, WebCalender } from '../admin-interfaces';
 import { Table } from 'primeng/components/table/table';
 import { WebcalenderService } from '../service/webcalender.service';
-
+import { IssoUtilService } from 'src/app/services/isso-util.service';
+import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-web-data',
   templateUrl: './web-data.component.html',
@@ -19,6 +20,8 @@ import { WebcalenderService } from '../service/webcalender.service';
   providers: [MessageService,ConfirmationService]
 })
 export class WebDataComponent implements OnInit {
+  items: MenuItem[] | undefined;
+  items1: MenuItem[] | undefined;
   profileForm:FormGroup;
   schoolForm: FormGroup;
   options: SelectItem[];
@@ -69,8 +72,10 @@ export class WebDataComponent implements OnInit {
   fileName: number;
   isMoreDot: boolean;
   url: any;
-
-
+  yearRange: any;
+  eventStartDate: Date;
+  eventEndDate: Date;
+  minimumDate = new Date();
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -79,6 +84,7 @@ export class WebDataComponent implements OnInit {
     private schoolService: WebcalenderService,
     private webcalenderService: WebcalenderService,
     private pb:FormBuilder,
+    private issoUtilService: IssoUtilService
   ) {
     setTimeout(()=>{this.disable = true}, 5000)
    }
@@ -88,7 +94,104 @@ ngOnInit() {
     this.fileUpladForm();
     this.loading = true;
     setTimeout(()=> {this.placeholderText = 'It has changed'}, 5000)
-    this.getCalderData()
+    this.getCalderData();
+  //  this.yearRange = this.issoUtilService.setYearRangeForAdmin(this.selectedAge,this.yearvalue);
+
+  this.items1 = [
+    {label: 'Home', icon: 'pi pi-fw pi-home',
+      items: [
+        {label: 'New', icon: 'pi pi-fw pi-plus'},
+        {label: 'Open', icon: 'pi pi-fw pi-folder-open'},
+        {label: 'Quit', icon: 'pi pi-fw pi-times'}
+      ]
+
+    },
+    {label: 'About', icon: 'pi pi-fw pi-info-circle'},
+    {label: 'Services', icon: 'pi pi-fw pi-cog'},
+    {label: 'Contact', icon: 'pi pi-fw pi-envelope'}
+  ];
+
+
+
+
+  this.items = [
+    {
+      label: 'File',
+      icon: 'pi pi-home',
+      items: [
+        {label: 'New', icon: 'pi pi-fw pi-plus'},
+        {label: 'Open', icon: 'pi pi-fw pi-folder-open'},
+        {label: 'Quit', icon: 'pi pi-fw pi-times'}
+      ]
+    },
+    {
+      label: 'Edit',
+      items: [
+        {label: 'Undo', icon: 'pi pi-fw pi-undo'},
+        {label: 'Redo', icon: 'pi pi-fw pi-redo'}
+      ]
+    },
+    {
+      label: 'Help',
+      items: [
+        {label: 'Contents'},
+        {label: 'Search', icon: 'pi pi-fw pi-search'},
+        {label: 'About', icon: 'pi pi-fw pi-info'}
+      ]
+    }
+  ];
+//   this.items = [
+//     {
+//         label: 'Home',
+//         icon: 'pi pi-home'
+//     },
+//     {
+//         label: 'Features',
+//         icon: 'pi pi-star'
+//     },
+//     {
+//         label: 'Projects',
+//         icon: 'pi pi-search',
+//         items: [
+//             {
+//                 label: 'Core',
+//                 icon: 'pi pi-bolt'
+//             },
+//             {
+//                 label: 'Blocks',
+//                 icon: 'pi pi-server'
+//             },
+//             {
+//                 label: 'UI Kit',
+//                 icon: 'pi pi-pencil'
+//             },
+//             {
+//                 separator: true
+//             },
+//             {
+//                 label: 'Templates',
+//                 icon: 'pi pi-palette',
+//                 items: [
+//                     {
+//                         label: 'Apollo',
+//                         icon: 'pi pi-palette',
+//                         badge: '2'
+//                     },
+//                     {
+//                         label: 'Ultima',
+//                         icon: 'pi pi-palette',
+//                         badge: '3'
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     {
+//         label: 'Contact',
+//         icon: 'pi pi-envelope',
+//         badge: '3'
+//     }
+// ];
 }
 fileUpladForm() {
   this.profileForm= this.pb.group({
@@ -149,10 +252,11 @@ initialForm() {
   this.selectedProfile ='';
  
     this.schoolForm = this.fb.group({
-      schoolTelePhone: ['', Validators.required],
       schoolname: ['', Validators.required],
       schoolEmail: ['', Validators.required],
       schoolBoard: ['', Validators.required],
+      startDate:['', Validators.required],
+      endDate:['', Validators.required],
       profile: ['', Validators.required],
       editStudentPhoto:[],
       schoolId: '',
@@ -230,16 +334,17 @@ changeFileName(filePath, fileName) {
 addNewSchool(event: Event, calenderData: WebCalender,type:any) {
   this.fullFilename='';
     if(type == 'edit') {
-      
       this.editStudentPhoto =  calenderData.eventFile,
       this.selectedProfile= calenderData.eventFile,
+      
        // this.schoolType = schoolData.isAffiliate;
         this.schoolForm.setValue({
             schoolId:calenderData.id,  
             schoolname: calenderData.sportName,
             schoolEmail:  calenderData.ageTitle,
             schoolBoard:  calenderData.sportLocation,
-            schoolTelePhone:  calenderData.title,
+            startDate: new Date(calenderData.eventStartDate),
+            endDate: new Date(calenderData.eventEndDate),
             profile:' ', 
             editStudentPhoto:calenderData.eventFile,
            // schoolId:'edit'        
@@ -252,7 +357,8 @@ addNewSchool(event: Event, calenderData: WebCalender,type:any) {
             schoolname: '',
             schoolEmail: '',
             schoolBoard: ' ',
-            schoolTelePhone:' ',
+            startDate:'',
+            endDate:'',
             profile:' ', 
             editStudentPhoto:' ', 
           }); 
@@ -271,11 +377,20 @@ hideExtraView() {
 onSubmit() {
       this.submitted = true;
       const formData = new FormData();
+      let selectedStartDate = this.schoolForm.get('startDate').value
+      let eventStartDate = selectedStartDate.getFullYear()+ "-" + (selectedStartDate.getMonth() + 1)+ "-"+selectedStartDate.getDate() 
+
+      let selectedEndDate = this.schoolForm.get('endDate').value
+      let eventEndDate = selectedEndDate.getFullYear()+ "-" + (selectedEndDate.getMonth() + 1)+ "-"+selectedEndDate.getDate() 
+
+
       let schoolID =  this.schoolForm.get('schoolId').value;
       formData.append('schoolname', this.schoolForm.get('schoolname').value);
       formData.append('schoolEmail', this.schoolForm.get('schoolEmail').value);
       formData.append('schoolBoard', this.schoolForm.get('schoolBoard').value);
-      formData.append('schoolTelePhone', this.schoolForm.get('schoolTelePhone').value);
+      formData.append('eventStartDate', eventStartDate);
+      formData.append('eventEndDate', eventEndDate);
+ 
       if(this.fullFilename =='') {
        // this.fullFilename = 'edit'
        // formData.append('editFile',  this.editStudentPhoto);

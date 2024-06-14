@@ -1,0 +1,95 @@
+<div class="tab">
+    <button [ngClass]="isAddMStudent ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Add Student</button>
+    <button [ngClass]="isViewStudent ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">View Student</button>
+</div>
+<div *ngIf="isAddMStudent">
+<div class="ui-g-12">
+    <div class="ui-g-4">
+      <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+        <p-dropdown [disabled]="!gameReadble"  [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="gameOptions"  size="30" ></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+        <p-multiSelect 
+        [disabled]="!subGameReadable" 
+        [(ngModel)]="selectedSubGame" 
+        [options]="subgameOptions" 
+        placeholder="Select Sub Game" 
+        (onChange)="loadSubGameChange($event)"
+        [panelStyle]="{minWidth:'12em'}">
+   </p-multiSelect>  
+        <!-- <p-dropdown 
+             [disabled]="!subGameReadable" 
+             [(ngModel)]="selectedSubGame" 
+             [options]="subgameOptions" 
+             placeholder="Select Sub Game" 
+             (onChange)="loadSubGameChange($event)" 
+              [style]="{'min-width':'140px'}">
+        </p-dropdown> -->
+    </div>
+
+</div>
+<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+
+<div class="ui-g-12">
+<div class="ui-g-4">
+    <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <p-dropdown [disabled]="!schoolReadble" [(ngModel)]="selectedSchool"  (onChange)="loadSchoolChange($event)" [options]="schoolOptions"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+  </div>
+</div>
+</div>
+<div class="ui-g-6">
+<div class="ui-g-12 align-merit-content"  *ngIf="isShowStudent">
+        <!-- <div>CRRENT STUDENT</div> -->
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Student Id</th>
+              <th scope="col">School Name</th>
+              <th scope="col">Action</th>
+           </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of studentData; let i = index;">
+              <td>{{student.sId}}</td>
+              <td>{{student.studentName}}</td>
+              <td>
+                <p-button class="align-submit"   label="Add" (click)="addStudent(student)">
+                </p-button>
+               </td> 
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+<div class="ui-g-6">
+  
+    <div class="ui-g-12 align-merit-content"  *ngIf="isShowStudent">
+        <!-- <div>SGFI ADDING STUDENTS</div> -->
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Student Id</th>
+                  <th scope="col">School Name</th>
+                  <th scope="col">Action</th>
+               </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let student of studentData; let i = index;">
+                  <td>{{student.sId}}</td>
+                  <td>{{student.studentName}}</td>
+                  <td>
+                    <p-button class="align-submit"   label="Add" (click)="addStudent(student)">
+                    </p-button>
+                   </td> 
+                </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>

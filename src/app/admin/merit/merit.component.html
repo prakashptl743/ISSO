@@ -32,7 +32,7 @@
       <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
     </div>
     <div class="ui-g-4">
-      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
     </div>
 </div> 
 <div class="ui-g-12" *ngIf="!isConsolited">
@@ -72,6 +72,7 @@
             <th scope="col">Student Name</th>
             <th scope="col">School Name</th>
             <th scope="col">Rank</th>
+            <th scope="col">Time / Distance</th>
             <th scope="col">Action</th>
          </tr>
         </thead>
@@ -80,8 +81,20 @@
             <td>{{school.studentName}}</td>
             <td>{{school.schoolName}}</td>
             <td>{{school.rank}}</td> 
+            <td>
+              <div class="col-md-12">
+                <div class="col-md-9">
+                 <input class="form-control" name="gameName" value="{{school.timeDistance}}" (keyup)="onKeypressEvent($event.target.value,i)"  type="text" required>
+               </div>
+               
+               <div class="col-md-3">
+                <p-button  [disabled]="disabledButtons.indexOf(i) !== indexVal"   class="align-submit" label="Update" (click)="upDateTimeDistance(school.merit_id);"></p-button>  
+               </div>
+ 
+            </div>
+            </td> 
              <td>
-              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id);deleteIndividualQr(school.studentID);">
               </p-button>
                 <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
              </td> 
@@ -101,7 +114,7 @@
             <td>{{school.schoolName}}</td>
             <td>{{school.rank}}</td> 
              <td>
-              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id)">
+              <p-button class="align-submit"   label="Delete" (click)="deleteMerit(school.merit_id);deleteTeamQr(school.eventId,school.schoolId,school.gameId,school.subgameId);">
               </p-button>
                 <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteMerit(school.merit_id)"></button> -->
              </td> 
@@ -253,7 +266,7 @@
             <td>{{school.rank}}</td> 
              <td> 
                 <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">Print Certificate</a>
-             </td> 
+             </td>
           </tr>
         </tbody>
       </table>

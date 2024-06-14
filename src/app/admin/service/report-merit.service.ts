@@ -64,6 +64,12 @@ getCertificateData(){
     catchError(this.handleError)
  );
 }
+getAmountData(){ 
+  let str = 'merit/getAmountData/';
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
 loadAllSchool() {
   let str = 'student/loadSchoolList/';
   return this.http.get(this.serverUrl + str).pipe(
@@ -78,13 +84,27 @@ updateCertificateData(id, employee) {
     catchError(this.handleError)
   )
 }
-
+updateSgfilAmount(id, employee) { 
+  let str = 'merit/updateSgfilAmount/' + id;
+  return this.http.post<any>(this.serverUrl + str, employee)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
 saveMeritData(meritInfo) {
   return this.http.post<any>(this.serverUrl + 'merit/addMerit/',meritInfo)
   .pipe(
     catchError(this.handleError)
   );
 }
+updateMeritData(meritInfo) {
+  return this.http.post<any>(this.serverUrl + 'merit/updateMeritData/',meritInfo)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
+
+
 checkDuplicateMeritData(eventValue,gameId,selectedAge,genderVal,subGameId,schoolId,studentId,rankValue) {
   // return this.http.post<any>(this.serverUrl + 'merit/checkDuplicateMeritData/',meritInfo)
   // .pipe(
@@ -102,6 +122,18 @@ deleteAddedMeritData(id){
       catchError(this.handleError)
     );
 }
+deleteTeamQr(eventId,schoolId,gameId,subGameVal){
+  return this.http.delete(this.serverUrl + 'merit/deleteTeamQr/' + eventId  +'/' + schoolId +'/' + gameId +'/' + subGameVal).pipe(
+    catchError(this.handleError)
+  );
+}
+
+deleteIndividualQr(studentId){
+  return this.http.delete(this.serverUrl + 'merit/deleteIndividualQr/' + studentId).pipe(
+    catchError(this.handleError)
+  );
+}
+
 showAlreadyMeritData(eventValue,gameId,selectedAge,genderVal,subGameId) {
   let apiUrl = 'merit/showAlreadyMeritData/' + eventValue +'/' +gameId +'/' + selectedAge +'/' + genderVal+'/'+subGameId;
   return this.http.get(this.serverUrl + apiUrl).pipe(
@@ -142,6 +174,12 @@ checkStudentcapacity(eventVal, ageRange, gender, gameId){
 }
 checkGameCapacityForStudent(eventVal, ageRange, gender, gameId, newSchoolId) {
   let str = 'student/checkGameCapacityForStudent/' + eventVal +'/' +ageRange +'/'+ gender +'/' +gameId+'/' +newSchoolId;
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
+setAgeMapForMerit(eventVal,gameId){
+  let str = 'student/setAgeMapForMerit/' + eventVal +'/' +gameId;
   return this.http.get(this.serverUrl + str).pipe(
     catchError(this.handleError)
  );

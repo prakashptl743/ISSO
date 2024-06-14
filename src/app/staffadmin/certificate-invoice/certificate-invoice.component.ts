@@ -26,7 +26,7 @@ import { PaymentInvoiceService } from 'src/app/admin/service/payment-invoice.ser
 export class CertificateInvoiceComponent implements OnInit {
  
 
-yearOptions: SelectItem[];
+yearOptions: object;
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
 schoolOptions: SelectItem[];
@@ -104,6 +104,12 @@ gameArray =[];
  
   showMeritData: boolean;
   gameName: any;
+  isFirstYear: boolean;
+  isPartCssEnable: boolean;
+  isMeritCssEnable: boolean;
+  isInvoiceCssEnable: boolean;
+  isReceiptCssEnable: boolean;
+  certType: any;
 constructor( 
   private issoUtilService: IssoUtilService,
   private studentService: StudentService,
@@ -116,10 +122,43 @@ constructor(
 ngOnInit() {
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.schoolId = localStorage.getItem('schoolId');
   this.isReport = true;
+  this.isPartCssEnable = true;
+  this.certType = 'certificate';
+  this.onyeareChange(this.yearOptions[1].year,this.certType)
 } 
+makeCssEnable(type) {
+  this.certType = type;
+  if (type == 'certificate') {
+    this.isPartCssEnable = true;
+    this.isMeritCssEnable = false;
+    this.isInvoiceCssEnable = false;
+    this.isReceiptCssEnable= false;
+  } else if (type == 'merit') {
+    this.isPartCssEnable = false;
+    this.isMeritCssEnable = true;
+    this.isInvoiceCssEnable = false;
+    this.isReceiptCssEnable= false;
+  } else if (type == 'invoice') {
+    this.isPartCssEnable = false;
+    this.isMeritCssEnable = false;
+    this.isInvoiceCssEnable = true;
+    this.isReceiptCssEnable= false;
+  } else if (type == 'receipt') {
+    this.isPartCssEnable = false;
+    this.isMeritCssEnable = false;
+    this.isInvoiceCssEnable = false;
+    this.isReceiptCssEnable= true;
+  }
+ //  this.makeReaadle(this.certType);
+  //this.onyeareChange(this.yearvalue,this.certType)
+ //this.resetDisable(); 
+ this.selectedEvent ='';
+ this.selectedGame = '';
+ this.gameReadble = false;
+}
 downloadReport() {
   this.isReport = true;
   this.resetDisable();
@@ -131,18 +170,29 @@ downloadInvoice() {
   this.resetDisable();
 }
  
-onyeareChange(event,type) {
-  this.yearvalue = event.value;
+
+onYear(val,yearText) {
+
+}
+// onyeareChange(event,type) {
+onyeareChange(val,yearText) {
+
+  this.yearvalue = val;
   this.showMeritData = false;
-  if (type == 'certificate') {
-     this.selectedMeritYear = ''; 
-  } else if (type == 'merit') {
-    this.selectedYear = '';
-  }  else if (type == 'invoice') {
-    this.selectedReceiptYear = '';
+  if(yearText == 'first') {
+    this.isFirstYear = true;
   } else {
-    this.selectedInvoiceYear = '';
+    this.isFirstYear = false;
   }
+  // if (type == 'certificate') {
+  //    this.selectedMeritYear = ''; 
+  // } else if (type == 'merit') {
+  //   this.selectedYear = '';
+  // }  else if (type == 'invoice') {
+  //   this.selectedReceiptYear = '';
+  // } else {
+  //   this.selectedInvoiceYear = '';
+  // }
   if(this.yearvalue !== '') {
   this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
   //this.meritService.loadEventByYear(this.yearvalue).subscribe(
@@ -155,7 +205,7 @@ onyeareChange(event,type) {
        // console.log(this.isCertificateAvailable);
         if(this.eventData.length > 0 ){
           this.eventOptions = [];
-          this.makeReaadle(type);
+          this.makeReaadle(this.certType);
           this.isDataAvailble = false;
           this.eventOptions.push({
             label: "Please Select",
@@ -285,25 +335,28 @@ onEventChange(event,type) {
   this.eventValue = this.eventDataArray[0];
   this.isCertificateData = this.eventDataArray[1];
   this.isMeritCertificateData = this.eventDataArray[2];
-  if (type == 'certificate') { 
+  if (this.certType == 'certificate') { 
     if (this.isCertificateData == '1') {
       this.getGameForReport(type);
     } else {
       this.gameReadble = false;
       this.selectedGame = '';
       this.isDataAvailble = false;
+      
       this.messageService.add({key: 'custom',severity:'error', summary: 'Certificate not Uploaded!'});
     }
   }
-  if (type == 'merit') { 
+  if (this.certType == 'merit') { 
     if (this.isMeritCertificateData == '1') {
       this.getGameForReport(type);
       this.setAgeMap(this.eventValue);
       this.genderOptions =this.issoUtilService.setGender();
-    } else {
+    } else { 
       this.meritGame = false;
       this.isMeritDataAvailble = false;
        this.selectedMeritGame = '';
+       this.gameReadble = false;
+       this.selectedGame = '';
       this.messageService.add({key: 'custom',severity:'error', summary: 'Certificate not Uploaded!'});
     }
   }
@@ -327,11 +380,14 @@ onEventChange(event,type) {
  // this.makeReaadle(type);
   // if (this.isReport ) {
   //  this.getGameForReport(type);
-  // } else {
-    if (type == 'invoice') {
-      this.getInvoiceData()
-    } else if(type == 'receipt') {
+  // } else {  
+    if (this.certType == 'invoice') {
+      this.getInvoiceData();
+      this.gameReadble = false;
+
+    } else if(this.certType == 'receipt') {
       this.getReceiptData()
+      this.gameReadble = false;
     }
   //}
 }
@@ -490,11 +546,11 @@ loadschoolChange(gameData,type) {
          this.gameType = response;
          console.log('game Type===>'+JSON.stringify(this.gameType))
         
-         if (type == 'certificate') {
+         if (this.certType == 'certificate') {
           this.isDataAvailble = true;
           this.isMeritDataAvailble = false;
           this.getGameData(this.gameID,type)
-        }  else if (type == 'merit') {
+        }  else if (this.certType == 'merit') {
           this.isDataAvailble = false;
          // this.isMeritDataAvailble = true;
           this.checkMertiAvailable();

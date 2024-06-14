@@ -195,7 +195,7 @@ body {
 
 /* //E:\Angular\14_feb_isso\src\assets\css\template\certificate.css */
 body {
-  font-family: "Trirong", serif;
+  font-family: 'DejaVuSerif-Bold' !important;
   /* background-image: url("https://issoindia.com/assets/img/Ibertificate.jpg");
   height: 100%;
   background-repeat:no-repeat;
@@ -203,6 +203,22 @@ body {
   background-size: 100vw 100vh; */
  
  
+}
+.no-data {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.align-logo {
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+.certificate-font {
+  font-family: 'DejaVuSerif-Bold';
 }
 .bg {
  
@@ -227,6 +243,9 @@ body {
   font-size: 11px;
   border: 1px solid black;
   margin: 0 10%;
+}
+.time-distance {
+  font-size: 12px;
 }
 .event-venue {
   padding-top: 1%;
@@ -400,7 +419,7 @@ body {
 html,
 body {
 height: 100%;
-font-family: 'Futura', sans-serif!important;
+font-family: 'DejaVuSerif-Bold' !important;
 
 }
 
@@ -454,15 +473,25 @@ font-size: 15px;
   padding-right: 8%;
   padding-top: 5%;
 }
-.certificate-section {
+/*.certificate-section {
   /* background-image: url('../../assets/images/sp2.png'); */
   /* background-image: url(assets/images/sp2.png) 0 0 repeat-y;   */
-  background: url("../../../assets/images/sp2.png") 0 0 repeat-y;  
-    float: left;
-    background-size: 100%;
-    margin-top: -5px;
-    width: 99.98%;
+  /* background: url("../../../assets/images/certificate/sp2.png") 2px 0 repeat-y;  
+  float: left;
+  background-size: 100%;
+  margin-top: -5px;
+  width: 99.8%; 
+} */
+
+.certificate-section {
+  background: url("https://issoindia.com/isso/assets/images/newImages/sp2.png") 0 0 repeat-y;  
+  float: left;
+  background-size: 99.85%;
+  margin-top: -5px;
+  width: 100.2%;
 }
+
+
 .certificate-section h1{
   text-align: center;
   font-size: 1.5rem;
@@ -538,7 +567,7 @@ width: 100%;
     margin-top: 3rem;
 }
 .merit-id {
-  font-family: Futura, sans-serif !important;
+  font-family: 'DejaVuSerif-Bold' !important;
   color: rgb(51, 51, 51) !important;
 }
 .summary-section p {
@@ -546,7 +575,7 @@ width: 100%;
     margin: 0 auto;
     padding: 1rem 0.5rem;
     line-height: 1.8;
-    font-family: Futura, sans-serif !important;
+    font-family: 'DejaVuSerif-Bold' !important;
     color: rgb(51, 51, 51) !important;
 }
 .lower-body{
@@ -610,7 +639,7 @@ width: 100%;
   }
   .summary-section p {
     line-height: 1.8;
-    font-family: Futura, sans-serif !important;
+    font-family: 'DejaVuSerif-Bold' !important;
     color: rgb(51, 51, 51) !important;
   }
 }
@@ -685,7 +714,7 @@ font-size: 9px;
   }
   .summary-section p {
     line-height: 1.8;
-    font-family: Futura, sans-serif !important;
+    font-family: 'DejaVuSerif-Bold' !important;
     color: rgb(51, 51, 51) !important;
   }
 }
@@ -775,7 +804,7 @@ font-size: 9px;
   }
   .summary-section p {
     line-height: 1.8;
-    font-family: Futura, sans-serif !important;
+    font-family: 'DejaVuSerif-Bold' !important;
     color: rgb(51, 51, 51) !important;
   }
 

@@ -39,6 +39,11 @@ import { ManageEventReport } from './mange-event-report/manage-event-report.comp
 import { DownloadReceipt } from './admin-payment/download-receipt/download-receipt.component';
 import { ManageTeamReport } from './manage-team-report/manage-team-report.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { CertificateContentComponent } from '../certificate-content/certificate-content.component';
+import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-payment/configure-sgfi-payment.component';
+import { ChangePassComponent } from '../change-pass/change-pass.component';
+import { SgfiEntriesComponent } from '../sgfi-entries/sgfi-entries.component';
+ 
 
 @NgModule({
   imports: [
@@ -83,7 +88,11 @@ import { UserManagementComponent } from './user-management/user-management.compo
     CoachDataComponent,
     WebDataComponent,
     UserManagementComponent,
-    AdminPayment
+    AdminPayment,
+    CertificateContentComponent,
+    ConfigureSgfiPaymentComponent,
+    ChangePassComponent,
+    SgfiEntriesComponent
   ],
   providers: [SumPipeModule,DatePipe,TextTransformPipeModule,AutoCompleteModule]
  

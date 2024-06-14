@@ -33,4 +33,10 @@ export class StaffadminMenuComponent implements OnInit {
    addNewUser() {
     this.router.navigate(['/staffadmin/student-dashboard']);
    }
+   closeMenu() {
+    let isMobile = /iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      document.getElementById('navButton').click();
+    }
+  }
 }

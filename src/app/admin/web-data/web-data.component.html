@@ -2,18 +2,95 @@
 
 <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
 
-
+<div class="container mt-5">
+    <p class="display-6 fw-bold">Demo</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarColor02"
+          aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-mdb-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                  <a class="dropdown-item" href="#">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" aria-current="page" href="#">Menu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Items</a>
+              </li>
+              <!-- Dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                  data-mdb-toggle="dropdown" aria-expanded="false">
+                  Dropdown link
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li>
+                    <a class="dropdown-item" href="#">Action</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Another action</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
 <div class="wrapper">
+    <p-menubar [model]="items" class="custom-menubar"></p-menubar>
+    <p-menubar [model]="items1" class="custom-menubar"></p-menubar>
+
+
+
+
+
+    
 <div id="content1" class="content-wrapper">
-    <div class="sub-view-wrapper"   >
+    <div class="sub-view-wrapper" *ngIf="display">
     <h2 class="headingSubview">{{subViewTitle}}</h2>
     <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-        <div class="form-row">
+        <!-- <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputPassword4">Title</label>
                 <input class="form-control" id="float-input" formControlName="schoolTelePhone"  type="text" >  
               </div>
-        </div>    
+        </div>     -->
         <div class="form-row">  
             <div class="form-group col-md-6">
               <label for="inputEmail4">Sport Name</label>
@@ -30,6 +107,24 @@
             <div class="form-group col-md-6">
               <label for="inputEmail4">Venue</label>
               <input class="form-control" formControlName="schoolBoard" name ="schoolBoard" type="text" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Event Start Date</label>
+              <p-calendar [(ngModel)]="eventStartDate" [minDate]="minimumDate" formControlName="startDate" onkeydown="return false;"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}"  [showIcon]="true" inputId="icon"></p-calendar>
+
+              <!-- <p-calendar   [showIcon]="true" onkeydown="return false;"   formControlName="startDate"    dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" ></p-calendar>  -->
+ 
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Event End Date</label>
+              <p-calendar [(ngModel)]="eventEndDate" [minDate]="minimumDate" formControlName="endDate" onkeydown="return false;"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}"  [showIcon]="true" inputId="icon"></p-calendar>
+
+              <!-- <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;"  formControlName="endDate"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>  -->
+ 
             </div>
         </div>
         
@@ -89,8 +184,8 @@
 <ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
     <div style="padding:.5em" class="ui-g-12 ui-md-6">
         <div class="item-box">
-            <div class="item-header">
-                <h4 title="{{school.title}}">Event Data</h4>
+            <div class="item-header1">
+                <h4 class="ev-name1" title="{{school.title}}">Event Data</h4>
                 <div class="icons-wrap">
                     <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
                     </button>
@@ -100,13 +195,18 @@
                 </div>
             </div>
             <div class="item-description">
-                <label>Event Title:</label>
-                <span class="item-value">{{school.title}}</span>
-            </div>
-            <div class="item-description">
                 <label>Sport Name:</label>
                 <span class="item-value">{{school.sportName}}</span>
             </div>
+            <div class="item-description">
+                <label>Event Start Date:</label>
+                <span class="item-value">{{school.eventStartDate  | date: 'd MMMM , y'}}</span>
+            </div>
+            <div class="item-description">
+                <label>Event End Date:</label>
+                <span class="item-value">{{school.eventEndDate  | date: 'd MMMM , y'}}</span>
+            </div>
+          
              <div class="item-description">
                 <label>Age Group:</label>
                 <div class="item-parent">

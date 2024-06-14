@@ -21,6 +21,7 @@ import { IssoUtilService } from 'src/app/services/isso-util.service';
 })
 export class AdminSchoolComponent implements OnInit {
   schoolForm: FormGroup;
+  showspinner: boolean;
   options: SelectItem[];
   zoneOptions: SelectItem[];
   editForm: FormGroup;
@@ -60,6 +61,7 @@ export class AdminSchoolComponent implements OnInit {
   sortField: string;
   sortOrder: number;
   selectedSchool: School;
+  selectedZoneVal:string;
   carDatavalue:any;
   carId:number
   displayDialog: boolean;
@@ -73,6 +75,8 @@ export class AdminSchoolComponent implements OnInit {
   emailOfSchool: any;
   verifyEmailForSchool: any;
   schoolEdit: boolean;
+  totalNonAffilatedSchoool: number;
+  totalSchoolCount: number;
 
 
   constructor(
@@ -90,6 +94,7 @@ export class AdminSchoolComponent implements OnInit {
 ngOnInit() {
     this.initialForm();
     this.loading = true;
+    this.selectedZoneVal = 'noZone';
     setTimeout(()=> {this.placeholderText = 'It has changed'}, 5000)
     this.getSchoolData()
 }
@@ -110,7 +115,20 @@ registeredSchool() {
 }
 loadData(event) {
 }
-
+filterSchoolList(event) {
+  const zoneVal = event.value;
+  if(zoneVal) {
+    console.log('zane vale--->'+zoneVal)
+    this.selectedZoneVal =event.value;
+    this.getSchoolData();
+  } else {
+    console.log('Im else')
+    this.selectedZoneVal = 'noZone';
+    this.getSchoolData();
+  }
+ 
+ 
+}
 editSchool(event: Event, car: School) {
   let carData=  JSON.stringify(car);
   this.carId =car.id;
@@ -185,12 +203,19 @@ changeWebStatus(id,isWebVisible) {
   );
 
 }
-getSchoolData(){
+getSchoolData() {
       this.registeredSchoolFlag =  false;
-      this.schoolService.getSchoolList().subscribe(response => {
+      this.totalNonAffilatedSchoool = 0;
+      this.schoolService.getSchoolList(this.selectedZoneVal).subscribe(response => {
         if(response!=="") {
+         console.log('Im resp--->'+response)
           this.schoolServiceData =response;
           this.schoolData = this.schoolServiceData;
+          this.totalSchoolCount = this.schoolData.length;
+          if(this.schoolData) {
+            this.totalNonAffilatedSchoool = this.schoolData.filter((d => d.isAffiliate=='No')).length;
+          }
+         
         } else {
           alert('im blankl=')
         }
@@ -405,7 +430,16 @@ onSubmit() {
      }
  
 }
-
+deleteRegisteredSchoolData(schoolId) {
+  if (event.defaultPrevented) return;
+  event.preventDefault();
+  this.confirmation.confirm({
+    key: 'confirm-delete-school',
+    icon: 'pi pi-info-circle',
+    message: 'Are you sure to delete school data?',
+    accept: () => { this.deleteRegisteredSchool(schoolId); },
+  });
+}
 
 deleteSchoolData(event: Event, schoolData: School) {
     if (event.defaultPrevented) return;
@@ -439,7 +473,23 @@ deleteSchool(School) {
    error => this.error = error
  );
 }
+deleteRegisteredSchool(schoolId) {
+ 
+  this.schoolService.deleteRegisteredSchool(schoolId).subscribe(
+   res => {
+     //  if (res.status !== 'error') {
+     //    this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+     //  } else {
+         this.messageService.add({key: 'custom', severity:'success', summary: 'School Data Deleted Successfully'});
 
+     //  }
+
+     this.display =false
+     this.getSchoolData();
+   },
+   error => this.error = error
+ );
+}
 importSchoolExcel() {
   this.meritService.exportAsExcelFile(this.schoolData, 'school-data');
 }

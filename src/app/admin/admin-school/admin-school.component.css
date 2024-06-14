@@ -10,14 +10,26 @@
 .inactive {
     background-color: red;color: white;
 }
-.search-text { 
-    width: 40%;
-    margin: 0 30px 12px 91px;
-    padding: 7px;
-} 
+.align-zone {
+    padding: 0 10px 20px 10px;
+}
+.align-header {
+    border: 1px solid;
+    margin: 0 10px;
+    padding: 10px;
+}  
 :host ::ng-deep button {
     margin-right: .25em;
 }
+:host ::ng-deep  .table>:not(:last-child)>:last-child>* {
+  border-bottom: none;
+}
+:host ::ng-deep  .table  {
+    border-radius: inherit !important;
+  }
+.table-headeing {
+    font-weight: 900 !important;
+  }
 /* .item-description label {
     float: left !important;
     margin-right: 10px !important;
@@ -98,3 +110,10 @@ body .ui-dataview .ui-dataview-content {
     color: red;
     padding-top: 10px;
   }
+.school-title-head{
+    float: left;
+    margin-top: 0;
+    font-size: 15px;
+    font-weight: bold;
+    width: 85%;
+} 

@@ -42,18 +42,29 @@ export class IssoUtilService {
   genderOptions: { label: string; value: string; }[];
   gameOptions: { label: string; value: string; }[];
   standardClass: { label: string; value: string; }[];
-
+  tShirtSize: { label: string; value: string; }[];
   // constructor(private http: HttpClient) { }
 
   
   setYear() {
     let setYearVal = 2021;
     let currYear = new Date().getFullYear();
-    let yearCount = currYear - setYearVal + 2
+    let month = new Date().getMonth(); 
+    let nextYear;
+    let yearCount
+    if(month >= 5 ) {
+      yearCount = currYear - setYearVal + 2
+    } else {
+      yearCount = currYear - setYearVal + 1
+    }
+
+    //let yearCount = currYear - setYearVal + 2
     this.yearArray.length = 0; 
     for(let i=1;i< yearCount; i++) {
+     
       let nextYear = setYearVal + 1;
       let currYearString = setYearVal+'-'+nextYear;
+      
       this.yearArray.push({year:currYearString});
         this.yearOptions = [];
         this.yearOptions.push({
@@ -67,8 +78,45 @@ export class IssoUtilService {
           });
         })
         setYearVal= nextYear;
-    }
+  
+  }
     return this.yearOptions;
+}
+setMonth() {
+  let setYearVal = 2021;
+  let currYear = new Date().getFullYear();
+  let month = new Date().getMonth(); 
+  let nextYear;
+  let yearCount
+  if(month >= 5 ) {
+    yearCount = currYear - setYearVal + 2
+  } else {
+    yearCount = currYear - setYearVal + 1
+  }
+
+  //let yearCount = currYear - setYearVal + 2
+  this.yearArray.length = 0; 
+  for(let i=1;i< yearCount; i++) {
+   
+    let nextYear = setYearVal + 1;
+    let currYearString = setYearVal+'-'+nextYear;
+    
+    this.yearArray.push({year:currYearString});
+      this.yearOptions = [];
+      this.yearOptions.push({
+        label: "Select year",
+        value: ''
+      });
+      this.yearArray.forEach(element => {
+        this.yearOptions.push({
+          label: element.year,
+          value: element.year
+        });
+      })
+      setYearVal= nextYear;
+
+}
+  return this.yearOptions;
 }
 setAgeMap(eventValue) {
   console.log('im service')
@@ -92,6 +140,43 @@ setAgeMap(eventValue) {
    //console.log('im service'+this.ageOptions)
    return this.ageOptions;
 }
+setYearToStaffadmin() {
+  const yearArray =[];
+  let currYear = new Date().getFullYear();
+  
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth(); 
+  
+  
+  let currYearString;
+  let nextYearString;
+ 
+  let prevYear = currYear - 1;
+  let nextYear = currYear + 1;
+ 
+  // if (month >= 5) { 
+  //   currYearString = prevYear+'-'+currYear;
+  //   nextYearString = currYear+'-'+nextYear;
+  // } else {
+  //   currYearString = prevYear+'-'+currYear;
+  //   nextYearString = currYear+'-'+nextYear;
+  // }
+ 
+ 
+  if (month >= 5) { 
+    currYearString = prevYear+'-'+currYear;
+    nextYearString = currYear+'-'+nextYear;
+  } else {
+    currYearString = (prevYear -1 )+'-'+prevYear;
+    nextYearString = prevYear+'-'+currYear;
+  } 
+
+  this.yearArray = [{year:currYearString}, {year:nextYearString}];
+  return  this.yearArray ;
+ 
+}
+
 setYearForStaffadmin() {
   const yearArray =[];
   let currYear = new Date().getFullYear();
@@ -100,6 +185,7 @@ setYearForStaffadmin() {
   let currYearString = prevYear+'-'+currYear;
   let nextYearString = currYear+'-'+nextYear;
   this.yearArray = [{year:currYearString}, {year:nextYearString}];
+  // return  this.yearArray ;
   this.staffadminYearOptions = [];
   this.staffadminYearOptions.push({
     label: "Select year",
@@ -130,8 +216,10 @@ setAge() {
 setFeeType() {
   this.feeType = [
     {label: "Select Type", value: ''},
-    {label: 'Affilation Fee', value: '1'},
-    {label: 'Participation Fee', value: '2'},
+    {label: 'Affilation Fee', value: 'affilation'},
+    {label: 'Participation Fee', value: 'participation'},
+    {label: 'Kit Amount', value: 'kit'},
+    {label: 'Miscellaneous Fee', value: 'misc'},
  
   ];
   return this.feeType;
@@ -172,27 +260,31 @@ setGender() {
     ];
     return this.genderOptions;
 }
-setDateOfBirthValidation(ageRange) {
+setDateOfBirthValidation_bk(ageRange) {
   var date = new Date();
   var newdate = new Date(date);
+  
     let setYear;
     if (ageRange === 11) {
       setYear = newdate.getFullYear() - 11; 
+      console.log(newdate.getFullYear()+1)
       console.log('Im true'+setYear)
     } else if(ageRange === 14) {
+      console.log('im 14')
       setYear = newdate.getFullYear() - 14; 
     }  else if(ageRange === 16) {
       setYear = newdate.getFullYear() - 16; 
     } else if(ageRange === 17) {
       setYear = newdate.getFullYear() - 17; 
     }  else if(ageRange === 19) {
-      setYear = newdate.getFullYear() - 20; 
+      console.log('Im 19')
+      setYear = newdate.getFullYear() - 19; 
     }
     var newdate = new Date(date);
     newdate.setDate(newdate.getDate() + 1);
     var dd = newdate.getDate();
     var mm = newdate.getMonth() + 1;
-  
+  console.log('monthval--->'+mm)
     if (dd === 1) {
       var dd1 = 1;
     } else {
@@ -210,6 +302,99 @@ setDateOfBirthValidation(ageRange) {
     return  this.minDate
     
 } 
+
+
+setDateOfBirthValidation(ageRange) {
+  var date = new Date();
+  var newdate = new Date(date);
+  var monthVal = newdate.getMonth() + 1;
+  let setYearVal; 
+  if (monthVal >= 6) {
+    setYearVal = newdate.getFullYear(); 
+  } else {
+    setYearVal = newdate.getFullYear()-1; 
+  }
+  let setYear;
+  if (ageRange === 11) {
+    setYear = setYearVal - 10;
+  } else if(ageRange === 14) {
+    setYear = setYearVal - 13; 
+  }  else if(ageRange === 16) {
+    setYear = setYearVal - 15; 
+  } else if(ageRange === 17) {
+    setYear = setYearVal - 16; 
+  }  else if(ageRange === 19) {
+    setYear = setYearVal - 18; 
+  }
+
+   
+  var newdate = new Date(date);
+  newdate.setDate(newdate.getDate() + 1);
+  var dd = newdate.getDate();
+  var mm = newdate.getMonth() + 1;
+  if (dd === 1) {
+    var dd1 = 1;
+  } else {
+    var dd1 = dd - (dd - 1);
+  }
+  if (mm === 1) {
+    var mm1 = 1;
+  } else {
+    var mm1 = mm - (mm - 1);
+  }
+  
+  var someFormattedDate = dd1 + '/' + mm1 + '/' + setYear;
+  this.minDate = new Date(someFormattedDate);
+  return  this.minDate
+    
+} 
+setDateOfBirthValidationForAdmin(ageRange,eventyear) {
+
+  var splitYear = eventyear.split("-");
+  console.log('Yearvalu--->',splitYear[0]);
+  let selectedEventYear = splitYear[0];
+  var date = new Date();
+  var newdate = new Date(date);
+ 
+  let setYearVal; 
+ 
+  let setYear;
+  if (ageRange === 11) {
+    setYear = selectedEventYear - 10;
+  } else if(ageRange === 14) {
+    setYear = selectedEventYear - 13; 
+  }  else if(ageRange === 16) {
+    setYear = selectedEventYear - 15; 
+  } else if(ageRange === 17) {
+    setYear = selectedEventYear - 16; 
+  }  else if(ageRange === 19) {
+    setYear = selectedEventYear - 18; 
+  }
+
+   
+  var newdate = new Date(date);
+  newdate.setDate(newdate.getDate() + 1);
+  var dd = newdate.getDate();
+  var mm = newdate.getMonth() + 1;
+  if (dd === 1) {
+    var dd1 = 1;
+  } else {
+    var dd1 = dd - (dd - 1);
+  }
+  if (mm === 1) {
+    var mm1 = 1;
+  } else {
+    var mm1 = mm - (mm - 1);
+  }
+  
+  var someFormattedDate = dd1 + '/' + mm1 + '/' + setYear;
+  this.minDate = new Date(someFormattedDate);
+  return  this.minDate
+    
+} 
+
+
+
 setPhotoYear() {
   var date = new Date();
   var newdate = new Date(date);
@@ -237,7 +422,7 @@ setCoachPhotoYear() {
   return this.setPhotoPath;
 }
 
-setYearRange(ageRange) {
+setYearRange_BK(ageRange) {
   let setMinYear;
   let setMaxYear;
   var date = new Date();
@@ -278,6 +463,126 @@ setYearRange(ageRange) {
   this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
   return  this.yearRange;
 }
+
+setYearRange(ageRange) {
+
+  let setMinYear;
+  let setMaxYear =0;
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth() + 1;
+  
+  if (month >= 6) {
+    if (ageRange === 11) {
+      setMinYear = 10;
+    } else if(ageRange === 14) {
+      setMinYear = 13;
+    } else if(ageRange === 16) {
+      setMinYear = 15;
+    } else if(ageRange === 17) {
+      setMinYear = 16;
+    }  else if(ageRange === 19) {
+      setMinYear = 18;
+    }
+  } else {
+    if (ageRange === 11) {
+      setMinYear = 11;
+    } else if(ageRange === 14) {
+      setMinYear = 14;
+    } else if(ageRange === 16) {
+      setMinYear = 16;
+    } else if(ageRange === 17) {
+      setMinYear = 17;
+    }  else if(ageRange === 19) {
+      setMinYear = 19;
+    }
+ }
+  this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
+  console.log('Im year Range-->'+this.yearRange)
+  return  this.yearRange;
+}
+
+setYearRangeForAdmin_BK(ageRange,eventYear) {
+  var splitYear = eventYear.split("-");
+  
+  var lastTwoDigitOfYear = Number(splitYear[1] % 100);
+  console.log('last digit-->'+lastTwoDigitOfYear)
+  let setMinYear = 0;
+  let setMaxYear;
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth();
+  
+  if (Number(ageRange) === 11) {
+    //setMinYear = 12; 
+    setMinYear = lastTwoDigitOfYear - 12;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 14) {
+    // setMinYear = 15; 
+    setMinYear = lastTwoDigitOfYear - 9;
+    setMaxYear = 0
+  } else if(Number(ageRange) === 17) {
+      // setMinYear = 18; 
+    setMinYear = lastTwoDigitOfYear - 6;
+    console.log('Im new min Year-->'+setMinYear)
+    setMaxYear = 0
+  }  else if(Number(ageRange) === 19) {
+    // setMinYear = 20; 
+    setMinYear = lastTwoDigitOfYear - 4;
+    setMaxYear = 0 
+  }
+ 
+  this.yearRange = `${new Date().getFullYear() - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
+
+  return  this.yearRange;
+}
+
+
+setYearRangeForAdmin(ageRange,eventYear) {
+  var splitYear = eventYear.split("-");
+  let selectedEventYear = splitYear[0];
+  console.log('year range-->'+selectedEventYear)
+  var lastTwoDigitOfYear = Number(splitYear[1] % 100);
+  console.log('last digit-->'+lastTwoDigitOfYear)
+  let setMinYear = 0;
+  let setMaxYear  = 0;
+  var date = new Date();
+  var newdate = new Date(date);
+  var month = newdate.getMonth();
+  
+  if (Number(ageRange) === 11) {
+    setMinYear = 10; 
+  } else if(Number(ageRange) === 14) {
+     setMinYear = 13; 
+  } else if(Number(ageRange) === 16) {
+    setMinYear = 15;
+  } else if(Number(ageRange) === 17) {
+    setMinYear = 16;
+  }  else if(Number(ageRange) === 19) {
+     setMinYear = 18;
+  }
+ 
+
+  // if (ageRange === 11) {
+  //   setMinYear = 10;
+  // } else if(ageRange === 14) {
+  //   setMinYear = 13;
+  // } else if(ageRange === 16) {
+  //   setMinYear = 15;
+  // } else if(ageRange === 17) {
+  //   setMinYear = 16;
+  // }  else if(ageRange === 19) {
+  //   setMinYear = 18;
+  // }
+
+
+
+  this.yearRange = `${selectedEventYear - setMinYear}:${new Date().getFullYear() - setMaxYear}`;
+
+  return  this.yearRange;
+}
+
+
 setRank() {
   this.genderOptions = [
   {label: "Select Rank", value: ''},
@@ -331,6 +636,21 @@ setClass() {
     ];
     return this.standardClass;
 }
+setTshirtSize () {
+  this.tShirtSize = [
+    {label: "Please select", value: ''},
+    {label: '32', value: '32'},
+    {label: '34', value: '34'},
+    {label: 'S', value: 'S'},
+    {label: 'M', value: 'M'},
+    {label: 'L', value: 'L'},
+    {label: 'XL', value: 'XL'},
+    {label: 'XXL', value: 'XXL'}
+   
+];
+return this.tShirtSize;
+}
+ 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

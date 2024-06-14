@@ -22,10 +22,15 @@ export class SchoolService {
     this.http = new HttpClient(handler);
 }
  
-getSchoolList() {
-   return this.http.get(this.serverUrl + 'school/schoolList').pipe(
+getSchoolList(zoneVal) {
+   return this.http.get(this.serverUrl + 'school/schoolList/'+ zoneVal).pipe(
         catchError(this.handleError)
   );
+}
+getSchoolByZoes(zoneVal) {
+  let str = 'school/getSchoolByZoes/' + zoneVal;
+ return this.http.get(this.serverUrl + str).pipe(
+  catchError(this.handleError));
 }
 getRegisterSchoolList() {
   return this.http.get(this.serverUrl + 'school/getRegisterSchoolList').pipe(
@@ -85,6 +90,7 @@ schoolRegistration(schoolInfo) {
    catchError(this.handleError)
  );
 }
+
 uploadDoc(docInfo) {
   return this.http.post<any>(this.serverUrl + 'schoolRegistration/uploadDoc',docInfo)
   .pipe(
@@ -127,7 +133,11 @@ deleteSchool(id: number) {
     catchError(this.handleError)
   );
 }
-
+deleteRegisteredSchool(id: number) {
+  return this.http.delete(this.serverUrl + 'schoolRegistration/deleteRegisteredSchool/' + id).pipe(
+    catchError(this.handleError)
+  );
+}
 loginFail(){
   return true;
 }

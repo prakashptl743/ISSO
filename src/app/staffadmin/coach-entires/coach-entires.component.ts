@@ -1,18 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-coach-entires',
-//   templateUrl: './coach-entires.component.html',
-//   styleUrls: ['./coach-entires.component.css']
-// })
-// export class CoachEntiresComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit() {
-//   }
-       
-// }
 import { Component, OnInit, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { ReportMeritService } from 'src/app/admin/service/report-merit.service';
@@ -57,7 +42,7 @@ base64Image:any;
 @ViewChild('reportContent', {static: false})reportContent: ElementRef;
 @ViewChild('report_Content', {static: false})report_Content: ElementRef;
 
-yearOptions: SelectItem[];
+yearOptions: object;
 feeOptions: SelectItem[];
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
@@ -147,6 +132,10 @@ schoolType: string;
   selectedGame: string;
   selectedAge: string;
   selectedGender: string;
+  display: boolean;
+  showAddbutton: boolean;
+  isFirstYear: boolean;
+  isButtonEnabled = false;
 constructor( 
   @Inject(PLATFORM_ID) private platformId: Object,
   private issoUtilService: IssoUtilService,
@@ -170,11 +159,13 @@ ngOnInit() {
   this.ageOptions = this.issoUtilService.setAge();
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
   this.initialForm();
   this.fileUpladForm();
+  this.onyeareChange(this.yearOptions[1].year,'second')
+  
   //this.setPhotoPath();
 }
  
@@ -223,6 +214,7 @@ onKeypressEvent(amount) {
 }
 get f() { return this.studentEnroolForm.controls; }
 initialForm() {
+ //this.isFileBig = false;
   this.genderOptions =this.issoUtilService.setGender();
   this.url = '';
   this.isValidFile = true;
@@ -230,6 +222,8 @@ initialForm() {
   this.studentEnroolForm = this.fb.group({
     editStudentPhoto:[],
     studentId: '',
+    ageRange:['', Validators.required],
+    gender:['', Validators.required],
     studentName: ['', Validators.required],
     fatherName: ['', Validators.required],
     profile: ['', Validators.required],
@@ -239,43 +233,20 @@ initialForm() {
 }
 
 makeEmptyForm() {
-  // this.selectedSubGame ='' ;
-  // this.isFileBig = false;
-  // this.showMapData = false;
-  // this.mapGameArray= [];
-  // this.studentDataArray= [];
-  // this.mapGameArray =[];
-  // this.showMapData = false;
-  // this.subGameIdArray =[];
-  // this.subGameNameArray= [];
-  // this.newSubGameCapacity = [];
-  // this.testArray = [];
-  // this.checkSubGameCapacity =[];
   this.isEdit = false;
   this.studentName ='';
   this.fatherName ='';
-  // this.datOfBirth ='';
-  // this.selectedClass ='';
-   this.selectedProfile ='';
-  // this.passport ='';
-  // this.aadhar='';
-  // this.passport ='';
-   this.studentId= ''
-    this.editStudentPhoto = '';
-  // this.admissionNo='';
-  // this.aadharNumber = null;
+  this.selectedProfile ='';
+  this.studentId= ''
+  this.editStudentPhoto = '';
   this.submitButtonLabel = "Submit"
- 
- 
-this.url= '';
- 
-
-    if(document.getElementById('my-input')) {
+  this.url= '';
+  if(document.getElementById('my-input')) {
      let control2 = this.studentEnroolForm.get('profile');
         control2.setValue(null);
         control2.setValidators([Validators.required]);
          control2.updateValueAndValidity();
-    }
+  }
 }
 onFileSelected(event) {    
   if(event.target.files) { 
@@ -298,8 +269,9 @@ onFileSelected(event) {
   // this.blobName = this.fullFilename
    const profile = event.target.files[0];
    const fileType = profile.type
- 
-   if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
+   if ((ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) && !this.isMoreDot) {
+
+   // if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
      this.isValidFile = true;
    } else {
      this.isValidFile = false;
@@ -372,6 +344,7 @@ onSubmit() {
           } else {
             this.messageService.add({key: 'custom', severity:'success', summary: 'Coach Data Added Successfully'});
             this.studentEnroolForm.reset();
+            this.display = false;
             this.loadCoachData();
           }
       },
@@ -386,6 +359,7 @@ onSubmit() {
           } else {
             this.messageService.add({key: 'custom', severity:'success', summary: 'Coach Data updated Successfully'});
             this.studentEnroolForm.reset();
+            this.display = false;
             this.loadCoachData();
           }
       },
@@ -436,9 +410,7 @@ addMoreData() {
   this.studentEnroolForm.reset();
   this.submitButtonLabel = 'Submit';
 }
- 
-
-loadCoachData() {
+loadCoachData_BK() {
   this.isEdit = false;
   this.genderReadble = true;
   this.coachDataArray = [];
@@ -468,37 +440,73 @@ loadCoachData() {
      //this.errorAlert =true;
     });
 }
-editStudent(i: number): void {
 
+loadCoachData() {
+  this.isEdit = false;
+  this.genderReadble = true;
+  this.coachDataArray = [];
+  this.coachDataArray.push(
+    this.eventValue, this.gameID, this.schoolId,
+  );
+  const formData = new FormData();
+  formData.append('coachInfo', JSON.stringify(this.coachDataArray));
+  this.studentEnrollmentService.loadCoachData(formData).subscribe(
+    response => {
+      this.coachListArray = response;
+     // if(response!=="") {
+        if(response.length > 0) {
+          this.studentId = this.coachListArray[0].id;
+          this.coachDataAvailable = false;
+         // this.submitButtonLabel= 'Update';
+        } else {
+          // this.submitButtonLabel = 'Submit';
+          this.studentEnroolForm.reset();
+          this.coachDataAvailable = false;
+        }
+        console.log(response);
+      
+    //  }
+    },
+   error => {
+     //this.errorAlert =true;
+    });
+}
+
+showDialog() {
+  this.display = true;
+  this.initialForm();
+  this.makeEmptyForm();
+}
+// hideDialog(){
+//   console.log('im')
+// }
+editStudent(i: number): void {
+  this.display = true;
   this.isEdit = true;
   this.isValidFile = true;
   this.isFileBig = false;
  
   this.submitButtonLabel = "Update";
   console.log(this.submitButtonLabel)
- 
+  //this.selectedProfile = this.coachListArray[i].coachPhoto,
   this.studentPhoto = this.coachListArray[i].coachPhoto,
   this.studentEnroolForm.setValue({
  //  schoolId: this.schoolId,
+   ageRange: this.coachListArray[i].ageRange,
+   gender: this.coachListArray[i].gender,
    editStudentPhoto: this.coachListArray[i].coachPhoto,
    studentId: this.coachListArray[i].id,
    studentName: this.coachListArray[i].coachName,
    fatherName: this.coachListArray[i].coachFatherName,
- 
- 
-    selectedProfile:this.coachListArray[i].coachPhoto,
+   selectedProfile:this.coachListArray[i].coachPhoto,
    profile :'',
-   //ageRange :this.coachListArray[i].ageRange,
-  //  gameId: this.gameID,
  
-   //schoolName:'',
-  // eventId: this.eventValue,
  });  
  //console.log('Form==>'+JSON.stringify(this.studentEnroolForm))
  
 // this.coachDataAvailable = false;
-   this.setFocus('studentNameText');
-  let filePath = 'http://localhost/isso-php/isso-php/upload/'+this.studentPhoto;
+  //this.setFocus('studentNameText');
+  let filePath = 'https://issoindia.com/isso-php/upload/'+this.yearvalue+'/coach/'+this.studentPhoto;
   this.changeFileName(filePath, this.studentPhoto);
 }
 setFocus(id: string) {
@@ -516,9 +524,15 @@ changeFileName(filePath, fileName) {
   control2.setValidators(null);
   control2.updateValueAndValidity();
 }
-onyeareChange(event) {
+onyeareChange(val, yearText) {
+  if(yearText == 'first') {
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
+  this.coachListArray = [];
   this.isEdit = false;
-  this.yearvalue = event.value;
+  this.yearvalue = val;
   this.genderReadble = false;
   this.selectedEvent ='';
   this.selectedGame ='';
@@ -577,6 +591,7 @@ onyeareChange(event) {
 
 onEventChange(event) {
   this.isEdit = false;
+  this.gameID = '';
   this.selectedGame ='';
   this.genderReadble = false;
   this.selectedAge='';
@@ -677,22 +692,22 @@ loadGameChange(gameData) {
 
    
 }
+
 loadGenderChange(gender) {
-  this.isEdit = false;
+  //this.isEdit = false; 
  // this.ageRange = ageData.value;
   this.genderVal = gender.value;
   console.log(this.ageRange);
-  this.loadCoachData();
+ // this.loadCoachData();
 }
 loadAgeChange(ageData) {
-  this.isEdit = false;
+ // this.isEdit = false;
   this.ageRange = ageData.value;
-  this.genderReadble = true;
-  this.selectedGender ='';
-  this.coachDataAvailable = true;
-  this.coachListArray=[];
- // console.log(this.ageRange);
- // this.loadCoachData();
+ if(this.ageRange) {
+   this.isButtonEnabled = true;
+ } else {
+  this.isButtonEnabled = false;
+ }
 }
 loadschoolChange(gameData) {
  //   this.gameID = gameData.value;
@@ -713,7 +728,7 @@ loadschoolChange(gameData) {
       error => {
     //this.errorAlert =true;
       });
-
+     this.loadCoachData()
 }
  
 getGameData(gameID) {
@@ -774,12 +789,14 @@ setPaymentForGame() {
           this.eventNote = this.reportData[0].note;
           this.eventDescription = this.reportData[0].description;
           this.ageReaadble = true;
+          this.showAddbutton = true;
         } else {
           this.coachDataAvailable = true;
           this.coachListArray =[];
           this.ageReaadble = false;
           this.genderReadble = false;
-          this.messageService.add({key: 'custom', severity:'error', summary: 'You are not participating in this game'});
+          this.showAddbutton = false;
+          this.messageService.add({key: 'custom', severity:'error', summary: 'You have not participated in this game'});
           this.noParticipateEvent = true;
           this.isDataAvailble = false;
           this.showPayment = false;

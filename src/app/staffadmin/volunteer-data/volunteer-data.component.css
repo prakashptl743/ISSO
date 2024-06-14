@@ -17,13 +17,14 @@ a.disabled {
 .align-heading {
     padding: 10px;
     margin: 0;
-    color: white;
-    background: #0d6efd;
+    color: #080808;
     text-align: center;
     border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 .align-container {
-    margin-top: 30px;
+    margin-top: 0;
 }
 .pad-left-zero {
     padding-left: 0;
@@ -293,10 +294,10 @@ a.disabled {
     color: white !important; 
  }
  
- .row{
+ /* .row{
      margin-top:40px;
      padding: 0 10px;
- }
+ } */
  .panel-primary {
      border-color: white !important;
  }
@@ -308,6 +309,15 @@ a.disabled {
      margin-top: -20px;
      font-size: 15px;
  }
+ table td {
+    padding: 20px 8px!important;
+    text-align: center;
+}
+table th {
+    padding: 15px 8px!important;
+    text-align: center;
+    background-color: #32383e!important;
+}
   
  
   

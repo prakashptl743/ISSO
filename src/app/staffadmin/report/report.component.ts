@@ -95,7 +95,7 @@ export class ReportComponent implements OnInit {
 @ViewChild('reportContent', {static: false})reportContent: ElementRef;
 @ViewChild('report_Content', {static: false})report_Content: ElementRef;
 
-yearOptions: SelectItem[];
+yearOptions: object;
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
 schoolOptions: SelectItem[];
@@ -144,6 +144,8 @@ eventDescription: any;
   isReport: boolean;
   isShowLoader: boolean;
   isCertificateAvailable: any;
+  finalGameList = [];
+  isFirstYear: boolean;
 ;
 constructor( 
   private issoUtilService: IssoUtilService,
@@ -159,12 +161,13 @@ ngOnInit() {
   // this.time = this.datePipe.transform(new Date());
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
   this.schoolId = localStorage.getItem('schoolId');
   // let imageUrl = '../../assets/images/general/1568798071IMG_8449214933993.jpg';
   // this.getBase64ImageFromURL1(imageUrl).subscribe(base64data => {    
   //   this.base64Image = 'data:image/jpg;base64,' + base64data;
   // });
+  this.onyeareChange(this.yearOptions[1].year,'second')
   this.isReport = true;
   this.setPhotoPath();
 }
@@ -286,20 +289,31 @@ downloadInvoice() {
   console.log('im donwnload downloadInvoice');
   this.eventValue = '';
 }
-
-onyeareChange(event) {
-  this.yearvalue = event.value;
+onyeareChange(val, yearText) {
+    if(yearText == 'first') {  
+      this.isFirstYear = true;
+    } else {
+      this.isFirstYear = false;
+    }
+  this.eventReadable = false;
+  this.yearvalue = val;
+  this.finalGameList = [];
+ 
   if(this.yearvalue !== '') {
   this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
   //this.meritService.loadEventByYear(this.yearvalue).subscribe(
-    response => {
-      if(response!=="") {
+    response => { 
+      let objectLength = Object.keys(response).length;
+  
+      if(objectLength > 0) {
+       
         this.eventData =response;
         this.gameReadble =false;
         this.schoolReadble  = false;
         this.isCertificateAvailable =  this.eventData[0]['isCertificate'];
         console.log(this.isCertificateAvailable);
         if(this.eventData.length > 0 ){
+          console.log('im if ')
           this.eventOptions = [];
           this.eventReadable = true;
           this.isDataAvailble = false;
@@ -337,7 +351,7 @@ onyeareChange(event) {
 }
 onEventChange(event) {
   this.eventValue = event.value;
-  
+  this.finalGameList = [];
   let yearVal = this.yearvalue.toString();
   let eventYear = yearVal.split("-");
   this.selectedYearVal = eventYear[1];
@@ -355,33 +369,38 @@ getGameForReport() {
         if(response!=="") {
           this.gameList =response;
           this.gameOptions =[];
-          this.schoolReadble = false;
+          this.schoolReadble = false;  
           if(this.gameList.length > 0 ) {
-            this.gameIdList = this.gameList[0].gameId.split(',')
-            this.gameNameList =  this.gameList[0].game_name.split(',')
-            console.log('im game name'+this.gameNameList)
-            this.myObjArray = [];
+            this.getGameData(this.gameList)
+            //  for(let i=0;i<=this.gameList.length - 1;i++) {
+            //   console.log('Im ID--->'+this.gameList[i]['gameId'])
+            //   this.getGameData(this.gameList[i]['gameId'])
+            //  }
+          //   this.gameIdList = this.gameList[0].gameId.split(',')
+          //   this.gameNameList =  this.gameList[0].game_name.split(',')
+          //   console.log('im game name'+this.gameNameList)
+          //   this.myObjArray = [];
           
-            
-           for(let i=0;i<this.gameIdList.length;i++) {
-             this.myObjArray.push({gameId: Number(this.gameIdList[i]), game_name: this.gameNameList[i] });
-           }
+             
+          //  for(let i=0;i<this.gameIdList.length;i++) {
+          //    this.myObjArray.push({gameId: Number(this.gameIdList[i]), game_name: this.gameNameList[i] });
+          //  }
   
   
-            this.gameOptions = [];
-            this.gameReadble = true;
-            this.isDataAvailble = false;
-            this.gameOptions.push({
-              label: "Please Select",
-              value: '',
-            });
-            this.gameList.forEach(element => {
-              this.gameOptions.push({
-                label: element.game_name,
-                value: element.gameId
-              });
-            })
-            console.log('gameOptions'+JSON.stringify(this.gameOptions));
+          //   this.gameOptions = [];
+          //   this.gameReadble = true;
+          //   this.isDataAvailble = false;
+          //   this.gameOptions.push({
+          //     label: "Please Select",
+          //     value: '',
+          //   });
+          //   this.gameList.forEach(element => {
+          //     this.gameOptions.push({
+          //       label: element.game_name,
+          //       value: element.gameId
+          //     });
+          //   })
+          //   console.log('gameOptions'+JSON.stringify(this.gameOptions));
   
          } else {
           this.isDataAvailble = false;
@@ -471,28 +490,26 @@ loadschoolChange(gameData) {
 
 }
  
-getGameData(gameID) {
-  if(this.gameID) {
-    this.meritService.loadStaffReport(this.yearvalue,0, this.eventValue,gameID, this.schoolId).subscribe(
+getGameData(gameData) {
+    this.finalGameList = [];
+    for(let i=0;i<= gameData.length - 1;i++) {
+       console.log('Im ID--->'+gameData[i]['gameId'])
+        
+    this.meritService.loadStaffReport(this.yearvalue,0, this.eventValue,gameData[i]['gameId'], this.schoolId).subscribe(
     response => {
       if(response!=="") { 
         this.reportData = response;
         this.reportDataLength = Object.keys(this.reportData).length;
         if (this.reportDataLength > 0) {
-          this.isDataAvailble = true;
-          this.noParticipateEvent = false;
-          this.school_Name = this.reportData[0].schoolName;
-          this.event_year = this.reportData[0].event_year;
-          this.evetName = this.reportData[0].eventName;
-          this.event_name= this.evetName;
-          this.schooName = this.school_Name;
-          this.eventNote = this.reportData[0].note;
-          this.eventDescription = this.reportData[0].description;
-        } else {
-          this.messageService.add({key: 'custom', severity:'error', summary: 'You are not participating in this game'});
-          this.noParticipateEvent = true;
-          this.isDataAvailble = false;
-        }
+        //  this.finalGameList.push(this.reportData.gameId);
+          this.finalGameList.push( {
+            'gameId':this.reportData[0].gameId,
+             'gameName': this.reportData[0].gameName
+          }
+          
+         )
+
+        }  
       } else {
         console.log('Data is blannk from service')
       }
@@ -501,9 +518,9 @@ getGameData(gameID) {
    error => {
      //this.errorAlert =true;
     });
-  } else {
-    this.isDataAvailble = false;
   }
+
+  console.log(this.finalGameList);
 }
 
 async printReport() {

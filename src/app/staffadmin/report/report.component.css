@@ -17,15 +17,29 @@ a.disabled {
 .align-heading {
     padding: 10px;
     margin: 0;
-    color: white;
-    background: #0d6efd;
+    color: #080808;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
-
+table td{
+    padding: 20px 8px!important;
+    text-align: center;
+}
+table th{
+    padding: 15px 8px!important;
+    text-align: center;
+    background-color: #32383e!important;
+}
 .align-container {
     margin-top: 0;
     padding-left: 0;
 }
-
+.align-margin-top{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 :host ::ng-deep .custom-toast .ui-toast-message {
     color: #ffffff;
     background:blue;

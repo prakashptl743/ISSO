@@ -2,43 +2,114 @@
   <div class="event-container">
       <div class="align-heading">COACH ENTRIES HERE</div>
  </div>  
-  <div class="ui-g-12 event-container align-container">
+  <div class="event-container align-container">
    
   
-    <div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
-            <label for="exampleInputEmail1">Select Year</label>
-            <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="ui-g-12 btn-nav">
+            <!-- <label for="exampleInputEmail1">Select Year</label> -->
+
+            <div>
+              <!-- <span  [ngClass]="isFirstYear ? 'active' : '' "   class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span> -->
+              <span  class="grey-btn active mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
+          </div> 
+
+            <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
           </div>
         </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group">
             <label for="exampleInputEmail1">Select Event</label>
             <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent" placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-          </div>
+           </div>
         </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
+        <div class="col-md-4">
+          <div class="form-group">
             <label for="exampleInputEmail1">Select Game</label>
             <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
           </div>
-        </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
-            <label for="exampleInputEmail1">Select Age</label>
-            <p-dropdown [disabled]="!ageReaadble"  [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
           </div>
-        </div>
-        <div class="col-md-12 pad-left-zero">
-          <div class="form-group ui-g-4 pad-zero">
-            <label for="exampleInputEmail1">Select Gender</label>
-            <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+        <div class="col-md-4"> 
+          <div class="form-group"  *ngIf="showAddbutton && eventValue!='' && gameID !=''">
+             <button (click)="showDialog()" class="red-btn click-col al-red-bt">ADD</button>
           </div>
+
         </div>
      
-    
-        <div  *ngIf="!coachDataAvailable">
+
+<p-dialog class="align-dialog" header="Add Coach" [(visible)]="display" width="775" height="400" [modal]="true" [responsive]="true"   
+[maximizable]="true" [baseZIndex]="1000">
+<form [formGroup]="studentEnroolForm" class="align-form-div row" (ngSubmit)="onSubmit()">
+        <div class="col-md-6 pad-left-zero">
+          <div class="form-group ui-g-12 pad-zero">
+            <label for="exampleInputEmail1">Select Age</label>
+            <p-dropdown [disabled]="!ageReaadble"  formControlName="ageRange"    [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+          </div>
+        </div>  
+        <div class="col-md-6 pad-left-zero">
+          <div class="form-group ui-g-12 pad-zero">
+            <label for="exampleInputEmail1">Select Gender</label>
+            <p-dropdown  [disabled]="!genderReadble"  formControlName="gender"    [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
+          </div>
+        </div>  
+        <div class="col-md-6 pad-left-zero">
+            <div class="form-group ui-g-12 pad-zero">
+              <label class="form-control-label">Coach Name</label>
+              <input #studentNameText [disabled]="stdNameReadable" type="text" [(ngModel)]="studentName" formControlName="studentName"
+                placeholder="Coach Name" class="form-control" id="inputSuccess1"  [ngClass]="{ 'is-invalid': f.studentName.touched && f.studentName.errors }">
+                <span *ngIf="f.studentName.touched && f.studentName.errors" class="invalid-feedback">
+                  <span *ngIf="f.studentName.errors.required">Coach Name is required</span>
+                </span>
+
+            </div>
+          </div>
+          <div class="col-md-6 pad-left-zero">
+            <div class="form-group ui-g-12 pad-zero">
+              <label class="form-control-label">Father's/Mother's Name</label> 
+              <input [disabled]="fatherNameReadable" type="text" [(ngModel)]="fatherName" formControlName="fatherName"
+                placeholder="Coach Father Name" class="form-control" id="inputWarning1" [ngClass]="{ 'is-invalid': f.fatherName.touched && f.fatherName.errors }">
+                <div *ngIf="f.fatherName.touched && f.fatherName.errors" class="invalid-feedback">
+                  <div *ngIf="f.fatherName.errors.required">Coach Father's/Mother's Name is required</div>
+                </div>
+            </div>
+          </div>
+
+  <input type="hidden" [(ngModel)]="studentId" formControlName="studentId" class="form-control"
+  id="inputWarning1">
+
+  <div class="col-md-6 pad-left-zero">
+    <div class="form-group ui-g-12 pad-zero">
+      <label class="form-control-label">Upload Photo</label>
+      <img *ngIf="isEdit && isValidFile" height="50" width="50" src="{{setPhotoYear}}//{{studentPhoto}}">
+      <!-- <img class="align-image" *ngIf="!isValidFile" [src]="url" > -->
+      <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control">
+      <span class="file-hint">Please upload file below 100 KB</span>
+      <div *ngIf="!isValidFile">
+          <span class="error-class">Invalid File type Please select file JPEG,PNG format only</span>
+      </div>
+      <div *ngIf="isFileBig">
+          <span class="error-class">File size too large please select image below 100 KB</span>
+      </div> 
+      <input type="hidden" [(ngModel)]="editStudentPhoto" formControlName="editStudentPhoto" class="form-control"
+      id="inputWarning1">
+    </div>
+
+  
+  </div>
+
+  <div class="form-group col-md-12 pad-bot-zero">Hii {{isButtonEnabled}}
+    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}">1111</p-button>
+    <p-button *ngIf="isEdit" [disabled]="!studentEnroolForm.valid && isFileBig && isValidFile"   label="{{submitButtonLabel}}">asfffffasf</p-button>
+    <button style="margin-left: 20px;" class="second-btn" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
+ 
+  </div>
+</form>
+  
+</p-dialog>
+
+
+        <!-- <div  *ngIf="!coachDataAvailable">
             <form [formGroup]="studentEnroolForm" class="align-form-div" (ngSubmit)="onSubmit()">
             
               <div class="form-group col-md-12 pad-bot-zero">
@@ -92,50 +163,51 @@
 
               </div>
             </form>
-        </div>
+        </div> -->
 
   </div>
 
 
-  <div class="container-fluid table-pad" *ngIf="coachListArray.length > 0">
+  <div class="table-pad" *ngIf="coachListArray.length > 0">
 
-    <div class="">
+    <div class="" >
       <div class="table-responsive">
 
 
-        <table class="table table-bordered">
+        <table class="table">
           <thead class="table-color">
             <tr>
               <th scope="col">Sr. No </th>
+              <th scope="col">Photo</th>
               <th scope="col">Coach Name </th>
               <th scope="col">Father's/Mother's Name</th>
               <th scope="col">Age Range</th>
               <th scope="col">Enrolled Date</th>
-              <th scope="col">Photo</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let coachList of coachListArray; let i = index;">
-              <td>{{i+1}}</td>
-              <td>{{coachList.coachName}}</td>
-              <td>{{coachList.coachFatherName}}</td>
-              <td>{{coachList.ageRange}}</td>
-              <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
+              <td class="text-center">{{i+1}}</td>
               <td class="align-photo" *ngIf="coachList.photo!=''">
                
-                <img height="50" width="50" src="{{setPhotoYear}}/{{coachList.coachPhoto}}" height="60"
+                <img height="40" width="40" src="{{setPhotoYear}}/{{coachList.coachPhoto}}"
                 alt="banner" />
                 <!-- <img height="50" width="50" src="http://issoindia.com/uploads/studentphoto/{{photoUrl}}" height="60"
                   alt="banner" /> -->
               </td>
               <td *ngIf="coachList.photo ==''">
-                <img height="50" width="50" src="../../assets/images/general/defaulUser.png" height="60" alt="banner" />
+                <img height="40" width="40" src="../../assets/images/general/defaulUser.png" alt="banner" />
               </td>
+              <td>{{coachList.coachName}}</td>
+              <td>{{coachList.coachFatherName}}</td>
+              <td class="text-center">{{coachList.ageRange}}</td>
+              <td>{{coachList.createdDate | date: 'MMM d, y'}}</td>
+              
+             
               <td class="action">
-                  <a href="javascript: void(0)"  (click)="editStudent(i)" ><img src="assets/images/web/edit.svg"></a>
-                  <a href="javascript: void(0)" (click)="deleteStudentData($event, i)"><img src="assets/images/web/delete.svg"></a>
-
+                  <a class="edit-font-icon" href="javascript: void(0)"  (click)="editStudent(i)" ><i class="fas fa-edit"></i></a>
+                  <a class="delete-font-icon" href="javascript: void(0)" (click)="deleteStudentData($event, i)"><i class="fas fa-trash"></i></a>
               </td>
           </tr>
           </tbody>

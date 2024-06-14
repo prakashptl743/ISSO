@@ -49,6 +49,8 @@ export class StudentEnrollmentComponent implements OnInit {
   gameForm: FormGroup;
   ageRange;
   standardClass;
+  tShirtSize;
+  curriculum;
   contactNo;
   //gameCapacityArray= any;
   newGameArray=[];
@@ -71,6 +73,8 @@ export class StudentEnrollmentComponent implements OnInit {
   subGameNames: any[];
   datOfBirth: string;
   selectedClass: string;
+  selectedtShirtSize:string;
+  selectedCurriculm:string;
   selectedSubGame: string;
   selectedProfile: string;
   studentId: string;
@@ -244,39 +248,7 @@ export class StudentEnrollmentComponent implements OnInit {
     })
   }
 
-  // studentsOld: any[] = [
-  //   { id: 12, name : 'Jakov', age: 25 }, 
-  //   { id: 14, name : 'Marko', age: 24 }
-  // ];
-
-  // students: any[] = [
-  //   { id: 77, name : 'Jakov', age: 11 }, 
-  //   { id: 88, name : 'Marko', age: 22 }
-  // ];
-
-  // updateAge() {
-
-  //   let studentsMap = {
-  //     get(id): any {
-  //       return this[id];
-  //     },
-  //     set(student) {
-  //       this[student.id] = student;
-  //     }
-  //   };
-
-  //   this.students.forEach((student) => {
-  //     studentsMap.set(student);
-  //   });
  
-  //   this.studentsOld.forEach((student) => {
-  //     if(studentsMap.get(student.id) && (student.id === studentsMap.get(student.id).id)) {
-  //       student.age = studentsMap.get(student.id).age;
-  //     }
-  //   });
-
-  //   this.updated = true;
-  // };
 
 
   initialiseForm() {
@@ -293,16 +265,20 @@ export class StudentEnrollmentComponent implements OnInit {
   }
   get f() { return this.studentEnroolForm.controls; }
   initialForm() {
+    console.log('im called')
     this.url = '';
     this.isValidFile = true;
     this.ageRange = this.issoUtilService.setAge();
     this.standardClass = this.issoUtilService.setClass();
+    this.tShirtSize = this.issoUtilService.setTshirtSize();
     this.studentEnroolForm = this.fb.group({
       schoolId:[''],
       studentId:[''],
       editStudentPhoto:[],
       studentName: ['', Validators.required],
       fatherName: ['', Validators.required],
+      tShirtSize:['', Validators.required],
+      curriculum:['', Validators.required],
      // dateOfBirth: ['', [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
 
       dateOfBirth: ['', Validators.required],
@@ -317,7 +293,8 @@ export class StudentEnrollmentComponent implements OnInit {
       subGameID: [''],
       subGameNames:[''],
       eventId: [''],
-      schoolName: ['']
+      schoolName: [''],
+     
     }); 
     this.submitButtonLabel = "Submit"
 }
@@ -338,12 +315,7 @@ onFileSelected(event) {
     } else {
        this.isMoreDot = false;
     }
- 
-   
-  //  var removeSpace = newName.replace(/\s/g, "");
-  //  var ext = (event.target.files[0].name).split('.').pop(); 
-  //  this.fileName= Math.floor((Math.random() * 1000000000) + 1);
-  //  this.fullFilename= removeSpace+this.fileName+'.'+ext;
+  
 
    var removeSpace = newName.replace(/\s/g, "");
    var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
@@ -361,7 +333,7 @@ onFileSelected(event) {
    const profile = event.target.files[0];
    const fileType = profile.type
  
-   if ((fileType == 'image/png' || fileType == 'image/jpeg' || fileType == 'image/PNG' || fileType == 'image/JPG' || fileType == 'image/JPG') && !this.isMoreDot) {
+   if ((ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) && !this.isMoreDot) {
      this.isValidFile = true;
    } else {
      this.isValidFile = false;
@@ -433,33 +405,18 @@ loadGameData(eventId) {
 }
 
 goBack() {
- //  /staffadmin/event-dashboard
-  // this.showStudentEnrollForm = false;
-  // this.studentListArray.length = 0;
-  // console.log(this.studentListArray);
-  // this.isStudentListShow = false;
-
+  this.studentEnroolForm.reset();
   this.router.navigateByUrl('/staffadmin/event-dashboard');
 }
 
 getAgeCapacityForGame(gameData: any) {
-  
-
-  //  this.newGameArray = gameData[0].gameId
-  //  this.gameIdArray = gameData[0].gameId.split(',');
-  //  let test= "\'"+gameData[0].gameId +"\'";
-  //  this.gameIdArray = test.split(',');
-  //  console.log('Hello gameIdArray===>'+this.gameIdArray);
-  
+ 
     gameData.forEach(element => {
       this.gameIdArray.push(
          Number(element.gameId)
       );
     })
-    // for(let i=0;i= gameData.length-1;i++) {
-    //   console.log(gameData[i].id);
-    //  // this.newGameArray.push(gameData[i]['gameId']);
-    // }
+ 
      
     console.log('NEW====>'+JSON.stringify(this.gameIdArray));
     let gameobj = { ggg:[] };
@@ -490,15 +447,7 @@ getAgeCapacityForGame(gameData: any) {
       });
       
 }
-// arrangeSubGame(gameData:any) {
-//   for(let i=0;i<gameData.length;i++) {
-//     if(gameData[0][i].subgameId !== 'null') {
-//        if(gameData[0][i].eleven_boys > 0) {
-//          console.log('Im eleven boys');
-//        } 
-//      }
-//   } 
-// }
+ 
 showDialog(eventData: any) {
  // this.initialForm();
   this.eventId = eventData.eventId;
@@ -570,34 +519,55 @@ testfun(eventData: any,capacity: any, minCapcity, gender:any, ageRange) {
       this.gender = '2';
       this.setCapacity = capacity;
     }
-    if(this.eventDayDiff >= 15) {
-      this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
-        response => {
-          if(response !== "false") {
-            this.bookingId = response;
-            this.showStudentEnrollForm = true;
-            this.display = false;
-            this.testBo= true;
-            this.gameType = eventData.gameType;
-            this.showGoBack = false 
-            this.showSubGameList = false;
-            this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
-            this.yearRange = this.issoUtilService.setYearRange(ageRange);
-            this.minCapcity = minCapcity;
-            this.loadStudentData();
-            this.makeEmptyForm();
-          } else {
-            this.display = true;
-            this.showStudentEnrollForm = false;
-          }
-        },
-        error => this.error = error
-      );
+ 
+      if(eventData.gameType =="Team") {   
+        if(this.eventDayDiff >= 15) {
+          this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
+            response => {
+              if(response !== "false") {
+                this.bookingId = response;
+                this.showStudentEnrollForm = true;
+                this.display = false;
+                this.testBo= true;
+                this.gameType = eventData.gameType;
+                this.showGoBack = false 
+                this.showSubGameList = false;
+                this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
+                this.yearRange = this.issoUtilService.setYearRange(ageRange);
+                this.minCapcity = minCapcity;
+                this.loadStudentData();
+                this.makeEmptyForm();
+              } else {
+                this.display = true;
+                this.showStudentEnrollForm = false;
+              }
+            },
+            error => this.error = error
+          );
+      } else {
+          this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
+            response => {
+              if(response !== "false") {
+                this.bookingId = response;
+                this.showStudentEnrollForm = true;
+                this.display = false;
+                this.testBo= true;
+                this.gameType = eventData.gameType;
+                this.showGoBack = false 
+                this.showSubGameList = false;
+                this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
+                this.yearRange = this.issoUtilService.setYearRange(ageRange);
+                this.minCapcity = minCapcity;
+                this.loadStudentData();
+                this.makeEmptyForm();
+              } else {
+                this.messageService.add({key: 'custom', severity:'error',life:3000, summary: 'Event is not booked '});
+              }
+            },
+            error => this.error = error
+          );
+        }
   } else {
-    this.studentEnrollmentService.getEventBookData(this.eventId,this.schoolId,eventData.gameId,this.ageRange,this.gender).subscribe(
-      response => {
-        if(response !== "false") {
-          this.bookingId = response;
           this.showStudentEnrollForm = true;
           this.display = false;
           this.testBo= true;
@@ -609,24 +579,8 @@ testfun(eventData: any,capacity: any, minCapcity, gender:any, ageRange) {
           this.minCapcity = minCapcity;
           this.loadStudentData();
           this.makeEmptyForm();
-        } else {
-          this.messageService.add({key: 'custom', severity:'error',life:3000, summary: 'Event is not booked '});
-        }
-      },
-      error => this.error = error
-    );
-
-
-
-
-   
   }
-
  
-
-  
-
-
 }
 enrollStudent(eventData: any,capacity: any, gender:any, ageRange) {
     this.showGoBack = false 
@@ -685,7 +639,7 @@ setSubGame(gameName,gameType,gameId,ageRange, gender,category) {
  // this.url = '';
   this.gameType = gameType;
   this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
-  console.log('Im min Date==>'+this.minDate)
+  console.log('HELLO Im min Date==>'+this.minDate)
   this.yearRange = this.issoUtilService.setYearRange(ageRange);
   this.makeEmptyForm()
   this.addClass = false;
@@ -719,32 +673,7 @@ setSubGame(gameName,gameType,gameId,ageRange, gender,category) {
         });  
           
         this.subGameResponseData.forEach(element => {
-
-          // if (element.eleven_boys > 0) {
-          //   this.ageCategory = element.eleven_boys;
-          // } else if(element.eleven_girls > 0) {
-          //   this.ageCategory = element.eleven_girls;
-          // } else if(element.fourteen_boys > 0) {
-          //   this.ageCategory = element.fourteen_boys;
-          // }  else if(element.fourteen_girls > 0) {
-          //   this.ageCategory = element.fourteen_girls;
-          // } else if(element.seventeen_boys > 0) {
-          //   this.ageCategory = element.seventeen_boys;
-          // }  else if(element.seventeen_girls > 0) {
-          //   this.ageCategory = element.seventeen_girls;
-          // }  else if(element.ninteen_boys > 0) {
-          //   this.ageCategory = element.ninteen_boys;
-          // }  else if(element.ninteen_girls > 0) {
-          //   this.ageCategory = element.ninteen_girls;
-          // }
-
-          // if (this.ageCategory > 0) {
-          //   const gameIdAndName = element.id +','+ element.subGameName +','+ this.ageCategory +','+ element.gameType;
-          //   this.subGameoptions.push({
-          //     label: element.subGameName,
-          //     value:gameIdAndName
-          //   });
-          // }
+ 
           if (element.gameType === 'Team' && element.eleven_boys > 0) { 
             this.mapSubGameTeam.push({
               'subGameId':element.id,
@@ -1091,22 +1020,24 @@ loadStudentData() {
               });
             }
             console.log('HELLOO++++>'+JSON.stringify(this.newSubGameCapacity));
+            console.log('MAP SUBGAME-->'+JSON.stringify(this.mapSubGameTeam));
             let  capaCityCount = 0;
             if (this.mapSubGameTeam.length > 0 ) {
               for(let i=0;i <=this.mapSubGameTeam.length - 1;i++) {
+                if(this.mapSubGameTeam[i]['subGameType'] == "Team") {
                 console.log('I value===>'+i);
-                
                 let  remainingCapacity = 0;
                 capaCityCount = this.newSubGameCapacity.filter((obj) => obj.subGameId === this.mapSubGameTeam[i]['subGameId']).length;
+               
                 console.log('CAPCITY COUNT===>'+capaCityCount);
-                //if (capaCityCount < this.mapSubGameTeam[i]['minCapacity'] ) {
-                   remainingCapacity = this.mapSubGameTeam[i]['subGameCapacity'] - capaCityCount;
+                  remainingCapacity = this.mapSubGameTeam[i]['minCapacity'] - capaCityCount;
                   this.incompleteTeamSubGame.push({
                     'subGameId':this.mapSubGameTeam[i]['subGameId'],
                     'subGameName': this.mapSubGameTeam[i]['subGameName'],
-                    'remainingCapacity': remainingCapacity
+                    'remainingCapacity': remainingCapacity,
+                    'minCapacity':this.mapSubGameTeam[i]['minCapacity']
                   })
-                //}
+                }
               }
              }
              console.log('incompleteTeamSubGame===>',JSON.stringify(this.incompleteTeamSubGame))
@@ -1166,7 +1097,9 @@ editStudent(i: number): void {
    fatherName: this.studentListArray[i].fatherName,
    dateOfBirth: new Date(this.studentListArray[i].dateOfBirth),
    standardClass : this.studentListArray[i].standardClass,
-    contactNo : this.studentListArray[i].contactNo,
+   tShirtSize: this.studentListArray[i].tShirtSize,
+   curriculum: this.studentListArray[i].curruclm,
+   contactNo : this.studentListArray[i].contactNo,
    
    // profile :this.studentListArray[i].photo,
    aadharNumber: this.studentListArray[i].aadharNumber,
@@ -1298,51 +1231,8 @@ toggleVisibility(e,Idtype: string){
    } else {
      this.showNRI = false;
    }
-  // if (this.marked ) {
-  //   if(this.isEdit && this.aadhar) {
-  //     this.showNRI = true;
-  //    // this.showAadharTextBox = false;
-  //   } else if(this.isEdit && this.passport !=='') {
-  //     this.showNRI = false;
-  //   }
-  // } else {
-  //   if(this.isEdit && this.aadhar) {
-  //     this.showNRI = false;
-  //    // this.showAadharTextBox = false;
-  //   } else if(this.isEdit && this.passport !=='') {
-  //     this.showNRI = true;
-  //   }
-  // }
-  // if (this.marked && !this.isEdit) { 
-  //   this.showNRI = true;
-  // } else   {
-  //   this.showNRI = false;
-  // }
-
-
-
-  // if (this.marked && this.isEdit && this.aadhar)  { 
-  //   this.showNRI = true;
-  // }
-  // if (this.marked && this.isEdit && this.passport !=='')  { 
-  //   this.showNRI = false;
-  // }
-  // if (!this.marked && this.isEdit && this.passport !=='')  { 
-  //   this.showNRI = false;
-  // }
-
-
-  // if(this.marked ) {
-  //   this.showNRI = true;
-  //   this.showAadharTextBox = false;
-  //   this.aadhar= '';
-  // } else {
-  //   this.passport = '';
-  //   this.showAadharTextBox = true;
-  //   this.showNRI = false;
-  // }
-  console.log('aadharNumber==>'+this.aadharNumber)
-  console.log('passport==>'+this.passport)
+ 
+ 
 }
 ngAfterViewChecked(): void {
   this.changeDetectorRef.detectChanges();
@@ -1377,6 +1267,8 @@ onSubmit() {
   formData.append('fatherName', this.studentEnroolForm.get('fatherName').value);
   formData.append('dateOfBirth', formatted_end_date);
   formData.append('standardClass', this.studentEnroolForm.get('standardClass').value);
+  formData.append('tShirtSize', this.studentEnroolForm.get('tShirtSize').value);
+  formData.append('curriculum', this.studentEnroolForm.get('curriculum').value);
   formData.append('contactNo', this.studentEnroolForm.get('contactNo').value);
   // if(this.studentEnroolForm.get('profile').value == 'C:\\fakepath\\'+this.studentPhoto || this.studentEnroolForm.get('profile').value == this.studentPhoto) {
   if(this.studentEnroolForm.get('profile').value == '' || this.studentEnroolForm.get('profile').value == 'C:\\fakepath\\'+this.studentPhoto || this.studentEnroolForm.get('profile').value == this.studentPhoto) {
@@ -1419,6 +1311,7 @@ onSubmit() {
                this.studentEnroolForm.reset();
                this.loadStudentData();
                this.selectedSubGame1 = '';
+               this.subGameButton = false;
                
              }
          },
@@ -1436,6 +1329,7 @@ onSubmit() {
             this.studentEnroolForm.reset();
             this.loadStudentData();
             this.selectedSubGame1 = '';
+            this.subGameButton = false;
             
           }
       },
@@ -1464,6 +1358,8 @@ onSubmit() {
     this.isEdit = false;
     this.studentName ='';
     this.fatherName ='';
+    this.selectedCurriculm =''
+    this.curriculum = '';
     this.datOfBirth ='';
     this.selectedClass ='';
     this.contactNo = '';

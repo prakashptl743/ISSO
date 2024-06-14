@@ -5,6 +5,9 @@
 .align-text {
     padding: 10px 10px 10px 10px;
 }
+.align-ev-name {
+    text-align: center;
+}
  .pad-bottom-none {
     padding-bottom: 0;
  }
@@ -41,7 +44,7 @@
 }
 .search-text { 
     width: 100%;
-    margin: 0 30px 12px 91px;
+    margin: 0 30px 12px 0;
     padding: 7px;
     margin-left: 0px;
 }
@@ -76,9 +79,9 @@
     width: 50% !important;
     height: 50%;
 } */
-:host ::ng-deep .ui-dataview{
+/* :host ::ng-deep .ui-dataview{
     box-shadow: 0px 0px 8px #0000004D;
-}
+} */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;

@@ -5,7 +5,7 @@
      </div>
   
      <div class="ui-g-12 ui-md-5">
-        <p-dropdown [disabled]="!globalSchoolReadble" [options]="globalSchoolOption" formControlName="globalSelectedSchool" [(ngModel)]="globalSelectedSchool"  placeholder="Select School"  [style]="{'min-width':'140px'}"></p-dropdown>
+        <p-dropdown [disabled]="!globalSchoolReadble" [options]="globalSchoolOption" formControlName="globalSelectedSchool" [(ngModel)]="globalSelectedSchool"  (onChange)="onLoadSchool($event)"  placeholder="Select School"  [style]="{'min-width':'140px'}"></p-dropdown>
     </div>
     <div class="ui-g-12  col-md-5">
         <input class="form-control" [(ngModel)]="search_text" placeholder="Enter student ID,Name or Aadhar number" formControlName="search_text" name="studentName"  type="text" required>
@@ -17,8 +17,7 @@
     </form> 
 </div>
 
-   
- 
+
 
 <div *ngIf="noSearchData">
     <div class="alert alert-danger" role="alert">
@@ -110,6 +109,7 @@
    <div class="ui-g-12">
           <button class="btn btn-primary float-right" *ngIf="display" (click)="hideExtraView()">Back</button>
     </div>
+    
      <div class="ui-g-12 ui-md-2">
         <p-dropdown  [options]="yearOptions" [(ngModel)]="yearvalue" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
      </div>
@@ -150,7 +150,7 @@
                     </span>
                     <!-- <p-dropdown [disabled]="!showGameFilter" [(ngModel)]="filter_game" [options]="statuses"  placeholder="Select Game" (onChange)="dt.filter($event.value, 'gameId', 'contains');setFiletrSubGame($event.value);" [showClear]="true"  [style]="{'min-width':'140px'}"></p-dropdown> -->
 
-                    <p-dropdown [disabled]="!showGameFilter"  [(ngModel)]="filter_game"  [options]="statuses" (onChange)="dt.filter($event.value, 'gameId', 'contains');setFiletrSubGame($event.value);" styleClass="p-column-filter">
+                    <p-dropdown [disabled]="!showGameFilter"  [(ngModel)]="filter_game"  [options]="statuses" (onChange)="dt.filter($event.value, 'gameId', 'contains');setFiletrSubGame($event.value);checkAge($event.value);" styleClass="p-column-filter">
                        <ng-template let-option pTemplate="item">
                           <span [class]="">&#123;&#123;option.label&#125;&#125;</span>
                        </ng-template>
@@ -160,7 +160,7 @@
                           <span [class]="">&#123;&#123;option.label&#125;&#125;</span>
                       </ng-template>
                     </p-dropdown> 
-                    <p-dropdown [disabled]="!showAgeFilter"  [(ngModel)]="filter_age"  [options]="ageOptions" (onChange)="dt.filter($event.value, 'ageRange', 'contains')" styleClass="p-column-filter" placeholder="Select Age">
+                    <p-dropdown [disabled]="!showAgeFilter"  [(ngModel)]="filter_age"  [options]="ageOptions" (onChange)="dt.filter($event.value, 'ageRange', 'contains');setGender();" styleClass="p-column-filter" placeholder="Select Age">
                       <ng-template let-option pTemplate="item">
                           <span [class]="">&#123;&#123;option.label&#125;&#125;</span>
                       </ng-template>
@@ -285,24 +285,46 @@
  
     </div>
     <div class="form-row">
+
+
+      <div class="form-group col-md-6" *ngIf="!isEditStudent">
+        <label for="inputEmail4">Select Game</label>
+        <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      </div>
+      <div class="form-group col-md-6" *ngIf="isEditStudent">
+        <label for="inputEmail4">Game Name</label>
+        <div><span>{{gameNameForEditStudent}}</span></div>
+      </div>
+
+
       <div class="form-group col-md-6"   *ngIf="!isEditStudent">
         <label for="inputEmail4">Select Age</label>
         <p-dropdown  [disabled]="!ageReadble" formControlName="studentAge" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
       </div>
-      <div class="form-group col-md-6" *ngIf="isEditStudent">
+
+      <div class="form-group col-md-6"   *ngIf="isEditStudent">
+        <label for="inputEmail4">Select Age</label>
+        <p-dropdown  formControlName="studentAge" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="changeAge($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
+      </div>
+
+      <!-- <div class="form-group col-md-6" *ngIf="isEditStudent">
         <label for="inputEmail4">Age Range</label>
         <div><span>{{ageValue}}</span></div>    
-      </div>
-      <div class="form-group col-md-6" *ngIf="!isEditStudent">
-        <label for="inputPassword4">Select Gender</label>
-        <p-dropdown  [disabled]="!genderReadble"  formControlName="studentGender" [(ngModel)]="selectedGender"  [options]="genderOptions" (onChange)="loadGenerChange()"   placeholder="Select Gender"  [style]="{'min-width':'20px'}"></p-dropdown>
-      </div>
-      <div class="form-group col-md-6"  *ngIf="isEditStudent">
-        <label for="inputPassword4">Gender</label>
-        <div><span>{{genderValue}}</span></div>
-       </div>
+      </div> -->
+
+    
   </div>
    <div class="form-row">
+
+    <div class="form-group col-md-6" *ngIf="!isEditStudent">
+      <label for="inputPassword4">Select Gender</label>
+      <p-dropdown  [disabled]="!genderReadble"  formControlName="studentGender" [(ngModel)]="selectedGender"  [options]="genderOptions" (onChange)="loadGenerChange()"   placeholder="Select Gender"  [style]="{'min-width':'20px'}"></p-dropdown>
+    </div>
+    <div class="form-group col-md-6"  *ngIf="isEditStudent">
+      <label for="inputPassword4">Gender</label>
+      <div><span>{{genderValue}}</span></div>
+     </div>
+
         <div class="form-group col-md-6" *ngIf="!isEditStudent">
           <label for="inputEmail4">Select School</label>
           <p-autoComplete [disabled]="!schoolEnter" [(ngModel)]="schoolName" [style]="{'width':'100%'}"  class="p-autocomplete"   formControlName="schoolName"  [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
@@ -319,17 +341,7 @@
           <!-- <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
         </div>
 
-        <div class="form-group col-md-6" *ngIf="!isEditStudent">
-          <label for="inputEmail4">Select Game</label>
-      
-
-
-          <p-dropdown [disabled]="!gameReadble" formControlName="studentGame" [(ngModel)]="selectedGame" [options]="gameOptions"  placeholder="Select Game" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-        </div>
-        <div class="form-group col-md-6" *ngIf="isEditStudent">
-          <label for="inputEmail4">Game Name</label>
-          <div><span>{{gameNameForEditStudent}}</span></div>
-        </div>
+     
     
     </div>
     <div class="form-row" *ngIf="isShowSubGame">
@@ -383,11 +395,15 @@
        
         <div class="form-group col-md-6">
           <label for="inputEmail4">Date of Birth</label>
-          <p-calendar [defaultDate]="minDate"  [showIcon]="true"  [(ngModel)]="dateOf_Birth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
-          <!-- <p-calendar [defaultDate]="minDate"  [showIcon]="true"  (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar> -->
+          <!-- <p-calendar    [showIcon]="true" onkeydown="return false;"  [(ngModel)]="dateOf_Birth" formControlName="dateOfBirth"    dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar> -->
 
-           <!-- <p-calendar formControlName="dateOfBirth"  [(ngModel)]="dateOf_Birth"  dateFormat="dd/mm/yy" showAnim="slideDown" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar> -->
-        </div>
+      
+            <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;"  [(ngModel)]="dateOf_Birth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar> 
+          
+           <!--     5 Jan 2023
+           <p-calendar [defaultDate]="minDate"  [showIcon]="true"  (onBlur)="checkDateofBirth($event)" (change)="checkDateofBirth($event)" [ngClass]="{ 'is-invalid': f.dateOfBirth.touched && f.dateOfBirth.errors }"  [(ngModel)]="datOfBirth" formControlName="dateOfBirth"  [minDate]='minDate' dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar> -->
+
+         </div>
         <div class="form-group col-md-6">
           <label for="inputEmail4">Admission Number</label>
           <input class="form-control" [(ngModel)]="admission_Number" formControlName="admissionNumber" name="admissionNumber"  type="text" required>
@@ -403,7 +419,7 @@
           <label>
              <input type="checkbox" data-md-icheck (change)="toggleVisibility($event,'aadhar')" #checkboxes>
              <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-             IsNRI
+             Passport
            </label>
          <label class="form-control-label align-aadhar">Aadhar Number</label>
          <input class="form-control" [(ngModel)]="aadharNumber" placeholder="Aadhar Number" formControlName="aadharNumber" name="aadharNumber"  type="text" required>
@@ -414,7 +430,7 @@
            <label>
              <input type="checkbox" [checked]="showNRI" (change)="toggleVisibility($event,'passport')" #checkboxes>
              <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-             IsNRI
+             Passport
            </label>
            <label class="form-control-label">Passport</label>
            <input type="text" [(ngModel)]="passport" placeholder="Passport" formControlName="passPort"
@@ -422,6 +438,25 @@
          </div>
        </div>
     </div>
+
+    <div class="form-row">
+       
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">T Shirt Size</label>
+        <p-dropdown [(ngModel)]="selectedtShirtSize" placeholder="Please Select" [options]="tShirtSize" size="30"
+        formControlName="tShirtSize"></p-dropdown>
+       </div>
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Curriculm</label>
+        <input class="form-control" [(ngModel)]="curriculum" formControlName="curriculum" name="curriculum"  type="text">
+      </div>
+  </div>
+
+
+
+
+
+
     <div class="form-row">
    
         <div class="form-group col-md-6">

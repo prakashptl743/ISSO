@@ -2,6 +2,12 @@
     color: white;
     padding-right: 10px;
 }
+.logged-logo{
+    width: 30px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
 .pad-right{
     padding-right: 10px;
 }
@@ -14,12 +20,18 @@
 .menu-colour {
     color: #dfdfdf;
 }
+.school-header{
+    padding-top: 5px;
+}
 .align-logo {
-    padding-left: 33px;
-    height: 100px;
+    height: 110px;
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    left: 60px;
 }
 .align-content {
-    margin-top: -84px;
+    margin-top: 15px;
 }
 .school-name {
     border-bottom: 1px solid beige;
@@ -28,8 +40,11 @@
   color: white !important;
 }
 header.isso-header {
-    height: 80px;
-    background: #005b9f;
+    float: left;
+    width: 100%;
+    background: #485E88;
+    padding: 10px;
+    color: #fff;
     box-shadow: 3px 1px 6px 1px #dfdfdf;
     margin-bottom: 30px;
     position: fixed;
@@ -38,3 +53,51 @@ header.isso-header {
 }
 
 .isso-menu{margin-top: 42px !important;padding-top: 0;}
+
+.footer{
+    background: #333437;
+    color: #fff;
+    padding: 10px;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.f-logo{
+    margin: 0 auto;width: 55%;
+}
+@media (min-width: 801px) and (max-width: 1180px) {
+    .align-content {
+        margin-top: 40px;
+    }
+    .f-logo {
+        margin: 0 auto 0 25%;
+        width: 65%;
+    }
+}
+@media (min-width: 768px) and (max-width: 1023px){
+    .align-content {
+        margin-top: 45px;
+    }
+    .f-logo {
+        margin: 0 auto 0 29%;
+        width: 65%;
+    }
+}
+@media (max-width: 767px) {
+    .align-logo {
+        height: 50px;
+        position: absolute;
+        top: 0;
+        z-index: 99;
+        left: 20px;
+    }
+    .usertitle{
+        font-size: 11px;
+    }
+    .align-content {
+        margin-top: 100px;
+    }
+    .f-logo{
+        margin: 0 auto;width: 90%;
+    }
+}

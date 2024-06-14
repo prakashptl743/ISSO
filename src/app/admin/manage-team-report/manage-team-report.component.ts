@@ -63,6 +63,7 @@ export class ManageTeamReport implements OnInit {
   selectedGender: string;
   schoolEnter: boolean;
   selectedSchool: string;
+  ageArray: string[];
   constructor(
     private confirmation: ConfirmationService,
     private eventService: EventService,
@@ -211,10 +212,41 @@ onEventChange(event) {
     this.gameVal = event.value;
     this.selectedSchool = '';
     if(event.value!=='') {
-      this.ageReadble = true;
-      this.selectedAge = '';
-      this.selectedGender = '';
-      this.genderReadble = false;
+    this.meritService.setAgeMapForMerit(this.eventValue,this.gameVal).subscribe(
+      response => {
+        this.ageReadble = true;
+        this.selectedAge = '';
+        this.selectedGender = '';
+        this.genderReadble = false;
+        if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
+        const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+        this.ageArray= ageList.split(" ");
+        const x = Array.from(new Set(ageList.split(" "))).toString();
+        
+        var myarray = x.split(',');
+        let ageArrayLength =  myarray.length;
+    
+        this.ageOptions =[];
+        this.ageOptions.push({
+          label: "Please Select",
+          value: ''
+        });
+
+      for(var i = 0; i < ageArrayLength; i++) {
+        if(myarray[i] !==''){
+        this.ageOptions.push({
+          label: myarray[i],
+          value: myarray[i]
+        });
+      }
+      }
+    }
+ 
+      } ,
+      error => {
+        //this.errorAlert =true;
+     });
+
     } else {
       this.ageReadble = false;
     }

@@ -22,7 +22,7 @@
             </p-footer>
            
 </p-dialog>
-		<div class="container-login100" style="background-image: url('assets/images/web/first_Image.jpg');">
+		<div class="container-login100" style="background-image: url('assets/images/table-tennis.png')">
 			<div class="wrap-login100">
                    <!-- <p-autoComplete [(ngModel)]="schoolName"   [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
                         placeholder="Enter school Name"  [size]="100" emptyMessage = "School Not found" [minLength]="1" (onSelect)="onPageSelect($event)">
@@ -35,20 +35,20 @@
                             </div>
                         </ng-template>
                     </p-autoComplete> -->
-				<form [formGroup]="loginForm"  (ngSubmit)="onSubmit()" class="login100-form validate-form">
-				     
-					<span class="login100-form-logo">
+                    <span class="login100-form-logo">
 					    <img src="assets/images/web/logo_retina.png">
 						 
 					</span>
 
-					<span class="login100-form-title p-b-34 p-t-27">
-						Log in
-					</span>
+					
+				<form [formGroup]="loginForm"  (ngSubmit)="onSubmit()" class="login100-form validate-form">
+				     
+					
 
 					 
 
                     <div class="form-group">
+                        <label class="usernameLbl">User / School Login</label>
                         <!-- <input type="text" formControlName="username"   class="form-control text-align" placeholder="Username" required> -->
                         <p-autoComplete [(ngModel)]="schoolName" formControlName="username"   [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
                         placeholder="Enter school Name"  [size]="100" emptyMessage = "School Not found" [minLength]="1" (onBlur)="checkuserName($event)" (onSelect)="onPageSelect($event)">
@@ -69,7 +69,7 @@
                       
                     <div class="form-group">
                      
-
+                        <label>Password</label>
                         <input type="password" formControlName="password"   class="form-control text-align" placeholder="Password" required>
                         <div *ngIf="password.invalid && (password.dirty || password.touched)" class="handle-error">
                             <div *ngIf="password.errors">
@@ -83,12 +83,12 @@
                           </div>
                     </div>
                     <span  class="align-condition" (click)="showDialog(event)">Terms and Conditions</span>
-					<div class="contact100-form-checkbox">
-					<!--	<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+					<!-- <div class="contact100-form-checkbox">
+						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 						<label class="label-checkbox100" for="ckb1">
-							Remember me
-						</label>  -->
-					</div>  
+							Accept Terms & Conditions
+						</label> 
+					</div>   -->
                    
 					<div class="container-login100-form-btn">
 						<button type="submit" [disabled]="!loginForm.valid"  class="login100-form-btn">
@@ -96,11 +96,12 @@
 						</button>
 					</div>
 
-					<!--<div class="text-center p-t-90">
-						<a class="txt1" href="#">
-							Forgot Password?
+					<div class="text-center p-t-90">
+                        <p class="new-user">I am new User</p>
+						<a class="txt1" target="_blank" href="https://issoindia.com/isso/#/school-registration">
+							Register
 						</a>
-					</div> -->
+					</div>
 				</form>
 			</div>
 		</div>

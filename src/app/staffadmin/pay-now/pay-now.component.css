@@ -18,7 +18,10 @@ a.disabled {
     pointer-events: none;
     cursor: default;
 }
-
+.pay-button {
+    margin-left: 23px;
+    margin-bottom: 5px;
+} 
 .pad-zero {
     padding-bottom: 0;
 } 
@@ -34,13 +37,14 @@ a.disabled {
 .align-heading {
     padding: 10px;
     margin: 0;
-    color: white;
+    color: #080808;
     text-align: center;
-    background: #0d6efd;
     border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 .align-container {
-    margin-top: 30px;
+    margin-top: 0px;
 }
 :host ::ng-deep .custom-toast .ui-toast-message {
     color: #ffffff;
@@ -168,4 +172,10 @@ i {
     font-size: 2em;
     top: 11px;
     text-decoration: none;
+}
+.payment-text-box {
+    width: 32%;
+}
+.align-payment-box {
+   padding-left: 15px; 
 }

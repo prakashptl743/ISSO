@@ -85,8 +85,15 @@ loadStudentData(studentInfo){
 
 }
 
+// loadCoachData(coachInfo){
+//   return this.http.post<any>(this.serverUrl + 'CoachData/getCoachDataForStaff/',coachInfo)
+//   .pipe(
+//     catchError(this.handleError)
+//   );
+ 
+// }
 loadCoachData(coachInfo){
-   return this.http.post<any>(this.serverUrl + 'CoachData/getCoachDataForStaff/',coachInfo)
+   return this.http.post<any>(this.serverUrl + 'CoachData/getCoachDataForStaff_New/',coachInfo)
    .pipe(
      catchError(this.handleError)
    );

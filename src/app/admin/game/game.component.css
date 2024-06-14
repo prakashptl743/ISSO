@@ -20,7 +20,7 @@
 }
 .search-text { 
     width: 100%;
-    margin: 0 30px 12px 91px;
+    margin: 0 30px 12px 0;
     padding: 7px;
     margin-left: 0px;
 }
@@ -40,7 +40,7 @@
 }
 .search-text { 
     width: 77%;
-    margin: 0 30px 12px 91px;
+    margin: 0 30px 12px 0;
     padding: 7px;
 }
 :host ::ng-deep .custom-toast .ui-toast-close-icon {
@@ -111,9 +111,7 @@ body .ui-dataview .ui-dataview-content {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-:host ::ng-deep .ui-dataview{
-    box-shadow: 0px 0px 8px #0000004D;
-}
+
 legend {  
     display: block;
     padding-left: 10px;
@@ -182,3 +180,8 @@ fieldset {
     background: #007ad9;
     color: white;
   }
+ .ev-name1 {
+    width: 85%;
+    margin-top: 0;
+    margin-bottom: 0;
+}

@@ -9,28 +9,67 @@
  
 </div> 
 <div *ngIf="isReport">
-    <div class="ui-g-12 event-container align-container">
-        <div class="ui-g-4">
-          <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+    <div class="row event-container align-container">
+        <div class="col-md-12">
+ 
+          <div class=" btn-nav">
+            <span  [ngClass]="isFirstYear ? 'active' : '' "    class="grey-btn mr10"  (click)="onyeareChange(yearOptions[0].year,'first')">{{yearOptions[0].year}}</span>
+            <span  [ngClass]="!isFirstYear ? 'active' : '' "  class="grey-btn mr10"  (click)="onyeareChange(yearOptions[1].year,'second')">{{yearOptions[1].year}}</span>
+         </div> 
+
+          <!-- <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown> -->
         </div>
-        <div class="ui-g-4">
+        <div class="col-md-4 align-margin-top">
           <p-dropdown [disabled]="!eventReadable"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
         </div>
     </div>    
-    <div class="ui-g-12 align-container">
+    <!-- <div class="ui-g-12 align-container">
       <div class="ui-g-4">
         <p-dropdown [disabled]="!gameReadble"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
         </div>
     
-    </div>      
+    </div>       -->
         
   <div class="ui-g-12" style="padding-left: 12px;">
     <!-- <button type="button"  [disabled]="!isDataAvailble" (click)="printReport()"  pButton   label="Print Report"></button> -->
-    <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a>
+    <!-- <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a> -->
     <!-- <a class="btn btn-primary"     href="http://localhost/isso-php/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a> -->
 
   </div>  
 </div>
+
+ 
+<div class="table-responsive" *ngIf="finalGameList.length >= 1">
+   <table class="table">
+    <thead class="table-color">
+      <tr>
+        <th scope="col">Sr. No </th>
+        <th scope="col">Game Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let game of finalGameList; let i = index;">
+        <td class="text-center">{{i+1}}</td>
+        <td class="align-photo">
+            {{game.gameName}}
+        </td>
+       
+        <td class="action">
+          <a class=""  href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{game.gameId}}/{{schoolId}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+        </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+    
+</div>
+
+
+
+
+
 <div *ngIf="!isReport">
   <div class="ui-g-12 event-container align-container">
       <div class="ui-g-4">

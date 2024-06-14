@@ -252,8 +252,12 @@
      </div>
     </form>
 </div>
+
 <p-dataView *ngIf="isGame && !display" #dv  paginatorPosition="bottom"  [rows]="10" [value]="GameData" class="no-padding clearBoth" filterBy="subGameName,gameType" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
     <p-header>
+        <div class="align-game-info alert alert-primary" role="alert">
+           Please select Root Game to load subgame
+          </div>
         <div class="ui-helper-clearfix">
             <div class="form-group col-md-4"> 
                 <label for="inputEmail4">Root Game Name</label>
@@ -267,14 +271,15 @@
              <button type="button" *ngIf="!display" (click)="addNewGame($event, '','add')" pButton   label="Add New SubGame"></button>
           </div>
         </div>
+     
     </p-header>
-
+  
 <ng-template let-subgame pTemplate="gridItem"  style="word-wrap: break-word;">
    
     <div style="padding:.5em" class="ui-g-12 ui-md-6">
         <div class="item-box">
-            <div class="item-header">
-                <h4>{{subgame.subGameName}}</h4>
+            <div class="item-header1">
+                <h4 class="ev-name1" title="{{subgame.subGameName}}">{{subgame.subGameName}}</h4>
                 <div class="icons-wrap">
                     <button class="glyphicon glyphicon-edit item-icons" (click)="editGame($event, subgame,'edit')">
                     </button>

@@ -13,6 +13,8 @@ import { PayNowComponent } from './pay-now/pay-now.component';
 import { CoachEntiresComponent } from './coach-entires/coach-entires.component';
 import { VolunteerDataComponent } from './volunteer-data/volunteer-data.component';
 import { CertificateInvoiceComponent } from './certificate-invoice/certificate-invoice.component';
+import { PermissionGuard } from '../services/permission.guard';
+import { Permission } from '../services/user.service';
  
 // import { PayNowComponent } from '../pay-now/pay-now.component';
 
@@ -25,17 +27,87 @@ const routes: Routes = [
       {
       path: '',
       children: [
-        { path: 'dashboard', component: StudentDashboardComponent },
-        { path: 'student-enrollment', component: StudentEnrollmentComponent },
-        { path: 'report', component: ReportComponent },
-        { path: 'certificate-invoice', component: CertificateInvoiceComponent },
-        { path: 'coach-entires', component: CoachEntiresComponent },
-        { path: 'volunteer-entires', component: VolunteerDataComponent },
-        { path: 'pay-now', component: PayNowComponent },
-        { path: 'event-dashboard', component: EventDashboardComponent },
-        { path: 'student-dashboard', component: StudentDashboardComponent },
-        { path: 'my-profile', component: StaffadminProfileComponent },
-        { path: 'test-report', component: TestReportComponent },
+        {
+          path: 'student-dashboard',
+          pathMatch: 'full',
+          component: StudentDashboardComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.StudentDashboard }
+        },  
+        {
+          path: 'student-enrollment',
+          pathMatch: 'full',
+          component: StudentEnrollmentComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.StudentEnrollment }
+        },  
+        {
+          path: 'event-dashboard',
+          pathMatch: 'full',
+          component: EventDashboardComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.EventDashboard }
+        },  
+        {
+          path: 'report',
+          pathMatch: 'full',
+          component: ReportComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.Report }
+        },  
+        {
+          path: 'certificate-invoice',
+          pathMatch: 'full',
+          component: CertificateInvoiceComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.InvoiceReceipt }
+        },  
+        {
+          path: 'coach-entires',
+          pathMatch: 'full',
+          component: CoachEntiresComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.CoachEntries }
+        },  
+        {
+          path: 'volunteer-entires',
+          pathMatch: 'full',
+          component: VolunteerDataComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.Volunteer }
+        },  
+        {
+          path: 'pay-now',
+          pathMatch: 'full',
+          component: PayNowComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.PayNow }
+        },  
+        {
+          path: 'my-profile',
+          pathMatch: 'full',
+          component: StaffadminProfileComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.Profile }
+        },  
+
+
+
+
+
+
+
+
+      //  { path: 'student-enrollment', component: StudentEnrollmentComponent },
+       // { path: 'report', component: ReportComponent },
+      //  { path: 'certificate-invoice', component: CertificateInvoiceComponent },
+        //{ path: 'coach-entires', component: CoachEntiresComponent },
+       // { path: 'volunteer-entires', component: VolunteerDataComponent },
+       // { path: 'pay-now', component: PayNowComponent },
+     //   { path: 'event-dashboard', component: EventDashboardComponent },
+      //  { path: 'student-dashboard', component: StudentDashboardComponent },
+        // { path: 'my-profile', component: StaffadminProfileComponent },
+       // { path: 'test-report', component: TestReportComponent },
       ],
     }
   ]

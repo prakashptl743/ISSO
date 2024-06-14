@@ -21,7 +21,21 @@ import { DatePipe } from '@angular/common';
   providers: [MessageService,ConfirmationService]
 })
 export class MeritComponent implements OnInit {
-
+  disabledButtons= [0,1, 2]
+  buttons = [
+    {
+      actionName: 'action1',
+      title: 'button1'
+    },
+    {
+      actionName: 'action2',
+      title: 'button2'
+    },
+    {
+      actionName: 'action3',
+      title: 'button3'
+    }
+  ]
   yearOptions: SelectItem[];
   eventOptions: SelectItem[];
   gameOptions: SelectItem[];
@@ -48,6 +62,7 @@ export class MeritComponent implements OnInit {
   eventArray =[];
   subgameArray=[];
   addMeritDataArray =[];
+  ageMeritArray =[];
   eventValue:number;
   yearvalue:number;
   schoolvalue:number;
@@ -124,6 +139,8 @@ export class MeritComponent implements OnInit {
   isAlreadyAddedMerit: boolean =false;
   timeAndDistance: boolean;
   timeAndDistanceValue: string;
+  isTimeDistance: any;
+  indexVal: any;
 
   constructor( 
     private confirmation: ConfirmationService,
@@ -135,19 +152,11 @@ export class MeritComponent implements OnInit {
      }
 
   ngOnInit() {
-    // this.subGameId = 'N/A';
     this.loadInitialData();
     this.items2 = [
       {label: 'Add Merit'},
       {label: 'Print Merit'},
     ];
-    // let imageUrl = '../assets/images/studentphoto/avatar51.png';
-
-    // this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {    
-    //   //console.log(base64data);
-    //   // this is the image as dataUrl
-    //   this.base64Image = 'data:image/jpg;base64,' + base64data;
-    // });
     this.setPhotoPath();
   } 
   setPhotoPath () { 
@@ -230,7 +239,7 @@ export class MeritComponent implements OnInit {
   }
   onyeareChange(event) {
     this.rankReadble = false;
-    this.showspinner = true;
+   // this.showspinner = true;
     this.isShowStudent = false;
     this.printmeritData = false;
     this.genderReadble = false;
@@ -252,6 +261,7 @@ export class MeritComponent implements OnInit {
     } else {
       this.meritFlagForGame = false;
     } 
+    if(this.yearvalue) {
     this.meritService.loadEventByYear(this.yearvalue, this.meritFlagForGame).subscribe(
       response => {
         if(response!=="") {
@@ -290,6 +300,12 @@ export class MeritComponent implements OnInit {
      error => {
        //this.errorAlert =true;
       });
+    } else {
+      this.eventReadable = false;
+      this.schoolReadble = false;
+      this.selectedEvent ='';
+      this.gameReadble = false;
+    }
   }
   onEventChange(event) {
     let yearVal = this.yearvalue.toString();
@@ -329,7 +345,8 @@ export class MeritComponent implements OnInit {
     // } else {
     //   console.log('im less')
 
-    this.setAgeMap(this.eventValue);
+   // this.setAgeMap(this.eventValue);
+   if(this.eventValue) {
     this.meritService.loadGameByEvent(this.eventValue,this.meritFlagForGame).subscribe(
       response => {
         if(response!=="") {
@@ -362,26 +379,41 @@ export class MeritComponent implements OnInit {
      error => {
        //this.errorAlert =true;
       });
+    } else {
+      this.gameReadble = false;
+      this.schoolReadble = false;
+      this.timeAndDistance = false;
+    }
    // }
   }
-  setAgeMap(evenVal) {
-    this.meritService.setAgeMap(evenVal).subscribe(
+  setAgeMap() {
+    this.meritService.setAgeMapForMerit(this.eventValue,this.gameId).subscribe(
       response => {
-       const myArray = response[0].ageRange.split(" ");
-       const ageList = response[0].ageRange;
-       var spaceCount = (ageList.split(" ").length - 1);
-       console.log(spaceCount);
-       this.ageOptions =[];
-       this.ageOptions.push({
+   
+       if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
+      const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+      this.ageMeritArray= ageList.split(" ");
+      const x = Array.from(new Set(ageList.split(" "))).toString();
+      
+      var myarray = x.split(',');
+      let ageArrayLength =  myarray.length;
+ 
+      this.ageOptions =[];
+      this.ageOptions.push({
         label: "Please Select",
         value: ''
       });
-       for(let i=0;i<=spaceCount;i++) {
-          this.ageOptions.push({
-            label: myArray[i],
-            value: myArray[i]
-          });
-        } 
+
+      for(var i = 0; i < ageArrayLength; i++) {
+        if(myarray[i] !==''){
+        this.ageOptions.push({
+          label: myarray[i],
+          value: myarray[i]
+        });
+      }
+      }
+
+    }
       } ,
       error => {
         //this.errorAlert =true;
@@ -453,21 +485,37 @@ export class MeritComponent implements OnInit {
     });
   }
 
-  loadAgeChange() {
-    this.selectedGender ='';
-    this.selectedSchool = '';
-    this.selectedRank ='';
-    this.rankReadble = false
-    this.isDataAvailble = false;
-    this.genderReadble = true;
-    this.schoolOptions = [];
-    this.schoolReadble = false;
-    this.isShowStudent = false;
-    this.printmeritData = false;
-    this.showMerit = false;
-    this.selectedSubGame = '';
-    this.selectedStudent= '';
-    this.isShowSubGame = false;
+  loadAgeChange(ageData) {
+    if(ageData.value!='') {
+      this.selectedGender ='';
+      this.selectedSchool = '';
+      this.selectedRank ='';
+      this.rankReadble = false
+      this.isDataAvailble = false;
+      this.genderReadble = true;
+      this.schoolOptions = [];
+      this.schoolReadble = false;
+      this.isShowStudent = false;
+      this.printmeritData = false;
+      this.showMerit = false;
+      this.selectedSubGame = '';
+      this.selectedStudent= '';
+      this.isShowSubGame = false;
+    } else {
+      this.genderReadble = false;
+      this.schoolReadble = false;
+      this.selectedSchool= '';
+      this.isShowSubGame = false;
+      this.selectedSubGame = '';
+      this.selectedGender = '';
+      this.isDataAvailble = false;
+      this.timeAndDistance = false;
+      this.selectedStudent = '';
+      this.isShowStudent = false;
+      this.rankReadble= false;
+      this.selectedRank = '';
+      this.individualMeritData = false;
+    }
   }
   loadGameChange(gameData) {
     this.isDataAvailble = false;
@@ -491,14 +539,17 @@ export class MeritComponent implements OnInit {
     this.gameName =  this.gameArray[1];
     this.gameType =  this.gameArray[2];
     console.log("Game Type"+this.gameType)
- 
-    if(this.gameType == 'Individual') {
-      this.individualAlreadyAddedMerit = true;
+    if(gameData.value!='') {
+        if(this.gameType == 'Individual') {
+          this.individualAlreadyAddedMerit = true;
+        } else {
+          this.individualAlreadyAddedMerit = false;
+        }
+        this.setAgeMap()
     } else {
-      this.individualAlreadyAddedMerit = false;
+      this.ageReadble = false;
+      this.timeAndDistance = false;
     }
-
-
   }
   loadSubGameChange(subgame) {
    // this.selectedAge ='';
@@ -514,6 +565,7 @@ export class MeritComponent implements OnInit {
     this.printmeritData = false;
     this.selectedSchool = '';
     this.selectedStudent= '';
+    this.indexVal = 5;
     // this.schoolOptions = [];
     const eventval = subgame.value;
     this.subgameArray =  eventval.split(","); 
@@ -536,15 +588,10 @@ export class MeritComponent implements OnInit {
         this.checkAlreadyMeritData();
       }
     } else {
-      // this.subGameId = 'N'; 
-      // console.log('Im not subgame');
-      // this.studentName ='';
-      // this.studentId = '';
-      // this.studentOptions =[];
-      // this.addMeritDataArray.push(
-      //   this.eventValue,this.gameId,this.selectedAge,this.genderVal,this.gameType
-      // );
-      
+     this.selectedSchool = '';
+     this.schoolReadble = false;
+     this.timeAndDistance = false;
+     this.isDataAvailble = false;
     }
     
   }
@@ -562,6 +609,7 @@ export class MeritComponent implements OnInit {
     this.schoolReadble = false;
     this.showMerit = false;
     this.selectedStudent= '';
+    if(this.genderVal !=='') {
      if(this.gameType == 'Both') {
      // this.ageReadble =false;
     
@@ -622,15 +670,13 @@ export class MeritComponent implements OnInit {
         this.checkAlreadyMeritData();
       }
     }
+  } else {
+    this.selectedSubGame = '';
+    this.isShowSubGame = false;
+    this.timeAndDistance = false;
+  }
 
-    // if (this.subGameId != '' && this.subGameId != 'N') {
-    //   console.log('Im subgame'+this.subGameId);
-    //   this.addMeritDataArray.push(
-    //     this.eventValue,this.gameId,this.subGameId,this.subGameType,this.selectedAge,this.genderVal
-    //   );
-    // } else {
-     
-    // }
+   
 
     
   }
@@ -749,27 +795,39 @@ export class MeritComponent implements OnInit {
     accept: () => { this.deleteAddedMeritData(merit_id); },
   });
 
-
-  //  this.confirmation.confirm({
-  //   key: 'confirm-delete-student',
-  //   icon: 'pi pi-info-circle',
-  //   message: 'Are you sure to delete student data?',
-  //   accept: () => { 
-      
-  //     this.deleteAddedMeritData(merit_id);
-  //     // this.studentListArray.splice(i, 1); 
-  //     // this.makeEmptyForm();
  
-  //     //  if(this.studentListArray.length > 0) {
-  //     //    this.isStudentListShow = true
-  //     //  } else {
-  //     //    this.isStudentListShow = false;
-  //     //  }
-      
-  //     //this.deleteSchool(eventData);
-  //    },
-  //   });
   }
+  deleteTeamQr(eventId,schoolId,gameId,subgameId) {
+    let subGameVal;
+     if(subgameId == '') {
+      console.log('hello Im blank submage');
+      subGameVal = 'N'
+     } else {
+      subGameVal =subgameId;
+      console.log('hello Im not blank submage');
+     }
+   
+
+    this.meritService.deleteTeamQr(eventId,schoolId,gameId,subGameVal).subscribe(
+      res => {
+         // this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Deleted Successfully'});
+          //this.checkAlreadyMeritData();
+      },
+      error => this.error = error
+    );
+  }
+  deleteIndividualQr(studentId) {
+    this.meritService.deleteIndividualQr(studentId).subscribe(
+      res => {
+         // this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Deleted Successfully'});
+          //this.checkAlreadyMeritData();
+      },
+      error => this.error = error
+    );
+  }
+  
+
+
   
   deleteAddedMeritData(merit_id: any) {
       this.meritService.deleteAddedMeritData(merit_id).subscribe(
@@ -1022,6 +1080,7 @@ downloadCertificatePdf(schoolName,rank) {
     this.schoolArray =  schoolval.split(","); 
     this.schoolId = this.schoolArray[0];
     this.schoolName =  this.schoolArray[1];
+    if(this.schoolId !=='') {
     if (this.subGameId != '' && this.subGameType == 'Individual' || this.gameType =='Individual') {
       this.addMeritDataArray= [];
       this.rankReadble = false;
@@ -1032,6 +1091,7 @@ downloadCertificatePdf(schoolName,rank) {
       console.log('data==>'+this.addMeritDataArray);
       const formData = new FormData();
       formData.append('studentData', JSON.stringify(this.addMeritDataArray));
+
       this.meritService.loadStudentName(formData).subscribe(
         response => {
           if(response!=="") {
@@ -1068,6 +1128,11 @@ downloadCertificatePdf(schoolName,rank) {
     } else if(this.subGameType == 'Team') {
       this.checkNOsugameMerit();
     }
+  } else {
+    this.rankReadble = false;
+    this.timeAndDistance = false;
+    this.isShowStudent = false;
+  }
 }
 checkNOsugameMerit(){
  
@@ -1116,6 +1181,11 @@ checkNoMerti() {
     this.studentArray =  studentval.split(","); 
     this.studentId = this.studentArray[0];
     this.studentName =  this.studentArray[1];
+    if(!this.studentId) {
+    this.rankReadble = false;
+    this.selectedRank = '';
+    this.timeAndDistance = false;
+    }
   }
 
 addMeritData() {
@@ -1303,20 +1373,47 @@ rankChange(rankVal) {
     this.rankValue = rankVal.value;
     if(this.rankValue) {
       this.isDataAvailble = true;
+      this.timeAndDistance = true;
+      this.timeAndDistanceValue = ' ';
     } else {
       this.isDataAvailble = false;
+      this.timeAndDistance = false;
     }
-    this.timeAndDistance = true;
-    this.timeAndDistanceValue = ' ';
-    // if(this.gameType == 'Both') {
-    //   this.timeAndDistance = true;
-    //   this.timeAndDistanceValue = ' ';
-    // } else {
-    //   this.timeAndDistance = false;
-    // }
+   // this.timeAndDistance = true;
+   // this.timeAndDistanceValue = ' ';
+ 
 }
-onKeypressEvent(val) {
-   this.timeAndDistanceValue =  val;
+onKeypressEvent(userEnterValue,val) {
+    let usrEnteredVal = userEnterValue.replace(/\s/g, "");
+    let actualVal = (this.showAlreadyMeritData[val].timeDistance).replace(/\s/g, "");
+    this.timeAndDistanceValue =  usrEnteredVal;
+   if(usrEnteredVal !== actualVal && userEnterValue !== '') {
+     this.indexVal = val;
+   } else {
+    this.indexVal = 5;
+   }
+}
+ 
+upDateTimeDistance(meritId) {
+ 
+  const formData = new FormData();
+  formData.append('meritId', JSON.stringify(meritId));
+  formData.append('timeDistance', JSON.stringify(this.timeAndDistanceValue).replace(/\s/g, ""));
+
+  // formData.append('meritId', JSON.stringify(2275));
+  // formData.append('timeDistance', JSON.stringify(456));
+
+  this.meritService.updateMeritData(formData).subscribe(
+    res => {
+      if (res.status === 'error') {
+        console.log('error occured');
+        this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+      } else {
+        this.messageService.add({key: 'custom', severity:'success', summary: 'Merit Data Updated Successfully'});
+       // this.makeEmptyForm();
+      }
+    });
+
 }
 deleteIndividualMeritData(i: number): void {
   this.individualMeritArray.splice(i, 1);

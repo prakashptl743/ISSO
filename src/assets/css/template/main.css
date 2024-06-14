@@ -220,12 +220,14 @@ header .user-dropbox img {
   border: none;
 }
 
-.event-container {
+/* .event-container {
   margin-top: 100px;
-}
+} */
 .event-container .event-namebox {
   margin-bottom: 30px;
   display: inline-block;
+  float: left;
+    width: 100%;
 }
 .event-container .event-namebox .event-locaton {
   color: #000;
@@ -237,13 +239,15 @@ header .user-dropbox img {
   color: #000;
   font-size: 14px;
   cursor: pointer;
-  background: orange;
+  background: transparent;
   padding: 10px;
-  box-shadow: 0px 0px 2px 0px #6a6a6a;
+  box-shadow: none;
+  float: left;
   cursor: pointer;
 }
 .event-container .event-namebox span.back a {
   text-decoration: none;
+  font-weight: bold;
 }
 .event-container .event-namebox span.back img {
   height: 12px;
@@ -279,27 +283,29 @@ header .user-dropbox img {
 }
 .event-container .tournament-box {
   box-shadow: 0px 0px 7px 1px #dadada;
-  padding: 20px;
-  margin-bottom: 10px;
-  background: #ffffffd1;
+  padding: 20px 0 0;
+  margin-bottom: 60px;
+  background: #ffffff;
+  border-radius: 15px;
 }
 .event-container .tournament-box .event-name {
   text-align: left;
 }
+.border-right-dark{
+  border-right: 1px solid #BBBEBF;
+}
+
+
 .game-name h2 {
 
-  text-align: left;
   background: #FFCE38!important;
-  min-width: 30%;
   display: inline-block;
-  padding: 5px;
+  padding: 10px;
   position: relative;
-  margin-left: 67px;
   text-align: center;
   margin-bottom: 30px;
   height: 38.7px;
-  /* border-bottom: solid 1px #FFCE38!important;
-  top: 0; */
+  font-size: 19px;
 
   
 }
@@ -329,7 +335,8 @@ header .user-dropbox img {
   /* margin-bottom: 50px 0; */
   
 }
-.category-box h2{font-size: 18px;}
+.category-box h2{font-size: 18px;
+  margin-bottom: 20px;margin-top: 0;}
 .categories button {
   margin-right: 5px;
 }

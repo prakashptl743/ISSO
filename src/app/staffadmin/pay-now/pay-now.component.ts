@@ -34,7 +34,7 @@ base64Image:any;
 @ViewChild('reportContent', {static: false})reportContent: ElementRef;
 @ViewChild('report_Content', {static: false})report_Content: ElementRef;
 
-yearOptions: SelectItem[];
+yearOptions: object;
 feeOptions: SelectItem[];
 eventOptions: SelectItem[];
 gameOptions: SelectItem[];
@@ -108,6 +108,7 @@ rzp1;
   showPayemntScreen: boolean = true;
   paymentTypeInfo: any;
   showAlredayPaidMessage: boolean;
+  isFirstYear: boolean;
 //options;
   // options: {
   //   key: string; // Enter the Key ID generated from the Dashboard
@@ -127,6 +128,7 @@ constructor(
 
 ngOnInit() {
 this.showPaidSuccess = false;
+
 this.showPayemntScreen = true;
 this.schoolType = localStorage.getItem('isAffiliate');
 console.log(this.schoolType)
@@ -134,16 +136,18 @@ console.log(this.schoolType)
   // this.time = this.datePipe.transform(new Date());
   this.isCertificate =false
   this.isDataAvailble = false
-  this.yearOptions = this.issoUtilService.setYearForStaffadmin();
+  this.yearOptions = this.issoUtilService.setYearToStaffadmin();
+  // this.yearOptions = this.issoUtilService.setYearForStaffadmin();
   this.feeOptions = this.issoUtilService.setFeeType();
   this.schoolId = localStorage.getItem('schoolId');
+  this.yearvalue = this.yearOptions[1].year;
   // let imageUrl = '../../assets/images/general/1568798071IMG_8449214933993.jpg';
   // this.getBase64ImageFromURL1(imageUrl).subscribe(base64data => {    
   //   this.base64Image = 'data:image/jpg;base64,' + base64data;
   // });
   this.setPhotoPath();
   this.setPaymentJson();
-  
+
 //  console.log(this.testFun1());
 }
 testFun1() {
@@ -165,6 +169,7 @@ onGoBack() {
 //   console.log('Running change detection ',this.affilateAmounnt);
 //   this.totalAmount = this.affilateAmounnt;
 // }
+ 
 payNow(amt,studentId,paymentType) {
   this.totalAmount = amt;
   this.studentId = studentId;
@@ -237,7 +242,7 @@ paymentCapture1() {
     this.generatedpaymentId = "dffff@sdf$%";
    // this.generatedpaymentId = paymentId;
     if(paymentId !=='') {
-      if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affliate') {
+      if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
         this.savePaymentData();
       } else {
          this.saveTeamPaymentData();
@@ -290,7 +295,7 @@ let paymentId = response.razorpay_payment_id;
     //   this.showPayemntScreen = false;
     // }, 0);
    
-    if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affliate') {
+    if (this.paymentTypeInfo == 'individual' || this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
       this.savePaymentData();
     } else {
       this.showPaidSuccess = true;
@@ -301,7 +306,7 @@ let paymentId = response.razorpay_payment_id;
 }
 savePaymentData() {
   const formData = new FormData();
-  if (this.paymentTypeInfo == 'affliate') {
+  if (this.paymentTypeInfo == 'affilation' || this.paymentTypeInfo == 'kit' || this.paymentTypeInfo == 'misc') {
     let paidAmount =(this.totalAmount).toString();
     formData.append('paymentTypeInfo', this.paymentTypeInfo);
     formData.append('schoolId', this.schoolId);
@@ -375,30 +380,73 @@ setAffiliateAmount() {
     // this.totalAmount= 50000;
   }
 }
+
 onPaymentTypeChange(event) {
   this.reportDataLength = 0;
   this.feeType =  event.value;
   this.mapStudentPaymentData = [];
+  this.slectedEvent = '';
   this.paymentType = event.value;
   console.log(this.paymentType);
   this.totalAmount = 0;
  
   console.log('affilateAmounnt===>'+this.totalAmount);
   if (this.paymentType !== '') {    
-    if (this.paymentType == '1') {
+    if (this.paymentType == 'affilation' || this.paymentType == 'kit'|| this.paymentType == 'misc' ) {
       this.showPayment = true;
       this.isAffilated = '1';
-      // this.affilateAmounnt = 50000;
-      // this.totalAmount= 50000;
-     // this.checkAlreadypaid();
+      this.totalAmount = 0;
+      this.affilateAmounnt = '';
+       
     } else {
       this.showPayment = false;
       this.showAlredayPaidMessage = false;
       this.isAffilated = '2';
+      this.loadEvents();
     }
   } else {
     this.isAffilated = '0';
   }
+}
+loadEvents() {
+  this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
+    //this.meritService.loadEventByYear(this.yearvalue).subscribe(
+      response => {
+        if(response!=="") {
+          this.eventData =response;
+          console.log(this.eventData)
+          this.gameReadble =false;
+          this.schoolReadble  = false;
+          if(this.eventData.length > 0 ){
+            this.eventOptions = [];
+            this.eventReadable = true;
+            this.isDataAvailble = false;
+            this.eventOptions.push({
+              label: "Please Select",
+              value: ''
+            });
+            this.eventData.forEach(element => {
+              const eventIdAndName = element.eventId +','+ element.eventName;
+              this.eventOptions.push({
+                label: element.eventName,
+                value: eventIdAndName
+              });
+            })
+          } else {
+            this.isDataAvailble = true;
+            this.eventReadable = false;
+            this.gameReadble =false;
+            this.schoolReadble = false;
+            this.messageService.add({key: 'custom',severity:'error', summary: 'Event not found for this year!'});
+          }
+        } else {
+         console.log('Data is blannk from service')
+        }
+  
+     } ,
+     error => {
+       //this.errorAlert =true;
+      });
 }
 checkAlreadypaid(){
   this.payemntService.checkAlreadypaid(this.schoolId).subscribe( 
@@ -416,52 +464,27 @@ checkAlreadypaid(){
   //this.errorAlert =true;
     });
 }
-onyeareChange(event) {
+onyeareChange(val,yearText) {
+  if(yearText == 'first') {
+    this.isFirstYear = true;
+  } else {
+    this.isFirstYear = false;
+  }
+  this.isAffilated = '0';
+  this.showPayment = false;
+  this.feeType = '';
+  this.slectedEvent = '';
+  this.slectedGame = '';
+  this.eventReadable = false;
+  this.gameReadble = false;
   this.reportDataLength = 0;
   this.totalTeamAmount = 0;
-  this.yearvalue = event.value;
+  this.yearvalue = val;
   this.showPayment = false;
   this.totalAmount=0;
   this.mapStudentPaymentData = [];
   if(this.yearvalue !== '') {
-  this.studentService.loadEventByYear(this.yearvalue, this.schoolId).subscribe(
-  //this.meritService.loadEventByYear(this.yearvalue).subscribe(
-    response => {
-      if(response!=="") {
-        this.eventData =response;
-        console.log(this.eventData)
-        this.gameReadble =false;
-        this.schoolReadble  = false;
-        if(this.eventData.length > 0 ){
-          this.eventOptions = [];
-          this.eventReadable = true;
-          this.isDataAvailble = false;
-          this.eventOptions.push({
-            label: "Please Select",
-            value: ''
-          });
-          this.eventData.forEach(element => {
-            const eventIdAndName = element.eventId +','+ element.eventName;
-            this.eventOptions.push({
-              label: element.eventName,
-              value: eventIdAndName
-            });
-          })
-        } else {
-          this.isDataAvailble = true;
-          this.eventReadable = false;
-          this.gameReadble =false;
-          this.schoolReadble = false;
-          this.messageService.add({key: 'custom',severity:'error', summary: 'Event not found for this year!'});
-        }
-      } else {
-       console.log('Data is blannk from service')
-      }
 
-   } ,
-   error => {
-     //this.errorAlert =true;
-    });
   } else {
     this.eventOptions = [];
     this.gameOptions = [];
@@ -654,7 +677,7 @@ setPaymentForGame() {
           this.eventNote = this.reportData[0].note;
           this.eventDescription = this.reportData[0].description;
         } else {
-          this.messageService.add({key: 'custom', severity:'error', summary: 'You are not participating in this game'});
+          this.messageService.add({key: 'custom', severity:'error', summary: 'You have not participated in this game'});
           this.noParticipateEvent = true;
           this.isDataAvailble = false;
         //  this.showPayment = false;

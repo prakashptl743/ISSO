@@ -1,86 +1,159 @@
 <div class="tab-menu">
-    <div class="tab">
-        <button [ngClass]="isMenu ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Menu</button>
-        <button [ngClass]="isUser ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Users</button>
-        
-    </div>
-</div>  
- 
-<table class="table" *ngIf="isMenu">
-    <thead>
-      <tr>
-        <th>Sr No.</th>
-        <th>Menu Name</th>
-        <th>Menu Status</th>
-        <!-- <th>Merit certificate</th> -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let menu of adminMenuData;let i = index;">
-        <td>{{i+1}}</td>
-        <td>{{menu.menu_name}}</td>
-        <td *ngIf="menu.isActive == 0"> 
-            <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">Active</button></span>
-        </td>
-        <td *ngIf="menu.isActive == 1"> 
-            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">InActive</button></span>
-        </td>
-     
-     </tr>
-    </tbody>
-  </table>
-<div *ngIf="isUser">
-    <button  type="button" (click)="addNewUser($event, '','add')" pButton label="Add New User"></button>
-    <form [formGroup]="userForm"  class="align-form-div">
-        <div class="form-row">
-           <div class="form-group col-md-6">
-               <label for="inputEmail4">Name</label>
-               <input class="form-control" formControlName="userName" type="text" required>
-             </div>
-             <div class="form-group col-md-6">
-               <label for="inputPassword4">Email</label>
-               <input class="form-control" formControlName="userEmail"  type="text" required>
-             </div>
-         </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Mobile</label>
-                <input class="form-control" formControlName="userMobile"  type="text" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input class="form-control" formControlName="userPassword"  type="text" required>
-            </div>
-         </div>
-        <input id="float-input1" formControlName="userId"  type="hidden"  pInputText>  
-        <button [disabled]="!userForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
-        <button class="btn btn-primary-outline" type="button" (click)="resetform();display=false">Cancel</button>
-                 
-      </form>
+  <div class="tab">
+      <button [ngClass]="isMenu && !showChangePassword ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Menu</button>
+      <button [ngClass]="!isMenu && !showChangePassword ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Users</button>
+      <button [ngClass]="showChangePassword ? 'isMenuActive' : '' " (click)="onloadMenu(2)"  class="tablinks">Change Password</button>
 
-
- <!-- <table class="table">
-    <thead>
-      <tr>
-        <th>Sr No.</th>
-        <th>User Name</th>
-        <th>Menu Status</th>
-   
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let menu of adminMenuData;let i = index;">
-        <td>{{i+1}}</td>
-        <td>{{menu.menu_name}}</td>
-        <td *ngIf="menu.isActive == 0"> 
-            <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">Active</button></span>
-        </td>
-        <td *ngIf="menu.isActive == 1"> 
-            <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeEventStatus(event.eventId,event.isCertificate,'certifiacate')">InActive</button></span>
-        </td>
-     
-     </tr>
-    </tbody>
-  </table>   -->
   </div>
-  <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+</div>  
+<app-change-pass *ngIf="showChangePassword"></app-change-pass>
+<table class="table table-bordered" *ngIf="isMenu && !showChangePassword">
+  <thead>
+    <tr class="table-row ">
+      <th>Sr No.</th>
+      <th>Menu Name</th>
+      <th>Menu Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let menu of adminMenuData;let i = index;">
+      <td>{{i+1}}</td>
+      <td>{{menu.menu_name}}</td>
+      <td *ngIf="menu.isActive == 0"> 
+          <span class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeMenuStatus(menu.menu_id,'1')">Active</button></span>
+      </td>
+      <td *ngIf="menu.isActive == 1"> 
+          <span class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeMenuStatus(menu.menu_id,'0')">InActive</button></span>
+      </td>
+   </tr>
+  </tbody>
+</table>
+<div *ngIf="isUser && !showChangePassword">
+
+  <form [formGroup]="userForm"  class="align-form-div">
+      <div class="form-row">
+         <div class="form-group col-md-6">
+             <label for="inputEmail4">Name</label>
+             <input class="form-control" formControlName="userName" type="text" required>
+           </div>
+           <div class="form-group col-md-6">
+             <label for="inputPassword4">User ID</label>
+             <input class="form-control" formControlName="userEmail"  type="text" required>
+           </div>
+       </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+              <label for="inputPassword4">Mobile</label>
+              <input class="form-control" formControlName="userMobile"  type="text" required>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="inputPassword4">Password</label>
+              <input class="form-control" formControlName="userPassword"  type="text" required>
+          </div>
+       </div>
+       <div class="form-row">
+          <div class="form-group col-md-3">
+              <p-dropdown  [options]="menuOptions"   placeholder="Select Menu" (onChange)="onMenuChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+          </div>
+          <div class="form-group col-md-3">
+              <button   class="btn btn-primary" type="button" (click)="addMenu()">Add Menu</button>
+          </div>
+       </div>
+       <div class="form-row">
+          <div class="form-group col-md-3">
+       <table class="table table-bordered"  *ngIf="showMapData">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Menu Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let mapMenu of mapMenuArray; let i = index;">
+              <td *ngIf="!isEdit">{{mapMenu.menu_name}}</td>  
+              <td>  
+                <button class="btn btn-primary" type="button" (click)="removeMappedData(i)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div> 
+      <input id="float-input1" formControlName="userId"  type="hidden"  pInputText>  
+      <button [disabled]="!userForm.valid" class="btn btn-primary align-submit" type="button" (click)="onSubmit()">Submit</button>
+      <button class="btn btn-primary-outline" type="button" (click)="resetForm();display=false">Cancel</button>
+               
+    </form>
+
+
+</div>
+<span class="test-text ">sffdsdg </span>
+<div *ngIf="!isMenu && !showChangePassword"> 
+<p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!isUser"  [rows]="10" [value]="issoUserrData" class="no-padding" filterBy="name,email" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+  <p-header>
+      <div class="ui-helper-clearfix">
+          <div class="ui-g">
+             <div class="ui-g-12 ui-md-12 filter-container">
+                      <div>
+                          <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+                           <div style="float: right;">
+                               <!-- <button  type="button" (click)="addNewUser($event, '','add')" pButton label="Add New User"></button> -->
+
+                               <button   type="button" (click)="addNewUser($event, '','add')" pButton label="Add New User"></button>
+                           </div>
+                      </div>
+
+              </div>
+  
+          </div>
+      </div>
+  </p-header>
+<ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
+  <div style="padding:.5em" class="ui-g-12 ui-md-6">
+      <div class="item-box">
+          <div class="item-header1">
+              <h4 class="ev-name1" title="{{school.name}}">{{school.name}}</h4>
+              <div class="icons-wrap">
+                  <button class="glyphicon glyphicon-edit item-icons" (click)="addNewUser($event, school,'edit')">
+                  </button>
+                   <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteUserData(school.userId)">
+                  </button>
+                  
+              </div>
+          </div>
+          <div class="item-description">
+              <label>User ID:</label>
+              <span class="item-value">{{school.email}}</span>
+          </div>
+          <div class="item-description">
+              <label>Contact Number:</label>
+              <span class="item-value">{{school.mobile}}</span>
+          </div>
+          <div class="item-description">
+            <label>Password:</label>
+            <span class="item-value">{{school.originalPassword}}</span>
+          </div>
+          <div class="item-description">
+            <label>Menu:</label>
+            <span class="item-value">{{school.menuName}}</span>
+          </div>
+
+          <div class="item-description">
+            <label>Status:</label>
+            <span *ngIf="school.isActive == 0" class="item-value"><button class="btn btn-danger-small active-state" type="button" (click)="changeUserStatus(school.userId,'1')">Active</button></span>
+            <span *ngIf="school.isActive == 1"  class="item-value"><button class="btn btn-danger-small pendig-state" type="button" (click)="changeUserStatus(school.userId,'0')">InActive</button></span>
+
+           
+          </div>
+         
+        
+          
+      </div>
+  </div>   
+ 
+</ng-template>
+</p-dataView>
+</div>
+
+<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+<p-confirmDialog key="confirm-delete-school" header="Delete User data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>

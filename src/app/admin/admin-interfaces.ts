@@ -23,6 +23,8 @@ export class WebCalender {
     sportName:string;
     title:string;
     eventFile:string;
+    eventStartDate:string;
+    eventEndDate:string
 }
   export class Event {
     gameId: any;
@@ -32,7 +34,7 @@ export class WebCalender {
     girlsageRange:string;
     preventDefault() {
       throw new Error("Method not implemented.");
-}
+    }
     eventId:number;
     eventName:string;
     price:number;
@@ -46,6 +48,8 @@ export class WebCalender {
     event_status:string;
     note:string;
     defaultPrevented: any;
+    certifiacteHeaderContent:string; 
+    certifiacteMainContent:string; 
 }
 export class Game {
     gameId:number;  
@@ -137,6 +141,9 @@ export class Student {
   subGameName: string;
   gameId: number;
   gameType:string;
+  eventId:number;
+  tShirtSize:string;
+  curruclm:string
 }
 export class coachData {
   ageRange: number;
