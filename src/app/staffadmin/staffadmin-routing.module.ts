@@ -15,6 +15,7 @@ import { VolunteerDataComponent } from './volunteer-data/volunteer-data.componen
 import { CertificateInvoiceComponent } from './certificate-invoice/certificate-invoice.component';
 import { PermissionGuard } from '../services/permission.guard';
 import { Permission } from '../services/user.service';
+import { SgfiEntryComponent } from './sgfi-entry/sgfi-entry.component';
  
 // import { PayNowComponent } from '../pay-now/pay-now.component';
 
@@ -76,6 +77,13 @@ const routes: Routes = [
           canActivate: [PermissionGuard],  
           data: { permission: Permission.Volunteer }
         },  
+        {
+          path:  'sgfi',
+          pathMatch: 'full',
+          component: SgfiEntryComponent,
+          canActivate: [PermissionGuard],  
+          data: { permission: Permission.Volunteer }
+        },
         {
           path: 'pay-now',
           pathMatch: 'full',

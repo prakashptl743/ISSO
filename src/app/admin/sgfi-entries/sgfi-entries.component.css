@@ -9,6 +9,25 @@
     margin: 20px;
   }
   
+  .float-right {
+    float: right;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .align-table{
+    padding: 20px;
+  }
+  .hide-table {
+    visibility: hidden;
+  }
+  .align-box {
+    border: 1px solid gray;
+    padding: 0;
+  }
+  .card-bg {
+    background: khaki;
+    height: 40px;
+  }
   /* Style the buttons inside the tab */
   .tab button {
    

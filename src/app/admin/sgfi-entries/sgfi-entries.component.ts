@@ -8,10 +8,12 @@ import { MenuItem } from 'primeng/api';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs/Rx';
-import { IssoUtilService } from '../services/isso-util.service';
-import { ReportMeritService } from '../admin/service/report-merit.service';
+ 
 import { DatePipe } from '@angular/common';
-import { SgfiEntriesService } from '../admin/service/sgfi-entries.service';
+import { IssoUtilService } from 'src/app/services/isso-util.service';
+import { SgfiEntriesService } from '../service/sgfi-entries.service';
+import { ReportMeritService } from '../service/report-merit.service';
+ 
 // import * as jspdf from 'jspdf';
 // import * as html2canvas from 'html2canvas';
  
@@ -32,7 +34,10 @@ export class SgfiEntriesComponent implements OnInit {
   gameArray =[];
   getSchoolList =[];
   subGameIdArray =[];
+  subGameNameArray=[];
   studentDataArray =[];
+  sgfiStudentArray =[];
+  saveSgfiStudentArray =[];
   gameServiceDATA:any;
   rootGameServicData: any;
   subGameServicData: any;
@@ -61,6 +66,13 @@ export class SgfiEntriesComponent implements OnInit {
   subGameVal: any;
   isShowStudent: boolean;
   studentData: any;
+  schoolId: any;
+  isDuplicate: boolean;
+  error: any;
+  alreadyAddedStudentList: any;
+  studentRecordLength: number =0;
+  schoolName: any;
+  selectedYear: string;
 
 
   constructor( 
@@ -132,7 +144,9 @@ export class SgfiEntriesComponent implements OnInit {
     this.ageReadble = false;
     this.genderReadble = false;
     this.schoolReadble = false;
-    this.isShowStudent = false;
+    this.alreadyAddedStudentList = [];
+    this.studentData = [];
+    this.studentRecordLength = 0;
     if(gameData.value!='') {
       if(this.gameType == 'Both') {
         this.ageReadble = false;
@@ -190,7 +204,8 @@ export class SgfiEntriesComponent implements OnInit {
     this.gameReadble = false;
     this.schoolReadble = false;
     this.schoolReadble = false;
-    this.isShowStudent = false;
+    this.alreadyAddedStudentList = [];
+    this.studentRecordLength = 0;
     if(this.yearvalue) {
       this.gameReadble = true;
     }  
@@ -202,7 +217,8 @@ export class SgfiEntriesComponent implements OnInit {
     this.genderReadble = false;
     this.genderReadble = false;
     this.schoolReadble = false;
-    this.isShowStudent = false;
+    this.alreadyAddedStudentList = [];
+    this.studentRecordLength = 0;
     if(ageData.value!='') {
       this.genderReadble = true;
     }
@@ -210,9 +226,10 @@ export class SgfiEntriesComponent implements OnInit {
   loadGenderChange(gender) {
     this.genderVal = gender.value;
     this.subGameIdArray = [];
-    this.isShowStudent = false;
+    this.subGameNameArray = [];
     if(this.genderVal !=='') {
      this.schoolReadble = true;
+
      if(this.subGameVal && this.gameType == 'Both') {
      this.subGameVal.forEach(element => {
       if (this.subGameIdArray.some(x => x == element.split(",")[0])) {
@@ -221,6 +238,10 @@ export class SgfiEntriesComponent implements OnInit {
         this.subGameIdArray.push(
           Number(element.split(",")[0])
         );
+        this.subGameNameArray.push( 
+          (element.split(",")[1])
+        );
+        console.log(this.subGameNameArray)
        }
        })
       }
@@ -230,6 +251,7 @@ export class SgfiEntriesComponent implements OnInit {
       this.selectedSchool = '';
     }
   }
+ 
   loadSubGameChange(subgame) {
     this.selectedAge ='';
     this.selectedGender ='';
@@ -237,13 +259,9 @@ export class SgfiEntriesComponent implements OnInit {
     this.genderReadble = false;
     this.ageReadble= false;
     this.schoolReadble = false;
-    this.isShowStudent = false;
+    this.alreadyAddedStudentList=[];
+    this.studentRecordLength = 0;
     this.subGameVal = subgame.value
-    // this.subgameArray =  subgame.value[0].split(","); 
-    // this.subGameId = this.subgameArray[0];
-  
-    // this.subGameName =  this.subgameArray[1];
-    // this.subGameType =  this.subgameArray[2];
     if (this.subGameVal.length > 0) {
       this.ageReadble =true;
     } else {
@@ -252,6 +270,7 @@ export class SgfiEntriesComponent implements OnInit {
   }
   getSchools() {
     this.getSchoolList=[];
+    this.studentRecordLength = 0;
     if(this.subGameIdArray.length >0 ) {
       this.subGameId = this.subGameIdArray.toString();
     } else {
@@ -260,15 +279,16 @@ export class SgfiEntriesComponent implements OnInit {
     this.getSchoolList.push(
       this.yearvalue,this.gameId,this.selectedAge,this.genderVal,this.gameType
     );
+   // this.getAlreadyAddedData();
     const formData = new FormData();
     formData.append('getSchoolList', JSON.stringify(this.getSchoolList));
     formData.append('subGameId', JSON.stringify(this.subGameId));
       this.sgfiEntriesService.loadSchoolByGame(formData).subscribe(
         response => {
           if(response!=="") {
-            if(response.length > 0) {
+            if(response[0].length > 0) {
               this.schoolReadble = true;
-              this.schoolList = response;
+              this.schoolList = response[0];
               this.schoolOptions = [];
               this.schoolOptions.push({
                 label: "Please Select",
@@ -281,7 +301,16 @@ export class SgfiEntriesComponent implements OnInit {
                   value: schoolIdAndName
                 });
               })
+            } else {
+              this.schoolList =[];
+              this.schoolReadble = false;
+              this.selectedSchool ='';
+              this.messageService.add({key: 'custom', severity:'error', summary: 'School not found'});
             }
+            if(response[1].length > 0) {
+              this.alreadyAddedStudentList =   response[1];
+              this.studentRecordLength = Object.keys( this.alreadyAddedStudentList).length;
+           }
           }
       } ,
       error => {
@@ -291,6 +320,8 @@ export class SgfiEntriesComponent implements OnInit {
   loadSchoolChange(schoolData) {
     console.log(schoolData);
     const schoolval =  schoolData.value.split(",")[0]; 
+    this.schoolId = schoolData.value.split(",")[0];
+    this.schoolName = schoolData.value.split(",")[1];
     this.studentDataArray =[];
     this.studentDataArray.push(
       this.yearvalue,this.gameId,this.selectedAge,this.genderVal,schoolval
@@ -306,8 +337,6 @@ export class SgfiEntriesComponent implements OnInit {
             this.isShowStudent = true;
              console.log(response) 
           } else {
-            this.isShowStudent = false;
-            console.log('Data is blannk from service')
             this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found'});
 
           }
@@ -318,5 +347,135 @@ export class SgfiEntriesComponent implements OnInit {
         });
     }
   }
+  deleteStudent(studentId) {
+    this.sgfiEntriesService.deleteStudent(studentId).subscribe(
+      res => {
+        //  if (res.status !== 'error') {
+        //    this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+        //  } else {
+            this.messageService.add({key: 'custom', severity:'success', summary: 'Studnet Data Deleted Successfully'});
+            this.getSchools()
+        //  }
+   
+       
+      },
+      error => this.error = error
+    );
+  }
+  addStudent(studentData) {
+    this.isDuplicate = false;
+    if(this.sgfiStudentArray.length !== 20) {
+      if (this.sgfiStudentArray.length > 0) {
+        for (let i=0;i< this.sgfiStudentArray.length;i++) {
+          if (this.sgfiStudentArray[i].studentId == studentData.sId) {
+            this.isDuplicate = true;
+            break;
+          } else {
+            this.isDuplicate = false;
+          }
+        }
+      }  
+  
+      if(this.isDuplicate) {
+        this.messageService.add({key: 'custom', severity:'error', summary: 'This studnet already exist!'});
+      }  else {
+      this.sgfiStudentArray.push({
+        'studentId':studentData.sId,
+        'studentName':studentData.studentName,
+        'gameId':this.gameId,
+        'agerange':this.selectedAge,
+        'genderId':this.genderVal,
+        'schoolId':this.schoolId,
+        'yearVal':this.yearvalue,
+        'gameName':this.gameName,
+        'subGameId': studentData.subgameId.replaceAll(",", " "),
+        'subGameName':studentData.subGameName,
+        'schoolName':this.schoolName      
+      });
+      console.log(this.sgfiStudentArray)
+    }
+    } else {
+      this.messageService.add({key: 'custom', severity:'error', summary: 'Maximum 20 student only!'});
+    }
+  
+   
+  }
+  removeStudnetData(i: number): void {
+    this.sgfiStudentArray.splice(i, 1);
+  }
+  confirmAddStudent() {
+    if (event.defaultPrevented) return;
+    event.preventDefault();
+    this.confirmation.confirm({
+      key: 'confirm-add-student',
+      icon: 'pi pi-info-circle',
+      message: 'Are you sure to add studnet data?',
+      accept: () => { this.saveSgfiStudentData(); },
+    });
+  }
+  confirmDeleteStudent(studentId) {
+    if (event.defaultPrevented) return;
+    event.preventDefault();
+    this.confirmation.confirm({
+      key: 'confirm-delete-student',
+      icon: 'pi pi-info-circle',
+      message: 'Are you sure to delete studnet data?',
+      accept: () => { this.deleteStudent(studentId); },
+    });
+  }
+  saveSgfiStudentData(){
+    this.saveSgfiStudentArray=[];
+    for(let i=0; i < this.sgfiStudentArray.length; i ++){
+      this.saveSgfiStudentArray.push(
+        this.sgfiStudentArray[i].studentId,
+        this.sgfiStudentArray[i].gameId,
+        this.sgfiStudentArray[i].agerange,
+        this.sgfiStudentArray[i].genderId,
+        this.sgfiStudentArray[i].schoolId,
+        this.sgfiStudentArray[i].yearVal,
+        this.sgfiStudentArray[i].subGameId,
+       );
+    }
 
+
+
+    const formData = new FormData();
+    formData.append('sgfiStudentArray', JSON.stringify(this.saveSgfiStudentArray));
+ 
+    this.sgfiEntriesService.saveSgfiStudentData(formData).subscribe(
+     res => {
+         if (res.status === 'error') {
+           console.log('error occured');
+           this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+         } else {
+           this.messageService.add({key: 'custom', severity:'success', summary: 'Studnet Data Added Successfully'});
+           this.makeEmptyForm();
+         }
+      },
+      error => this.error = error
+     );
+     if(this.error){
+       this.messageService.add({key: 'custom', severity:'error', summary: 'Error occured'});
+     }
+  }
+  makeEmptyForm() {
+    this.saveSgfiStudentArray =[];
+    this.sgfiStudentArray =[];
+    this.selectedGame ='';
+    this.selectedAge = '';
+    this.selectedSchool = '';
+    this.selectedGender = '';
+    this.selectedSubGame = '';
+    this.selectedYear= '';
+    this.yearvalue ='';
+    this.ageReadble = false;
+    this.genderReadble = false;
+    this.subGameReadable = false;
+    this.gameReadble = false;
+    this.schoolReadble = false;
+    this.schoolReadble = false;
+    this.isShowStudent = false;
+    this.studentRecordLength =0;
+  } 
 }
+ 

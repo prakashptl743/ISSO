@@ -42,7 +42,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { CertificateContentComponent } from '../certificate-content/certificate-content.component';
 import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-payment/configure-sgfi-payment.component';
 import { ChangePassComponent } from '../change-pass/change-pass.component';
-import { SgfiEntriesComponent } from '../sgfi-entries/sgfi-entries.component';
+import { SgfiEntriesComponent } from './sgfi-entries/sgfi-entries.component';
  
 
 @NgModule({

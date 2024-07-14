@@ -9,6 +9,7 @@ export enum Permission {
     InvoiceReceipt = "InvoiceReceipt",
     PayNow = "PayNow",
     Volunteer = "Volunteer",
+    Sgfi="Sgfi",
     Profile = "Profile"
 }
 export enum AdminPermission {
@@ -48,6 +49,7 @@ export class UserService {
     Permission.InvoiceReceipt  ,
     Permission.PayNow,
     Permission.Volunteer,
+    Permission.Sgfi,
     Permission.Profile
   ]; 
   

@@ -20,13 +20,8 @@ import { CoachEntiresComponent } from './coach-entires/coach-entires.component';
 import { VolunteerDataComponent } from './volunteer-data/volunteer-data.component';
 import { PrimengModule } from '../primeng-module';
 import { CertificateInvoiceComponent } from './certificate-invoice/certificate-invoice.component';
-
-// import { AdminComponent } from './admin/admin.component';
-// import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-// import { ManageBlogsComponent } from './manage-blogs/manage-blogs.component';
-// import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
-// import { ManagePagesComponent } from './manage-pages/manage-pages.component';
-// import { BlogFormComponent } from './blog-form/blog-form.component';
+import { SgfiEntryComponent } from './sgfi-entry/sgfi-entry.component';
+ 
 
 @NgModule({
   imports: [
@@ -51,15 +46,9 @@ import { CertificateInvoiceComponent } from './certificate-invoice/certificate-i
     TestReportComponent,
     PayNowComponent,
     CoachEntiresComponent,
-    VolunteerDataComponent
-
-
-    // AdminComponent,
-    // AdminDashboardComponent,
-    // ManageBlogsComponent,
-    // ManageCategoriesComponent,
-    // ManagePagesComponent,
-    // BlogFormComponent
+    VolunteerDataComponent,
+    SgfiEntryComponent
+ 
   ],
   providers: [SafeUrlPipeModule]
 })

@@ -21,12 +21,40 @@ export class SgfiEntriesService {
     this.http = new HttpClient(handler);
   }
  
-getRootGameList(){
+getRootGameList() {
   return this.http.get(this.serverUrl + 'SgfiEntries/gameList').pipe(
     catchError(this.handleError)
   );
+} 
+getGameForStaff(schoolId) {
+  return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/gameList/' + schoolId).pipe(
+    catchError(this.handleError)
+  );
+} 
+getSgfiAmount() {
+  return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/getSgfiAmount/').pipe(
+    catchError(this.handleError)
+  );
+} 
+savePaymentData(studentInfo) {
+  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/savePaymentData',studentInfo)
+  .pipe(
+    catchError(this.handleError)
+  );
 }
- 
+enrollStudent(userData) { 
+  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/enrollStudent',userData)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
+
+
+getStudentForStaff(schoolId,gameId) {
+  return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/studentlListForStaff/' + schoolId +'/'+gameId).pipe(
+    catchError(this.handleError)
+  );
+} 
 getSubGameList(gameId){
   let str = 'SgfiEntries/subGameListById/' + gameId;
   return this.http.get(this.serverUrl + str).pipe(
@@ -41,6 +69,17 @@ loadSchoolByGame(gameData){
 loadStudentData(studentData){
   return this.http.post<any>(this.serverUrl + 'SgfiEntries/studentlList/',studentData)
   .pipe(
+    catchError(this.handleError)
+  );
+}
+saveSgfiStudentData(meritInfo) {
+  return this.http.post<any>(this.serverUrl + 'SgfiEntries/saveSgfiStudentData/',meritInfo)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
+deleteStudent(id: number) {
+  return this.http.delete(this.serverUrl + 'SgfiEntries/deleteStudent/' + id).pipe(
     catchError(this.handleError)
   );
 }
