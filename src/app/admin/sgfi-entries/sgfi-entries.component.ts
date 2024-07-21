@@ -23,7 +23,7 @@ import { ReportMeritService } from '../service/report-merit.service';
   styleUrls: ['./sgfi-entries.component.css']
 })
 export class SgfiEntriesComponent implements OnInit {
-  isAddMStudent: boolean;
+  isAddStudent: boolean;
   isViewStudent: boolean;
   yearOptions: SelectItem[];
   gameOptions: SelectItem[];
@@ -73,6 +73,9 @@ export class SgfiEntriesComponent implements OnInit {
   studentRecordLength: number =0;
   schoolName: any;
   selectedYear: string;
+  enrolledStudentData: any;
+  enrolledStudentRecordLength: number;
+  alreadyExist: boolean;
 
 
   constructor( 
@@ -86,17 +89,18 @@ export class SgfiEntriesComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.isAddMStudent = true;
+    this.isAddStudent = true;
     this.loadInitialData();
     this.loadGame();
   }
   onloadMenu(index) {
+    this.makeEmptyForm();
     if(index == '0'){
-      this.isAddMStudent = true;
+      this.isAddStudent = true;
       this.isViewStudent =false;
     } else  {
       this.isViewStudent = true;
-      this.isAddMStudent = false;
+      this.isAddStudent = false;
     } 
   }
   loadInitialData() {
@@ -191,6 +195,9 @@ export class SgfiEntriesComponent implements OnInit {
      //this.errorAlert =true;
     });
   }
+  onViewStudentYearChange(event) {
+    this.yearvalue = event.value;
+  }
   onyeareChange(event) {
     this.yearvalue = event.value;
     this.selectedGame ='';
@@ -224,12 +231,21 @@ export class SgfiEntriesComponent implements OnInit {
     }
   }
   loadGenderChange(gender) {
+    this.getSchoolList=[];
+    if(this.subGameIdArray.length >0 ) {
+      this.subGameId = this.subGameIdArray.toString();
+    } else {
+      this.subGameId ='N';
+    }
     this.genderVal = gender.value;
     this.subGameIdArray = [];
     this.subGameNameArray = [];
     if(this.genderVal !=='') {
+      this.getSchoolList.push(
+        this.yearvalue,this.gameId,this.selectedAge,this.genderVal,this.gameType
+      );
      this.schoolReadble = true;
-
+    if(this.isAddStudent ) {
      if(this.subGameVal && this.gameType == 'Both') {
      this.subGameVal.forEach(element => {
       if (this.subGameIdArray.some(x => x == element.split(",")[0])) {
@@ -247,11 +263,32 @@ export class SgfiEntriesComponent implements OnInit {
       }
      this.getSchools();
     } else {
+      this.showEnroolledStudent();
+    }
+
+    } else {
       this.schoolReadble = false;
       this.selectedSchool = '';
     }
   }
- 
+  showEnroolledStudent() {
+    const formData = new FormData();
+    formData.append('subGameId', JSON.stringify(this.subGameId));
+    formData.append('getStudentData', JSON.stringify(this.getSchoolList));
+    this.sgfiEntriesService.getEnrolledStudentData(formData).subscribe(
+      response => {
+        if(response!=="") {
+           if(response.length > 0) {
+             this.enrolledStudentData = response;
+             console.log(this.enrolledStudentData)
+             this.enrolledStudentRecordLength = Object.keys( this.enrolledStudentData).length;
+           }else {
+            this.enrolledStudentRecordLength  =0;
+            this.messageService.add({key: 'custom', severity:'error', summary: 'Data not found'});
+          }
+        } 
+      })
+  }
   loadSubGameChange(subgame) {
     this.selectedAge ='';
     this.selectedGender ='';
@@ -269,16 +306,10 @@ export class SgfiEntriesComponent implements OnInit {
     }
   }
   getSchools() {
-    this.getSchoolList=[];
+
     this.studentRecordLength = 0;
-    if(this.subGameIdArray.length >0 ) {
-      this.subGameId = this.subGameIdArray.toString();
-    } else {
-      this.subGameId ='N';
-    }
-    this.getSchoolList.push(
-      this.yearvalue,this.gameId,this.selectedAge,this.genderVal,this.gameType
-    );
+  
+   
    // this.getAlreadyAddedData();
     const formData = new FormData();
     formData.append('getSchoolList', JSON.stringify(this.getSchoolList));
@@ -363,6 +394,16 @@ export class SgfiEntriesComponent implements OnInit {
     );
   }
   addStudent(studentData) {
+    console.log('alreadyAddedStudentList',this.alreadyAddedStudentList)
+    let findElement = this.alreadyAddedStudentList.find(el => (el.sId == studentData.sId));
+     console.log("array find",findElement);
+     if(findElement) {
+      this.alreadyExist = true;
+      this.messageService.add({key: 'custom', severity:'error', summary: 'This studnet already exist in database'});
+      console.log('im yes')
+     } else {
+      this.alreadyExist = false;
+     }
     this.isDuplicate = false;
     if(this.sgfiStudentArray.length !== 20) {
       if (this.sgfiStudentArray.length > 0) {
@@ -376,9 +417,9 @@ export class SgfiEntriesComponent implements OnInit {
         }
       }  
   
-      if(this.isDuplicate) {
+      if(this.isDuplicate ) {
         this.messageService.add({key: 'custom', severity:'error', summary: 'This studnet already exist!'});
-      }  else {
+      }  else if(!this.alreadyExist) {
       this.sgfiStudentArray.push({
         'studentId':studentData.sId,
         'studentName':studentData.studentName,

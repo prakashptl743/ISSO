@@ -48,6 +48,12 @@ enrollStudent(userData) {
     catchError(this.handleError)
   );
 }
+enrollStudentFile(userData) { 
+  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/enrollStudentFile',userData)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
 
 
 getStudentForStaff(schoolId,gameId) {
@@ -62,6 +68,12 @@ getSubGameList(gameId){
 }
 loadSchoolByGame(gameData){
   return this.http.post<any>(this.serverUrl + 'SgfiEntries/schoolList/',gameData)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
+getEnrolledStudentData(gameData){
+  return this.http.post<any>(this.serverUrl + 'SgfiEntries/getEnrolledStudentData/',gameData)
   .pipe(
     catchError(this.handleError)
   );

@@ -1,185 +1,17 @@
 <div *ngIf="showSgfi">
-<div class="ui-g-4">
-    <p-dropdown    [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="gameOptions"  size="30" ></p-dropdown>
+ 
+<div class="event-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-nav">
+             </div>
+        </div> 
+     </div>
 </div>
-<!-- <div [ngClass]="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog  modal-dialog-centered" role="document" style="padding-left: 100px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">SGFI STUDENT ENTRY FORM</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-            </div>
-
-
-            
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                      <div class="col-sm align-form-menu" (click)="formMenu('form')" [ngClass]="isForm ? 'isMenuActive' : '' ">
-                        <i class="pi pi-calendar"></i> 
-                         ENROLL FORM
-                      </div>
-                      <div class="col-sm align-form-menu"  (click)="formMenu('doc')" [ngClass]="isDoc ? 'isMenuActive' : ''">
-                        <i class="pi pi-upload"></i> 
-                      UPLOAD DOCUMENTS
-                      </div>
-                      <div class="col-sm align-form-menu"  (click)="formMenu('payment')" [ngClass]="isPayment ? 'isMenuActive' : ''">
-                        <i class="pi pi-money-bill"></i> 
-                       PAYMENT
-                      </div>
-                    </div>
-                  </div>
-                
-                <div *ngIf="isForm">
-                    <div class="col-md-12 align-sgfi-form">
-                        <form [formGroup]="sgfiEnrollForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
-
-                        <div class="col-md-4">
-                                <div [hidden]="formDir.submitted">
-                                        <div class="align-form-column">
-                                            <label for="name">Name 44</label>
-                                            <input id="name" class="form-control" [(ngModel)]="studentName"
-                                                formControlName="name" required >
-                                    
-                                            <div *ngIf="name.invalid && (name.dirty || name.touched)"
-                                                class="alert alert-danger">
-                                    
-                                            <div *ngIf="name.errors.required">
-                                                Name is required.
-                                            </div>
-                                            <div *ngIf="name.errors.minlength">
-                                                Name must be at least 4 characters long.
-                                            </div>
-                                            <div *ngIf="name.errors.forbiddenName">
-                                                Name cannot be Bob.
-                                            </div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="align-form-column">
-                                            <label for="alterEgo">Father Name</label>
-                                            <input id="fatherName" class="form-control" [(ngModel)]="fatherName" formControlName="fatherName">
-                                        </div>
-                                        <div class="align-form-column">
-                                            <label for="alterEgo">Mother Name</label>
-                                            <input id="motherName" class="form-control" formControlName="motherName">
-                                        </div>
-                                        <div class="align-form-column">
-                                            <label for="alterEgo">School Name</label>
-                                            <input id="schoolName"  [(ngModel)]="schoolName"  formControlName="schoolName" class="form-control" readonly>
-                                        </div>
-                                    
-                                        <button type="submit" class="btn btn-default"
-                                                [disabled]="sgfiEnrollForm.invalid">Submit</button>
-                                        <button type="button" class="btn btn-default"
-                                                (click)="formDir.resetForm({})">Reset</button>
-                                </div>
-                          
-                        </div> 
-                        <div class="col-md-4">
-                            <div [hidden]="formDir.submitted">
-                                <div class="align-form-column">
-                                    <label for="name">Name</label>
-                                    <input id="name" class="form-control" [(ngModel)]="studnetName"
-                                        formControlName="name" required >
-                            
-                                    <div *ngIf="name.invalid && (name.dirty || name.touched)"
-                                        class="alert alert-danger">
-                            
-                                    <div *ngIf="name.errors.required">
-                                        Name is required.
-                                    </div>
-                                    <div *ngIf="name.errors.minlength">
-                                        Name must be at least 4 characters long.
-                                    </div>
-                                    <div *ngIf="name.errors.forbiddenName">
-                                        Name cannot be Bob.
-                                    </div>
-                                    </div>
-                                </div>
-                            
-                                <div class="align-form-column">
-                                    <label for="alterEgo">Father Name</label>
-                                    <input id="fatherName" class="form-control" [(ngModel)]="fatherName" formControlName="fatherName">
-                                </div>
-                                <div class="align-form-column">
-                                    <label for="alterEgo">Mother Name</label>
-                                    <input id="motherName" class="form-control" formControlName="motherName">
-                                </div>
-                                <div class="align-form-column">
-                                    <label for="alterEgo">School Name</label>
-                                    <input id="schoolName"  [(ngModel)]="schoolName"  formControlName="schoolName" class="form-control" readonly>
-                                </div>
-                            
-                                <button type="submit" class="btn btn-default"
-                                        [disabled]="sgfiEnrollForm.invalid">Submit</button>
-                                <button type="button" class="btn btn-default"
-                                        (click)="formDir.resetForm({})">Reset</button>
-                        </div>
-                  
-                        </div>
-                        <div class="col-md-4">
-                            <div [hidden]="formDir.submitted">
-                                <div class="align-form-column">
-                                    <label for="name">Name</label>
-                                    <input id="name" class="form-control" [(ngModel)]="studentName"
-                                        formControlName="name" required >
-                            
-                                    <div *ngIf="name.invalid && (name.dirty || name.touched)"
-                                        class="alert alert-danger">
-                            
-                                    <div *ngIf="name.errors.required">
-                                        Name is required.
-                                    </div>
-                                    <div *ngIf="name.errors.minlength">
-                                        Name must be at least 4 characters long.
-                                    </div>
-                                    <div *ngIf="name.errors.forbiddenName">
-                                        Name cannot be Bob.
-                                    </div>
-                                    </div>
-                                </div>
-                            
-                                <div class="align-form-column">
-                                    <label for="alterEgo">Father Name</label>
-                                    <input id="fatherName" class="form-control" [(ngModel)]="fatherName" formControlName="fatherName">
-                                </div>
-                                <div class="align-form-column">
-                                    <label for="alterEgo">Mother Name</label>
-                                    <input id="motherName" class="form-control" formControlName="motherName">
-                                </div>
-                                <div class="align-form-column">
-                                    <label for="alterEgo">School Name</label>
-                                    <input id="schoolName"  [(ngModel)]="schoolName"  formControlName="schoolName" class="form-control" readonly>
-                                </div>
-                            
-                                <button type="submit" class="btn btn-default"
-                                        [disabled]="sgfiEnrollForm.invalid">Submit</button>
-                                <button type="button" class="btn btn-default"
-                                        (click)="formDir.resetForm({})">Reset</button>
-                        </div>
-                  
-                        </div>
-                    </form>
-                    </div>
-                </div>
-                  
-             </div>
-             <div *ngIf="isDoc">
-                  <h3>I am doc</h3>
-             </div>
-             <div *ngIf="isPayment">
-                <h3>I am Payment</h3>
-             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div class="col-md-3 align-game-div">
+    <div>Select Game</div>
+<p-dropdown    [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="gameOptions"  size="30" ></p-dropdown>
+</div>
 <table class="table"  *ngIf="studentRecordLength>0">
     <thead class="thead-dark">
       <tr>
@@ -188,37 +20,44 @@
         <th scope="col">Age</th>
         <th scope="col">Gender</th>
         <th scope="col">Action</th>
+        <th scope="col">Status</th>
      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let student of alreadyAddedStudentList; let i = index;">
+      <tr *ngFor="let student of sgfiStudentData; let i = index;">
         <td>{{student.studentName}}</td>
         <td>{{student.gameName}}</td>
         <td>{{student.ageRange}}</td>
-        <td><span *ngIf="student.gender == '1'">Boys</span> <span *ngIf="student.gender == '2'">Girls</span></td>
         <td>
-            <button   class="btn pay-now-button"  type="button" (click)="showDialog1()">ENROLL NOW</button>
+            <span> {{student.gender == '1' ? 'Boys' : 'Girls'}} </span>
+        </td>
+        <td>
+            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">ENROLL NOW</button>
+            <button *ngIf="student.isForm == '1' && student.isDoc == '1' &&  student.isPaid == '1'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">VIEW/UPDATE</button>
+
         </td> 
+        <td>
+            <span class="plain-button btn btn-success" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'"> Completed</span>
+            <span class="plain-button btn btn-warning" *ngIf="student.isForm == '1' || student.isDoc == '1' ||  student.isPaid == '1'"> In Progress</span>
+            <span class="plain-button btn btn-danger" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
+
+        </td>
       </tr>
     </tbody>
   </table>
- 
- 
- 
- 
-</div>
+ </div>
 <div *ngIf="!showSgfi">
     <img class="align-img" src="assets/images/web/noData.JPG">
 </div>
- 
  
 
 
      <p-dialog  
      [contentStyle]="{'overflow-y': 'auto', 'overflow-x': 'hidden', 'max-height': '80vh','min-height':'250px'}"
-        header="Header" 
+        header= "{{dialogHeader}}"
         styleClass="enroll-popup"
         [modal]="true"
+        (onHide)="cancel()"
         [(visible)]="visible">   
           <div class="justify-content-center">
         <div class="container">
@@ -245,7 +84,7 @@
                         <div [hidden]="formDir.submitted">
                                 <div class="align-form-column">
                                     <label for="name">Student Name <span class="required-label">*</span></label>
-                                    <input id="name" class="form-control" [(ngModel)]="studentName" formControlName="name"
+                                    <input  name="studentNameText" id="studentName" class="form-control" [(ngModel)]="studentName" formControlName="name"
                                     [ngClass]="{'is-invalid error-input-border': name.invalid && (name.dirty || name.touched)}">
  
                                     <div class="error-message" *ngIf="name.invalid && (name.dirty || name.touched)">
@@ -408,7 +247,7 @@
             </form>
         </div>
             <div>
-                <button  type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+                <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
                 <button class="align-button" type="submit" (click)="onFormSubmit()" [disabled]="sgfiEnrollForm.invalid" class="btn btn-primary">Save changes</button>
             </div>  
             
@@ -416,54 +255,58 @@
         </div>
         <div *ngIf="isDoc">
             <div class="col-md-12 align-sgfi-form">
-                <form [formGroup]="sgfiEnrollForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="sgfiFileEnrollForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
                 <div class="col-md-6">
                         <div [hidden]="formDir.submitted">
                                 <div class="align-form-column">
                                     <label for="name">Candidate Scanned Sign</label>
-                                        <div class="card flex justify-content-center">
-                                            <input type="file" class="form-control" id="customFile" />
+                                        <div class="">
+                                            <input  id="studentSign" type="file"  formControlName="studentSign" class="form-control" id="customFile" />
                                         </div>
                                 </div>
                             
                                 <div class="align-form-column">
                                     <label for="alterEgo">Scanned Aadhaar/Passport/OCI</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div class="">
+                                        <input type="file"  id="studentGovDoc" formControlName="studentGovDoc" class="form-control" id="customFile" />
                                     </div>                                </div>
                                 <div class="align-form-column">
                                     <label for="alterEgo">School Bonafide</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div>
+                                        <input type="file" id="studentStudnetBonafide"  formControlName="studentStudnetBonafide" class="form-control"/>
                                     </div>                                </div>
                                 <div class="align-form-column">
                                     <label for="alterEgo">Last Year Mark Sheet</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div>
+                                        <input type="file" id="lastYearmarkSheet" formControlName="lastYearmarkSheet" class="form-control"/>
                                     </div>                                </div>
                                 <div class="align-form-column">
                                     <label for="alterEgo">Birth Certificate</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div>
+                                        <input type="file" id="birthCertificate" formControlName="birthCertificate" class="form-control" />
                                     </div>                                </div>
                                 <div class="align-form-column">
                                     <label for="alterEgo">Head Master Sign</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div>
+                                        <input type="file" id="headMasterSign" formControlName="headMasterSign" class="form-control"  />
                                     </div>                                </div>
                                 <div class="align-form-column">
                                     <label for="alterEgo">Student Photo</label>
-                                    <div class="card flex justify-content-center">
-                                        <input type="file" class="form-control" id="customFile" />
+                                    <div>
+                                        <input type="file" id="studentPhoto"  formControlName="studentPhoto" class="form-control" />
                                     </div>                                </div>
                         </div>
                   
                 </div>
                 </form>
                 </div>
+                <div>
+                    <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+                    <button class="align-button" type="submit" (click)="onFileSubmit()"  class="btn btn-primary">Save changes</button>
+                </div>  
        </div>
        <div *ngIf="isPayment">
-        <div class="col-md-12">
+        <div class="col-md-12 align-sgfi-form">
             <h3>Total Payable Amount</h3>
             <div><h3>{{payableAmount | number: '.2'}} Rs.</h3></div>
         </div>

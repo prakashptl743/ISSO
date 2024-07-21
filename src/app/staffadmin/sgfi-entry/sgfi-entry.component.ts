@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { SgfiEntriesService } from 'src/app/admin/service/sgfi-entries.service';
 import { MessageService, SelectItem,Message } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { PaymentService } from '../service/payment.service';
+import { isPlatformBrowser } from '@angular/common';
 interface UploadEvent {
   originalEvent: Event;
   files: File[];
@@ -16,6 +17,7 @@ interface UploadEvent {
   providers: [MessageService,ConfirmationService]
 })
 export class SgfiEntryComponent implements OnInit {
+  @ViewChild('studentNameText', {static: false}) formDir: ElementRef;
   rootGameServicData: any;
   rootGameData: any;
   gameOptions: any[];
@@ -24,11 +26,12 @@ export class SgfiEntryComponent implements OnInit {
   gameId: any;
   gameName: any;
   gameType: any;
-  alreadyAddedStudentList: any;
+  sgfiStudentData: any;
   studentRecordLength: number;
   showSgfi: boolean = false;
   display: boolean= false;
-   sgfiEnrollForm: FormGroup;
+  sgfiEnrollForm: FormGroup;
+  sgfiFileEnrollForm: FormGroup;
   modal='modal';
   isForm: boolean;
   isDoc: boolean;
@@ -50,8 +53,12 @@ export class SgfiEntryComponent implements OnInit {
   totalAmount: any;
   paymentTypeInfo: any;
   generatedpaymentId: any;
+  dialogHeader: string;
+  ageRange: any;
+  gender: any;
  
   constructor( 
+    @Inject(PLATFORM_ID) private platformId: Object,
     private sgfiEntriesService :SgfiEntriesService,  
     private messageService: MessageService,
     private payemntService:  PaymentService,
@@ -60,6 +67,16 @@ export class SgfiEntryComponent implements OnInit {
     
   }
  
+  get studentSign() { return this.sgfiFileEnrollForm.get('studentSign'); }
+  get studentGovDoc() { return this.sgfiFileEnrollForm.get('studentGovDoc'); }
+  get studentStudnetBonafide() { return this.sgfiFileEnrollForm.get('studentStudnetBonafide'); }
+  get lastYearmarkSheet() { return this.sgfiFileEnrollForm.get('lastYearmarkSheet'); }
+  get birthCertificate() { return this.sgfiFileEnrollForm.get('birthCertificate'); }
+  get headMasterSign() { return this.sgfiFileEnrollForm.get('headMasterSign'); }
+  get studentPhoto() { return this.sgfiFileEnrollForm.get('studentPhoto'); }
+  
+
+
   // get name() { return this.sgfiEnrollForm.controls; }
    get name() { return this.sgfiEnrollForm.get('name'); }
    get fatherName() { return this.sgfiEnrollForm.get('fatherName'); }
@@ -96,8 +113,6 @@ export class SgfiEntryComponent implements OnInit {
     this.totalAmount = amt;
     this.studentId = studentId;
     this.paymentTypeInfo = paymentType;
-   // this.paymentCapture.bind(this);
-    // this.paymentCapture1();
     let options = {
       "key": "rzp_live_08wdE0QgVsFNVd", // Enter the Key ID generated from the Dashboard
       "amount": amt * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -106,11 +121,8 @@ export class SgfiEntryComponent implements OnInit {
       "name": 'SGFI PAYMENT',
       "description": this.gameName,
       "image": "https://issoindia.com/assets/img/logo_retina.png", 
-      //'handler': this.paymentCapture.bind(this),
       'handler':(response)=>{this.paymentCapture(response)},
-   
-      // "order_id": "order_9A33XWu170gUtb", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-     "callback_url": "http://localhost:4200/#/staffadmin/sgfi",
+      "callback_url": "http://localhost:4200/#/staffadmin/sgfi",
       "prefill": {
           "name": "",
           "email": "", 
@@ -123,10 +135,7 @@ export class SgfiEntryComponent implements OnInit {
           "color": "#3399cc"
       }
   };
-  // options.handler = ((response) => {
-  //   //this.pay_id = response.razorpay_payment_id;
-  //   this.orderanything()
-  // }); 
+
   var propay = new this.payemntService.nativeWindow.Razorpay(options);
   propay.open();
   
@@ -159,16 +168,30 @@ export class SgfiEntryComponent implements OnInit {
     error => this.error = error
    );
   }
-  initialiseForm(response) {
-    console.log(response)
-    this.studentName = response[0].studentName;
-    this.selectedFatherName = response[0].fatherName;
-    this.schoolName =  response[0].schoolName;
-    this.dateOfBirth =  response[0].dateOfBirth;
-    this.schoolAddress = response[0].schoolAddress;
-    this.studentId = response[0].sId;
-    this.completedYear =  moment.duration(moment().diff(response[0].dateOfBirth));
-    this.schoolContact =response[0].designation1;
+  initialFileForm(index) {
+    this.sgfiFileEnrollForm = new FormGroup({
+      'studentSign': new FormControl('', [ Validators.required]),
+      'studentGovDoc': new FormControl('', [ Validators.required]),
+      'studentStudnetBonafide': new FormControl('', [ Validators.required]),
+      'lastYearmarkSheet': new FormControl('', [ Validators.required]),
+      'birthCertificate': new FormControl('', [ Validators.required]),
+      'headMasterSign': new FormControl('', [ Validators.required]),
+      'studentPhoto': new FormControl('', [ Validators.required]),
+    });
+  }
+  initialiseForm(index) {
+    this.studentName = this.sgfiStudentData[index].studentName;
+    this.selectedFatherName = this.sgfiStudentData[index].fatherName;
+    this.schoolName =  this.sgfiStudentData[index].schoolName;
+    this.dateOfBirth =  this.sgfiStudentData[index].dateOfBirth;
+    this.schoolAddress = this.sgfiStudentData[index].schoolAddress;
+    this.studentId = this.sgfiStudentData[index].sId;
+    this.ageRange = this.sgfiStudentData[index].ageRange;
+    this.gender = this.sgfiStudentData[index].gender;
+    this.completedYear =  moment.duration(moment().diff(this.sgfiStudentData[index].dateOfBirth));
+    this.schoolContact =this.sgfiStudentData[index].designation1;
+    let genderVal = this.sgfiStudentData[index].gender  === '1' ? 'BOYS' : 'GIRLS'
+    this.dialogHeader = this.studentName+' '+this.sgfiStudentData[index].gameName+' '+'UNDER ' +this.sgfiStudentData[index].ageRange+ ' '+ genderVal;
     this.sgfiEnrollForm = new FormGroup({
       'name': new FormControl('', [ Validators.required]),
       'fatherName': new FormControl('', [ Validators.required]),
@@ -238,19 +261,16 @@ export class SgfiEntryComponent implements OnInit {
  
   }
   
-  showDialog1() {
-    this.visible = true;
-    this.isForm = true;
-}
+
   getStudents() {
     this.sgfiEntriesService.getStudentForStaff(this.schoolId,this.gameId).subscribe(response => {
           if(response!=="") {
-              this.alreadyAddedStudentList =   response;
+              this.sgfiStudentData =   response;
               this.dateOfBirth =  response[0].dateOfBirth
-              this.studentRecordLength = Object.keys( this.alreadyAddedStudentList).length;
-              if(this.studentRecordLength >0) {
-                this.initialiseForm(response)
-              }
+              this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
+              // if(this.studentRecordLength >0) {
+              //   this.initialiseForm(response)
+              // }
           }
       } ,
       error => {
@@ -261,13 +281,36 @@ export class SgfiEntryComponent implements OnInit {
 showDialog() {
   this.display = true;
  }
+ setFocus(id: string) {
+  if (isPlatformBrowser(this.platformId)) {
+    this[id].nativeElement.focus();
+  } 
+}
+ onFileSubmit() {
+  const formData = new FormData();
+  formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value);
+  formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value);
+  formData.append('studentStudnetBonafide', this.sgfiFileEnrollForm.get('studentStudnetBonafide').value);
+  formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value);
+  formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value);
+  formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value);
+  formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value);
+  this.sgfiEntriesService.enrollStudentFile(formData).subscribe(
+    res => {
+      if(res.status === 'success') { 
+        this.messageService.add({key: 'custom', severity:'success', summary: 'Student Data Added Successfully'});
+        this.sgfiFileEnrollForm.reset();
+        // this.isDoc = true;
+        // this.isForm = false;
+        // this.selectedFatherName ='';
+     } 
+     },
+    error => this.error = error
+
+    );
+ }
  onFormSubmit() {
  this.sgfiFormData = this.sgfiEnrollForm.value;
-  console.log(this.sgfiFormData);
-  // const formData = new FormData();
-  // formData.append('sgfiStudentData', JSON.stringify(this.sgfiFormData));
-
-   
   const formData = new FormData();
   formData.append('name', this.sgfiEnrollForm.get('name').value);
   formData.append('fatherName', this.sgfiEnrollForm.get('fatherName').value);
@@ -288,7 +331,10 @@ showDialog() {
   formData.append('schoolId', this.schoolId);
   formData.append('gameId', this.gameId);
   formData.append('studentId', this.studentId);
+  formData.append('ageRange', this.ageRange);
+  formData.append('gender', this.gender);
 
+ 
       this.sgfiEntriesService.enrollStudent(formData).subscribe(
         res => {
           if(res.status === 'success') { 
@@ -308,11 +354,36 @@ openModal(inp: string) {
   this.modal='modal-open';
   this.isForm = true;
 }
-closeModal(){
-  this.modal='modal';
-  this.isForm = false;
+showEnrollDialog(event) {
+  
+  //this.setFocus('studentNameText');
+ // this.setFocusOnStudent('studentNameText')
+  this.visible = true;
+  this.isForm = true;
   this.isDoc = false;
   this.isPayment = false;
+  this.initialiseForm(event)
+  this.initialFileForm(event)
+  setTimeout(() => {
+     document.getElementById('studentName').focus();
+  }, 500);
+
+}
+setFocusOnStudent(studentNameText) {    
+  // const ele = this.formDir.nativeElement[studentNameText];    
+  // if (ele) {
+  //   ele.focus();
+  // }
+  document.getElementById('studentName').focus();
+}
+closeModal(){
+  this.sgfiEnrollForm.reset()
+  this.visible = false;
+}
+// (onHide)="cancel()" 
+cancel() {
+  this.sgfiEnrollForm.reset()
+  this.visible = false;
 }
 formMenu(type:string) {
   if (type=='form') {

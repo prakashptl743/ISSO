@@ -72,6 +72,12 @@
     text-align: left;
     vertical-align: middle;
   }
+  .close-button {
+    margin: 10px;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+  }
 .align-form-menu {
     font-size: 14px;
     color: gray;
@@ -82,11 +88,25 @@
     text-decoration: underline;
 }
 .align-sgfi-form {
-    padding: 10px 0 0 0px;
-    border: 1px solid;
-    margin: 10px 0;
+    /* padding: 10px 0 0 0px;
+    margin: 10px 0; */
+
+    padding: 10px 0 10px 0px;
+    margin: 10px 0 12px 0;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+.sgfi-enroll-button {
+  background: blue !important;
+    border-color: blue !important;
+}
+.plain-button {
+  cursor: default !important;
 }
 .align-form-column {
     padding: 5px 0;
+}
+.align-game-div {
+  padding: 0 0 20px 0;
 }
   

@@ -104,3 +104,6 @@ table {
     text-align: center;
     font-weight: bold;
 }
+:host ::ng-deep.table>thead>tr>th { 
+  vertical-align: text-top !important;
+}

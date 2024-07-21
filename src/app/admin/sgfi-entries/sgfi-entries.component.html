@@ -1,8 +1,8 @@
 <div class="tab">
-    <button [ngClass]="isAddMStudent ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Add Student</button>
+    <button [ngClass]="isAddStudent ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Add Student</button>
     <button [ngClass]="isViewStudent ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">View Student</button>
 </div>
-<div *ngIf="isAddMStudent">
+<div>
 <div class="ui-g-12">
     <div class="ui-g-4">
       <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
@@ -40,10 +40,11 @@
     <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
   </div>
   <div class="ui-g-4">
-    <p-dropdown [disabled]="!schoolReadble" [(ngModel)]="selectedSchool"  (onChange)="loadSchoolChange($event)" [options]="schoolOptions"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
+    <p-dropdown *ngIf="isAddStudent" [disabled]="!schoolReadble" [(ngModel)]="selectedSchool"  (onChange)="loadSchoolChange($event)" [options]="schoolOptions"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
   </div>
 </div>
 </div>
+ 
 <div class="accordion" id="accordionExample">
   <div class="ui-g-12" *ngIf="studentRecordLength > 0">
    <div class="card">
@@ -108,7 +109,7 @@
             <tbody>
               <tr *ngFor="let student of studentData; let i = index;">
                 <td>{{student.studentName}}</td>
-                <td>{{student.subGameName}}</td>
+                <td>{{student.subGameName == 'undefined' ? 'N/A' : 'student.subGameName'}}</td>
                 <td>
                   <p-button class="align-submit"   label="Add" (click)="addStudent(student)">
                   </p-button>
@@ -153,6 +154,37 @@
       </div>
 </div>
 </div>
+</div>
+ 
+
+ 
+<div class="ui-g-12 align-merit-content" *ngIf="enrolledStudentRecordLength > 0">
+  <table class="table"  [ngClass]="{ 'hide-table':enrolledStudentData.length ==0 }">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Student Name</th>
+        <th scope="col">Game Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Gender</th>
+        <th scope="col">School</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of enrolledStudentData; let i = index;">
+        <td>{{student.studentName}}</td>
+        <td>{{student.gameName}}</td>
+        <td>{{student.ageRange}}</td>
+        <td> {{student.gender == '1' ? 'Boys' : 'Girls'}}</td>
+        <td>{{student.schoolName}}</td>
+        <td> 
+          <span class="plain-button btn btn-success" *ngIf="student.isDocUpdate == '1' && student.isPaid == '1'"> Completed</span>
+          <span class="plain-button btn btn-warning" *ngIf="student.isDocUpdate == '1' ||  student.isPaid == '1'">In Progress</span>
+          <span class="plain-button btn btn-danger" *ngIf="student.isDocUpdate == '0' &&  student.isPaid == '0'"> Pending</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <p-confirmDialog key="confirm-delete-student" header="Delete SGFI Student" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
 <p-confirmDialog key="confirm-add-student" header="Add SGFI Student" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
