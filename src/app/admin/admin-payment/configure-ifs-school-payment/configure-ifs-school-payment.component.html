@@ -1,0 +1,10 @@
+<form [formGroup]="sgfiAmountForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+          <label for="inputEmail4">IFS School Amount</label>
+          <input class="form-control" formControlName="amount" type="text" required>
+        </div>
+    </div>
+    <input id="float-input" formControlName="id"  type="hidden"  pInputText> 
+    <button [disabled]="!sgfiAmountForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+  </form>

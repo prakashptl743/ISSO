@@ -43,7 +43,6 @@ editCalenderData(id, employee) {
 
  
 saveCalenderData(schoolInfo) {
-   console.log('Data in service'+JSON.stringify(schoolInfo));
   return this.http.post<any>(this.serverUrl + 'webcalender/addNewCalender',schoolInfo)
   .pipe(
     catchError(this.handleError)

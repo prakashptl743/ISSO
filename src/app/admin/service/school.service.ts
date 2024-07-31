@@ -92,7 +92,7 @@ schoolRegistration(schoolInfo) {
 }
 
 uploadDoc(docInfo) {
-  return this.http.post<any>(this.serverUrl + 'schoolRegistration/uploadDoc',docInfo)
+  return this.http.post<any>(this.serverUrl + 'IfsSchool/uploadDoc',docInfo)
   .pipe(
     catchError(this.handleError)
   );

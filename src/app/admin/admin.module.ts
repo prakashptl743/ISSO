@@ -43,6 +43,7 @@ import { CertificateContentComponent } from '../certificate-content/certificate-
 import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-payment/configure-sgfi-payment.component';
 import { ChangePassComponent } from '../change-pass/change-pass.component';
 import { SgfiEntriesComponent } from './sgfi-entries/sgfi-entries.component';
+import { ConfigureIfsSchoolPaymentComponent } from './admin-payment/configure-ifs-school-payment/configure-ifs-school-payment.component';
  
 
 @NgModule({
@@ -91,6 +92,7 @@ import { SgfiEntriesComponent } from './sgfi-entries/sgfi-entries.component';
     AdminPayment,
     CertificateContentComponent,
     ConfigureSgfiPaymentComponent,
+    ConfigureIfsSchoolPaymentComponent,
     ChangePassComponent,
     SgfiEntriesComponent
   ],

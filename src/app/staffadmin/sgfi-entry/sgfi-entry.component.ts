@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { SgfiEntriesService } from 'src/app/admin/service/sgfi-entries.service';
 import { MessageService, SelectItem,Message } from 'primeng/api';
@@ -56,12 +56,20 @@ export class SgfiEntryComponent implements OnInit {
   dialogHeader: string;
   ageRange: any;
   gender: any;
- 
+  selectedProfile: string;
+  url: any;
+  isMoreDot: boolean;
+  fileName: number;
+  fullFilename: string;
+  isValidFile: boolean;
+  editStudentPhoto: string;
+  schoolForm: FormGroup;
   constructor( 
     @Inject(PLATFORM_ID) private platformId: Object,
     private sgfiEntriesService :SgfiEntriesService,  
     private messageService: MessageService,
     private payemntService:  PaymentService,
+    private fb: FormBuilder,
 
   ) { 
     
@@ -177,6 +185,16 @@ export class SgfiEntryComponent implements OnInit {
       'birthCertificate': new FormControl('', [ Validators.required]),
       'headMasterSign': new FormControl('', [ Validators.required]),
       'studentPhoto': new FormControl('', [ Validators.required]),
+      
+    });
+
+    this.schoolForm = this.fb.group({
+ 
+      profile: ['', Validators.required],
+      editStudentPhoto:[],
+      schoolId: '',
+    
+      
     });
   }
   initialiseForm(index) {
@@ -286,15 +304,66 @@ showDialog() {
     this[id].nativeElement.focus();
   } 
 }
+onFileSelected(event) {    
+  if(event.target.files) { 
+   var reader = new FileReader();
+   reader.readAsDataURL(event.target.files[0]);
+   reader.onload=(event:any)=>{
+     this.url=event.target.result;
+   }
+   var newName=(event.target.files[0].name).split('.').slice(0, -1).join('.')
+   if(newName.indexOf('.') !== -1)
+   {
+     this.isMoreDot = true;
+   } else {
+      this.isMoreDot = false;
+   }
+   var removeSpace = newName.replace(/\s/g, "");
+   var ext = (event.target.files[0].name).split('.').pop(); 
+   this.fileName= Math.floor((Math.random() * 10000000000000) + 1);
+   this.fullFilename= removeSpace+this.fileName+'.'+ext;
+   console.log(this.fullFilename)
+  // this.blobName = this.fullFilename
+   const profile = event.target.files[0];
+   const fileType = profile.type
+ 
+   if ((fileType == 'application/pdf' || fileType == 'application/PDF') && !this.isMoreDot) {
+     this.isValidFile = true;
+   } else {
+     this.isValidFile = false;
+     const inputElement: HTMLInputElement = document.getElementById('my-input') as HTMLInputElement
+     inputElement.value = '';
+     this.selectedProfile = '';
+     if(document.getElementById('my-input')) {
+         let control2 = this.sgfiFileEnrollForm.get('profile');
+         control2.setValue(null);
+         control2.setValidators([Validators.required]);
+         control2.updateValueAndValidity();
+     }
+   }
+ 
+   this.sgfiFileEnrollForm.get('profile').setValue(profile);
+ 
+   
+ } 
+}
  onFileSubmit() {
   const formData = new FormData();
-  formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value);
-  formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value);
-  formData.append('studentStudnetBonafide', this.sgfiFileEnrollForm.get('studentStudnetBonafide').value);
-  formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value);
-  formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value);
-  formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value);
-  formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value);
+  // formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value);
+  // formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value); 
+  // formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value);
+  // formData.append('studentStudnetBonafide', this.sgfiFileEnrollForm.get('studentStudnetBonafide').value);
+  // formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value);
+  // formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value);
+  // formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value);
+  // formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value);
+  if(this.fullFilename =='') {
+    // this.fullFilename = 'edit'
+    // formData.append('editFile',  this.editStudentPhoto);
+   } else {
+     formData.append('editFile',  this.editStudentPhoto);
+     formData.append('profile', this.schoolForm.get('profile').value, this.fullFilename); 
+   }
   this.sgfiEntriesService.enrollStudentFile(formData).subscribe(
     res => {
       if(res.status === 'success') { 

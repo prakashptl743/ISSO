@@ -159,8 +159,6 @@
                 </div>
                 <div class="col-md-4">
                     <div [hidden]="formDir.submitted">
-                     
-                     
                         <div class="align-form-column">
                             <label for="alterEgo">Discipline <span class="required-label">*</span></label>
                             <input id="dicipline"  formControlName="dicipline" class="form-control"
@@ -255,8 +253,33 @@
         </div>
         <div *ngIf="isDoc">
             <div class="col-md-12 align-sgfi-form">
+                <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-6"> 
+                      <label for="inputEmail4">Attach PDF</label> 
+       
+                      <input type="file" id="my-input"  [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control" required>
+                      <span class="file-hint">Please upload file below 100 KB</span><br/>
+                      <span class="form-group" *ngIf="!isValidFile">
+                        <span class="error-class">Invalid File type Please select file PDF format only</span>
+                      </span><br/>
+                      <span class="form-group" *ngIf="isFileBig">
+                        <span class="error-class">File size too large please select image below 100 KB</span>
+                      </span> 
+                      <input type="hidden" [(ngModel)]="editStudentPhoto" formControlName="editStudentPhoto" class="form-control"
+                      id="inputWarning1">
+                    </div>
+                    
+                  
+                </div>
+
+
+                <button   class="btn btn-primary marginR10" type="button" (click)="onFileSubmit()">Submit</button>
+               
+        
+            </form>
                 <form [formGroup]="sgfiFileEnrollForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
-                <div class="col-md-6">
+                <div class="col-md-4">
                         <div [hidden]="formDir.submitted">
                                 <div class="align-form-column">
                                     <label for="name">Candidate Scanned Sign</label>
@@ -264,7 +287,10 @@
                                             <input  id="studentSign" type="file"  formControlName="studentSign" class="form-control" id="customFile" />
                                         </div>
                                 </div>
-                            
+                           
+
+
+
                                 <div class="align-form-column">
                                     <label for="alterEgo">Scanned Aadhaar/Passport/OCI</label>
                                     <div class="">
@@ -294,11 +320,16 @@
                                     <label for="alterEgo">Student Photo</label>
                                     <div>
                                         <input type="file" id="studentPhoto"  formControlName="studentPhoto" class="form-control" />
-                                    </div>                                </div>
+                                    </div>                               
+                                 </div>
                         </div>
                   
                 </div>
                 </form>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4"></div>
                 </div>
                 <div>
                     <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
