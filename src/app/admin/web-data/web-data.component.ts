@@ -76,6 +76,9 @@ export class WebDataComponent implements OnInit {
   eventStartDate: Date;
   eventEndDate: Date;
   minimumDate = new Date();
+  isWebVisible: boolean = true;
+  reportLabel: string;
+ 
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -373,7 +376,16 @@ hideExtraView() {
   this.display = false;
 }
  
-
+onloadMenu(index) {
+ 
+  if(index == '0') {
+    this.isWebVisible = true;
+    this.reportLabel = "Web Calender"
+  } else {
+    this.isWebVisible = false;
+    this.reportLabel = "IFS Data"
+  }
+  }
 onSubmit() {
       this.submitted = true;
       const formData = new FormData();

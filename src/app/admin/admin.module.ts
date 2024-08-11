@@ -44,6 +44,7 @@ import { ConfigureSgfiPaymentComponent } from './admin-payment/configure-sgfi-pa
 import { ChangePassComponent } from '../change-pass/change-pass.component';
 import { SgfiEntriesComponent } from './sgfi-entries/sgfi-entries.component';
 import { ConfigureIfsSchoolPaymentComponent } from './admin-payment/configure-ifs-school-payment/configure-ifs-school-payment.component';
+import { IfsSchoolDataComponent } from './ifs-school-data/ifs-school-data.component';
  
 
 @NgModule({
@@ -94,7 +95,9 @@ import { ConfigureIfsSchoolPaymentComponent } from './admin-payment/configure-if
     ConfigureSgfiPaymentComponent,
     ConfigureIfsSchoolPaymentComponent,
     ChangePassComponent,
-    SgfiEntriesComponent
+    SgfiEntriesComponent,
+    IfsSchoolDataComponent
+
   ],
   providers: [SumPipeModule,DatePipe,TextTransformPipeModule,AutoCompleteModule]
  

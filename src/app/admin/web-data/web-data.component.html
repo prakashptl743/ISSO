@@ -1,10 +1,15 @@
  
 
+<div class="tab">
+  <button [ngClass]="reportLabel=='Web Calender' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Web Calender</button>
+  <button [ngClass]="reportLabel=='IFS Data' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >ISF Data</button>
+ 
+</div>
 <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
 
-<div class="container mt-5">
-    <p class="display-6 fw-bold">Demo</p>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+ <div class="container mt-5 align-web-container">
+ 
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarColor02"
@@ -22,7 +27,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Pricing</a>
             </li>
-            <!-- Dropdown -->
+          
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                 data-mdb-toggle="dropdown" aria-expanded="false">
@@ -49,7 +54,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Items</a>
               </li>
-              <!-- Dropdown -->
+           
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                   data-mdb-toggle="dropdown" aria-expanded="false">
@@ -71,26 +76,16 @@
           </div>
         </div>
       </div>
-    </nav>
+    </nav> -->
 <div class="wrapper">
-    <p-menubar [model]="items" class="custom-menubar"></p-menubar>
-    <p-menubar [model]="items1" class="custom-menubar"></p-menubar>
-
-
-
-
-
-    
-<div id="content1" class="content-wrapper">
+    <!-- <p-menubar [model]="items" class="custom-menubar"></p-menubar>
+    <p-menubar [model]="items1" class="custom-menubar"></p-menubar>   -->
+   
+<div id="content1" class="content-wrapper" *ngIf="isWebVisible">
     <div class="sub-view-wrapper" *ngIf="display">
     <h2 class="headingSubview">{{subViewTitle}}</h2>
     <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-        <!-- <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Title</label>
-                <input class="form-control" id="float-input" formControlName="schoolTelePhone"  type="text" >  
-              </div>
-        </div>     -->
+      
         <div class="form-row">  
             <div class="form-group col-md-6">
               <label for="inputEmail4">Sport Name</label>
@@ -148,18 +143,12 @@
           
         </div>
      
-  
-           
-    
 
         <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
         <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
 
     </form>
-   <!--  <p-footer class="btn-footer">
-        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-    </p-footer> -->
+ 
 </div>
 <p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="calenderData" class="no-padding" filterBy="title,sportName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
 
@@ -247,4 +236,8 @@
 
 </p-dialog>    
  </div>
+ 
+  <div *ngIf="!isWebVisible">
+     <app-ifs-school-data></app-ifs-school-data>
+ </div>  
 </div>

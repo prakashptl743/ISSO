@@ -48,13 +48,13 @@ enrollStudent(userData) {
     catchError(this.handleError)
   );
 }
-enrollStudentFile(userData) { 
-  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/enrollStudentFile',userData)
+enrollStudentFile(fileData) { 
+  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/enrollStudentFile',fileData)
   .pipe(
     catchError(this.handleError)
   );
 }
-
+ 
 
 getStudentForStaff(schoolId,gameId) {
   return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/studentlListForStaff/' + schoolId +'/'+gameId).pipe(

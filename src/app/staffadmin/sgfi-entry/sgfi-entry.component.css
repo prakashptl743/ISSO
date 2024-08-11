@@ -63,7 +63,17 @@
       height: 100%;
     }
   }
- 
+  .error-class {
+    color: red;
+    padding-top: 15px;
+  }
+  input::file-selector-button {
+    font-weight: bold;
+    color: dodgerblue;
+    padding: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+  }
   :host::ng-deep .ui-dialog { 
     left: 210px !important;
   }

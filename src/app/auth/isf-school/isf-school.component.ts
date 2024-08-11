@@ -66,10 +66,10 @@ export class IsfSchoolComponent implements OnInit {
   mobileNumberVal: string;
   isPassportUpload: boolean = false; 
   isSchoolNocUpload:boolean= false;
-  isParentNocUpload:boolean= false;
-  passportVal = '';
-  schoolNocVal = '';
-  parenTNoctVal = '';
+  isParentNocUpload:boolean = false;
+  isMobfind: any;
+  isMobExist: boolean= false;
+ 
   showDialog() {
       this.display = true;
   }
@@ -100,6 +100,7 @@ export class IsfSchoolComponent implements OnInit {
     this.fileUpladForm();    
     this.getIfsSchoolAmout()
   }
+  
   getIfsSchoolAmout(){
     this.ifsSchoolService.getIfsSchoolAmount().subscribe(response => {
       if(response!=='') {
@@ -117,9 +118,10 @@ export class IsfSchoolComponent implements OnInit {
 
 
   fileUpladForm() {
+    const numericNumberReg= '^-?[0-9]\\d*(\\.\\d{1,2})?$';
     this.fileForm= this.pb.group({
       schoolId:[''],
-      mobNo:['', Validators.required],
+      mobNo:['', [Validators.required, Validators.pattern('^[0-9]+$'),Validators.min(1000000000), Validators.max(9999999999)]],
       name:['', Validators.required],  
       gameName:['', Validators.required],         
       profile:['', Validators.required],
@@ -223,16 +225,17 @@ onPassportSelected(event: Event): void {
    }
   
    if(this.filePassportInput.nativeElement.value) {
-    console.log('im if')
     this.isPassportUpload = true;
-    this.passportVal = '0';
+   
    } else {
     this.isPassportUpload = false;
-    console.log('im else')
-    this.passportVal = '1';
-   }
-  //console.log('im pathe-->'+this.filePassportInput.nativeElement.value)
+  }
+   if(this.isPassPortValidFile && !this.isPassportFileBig) {
     this.fileForm.get('profile').setValue(file);
+   } else {
+    this.fileForm.patchValue( {'profile':null} );
+   }
+ 
   }
 }
 resetFileInput(fileInput: HTMLInputElement): void {
@@ -262,13 +265,16 @@ onParentNocSelected(event: Event): void {
      this.isParnetNocFileBig = false;
    }
    if(this.fileInputparentNoc.nativeElement.value) {
-    this.isParentNocUpload = true;
-    this.parenTNoctVal  = '0';
+    this.isParentNocUpload = true; 
    } else {
-    this.isParentNocUpload = false;
-    this.parenTNoctVal= '1';
+    this.isParentNocUpload = false; 
    }
+   if(this.isParentNocValidFile && !this.isParnetNocFileBig) {
     this.fileForm.get('parentNoc').setValue(file);
+   } else {
+    this.fileForm.patchValue( {'parentNoc':null} );
+   }
+ 
   }
 }
 onSchoolNocSelected(event: Event): void {
@@ -296,50 +302,36 @@ onSchoolNocSelected(event: Event): void {
    }
 
    if(this.fileInputSchoolNoc.nativeElement.value) {
-    this.isParentNocUpload = true;
-    this.schoolNocVal  = '0';
+    this.isParentNocUpload = true; 
    } else {
-    this.isParentNocUpload = false;
-    this.schoolNocVal  = '1';
+    this.isParentNocUpload = false; 
    }
+   if(this.isSchoolNocValidFile && !this.isSchoolNocFileBig) {
     this.fileForm.get('schoolNoc').setValue(file);
+   } else {
+    this.fileForm.patchValue( {'schoolNoc':null} );
+   }
+    
   }
 }
 
 
-onFileSelected_old(event,fileName) {    
-  if(event.target.files) { 
-   var newName=(event.target.files[0].name).split('.').slice(0, -1).join('.')
-   var removeSpace = newName.replace(/\s/g, "");
-   var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
-   var ext = (event.target.files[0].name).split('.').pop(); 
-   this.fileName = Math.floor((Math.random() * 1000000000) + 1);
-   this.fullFilename= removeSpecialChar+this.fileName+'.'+ext;
-   const profile = event.target.files[0];
-   const fileType = profile.type
-   if (fileType == 'application/pdf' || fileType == 'application/PDF') {
-     this.isValidFile = true;
-   } else {
-     this.isValidFile = false;
-     this.makeFileEmpty(fileName);
-     if(document.getElementById('my-input')) {
-      let control2 = this.fileForm.get('profile');
-      control2.setValue(null);
-      control2.setValidators([Validators.required]);
-      control2.updateValueAndValidity();
-     }
-   }
-   if (profile.size > 102400) { 
-      this.isFileBig = true;
-      this.makeFileEmpty(fileName);
-   } else {
-     this.isFileBig = false;
-   }
-   this.fileForm.get('profile').setValue(profile);
- // this.setFilForm(fileName,profile,this.fullFilename);
-  }
- } 
-
+ 
+ onEnterMob(event:any) {
+  this.ifsSchoolService.checkRegisteredMobNo(event).subscribe((isMobfind) => {
+    if(!isMobfind) {
+      this.isMobExist = false;
+      this.fileForm.get('mobNo').setValue(event);
+    } else {
+      this.isMobExist = true;
+      this.fileForm.patchValue( {'mobNo':null} );
+ 
+    }
+ 
+    },
+     error => this.error = error
+   );
+ }
  payNow(amt) {
   console.log(amt)
     this.totalAmount = amt;
@@ -352,8 +344,8 @@ onFileSelected_old(event,fileName) {
     "amount": amt * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     // "amount": 100,
     "currency": "INR",
-    "name": 'test',
-    "description":'test',
+    "name": 'IFS SCHOOL',
+    "description":'IFS SCHOOL',
     "image": "https://issoindia.com/assets/img/logo_retina.png", 
     //'handler': this.paymentCapture.bind(this),
     'handler':(response)=>{this.paymentCapture(response)},

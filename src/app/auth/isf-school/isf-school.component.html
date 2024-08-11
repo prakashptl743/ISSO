@@ -4,18 +4,24 @@
 </div>
 
 <div class="container">
- 
+  
     <div class="form-title col-md-12">ISF GYMNASIADE BAHRAIN 2024</div> 
     <div *ngIf="isRegisteredSchool" class="register-form">
         <form [formGroup]="fileForm">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Enter Mobile Number:</label>
-                    <input class="form-control" id="float-input"  formControlName="mobNo"  type="text" size="30"  [ngClass]="{ 'is-invalid': ifs.mobNo.touched && ifs.mobNo.errors }">  
+                    <input class="form-control" id="float-input"  (blur)="onEnterMob($event.target.value)"  formControlName="mobNo"  type="text" size="30"  [ngClass]="{'is-invalid': ifs.mobNo.touched && ifs.mobNo.errors }">  
                     <div *ngIf="ifs.mobNo.touched && ifs.mobNo.errors" class="invalid-feedback">
                         <div *ngIf="ifs.mobNo.errors.required">Mobile Number is  required</div>
+                        <div *ngIf="ifs.mobNo.hasError('pattern')">Please enter valid contact number</div>
+                        <div *ngIf="ifs.mobNo.hasError('min')">Contact number should be 10 digit</div>
+                        <div *ngIf="ifs.mobNo.hasError('max')">Contact number should be 10 digit</div>  
                     </div> 
+                    <span class="error-message" *ngIf="isMobExist">This mobile number already exist in database</span>
+                    
                 </div> 
+                 
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Enter Name:</label>
                     <input class="form-control" id="float-input"  formControlName="name"  type="text" size="30"  [ngClass]="{ 'is-invalid': ifs.name.touched && ifs.name.errors }">  
@@ -73,7 +79,7 @@
             </div>  
             <div class="form-row align-file-row">
             <div class="form-group col-md-6"> 
-                 <button [disabled]="(!fileForm.valid)" class="btn btn-primary marginR10" type="button" (click)="onFileUpload()">Submit</button>
+                 <button [disabled]="fileForm.invalid" class="btn btn-primary marginR10" type="button" (click)="onFileUpload()">Submit</button>
             </div>
             </div>
         </form>

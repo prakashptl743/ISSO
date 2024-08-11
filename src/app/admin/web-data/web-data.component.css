@@ -85,6 +85,42 @@ body .ui-dataview .ui-dataview-content {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.tab button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  .isMenuActive {
+    background: #007ad9;
+    color: white;
+  }
+  .align-game-button {
+    margin-left: 30px;
+  }
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    margin: 20px;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+   
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 14px;
+  }
 .submenu {
     /* Remove right alignment */
     text-align: left; /* or use any other alignment value you prefer */
@@ -122,4 +158,8 @@ body .ui-dataview .ui-dataview-content {
   .custom-menubar .p-tieredmenu .p-menuitem:hover {
     background-color: #f0f0f0; /* Change background color on hover */
     color: #000; /* Change text color on hover */
+  }
+  .align-web-container {
+    margin: 0;
+    padding: 0;
   }

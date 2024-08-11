@@ -17,6 +17,15 @@ interface UploadEvent {
   providers: [MessageService,ConfirmationService]
 })
 export class SgfiEntryComponent implements OnInit {
+  @ViewChild('studentSignInput', { static: false }) studentSignInput: ElementRef;
+  @ViewChild('scannedaadharInput', { static: false }) scannedaadharInput: ElementRef;
+  @ViewChild('studentBonafideInput', { static: false }) studentBonafideInput: ElementRef;
+  @ViewChild('studentmarksheetInput', { static: false }) studentmarksheetInput: ElementRef;
+  @ViewChild('studentBirthCertificateInput', { static: false }) studentBirthCertificateInput: ElementRef;
+  @ViewChild('headmasterSignInput', { static: false }) headmasterSignInput: ElementRef;
+  @ViewChild('studentPhotoInput', { static: false }) studentPhotoInput: ElementRef;
+
+
   @ViewChild('studentNameText', {static: false}) formDir: ElementRef;
   rootGameServicData: any;
   rootGameData: any;
@@ -60,10 +69,40 @@ export class SgfiEntryComponent implements OnInit {
   url: any;
   isMoreDot: boolean;
   fileName: number;
-  fullFilename: string;
   isValidFile: boolean;
   editStudentPhoto: string;
   schoolForm: FormGroup;
+  studentSignFile: boolean;
+
+  fullFilename: string;
+  isStudentSignValidFile: boolean= true;
+  isStudentFileBig: boolean= false;
+
+  aadharFileName: string;
+  isStudenAadaharValidFile: boolean= true;
+  isStudenAadaharFileBig: boolean= false;
+
+  bonafideFileName: string;
+  isBonafideFileValidFile: boolean= true;
+  isBonafideFileFileBig: boolean= false;
+
+  markSheetFileName: string;
+  markSheetFileValidFile: boolean= true;
+  markSheetFileFileBig: boolean= false;
+
+  birthCertificateFileName: string;
+  birthCertificateFileValidFile: boolean= true;
+  birthCertificateFileFileBig: boolean= false;
+
+  headMasterSignFileName: string;
+  headMasterSignFileValidFile: boolean= true;
+  headMasterSignFileFileBig: boolean= false;
+
+  studentPhotoFileName: string;
+  studentPhotoFileValidFile: boolean= true;
+  studentPhotoFileFileBig: boolean= false;
+
+
   constructor( 
     @Inject(PLATFORM_ID) private platformId: Object,
     private sgfiEntriesService :SgfiEntriesService,  
@@ -77,7 +116,7 @@ export class SgfiEntryComponent implements OnInit {
  
   get studentSign() { return this.sgfiFileEnrollForm.get('studentSign'); }
   get studentGovDoc() { return this.sgfiFileEnrollForm.get('studentGovDoc'); }
-  get studentStudnetBonafide() { return this.sgfiFileEnrollForm.get('studentStudnetBonafide'); }
+  get studentBonafide() { return this.sgfiFileEnrollForm.get('studentBonafide'); }
   get lastYearmarkSheet() { return this.sgfiFileEnrollForm.get('lastYearmarkSheet'); }
   get birthCertificate() { return this.sgfiFileEnrollForm.get('birthCertificate'); }
   get headMasterSign() { return this.sgfiFileEnrollForm.get('headMasterSign'); }
@@ -103,6 +142,221 @@ export class SgfiEntryComponent implements OnInit {
     this.getSgfiAmount();
   // this.initialiseForm();
     
+  }
+  onStudentSignSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.fullFilename= removeSpecialChar+this.fileName+'.'+ext;
+  
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isStudentSignValidFile = true;
+      } else {
+        this.isStudentSignValidFile = false;
+        this.studentSignInput.nativeElement.value = "";
+      } 
+      if (this.studentSignInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isStudentFileBig = true;
+        this.studentSignInput.nativeElement.value = "";
+      } else {
+       this.isStudentFileBig = false;
+     }
+   
+     if(this.isStudentSignValidFile && !this.isStudentFileBig) {
+      this.sgfiFileEnrollForm.get('studentSign').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentSign':null} );
+     }
+    }
+  }
+
+  onScannedaadharSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.aadharFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isStudenAadaharValidFile = true;
+      } else {
+        this.isStudenAadaharValidFile = false;
+        this.scannedaadharInput.nativeElement.value = "";
+      } 
+      if (this.scannedaadharInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isStudenAadaharFileBig = true;
+        this.scannedaadharInput.nativeElement.value = "";
+      } else {
+       this.isStudenAadaharFileBig = false;
+     }
+   
+     if(this.isStudenAadaharValidFile && !this.isStudenAadaharFileBig) {
+      this.sgfiFileEnrollForm.get('studentGovDoc').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentGovDoc':null} );
+     }
+    }
+  }
+ 
+  onBonafideSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.bonafideFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isBonafideFileValidFile = true;
+      } else {
+        this.isBonafideFileValidFile = false;
+        this.studentBonafideInput.nativeElement.value = "";
+      } 
+      if (this.studentBonafideInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isBonafideFileFileBig = true;
+        this.studentBonafideInput.nativeElement.value = "";
+      } else {
+       this.isBonafideFileFileBig = false;
+     }
+   
+     if(this.isBonafideFileValidFile && !this.isBonafideFileFileBig) {
+      this.sgfiFileEnrollForm.get('studentBonafide').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentBonafide':null} );
+     }
+    }
+  }
+  onMarkSheetSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.markSheetFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.markSheetFileValidFile = true;
+      } else {
+        this.markSheetFileValidFile = false;
+        this.studentmarksheetInput.nativeElement.value = "";
+      } 
+      if (this.studentmarksheetInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.markSheetFileFileBig = true;
+        this.studentmarksheetInput.nativeElement.value = "";
+      } else {
+       this.markSheetFileFileBig = false;
+     }
+   
+     if(this.markSheetFileValidFile && !this.markSheetFileFileBig) {
+      this.sgfiFileEnrollForm.get('lastYearmarkSheet').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'lastYearmarkSheet':null} );
+     }
+    }
+  }
+
+  onBirthCertificateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.birthCertificateFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.birthCertificateFileValidFile = true;
+      } else {
+        this.birthCertificateFileValidFile = false;
+        this.studentBirthCertificateInput.nativeElement.value = "";
+      } 
+      if (this.studentBirthCertificateInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.birthCertificateFileFileBig = true;
+        this.studentBirthCertificateInput.nativeElement.value = "";
+      } else {
+       this.birthCertificateFileFileBig = false;
+     }
+   
+     if(this.birthCertificateFileValidFile && !this.birthCertificateFileFileBig) {
+      this.sgfiFileEnrollForm.get('birthCertificate').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'birthCertificate':null} );
+     }
+    }
+  }
+  onHeadMasterSignSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.headMasterSignFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.headMasterSignFileValidFile = true;
+      } else {
+        this.headMasterSignFileValidFile = false;
+        this.headmasterSignInput.nativeElement.value = "";
+      } 
+      if (this.headmasterSignInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.headMasterSignFileFileBig = true;
+        this.headmasterSignInput.nativeElement.value = "";
+      } else {
+       this.headMasterSignFileFileBig = false;
+     }
+   
+     if(this.headMasterSignFileValidFile && !this.headMasterSignFileFileBig) {
+      this.sgfiFileEnrollForm.get('headMasterSign').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'headMasterSign':null} );
+     }
+    }
+  }
+  
+  onStudentPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.studentPhotoFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.studentPhotoFileValidFile = true;
+      } else {
+        this.studentPhotoFileValidFile = false;
+        this.studentPhotoInput.nativeElement.value = "";
+      } 
+      if (this.studentPhotoInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.studentPhotoFileFileBig = true;
+        this.studentPhotoInput.nativeElement.value = "";
+      } else {
+       this.studentPhotoFileFileBig = false;
+     }
+   
+     if(this.studentPhotoFileValidFile && !this.studentPhotoFileFileBig) {
+      this.sgfiFileEnrollForm.get('studentPhoto').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentPhoto':null} );
+     }
+    }
   }
   getSgfiAmount(){
     this.sgfiEntriesService.getSgfiAmount().subscribe(response => {
@@ -180,7 +434,7 @@ export class SgfiEntryComponent implements OnInit {
     this.sgfiFileEnrollForm = new FormGroup({
       'studentSign': new FormControl('', [ Validators.required]),
       'studentGovDoc': new FormControl('', [ Validators.required]),
-      'studentStudnetBonafide': new FormControl('', [ Validators.required]),
+      'studentBonafide': new FormControl('', [ Validators.required]),
       'lastYearmarkSheet': new FormControl('', [ Validators.required]),
       'birthCertificate': new FormControl('', [ Validators.required]),
       'headMasterSign': new FormControl('', [ Validators.required]),
@@ -304,80 +558,42 @@ showDialog() {
     this[id].nativeElement.focus();
   } 
 }
-onFileSelected(event) {    
-  if(event.target.files) { 
-   var reader = new FileReader();
-   reader.readAsDataURL(event.target.files[0]);
-   reader.onload=(event:any)=>{
-     this.url=event.target.result;
-   }
-   var newName=(event.target.files[0].name).split('.').slice(0, -1).join('.')
-   if(newName.indexOf('.') !== -1)
-   {
-     this.isMoreDot = true;
-   } else {
-      this.isMoreDot = false;
-   }
-   var removeSpace = newName.replace(/\s/g, "");
-   var ext = (event.target.files[0].name).split('.').pop(); 
-   this.fileName= Math.floor((Math.random() * 10000000000000) + 1);
-   this.fullFilename= removeSpace+this.fileName+'.'+ext;
-   console.log(this.fullFilename)
-  // this.blobName = this.fullFilename
-   const profile = event.target.files[0];
-   const fileType = profile.type
  
-   if ((fileType == 'application/pdf' || fileType == 'application/PDF') && !this.isMoreDot) {
-     this.isValidFile = true;
-   } else {
-     this.isValidFile = false;
-     const inputElement: HTMLInputElement = document.getElementById('my-input') as HTMLInputElement
-     inputElement.value = '';
-     this.selectedProfile = '';
-     if(document.getElementById('my-input')) {
-         let control2 = this.sgfiFileEnrollForm.get('profile');
-         control2.setValue(null);
-         control2.setValidators([Validators.required]);
-         control2.updateValueAndValidity();
-     }
-   }
- 
-   this.sgfiFileEnrollForm.get('profile').setValue(profile);
- 
-   
- } 
-}
  onFileSubmit() {
-  const formData = new FormData();
-  // formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value);
-  // formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value); 
-  // formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value);
-  // formData.append('studentStudnetBonafide', this.sgfiFileEnrollForm.get('studentStudnetBonafide').value);
-  // formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value);
-  // formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value);
-  // formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value);
-  // formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value);
-  if(this.fullFilename =='') {
-    // this.fullFilename = 'edit'
-    // formData.append('editFile',  this.editStudentPhoto);
-   } else {
-     formData.append('editFile',  this.editStudentPhoto);
-     formData.append('profile', this.schoolForm.get('profile').value, this.fullFilename); 
-   }
-  this.sgfiEntriesService.enrollStudentFile(formData).subscribe(
-    res => {
-      if(res.status === 'success') { 
-        this.messageService.add({key: 'custom', severity:'success', summary: 'Student Data Added Successfully'});
-        this.sgfiFileEnrollForm.reset();
-        // this.isDoc = true;
-        // this.isForm = false;
-        // this.selectedFatherName ='';
-     } 
-     },
-    error => this.error = error
+    const formData = new FormData();
+    formData.append('schoolId', this.schoolId);
+    formData.append('gameId', this.gameId);
+    formData.append('studentId', this.studentId);
+    formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value,this.fullFilename);
+    formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value,this.aadharFileName);
+    formData.append('studentBonafide', this.sgfiFileEnrollForm.get('studentBonafide').value,this.bonafideFileName);
+    formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value,this.markSheetFileName);
+    formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value,this.birthCertificateFileName);
+    formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value,this.headMasterSignFileName);
+    formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value,this.studentPhotoFileName);
 
+    this.sgfiEntriesService.enrollStudentFile(formData).subscribe(
+      res => {
+          if (res.status === 'error') {
+            this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+          } else {
+            this.messageService.add({key: 'custom', severity:'success', summary: 'Data Saved Successfully'});
+            this.sgfiFileEnrollForm.reset();
+            this.resetFiles();
+          }
+      },
+      error => this.error = error
     );
  }
+ resetFiles() {
+  this.studentSignInput.nativeElement.value = "";
+  this.scannedaadharInput.nativeElement.value = "";
+  this.studentBonafideInput.nativeElement.value = "";
+  this.studentmarksheetInput.nativeElement.value = "";
+  this.studentBirthCertificateInput.nativeElement.value = "";
+  this.headmasterSignInput.nativeElement.value = "";
+  this.studentPhotoInput.nativeElement.value = "";
+}
  onFormSubmit() {
  this.sgfiFormData = this.sgfiEnrollForm.value;
   const formData = new FormData();
@@ -402,8 +618,6 @@ onFileSelected(event) {
   formData.append('studentId', this.studentId);
   formData.append('ageRange', this.ageRange);
   formData.append('gender', this.gender);
-
- 
       this.sgfiEntriesService.enrollStudent(formData).subscribe(
         res => {
           if(res.status === 'success') { 

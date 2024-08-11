@@ -40,11 +40,25 @@ verifyMobNo(eventValue) {
      catchError(this.handleError)
   );
 }
+checkRegisteredMobNo(eventValue) {
+  return this.http.post<any>(`${this.serverUrl}IfsSchool/checkRegisteredMobNo`, {mobNo: eventValue})
+   .pipe(map(user => {
+    return user; 
+    }),
+     catchError(this.handleError)
+  );
+}
 savePaymentData(paymentInfo) {
   return this.http.post<any>(this.serverUrl + 'IfsSchool/savePaymentData',paymentInfo)
   .pipe(
     catchError(this.handleError)
   );
+}
+getSchoolData() {
+  return this.http.get(this.serverUrl + 'IfsSchool/getIfsSchoolData').pipe(
+    catchError(this.handleError)
+ );
+ 
 }
 private handleError(error: HttpErrorResponse) {
    if (error.error instanceof ErrorEvent) {
