@@ -107,3 +107,67 @@ table {
 :host ::ng-deep.table>thead>tr>th { 
   vertical-align: text-top !important;
 }
+/* Basic styling for the table */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Header styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+.cursor-point {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+.align-sr {
+  text-align: center;
+  width: 5%;
+}
+ 
+/* Responsive design */
+@media (max-width: 768px) {
+  .table, .table-row, .table-cell {
+    display: block;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .table-cell::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}

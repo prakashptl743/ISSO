@@ -42,7 +42,7 @@
                         <input type="file"  (change)="onPassportSelected($event)" #filePassportInput>
                     </div>
                     <div *ngIf="!isPassPortValidFile">
-                        <span class="error-class">Invalid File type Please select file PDF format only</span>
+                        <span class="error-class">Invalid File type Please select file Image or PDF format only</span>
                     </div>
                     <div *ngIf="isPassportFileBig">
                         <span class="error-class">File size too large please select image below 100 KB</span>
@@ -55,7 +55,7 @@
                             <input type="file" (change)="onSchoolNocSelected($event)" #fileInputSchoolNoc>
                         </div>
                         <div *ngIf="!isSchoolNocValidFile">
-                            <span class="error-class">Invalid File type Please select file PDF format only</span>
+                            <span class="error-class">Invalid File type Please select file Image or PDF format only</span>
                         </div>
                         <div *ngIf="isSchoolNocFileBig">
                             <span class="error-class">File size too large please select image below 100 KB</span>
@@ -68,7 +68,7 @@
                         <input type="file" (change)="onParentNocSelected($event)" #fileInputparentNoc>
                     </div>
                     <div *ngIf="!isParentNocValidFile">
-                        <span class="error-class">Invalid File type Please select file PDF format only</span>
+                        <span class="error-class">Invalid File type Please select file Image or PDF format only</span>
                     </div>
                     <div *ngIf="isParnetNocFileBig">
                         <span class="error-class">File size too large please select image below 100 KB</span>
@@ -84,6 +84,7 @@
             </div>
         </form>
             <div class="form-row ">
+
                 <div class="align-payment-hint col-md-12">Note:- Please verify Mobile Number to do Payment</div> 
                 <div class="form-group col-md-6">
                   
@@ -91,6 +92,8 @@
                     <input class="form-control" id="float-input"  (input)="onMobChange($event.target.value)"    type="text" size="30">  
                 </div> 
                 <button  [disabled]="!verifyMobNo" class="submit-button btn btn-primary marginR10" type="button" (click)="verifyMob()">Submit</button>
+                <div class="hold-payment-hint  col-md-12">Kindly hold patiently until it is redirected to ISSO portal for payment confirmation.Please do not close tab or browser.</div> 
+
                 <div class="form-group col-md-12" *ngIf="showErrorMessage">
                     <div class="col-md-6 alert alert-danger  alert-dismissible">
                     <button type="button" class="close close-button" data-dismiss="alert">&times;</button>

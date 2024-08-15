@@ -12,39 +12,73 @@
     <div>Select Game</div>
 <p-dropdown    [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="gameOptions"  size="30" ></p-dropdown>
 </div>
-<table class="table"  *ngIf="studentRecordLength>0">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Student Name</th>
-        <th scope="col">Game Name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Gender</th>
-        <th scope="col">Action</th>
-        <th scope="col">Status</th>
-     </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of sgfiStudentData; let i = index;">
-        <td>{{student.studentName}}</td>
-        <td>{{student.gameName}}</td>
-        <td>{{student.ageRange}}</td>
-        <td>
-            <span> {{student.gender == '1' ? 'Boys' : 'Girls'}} </span>
-        </td>
-        <td>
-            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">ENROLL NOW</button>
+
+
+<!-- <div class="container">
+    <div class="row">
+      <div class="col-md-4 fancy-column">
+        <div class="column-content">
+          <h4>Column 1</h4>
+          <p>This is some content in column 1. It has a unique style.</p>
+          <a href="#" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-4 fancy-column">
+        <div class="column-content">
+          <h4>Column 2</h4>
+          <p>This is some content in column 2. It also has a unique style.</p>
+          <a href="#" class="btn btn-success">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-4 fancy-column">
+        <div class="column-content">
+          <h4>Column 3</h4>
+          <p>This is some content in column 3. It has a different style.</p>
+          <a href="#" class="btn btn-danger">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
+
+<div class="ui-g-12 align-merit-content"*ngIf="studentRecordLength>0">
+ 
+    <div class="table">
+      <div class="table-row table-header">
+        <div class="table-cell align-sr">Sr No.</div>
+        <div class="table-cell">Student Name</div>
+        <div class="table-cell">Game Name</div>
+        <div class="table-cell">Age</div>
+        <div class="table-cell">Gender</div>
+        <div class="table-cell">Action</div>
+        <div class="table-cell">Status</div>
+  
+        <div class="table-cell">ISSO Status</div>
+      </div>
+     
+      <div class="table-row" *ngFor="let student of sgfiStudentData; let i = index;" >
+          <div class="table-cell align-sr">{{i+1}}</div>
+          <div class="table-cell">{{student.studentName}}</div>
+          <div class="table-cell">{{student.gameName}}</div>
+          <div class="table-cell">{{student.ageRange}}</div>
+          <div class="table-cell">{{student.gender == '1' ? 'Boys' : 'Girls'}}</div>
+          <div class="table-cell">
+            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">ENROLL NOW</button>
             <button *ngIf="student.isForm == '1' && student.isDoc == '1' &&  student.isPaid == '1'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">VIEW/UPDATE</button>
-
-        </td> 
-        <td>
-            <span class="plain-button btn btn-success" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
-            <span class="plain-button btn btn-warning" *ngIf="student.isForm == '1' || student.isDoc == '1' ||  student.isPaid == '1'">In Progress</span>
-            <span class="plain-button btn btn-danger" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
+         </div>
+         <div class="table-cell">
+            <span class="p-3 mb-2 bg-success text-white" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
+            <span class="p-3 mb-2 bg-warning text-dark" *ngIf="student.isForm == '1' && (student.isDoc == '0' || student.isPaid == '0') || student.isDoc == '1' && student.isPaid == '0' || student.isPaid == '1' && (student.isForm == '0' || student.isDoc == '0')">In Progress</span>
+            <span class="p-3 mb-2 bg-danger text-white" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
+        </div>
+        <div class="table-cell">
+            <span class="p-3 mb-2 bg-success text-white" *ngIf="student.issoadminstatus == '1'">Approved</span>
+            <span class="p-3 mb-2 bg-danger text-white" *ngIf="student.issoadminstatus == '0'"> Pending</span>
+        </div>
+     </div>
+      
+    </div>
+  </div>
  </div>
 <div *ngIf="!showSgfi">
     <img class="align-img" src="assets/images/web/noData.JPG">
@@ -160,14 +194,10 @@
                 <div class="col-md-4">
                     <div [hidden]="formDir.submitted">
                         <div class="align-form-column">
-                            <label for="alterEgo">Discipline <span class="required-label">*</span></label>
-                            <input id="dicipline"  formControlName="dicipline" class="form-control"
-                            [ngClass]="{'is-invalid error-input-border': dicipline.invalid && (dicipline.dirty || dicipline.touched)}">
-                            <div class="error-message" *ngIf="dicipline.invalid && (dicipline.dirty || dicipline.touched)">
-                                <div *ngIf="dicipline.errors.required">
-                                    Discipline  is required.
-                                </div>
-                            </div>
+                            <label for="alterEgo">Game Name {{selectedGameName}} <span class="required-label">*</span></label>
+                            <input id="dicipline"  formControlName="dicipline" class="form-control" [(ngModel)]="selectedGameName" readonly
+                            >
+                            
                         </div>
                         <div class="align-form-column">
                             <label for="alterEgo">Standard Studying last year <span class="required-label">*</span></label>
@@ -253,10 +283,85 @@
         </div>
         <div *ngIf="isDoc">
             <div class="col-md-12 align-sgfi-form">
+         
                 <form [formGroup]="sgfiFileEnrollForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <h5>Candidate Scanned Sign</h5>
+                            <input  id="studentSign" type="file"  (change)="onStudentSignSelected($event)" id="customFile" #studentSignInput/>
+                            <div *ngIf="!isStudentSignValidFile">
+                                <span class="error-class">Invalid File type Please select file type in correct format only</span>
+                            </div>
+                            <div *ngIf="isStudentFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div>  
+                        </div>
+                          <div class="col-md-4">
+                            <h5>Scanned Aadhaar/Passport/OCI</h5>
+                            <input type="file"  id="studentGovDoc" (change)="onScannedaadharSelected($event)"  #scannedaadharInput />
+                            <div *ngIf="!isStudenAadaharValidFile">
+                                <span class="error-class">Invalid File type Please select file type in correct format only</span>
+                            </div>
+                            <div *ngIf="isStudenAadaharFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div>  
+                        </div>
+                          <div class="col-md-4">
+                            <h5>School Bonafide</h5>
+                            <input type="file" id="studentBonafide" (change)="onBonafideSelected($event)" #studentBonafideInput />
+                            <div *ngIf="!isBonafideFileValidFile">
+                                <span class="error-class">Invalid File type Please select file type in correct format only</span>
+                            </div>
+                            <div *ngIf="isBonafideFileFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div>    
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Last Year Mark Sheet</h5>
+                            <input type="file" id="lastYearmarkSheet" (change)="onMarkSheetSelected($event)" #studentmarksheetInput/>
+                            <div *ngIf="!markSheetFileValidFile">
+                                <span class="error-class">Invalid File type Please file type in correct format only</span>
+                            </div>
+                            <div *ngIf="markSheetFileFileBig">
+                                <span class="error-class">File size too large please  select file below 100 KB</span>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Birth Certificate</h5>
+                            <input type="file" id="birthCertificate"  (change)="onBirthCertificateSelected($event)" #studentBirthCertificateInput  />
+                            <div *ngIf="!birthCertificateFileValidFile">
+                                <span class="error-class">Invalid File type Please select file type in correct format only</span>
+                            </div>
+                            <div *ngIf="birthCertificateFileFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div> 
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Head Master Sign</h5>
+                            <input type="file" id="headMasterSign"  (change)="onHeadMasterSignSelected($event)"  #headmasterSignInput />
+                            <div *ngIf="!headMasterSignFileValidFile">
+                                <span class="error-class">Invalid File type Please select file type in correct format only</span>
+                            </div>
+                            <div *ngIf="headMasterSignFileFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div> 
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Student Photo</h5>
+                            <input type="file" id="studentPhoto"  (change)="onStudentPhotoSelected($event)"  #studentPhotoInput/>
+                            <div *ngIf="!studentPhotoFileValidFile">
+                                <span class="error-class">Invalid File type Please select filefile type in correct format only</span>
+                            </div>
+                            <div *ngIf="studentPhotoFileFileBig">
+                                <span class="error-class">File size too large please select file below 100 KB</span>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-4">
                         <div [hidden]="formDir.submitted">
-                                <div class="align-form-column">
+                                <!-- <div class="align-form-column">
                                     <label for="name">Candidate Scanned Sign</label>
                                         <div class="">
                                             <input  id="studentSign" type="file"  (change)="onStudentSignSelected($event)" id="customFile" #studentSignInput/>
@@ -267,7 +372,7 @@
                                         <div *ngIf="isStudentFileBig">
                                             <span class="error-class">File size too large please select image below 100 KB</span>
                                         </div> 
-                                </div>
+                                </div> 
                                 <div class="align-form-column">
                                     <label for="alterEgo">Scanned Aadhaar/Passport/OCI</label>
                                     <div class="">
@@ -339,7 +444,7 @@
                                     <div *ngIf="studentPhotoFileFileBig">
                                         <span class="error-class">File size too large please select image below 100 KB</span>
                                     </div>                             
-                                 </div>
+                                 </div>-->
                         </div>
                   
                 </div>
@@ -355,13 +460,16 @@
                 </div>  
        </div>
        <div *ngIf="isPayment">
-        <div class="col-md-12 align-sgfi-form">
-            <h3>Total Payable Amount</h3>
-            <div><h3>{{payableAmount | number: '.2'}} Rs.</h3></div>
-        </div>
-        <div class="form-group pad-zero">
-            <button [class.disabled]="!(payableAmount > 0)"  class="btn pay-now-button"  type="button" (click)="payNow(payableAmount,studentId,'sgfi')">PAY NOW</button>
-         </div>
+            <div class="col-md-12 align-sgfi-form">
+                <div class="alert alert-success" role="alert">
+                     you have already make payment please connect with ISSO admin for more details !
+                </div>
+                <h3>Total Payable Amount</h3>
+                <div><h3>{{payableAmount | number: '.2'}} Rs.</h3></div>
+            </div>
+            <div class="form-group pad-zero">
+                <button [class.disabled]="!(payableAmount > 0)"  class="btn pay-now-button"  type="button" (click)="payNow(payableAmount,studentId,'sgfi')">PAY NOW</button>
+           </div>
        </div>
       
     </div> 

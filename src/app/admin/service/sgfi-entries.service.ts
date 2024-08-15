@@ -61,6 +61,11 @@ getStudentForStaff(schoolId,gameId) {
     catchError(this.handleError)
   );
 } 
+getEnrolledStudentDataForStaff(schoolId,gameId) {
+  return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/getEnrolledStudentDataForStaff/' + schoolId +'/'+gameId).pipe(
+    catchError(this.handleError)
+  );
+} 
 getSubGameList(gameId){
   let str = 'SgfiEntries/subGameListById/' + gameId;
   return this.http.get(this.serverUrl + str).pipe(
@@ -77,6 +82,13 @@ getEnrolledStudentData(gameData){
   .pipe(
     catchError(this.handleError)
   );
+}
+changeIssoStatus(id, eventData) { 
+  let str = 'SgfiEntries/changeIssoStatus/' + id;
+  return this.http.post<any>(this.serverUrl + str, eventData)
+  .pipe(
+    catchError(this.handleError)
+  )
 }
 loadStudentData(studentData){
   return this.http.post<any>(this.serverUrl + 'SgfiEntries/studentlList/',studentData)

@@ -344,8 +344,8 @@ onSchoolNocSelected(event: Event): void {
     "amount": amt * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     // "amount": 100,
     "currency": "INR",
-    "name": 'IFS SCHOOL',
-    "description":'IFS SCHOOL',
+    "name": 'ISF GAMES',
+    "description":'ISF GAMES',
     "image": "https://issoindia.com/assets/img/logo_retina.png", 
     //'handler': this.paymentCapture.bind(this),
     'handler':(response)=>{this.paymentCapture(response)},

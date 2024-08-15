@@ -36,6 +36,7 @@ export class SgfiEntryComponent implements OnInit {
   gameName: any;
   gameType: any;
   sgfiStudentData: any;
+  sgfiEnrolledStudentData: any;
   studentRecordLength: number;
   showSgfi: boolean = false;
   display: boolean= false;
@@ -101,6 +102,7 @@ export class SgfiEntryComponent implements OnInit {
   studentPhotoFileName: string;
   studentPhotoFileValidFile: boolean= true;
   studentPhotoFileFileBig: boolean= false;
+  selectedGameName: any;
 
 
   constructor( 
@@ -451,9 +453,24 @@ export class SgfiEntryComponent implements OnInit {
       
     });
   }
+  calculateAgeAsOfDecember31(val) {
+    // Get the student's date of birth
+    const dob = moment(val);
+    
+    // Set the reference date to December 31st of the current year
+    const endOfYear = moment().endOf('year');
+    
+    // Calculate the difference between the reference date and date of birth
+    const age = moment.duration(endOfYear.diff(dob)).years();
+
+    return age;
+}
   initialiseForm(index) {
+    const age = this.calculateAgeAsOfDecember31(this.sgfiStudentData[index].dateOfBirth);
+    console.log(`The student's age as of December 31st is ${age} years.`);
     this.studentName = this.sgfiStudentData[index].studentName;
     this.selectedFatherName = this.sgfiStudentData[index].fatherName;
+    this.selectedGameName  = this.sgfiStudentData[index].gameName;
     this.schoolName =  this.sgfiStudentData[index].schoolName;
     this.dateOfBirth =  this.sgfiStudentData[index].dateOfBirth;
     this.schoolAddress = this.sgfiStudentData[index].schoolAddress;
@@ -529,10 +546,24 @@ export class SgfiEntryComponent implements OnInit {
     this.gameType =  this.gameArray[2];
     if(gameData.value!='') {
       this.getStudents();
+      this.getEnrolledStudentDataForStaff();
     }
  
   }
-  
+ public  getEnrolledStudentDataForStaff() {
+    this.sgfiEntriesService.getEnrolledStudentDataForStaff(this.schoolId,this.gameId).subscribe(response => {
+        if(response!=="") {
+            this.sgfiEnrolledStudentData =   response;
+            console.log(this.sgfiEnrolledStudentData)
+            // this.dateOfBirth =  response[0].dateOfBirth
+            // this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
+
+        }
+    } ,
+    error => {
+      //this.errorAlert =true;
+    });
+ }
 
   getStudents() {
     this.sgfiEntriesService.getStudentForStaff(this.schoolId,this.gameId).subscribe(response => {
@@ -540,9 +571,7 @@ export class SgfiEntryComponent implements OnInit {
               this.sgfiStudentData =   response;
               this.dateOfBirth =  response[0].dateOfBirth
               this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
-              // if(this.studentRecordLength >0) {
-              //   this.initialiseForm(response)
-              // }
+
           }
       } ,
       error => {
@@ -637,10 +666,11 @@ openModal(inp: string) {
   this.modal='modal-open';
   this.isForm = true;
 }
-showEnrollDialog(event) {
+showEnrollDialog(studentId,event) {
+   console.log(studentId);
+   const student = this.sgfiEnrolledStudentData.find(student => student.studentId === studentId);
+   console.log('Data-->'+student)
   
-  //this.setFocus('studentNameText');
- // this.setFocusOnStudent('studentNameText')
   this.visible = true;
   this.isForm = true;
   this.isDoc = false;

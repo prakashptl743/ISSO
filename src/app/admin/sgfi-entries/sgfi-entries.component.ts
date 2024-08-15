@@ -1,7 +1,5 @@
- import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SelectItem } from 'primeng/api';
- 
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
@@ -13,9 +11,8 @@ import { DatePipe } from '@angular/common';
 import { IssoUtilService } from 'src/app/services/isso-util.service';
 import { SgfiEntriesService } from '../service/sgfi-entries.service';
 import { ReportMeritService } from '../service/report-merit.service';
+import { environment } from 'src/environments/environment'; 
  
-// import * as jspdf from 'jspdf';
-// import * as html2canvas from 'html2canvas';
  
 @Component({
   selector: 'app-sgfi-entries',
@@ -76,6 +73,10 @@ export class SgfiEntriesComponent implements OnInit {
   enrolledStudentData: any;
   enrolledStudentRecordLength: number;
   alreadyExist: boolean;
+  display: boolean;
+  docArray: any;
+  baseUrl: string;
+  dialogTitle: any;
 
 
   constructor( 
@@ -92,9 +93,12 @@ export class SgfiEntriesComponent implements OnInit {
     this.isAddStudent = true;
     this.loadInitialData();
     this.loadGame();
+    console.log(environment.baseUrl);
+    this.baseUrl = environment.baseUrl;
   }
   onloadMenu(index) {
     this.makeEmptyForm();
+    this.enrolledStudentRecordLength =0;
     if(index == '0'){
       this.isAddStudent = true;
       this.isViewStudent =false;
@@ -135,6 +139,7 @@ export class SgfiEntriesComponent implements OnInit {
     });
   }
   loadGameChange(gameData) {
+    this.enrolledStudentRecordLength =0;
     const gameval = gameData.value;
     this.gameArray =  gameval.split(","); 
     this.gameId = this.gameArray[0];
@@ -171,6 +176,50 @@ export class SgfiEntriesComponent implements OnInit {
       this.subGameReadable = false;
        this.schoolReadble = false;
     }
+  }
+  changeEventStatus(studentId,staus) {
+ 
+    const formData = new FormData();
+    if(staus == '1') {
+      formData.append('issoadminstatus', '0');
+    } else {
+      formData.append('issoadminstatus', '1');
+    }
+    this.sgfiEntriesService.changeIssoStatus(studentId,formData).subscribe(
+  
+      res => {
+          if (res.status === 'success') { 
+            this.messageService.add({key: 'custom', severity:'success', summary: 'Data Updated Successfully'});
+         } 
+        else {
+           this.messageService.add({key: 'custom', severity:'success', summary: 'Data Updated Successfully'});
+          }
+        this.display =false
+        this.showEnroolledStudent()
+        //this.getEventData();
+      },
+      error => this.error = error
+    );
+  
+  }
+  showDialog(student) {
+    console.log(student)
+    this.display = true;
+    this.docArray = [];
+    this.dialogTitle = '';
+    this.dialogTitle= student.studentName +' DOCUMENTS';
+    this.docArray.push({
+      'birthCert': student.birthCertificate == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.birthCertificate,
+      'bonafide': student.studentBonafide == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.studentBonafide,
+      'govID':student.studentGovDoc == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.studentGovDoc,
+      'lastYearMarkSheet':student.lastYearmarkSheet == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.lastYearmarkSheet,
+      'Photo':student.studentPhoto == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.studentPhoto,
+      'stdSign':student.studentSign == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.studentSign,
+      'headMastSign':student.headMasterSign == null? 'N/A': this.baseUrl+'upload/sgfi/'+student.headMasterSign
+    })
+    console.log(this.docArray)
+ 
+
   }
   loadSubGameData() {
     this.sgfiEntriesService.getSubGameList(this.gameId).subscribe(response => {
@@ -213,6 +262,7 @@ export class SgfiEntriesComponent implements OnInit {
     this.schoolReadble = false;
     this.alreadyAddedStudentList = [];
     this.studentRecordLength = 0;
+    this.enrolledStudentRecordLength =0;
     if(this.yearvalue) {
       this.gameReadble = true;
     }  
@@ -226,6 +276,7 @@ export class SgfiEntriesComponent implements OnInit {
     this.schoolReadble = false;
     this.alreadyAddedStudentList = [];
     this.studentRecordLength = 0;
+    this.enrolledStudentRecordLength =0;
     if(ageData.value!='') {
       this.genderReadble = true;
     }

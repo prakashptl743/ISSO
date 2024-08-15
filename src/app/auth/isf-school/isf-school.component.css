@@ -75,6 +75,10 @@
   padding: 0px 10px 10px;
   color: green;
 }
+.hold-payment-hint {
+    font-size: 15px;
+    color: red;
+}
 :host ::ng-deep .custom-toast .ui-toast-close-icon {
     padding-top: 10px;
     padding-right: 15px;

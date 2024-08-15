@@ -122,4 +122,87 @@
 :host::ng-deep .ui-dialog .ui-dialog-content {
   font-size: 13px;
 }
-  
+/* Basic styling for the table */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Header styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+  /* Responsive design */
+@media (max-width: 768px) {
+  .table, .table-row, .table-cell {
+    display: block;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .table-cell::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+.fancy-column {
+  background-color: #f8f9fa; /* Light gray background */
+  border: 2px solid #007bff; /* Blue border */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Inner padding */
+  margin-bottom: 20px; /* Space between rows */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.fancy-column:hover {
+  transform: translateY(-10px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+.column-content h4 {
+  font-size: 1.5rem;
+  color: #007bff; /* Blue text color */
+}
+
+.column-content p {
+  font-size: 1rem;
+  color: #6c757d; /* Bootstrap's muted text color */
+}
+
+.column-content a {
+  margin-top: 15px;
+  display: inline-block;
+  font-weight: bold;
+}
