@@ -28,10 +28,7 @@
         <div class="col-md-6 align-drop-down" *ngIf="(certType !== 'invoice' && certType !== 'receipt')" >
           <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
         </div> 
-          <!-- 
-        <div  [ngClass]="isReport ? 'menu-background ' : 'menu-inactive' "  class="align-certificate-menu" (click) ="downloadReport()">DOWNLOAD CERTIFICATE</div>
-        <div  [ngClass]="!isReport ? 'menu-background ' : 'menu-inactive' "   class="align-invoice-menu" (click) ="downloadInvoice()">INVOICE/RECEIPT</div>
-       -->
+ 
   </div> 
  
   <div class="align-certificate-button" *ngIf="certType == 'certificate'">
@@ -47,57 +44,7 @@
   </div>
    
 
-<!-- <div *ngIf="isReport">
-  <div class="container">
-    <div class="row row-border">
-      <div class="col col-border">
-            <div class="certicate-header">
-                PRINT PARTICIPATION CERTIFICATE
-            </div> 
- 
-            <div class="certificate-row">
-              <div class="ui-g-12 event-container align-container align-drop-down">
-                  <p-dropdown  [options]="yearOptions"  [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
-              </div>
-              <div class="ui-g-12 align-drop-down">
-                  <p-dropdown [disabled]="!eventReadable" [(ngModel)]="selectedEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
-              </div>    
-              <div class="ui-g-12 align-container align-drop-down">
-                <p-dropdown [disabled]="!gameReadble" [(ngModel)]="selectedGame"  placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'certificate')" [style]="{'min-width':'140px'}"></p-dropdown>
-              </div> 
-              <div class="align-certificate-button">
-                  <a class="btn btn-primary"  [class.disabled]="!isDataAvailble" href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a>
-              </div>
-          </div>
-      </div>
-      <div class="col col-border">
-          <div class="certicate-header">
-            PRINT MERIT CERTIFICATE
-          </div> 
-          <div class="certificate-row">
-                <div class="ui-g-12 event-container align-container align-drop-down">
-                    <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedMeritYear"  placeholder="Select Year" (onChange)="onyeareChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
-                </div>
-                <div class="ui-g-12 align-drop-down">
-                    <p-dropdown [disabled]="!meritevent" [(ngModel)]="selectedMeritEvent"  placeholder="Please Select"  [options]="eventOptions"  (onChange)="onEventChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
-                </div>    
-                <div class="ui-g-12 align-container align-drop-down">
-                  <p-dropdown [disabled]="!meritGame" [(ngModel)]="selectedMeritGame" placeholder="Please Select" [options]="gameOptions"  (onChange)="loadschoolChange($event,'merit')" [style]="{'min-width':'140px'}"></p-dropdown>
-                </div>
-              
-              </div>
-      </div>
-    </div>
-  </div>
-</div>  -->
-    
-    <!-- <div  *ngIf="!isReport"> 
-     <div class="ui-g-12" style="padding-left: 12px;">
-        <button type="button"  [disabled]="!isDataAvailble" (click)="printReport()"  pButton   label="Print Report"></button>  
-        <a class="btn btn-primary"  [class.disabled]="!isDataAvailble ? true: null"   href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/0/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Report</a>
-        <a class="btn btn-primary"     href="https://issoindia.com/isso-php/tcpdf/advancetcpdf_example/{{yearvalue}}/1/{{eventValue}}/{{gameID}}/{{schoolId}}">Download Certificate</a>  
-      </div>  
-    </div>  -->
+
     <div *ngIf="!isReport">
 
       <div class="container">

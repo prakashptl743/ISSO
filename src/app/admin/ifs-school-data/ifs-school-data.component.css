@@ -1,0 +1,45 @@
+.fancy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 12px;
+    text-align: left;
+  }
+  .not-paid-column {
+  
+
+    background-color: green;
+    color: white;
+  }
+  .paid-column {
+    background-color: red;
+    color: white;
+  }
+  .fancy-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .fancy-table th, .fancy-table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+  }
+  
+  .fancy-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .fancy-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .fancy-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+  .fancy-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  

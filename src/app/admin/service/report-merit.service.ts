@@ -70,6 +70,12 @@ getAmountData(){
     catchError(this.handleError)
  );
 }
+getIfsSchoolAmountData(){ 
+  let str = 'merit/getIfsSchoolAmountData/';
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+ );
+}
 loadAllSchool() {
   let str = 'student/loadSchoolList/';
   return this.http.get(this.serverUrl + str).pipe(
@@ -86,6 +92,13 @@ updateCertificateData(id, employee) {
 }
 updateSgfilAmount(id, employee) { 
   let str = 'merit/updateSgfilAmount/' + id;
+  return this.http.post<any>(this.serverUrl + str, employee)
+  .pipe(
+    catchError(this.handleError)
+  )
+}
+updateIfsSchoolAmount(id, employee) { 
+  let str = 'merit/updateIfsSchoolAmount/' + id;
   return this.http.post<any>(this.serverUrl + str, employee)
   .pipe(
     catchError(this.handleError)

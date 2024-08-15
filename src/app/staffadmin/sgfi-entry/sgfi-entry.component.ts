@@ -1,0 +1,716 @@
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
+import { SgfiEntriesService } from 'src/app/admin/service/sgfi-entries.service';
+import { MessageService, SelectItem,Message } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { PaymentService } from '../service/payment.service';
+import { isPlatformBrowser } from '@angular/common';
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
+@Component({
+  selector: 'app-sgfi-entry',
+  templateUrl: './sgfi-entry.component.html',
+  styleUrls: ['./sgfi-entry.component.css'],
+  providers: [MessageService,ConfirmationService]
+})
+export class SgfiEntryComponent implements OnInit {
+  @ViewChild('studentSignInput', { static: false }) studentSignInput: ElementRef;
+  @ViewChild('scannedaadharInput', { static: false }) scannedaadharInput: ElementRef;
+  @ViewChild('studentBonafideInput', { static: false }) studentBonafideInput: ElementRef;
+  @ViewChild('studentmarksheetInput', { static: false }) studentmarksheetInput: ElementRef;
+  @ViewChild('studentBirthCertificateInput', { static: false }) studentBirthCertificateInput: ElementRef;
+  @ViewChild('headmasterSignInput', { static: false }) headmasterSignInput: ElementRef;
+  @ViewChild('studentPhotoInput', { static: false }) studentPhotoInput: ElementRef;
+
+
+  @ViewChild('studentNameText', {static: false}) formDir: ElementRef;
+  rootGameServicData: any;
+  rootGameData: any;
+  gameOptions: any[];
+  schoolId: string;
+  gameArray =[];
+  gameId: any;
+  gameName: any;
+  gameType: any;
+  sgfiStudentData: any;
+  sgfiEnrolledStudentData: any;
+  studentRecordLength: number;
+  showSgfi: boolean = false;
+  display: boolean= false;
+  sgfiEnrollForm: FormGroup;
+  sgfiFileEnrollForm: FormGroup;
+  modal='modal';
+  isForm: boolean;
+  isDoc: boolean;
+  isPayment: boolean;
+  studentName: any;
+  schoolName: any;
+  dateOfBirth: any;
+  selectedFatherName: any;
+  visible: boolean= false;
+  schoolAddress: any;
+  schoolContact: any;
+  completedYear: moment.Duration;
+  finalCompletedYear: string;
+  submitted: boolean;
+  sgfiFormData:any;
+  error: any;
+  studentId: any;
+  payableAmount: any;
+  totalAmount: any;
+  paymentTypeInfo: any;
+  generatedpaymentId: any;
+  dialogHeader: string;
+  ageRange: any;
+  gender: any;
+  selectedProfile: string;
+  url: any;
+  isMoreDot: boolean;
+  fileName: number;
+  isValidFile: boolean;
+  editStudentPhoto: string;
+  schoolForm: FormGroup;
+  studentSignFile: boolean;
+
+  fullFilename: string;
+  isStudentSignValidFile: boolean= true;
+  isStudentFileBig: boolean= false;
+
+  aadharFileName: string;
+  isStudenAadaharValidFile: boolean= true;
+  isStudenAadaharFileBig: boolean= false;
+
+  bonafideFileName: string;
+  isBonafideFileValidFile: boolean= true;
+  isBonafideFileFileBig: boolean= false;
+
+  markSheetFileName: string;
+  markSheetFileValidFile: boolean= true;
+  markSheetFileFileBig: boolean= false;
+
+  birthCertificateFileName: string;
+  birthCertificateFileValidFile: boolean= true;
+  birthCertificateFileFileBig: boolean= false;
+
+  headMasterSignFileName: string;
+  headMasterSignFileValidFile: boolean= true;
+  headMasterSignFileFileBig: boolean= false;
+
+  studentPhotoFileName: string;
+  studentPhotoFileValidFile: boolean= true;
+  studentPhotoFileFileBig: boolean= false;
+  selectedGameName: any;
+
+
+  constructor( 
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private sgfiEntriesService :SgfiEntriesService,  
+    private messageService: MessageService,
+    private payemntService:  PaymentService,
+    private fb: FormBuilder,
+
+  ) { 
+    
+  }
+ 
+  get studentSign() { return this.sgfiFileEnrollForm.get('studentSign'); }
+  get studentGovDoc() { return this.sgfiFileEnrollForm.get('studentGovDoc'); }
+  get studentBonafide() { return this.sgfiFileEnrollForm.get('studentBonafide'); }
+  get lastYearmarkSheet() { return this.sgfiFileEnrollForm.get('lastYearmarkSheet'); }
+  get birthCertificate() { return this.sgfiFileEnrollForm.get('birthCertificate'); }
+  get headMasterSign() { return this.sgfiFileEnrollForm.get('headMasterSign'); }
+  get studentPhoto() { return this.sgfiFileEnrollForm.get('studentPhoto'); }
+  
+
+
+  // get name() { return this.sgfiEnrollForm.controls; }
+   get name() { return this.sgfiEnrollForm.get('name'); }
+   get fatherName() { return this.sgfiEnrollForm.get('fatherName'); }
+   get motherName() { return this.sgfiEnrollForm.get('motherName'); } 
+   get admissionNo() { return this.sgfiEnrollForm.get('admissionNo'); }
+   get schoolJoinDate() { return this.sgfiEnrollForm.get('schoolJoinDate'); }
+   get studyingYear() { return this.sgfiEnrollForm.get('studyingYear'); }
+   get sgfiRegNo() { return this.sgfiEnrollForm.get('sgfiRegNo'); }
+   get dicipline() { return this.sgfiEnrollForm.get('dicipline'); }
+   get studyingLastYear() { return this.sgfiEnrollForm.get('studyingLastYear'); }
+   get personalIdentity() { return this.sgfiEnrollForm.get('personalIdentity'); }
+   
+  ngOnInit() {
+    this.schoolId = localStorage.getItem('schoolId')
+    this.loadGame();
+    this.getSgfiAmount();
+  // this.initialiseForm();
+    
+  }
+  onStudentSignSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.fullFilename= removeSpecialChar+this.fileName+'.'+ext;
+  
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isStudentSignValidFile = true;
+      } else {
+        this.isStudentSignValidFile = false;
+        this.studentSignInput.nativeElement.value = "";
+      } 
+      if (this.studentSignInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isStudentFileBig = true;
+        this.studentSignInput.nativeElement.value = "";
+      } else {
+       this.isStudentFileBig = false;
+     }
+   
+     if(this.isStudentSignValidFile && !this.isStudentFileBig) {
+      this.sgfiFileEnrollForm.get('studentSign').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentSign':null} );
+     }
+    }
+  }
+
+  onScannedaadharSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.aadharFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isStudenAadaharValidFile = true;
+      } else {
+        this.isStudenAadaharValidFile = false;
+        this.scannedaadharInput.nativeElement.value = "";
+      } 
+      if (this.scannedaadharInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isStudenAadaharFileBig = true;
+        this.scannedaadharInput.nativeElement.value = "";
+      } else {
+       this.isStudenAadaharFileBig = false;
+     }
+   
+     if(this.isStudenAadaharValidFile && !this.isStudenAadaharFileBig) {
+      this.sgfiFileEnrollForm.get('studentGovDoc').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentGovDoc':null} );
+     }
+    }
+  }
+ 
+  onBonafideSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.bonafideFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.isBonafideFileValidFile = true;
+      } else {
+        this.isBonafideFileValidFile = false;
+        this.studentBonafideInput.nativeElement.value = "";
+      } 
+      if (this.studentBonafideInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.isBonafideFileFileBig = true;
+        this.studentBonafideInput.nativeElement.value = "";
+      } else {
+       this.isBonafideFileFileBig = false;
+     }
+   
+     if(this.isBonafideFileValidFile && !this.isBonafideFileFileBig) {
+      this.sgfiFileEnrollForm.get('studentBonafide').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentBonafide':null} );
+     }
+    }
+  }
+  onMarkSheetSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.markSheetFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.markSheetFileValidFile = true;
+      } else {
+        this.markSheetFileValidFile = false;
+        this.studentmarksheetInput.nativeElement.value = "";
+      } 
+      if (this.studentmarksheetInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.markSheetFileFileBig = true;
+        this.studentmarksheetInput.nativeElement.value = "";
+      } else {
+       this.markSheetFileFileBig = false;
+     }
+   
+     if(this.markSheetFileValidFile && !this.markSheetFileFileBig) {
+      this.sgfiFileEnrollForm.get('lastYearmarkSheet').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'lastYearmarkSheet':null} );
+     }
+    }
+  }
+
+  onBirthCertificateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.birthCertificateFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.birthCertificateFileValidFile = true;
+      } else {
+        this.birthCertificateFileValidFile = false;
+        this.studentBirthCertificateInput.nativeElement.value = "";
+      } 
+      if (this.studentBirthCertificateInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.birthCertificateFileFileBig = true;
+        this.studentBirthCertificateInput.nativeElement.value = "";
+      } else {
+       this.birthCertificateFileFileBig = false;
+     }
+   
+     if(this.birthCertificateFileValidFile && !this.birthCertificateFileFileBig) {
+      this.sgfiFileEnrollForm.get('birthCertificate').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'birthCertificate':null} );
+     }
+    }
+  }
+  onHeadMasterSignSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.headMasterSignFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.headMasterSignFileValidFile = true;
+      } else {
+        this.headMasterSignFileValidFile = false;
+        this.headmasterSignInput.nativeElement.value = "";
+      } 
+      if (this.headmasterSignInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.headMasterSignFileFileBig = true;
+        this.headmasterSignInput.nativeElement.value = "";
+      } else {
+       this.headMasterSignFileFileBig = false;
+     }
+   
+     if(this.headMasterSignFileValidFile && !this.headMasterSignFileFileBig) {
+      this.sgfiFileEnrollForm.get('headMasterSign').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'headMasterSign':null} );
+     }
+    }
+  }
+  
+  onStudentPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      var newName=(input.files[0].name).split('.').slice(0, -1).join('.')
+      var removeSpace = newName.replace(/\s/g, "");
+      var removeSpecialChar = removeSpace.replace(/[^\w\s]/gi, "")
+      var ext = (input.files[0].name).split('.').pop(); 
+      this.fileName = Math.floor((Math.random() * 1000000000) + 1);
+      this.studentPhotoFileName= removeSpecialChar+this.fileName+'.'+ext;
+      if ( ext == 'pdf'  || ext == 'PDF' ||ext == 'png'  || ext == 'PNG' || ext == 'jpeg' || ext == 'JPEG' || ext == 'JPG' || ext == 'jpg' ) {
+        this.studentPhotoFileValidFile = true;
+      } else {
+        this.studentPhotoFileValidFile = false;
+        this.studentPhotoInput.nativeElement.value = "";
+      } 
+      if (this.studentPhotoInput.nativeElement.value && input.files[0].size > 102400) { 
+        this.studentPhotoFileFileBig = true;
+        this.studentPhotoInput.nativeElement.value = "";
+      } else {
+       this.studentPhotoFileFileBig = false;
+     }
+   
+     if(this.studentPhotoFileValidFile && !this.studentPhotoFileFileBig) {
+      this.sgfiFileEnrollForm.get('studentPhoto').setValue(file);
+     } else {
+      this.sgfiFileEnrollForm.patchValue( {'studentPhoto':null} );
+     }
+    }
+  }
+  getSgfiAmount(){
+    this.sgfiEntriesService.getSgfiAmount().subscribe(response => {
+      if(response!=='') {
+        this.payableAmount = response[0].amount;
+      }
+    },
+    error => {
+      console.log('this is error-->'+JSON.stringify(error.errorDesc));
+     // this.messageService.add({key: 'error', severity:'error', summary: error.errorDesc});
+      this.messageService.add({key: 'custom',severity:'error', summary:  error.errorDesc});
+      //this.errorAlert =true;
+     });
+  }
+  payNow(amt,studentId,paymentType) {
+    this.totalAmount = amt;
+    this.studentId = studentId;
+    this.paymentTypeInfo = paymentType;
+    let options = {
+      "key": "rzp_live_08wdE0QgVsFNVd", // Enter the Key ID generated from the Dashboard
+      "amount": amt * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      // "amount": 100,
+      "currency": "INR",
+      "name": 'SGFI PAYMENT',
+      "description": this.gameName,
+      "image": "https://issoindia.com/assets/img/logo_retina.png", 
+      'handler':(response)=>{this.paymentCapture(response)},
+      "callback_url": "http://localhost:4200/#/staffadmin/sgfi",
+      "prefill": {
+          "name": "",
+          "email": "", 
+          "contact": ""
+      },
+      "notes": {
+          "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
+
+  var propay = new this.payemntService.nativeWindow.Razorpay(options);
+  propay.open();
+  
+  propay.on('payment.success', function(resp) {
+  alert("payment checking.");
+  alert(resp.razorpay_payment_id),
+  alert(resp.razorpay_order_id),
+  alert(resp.razorpay_signature)}); 
+   
+  }
+  paymentCapture(response) {
+    const formData = new FormData();
+    this.generatedpaymentId = response.razorpay_payment_id;
+ 
+    let paidAmount =(this.totalAmount).toString();
+    formData.append('paymentTypeInfo', this.paymentTypeInfo);
+    formData.append('schoolId', this.schoolId);
+    formData.append('generatedpaymentId', this.generatedpaymentId);
+    formData.append('studentId', this.studentId);
+    formData.append('paidAmount', paidAmount);
+    formData.append('gameId', this.gameId);
+ 
+  
+  this.sgfiEntriesService.savePaymentData(formData).subscribe(
+    res => {
+        if (res.status === 'error') {
+          this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+        }  
+    },
+    error => this.error = error
+   );
+  }
+  initialFileForm(index) {
+    this.sgfiFileEnrollForm = new FormGroup({
+      'studentSign': new FormControl('', [ Validators.required]),
+      'studentGovDoc': new FormControl('', [ Validators.required]),
+      'studentBonafide': new FormControl('', [ Validators.required]),
+      'lastYearmarkSheet': new FormControl('', [ Validators.required]),
+      'birthCertificate': new FormControl('', [ Validators.required]),
+      'headMasterSign': new FormControl('', [ Validators.required]),
+      'studentPhoto': new FormControl('', [ Validators.required]),
+      
+    });
+
+    this.schoolForm = this.fb.group({
+ 
+      profile: ['', Validators.required],
+      editStudentPhoto:[],
+      schoolId: '',
+    
+      
+    });
+  }
+  calculateAgeAsOfDecember31(val) {
+    // Get the student's date of birth
+    const dob = moment(val);
+    
+    // Set the reference date to December 31st of the current year
+    const endOfYear = moment().endOf('year');
+    
+    // Calculate the difference between the reference date and date of birth
+    const age = moment.duration(endOfYear.diff(dob)).years();
+
+    return age;
+}
+  initialiseForm(index) {
+    const age = this.calculateAgeAsOfDecember31(this.sgfiStudentData[index].dateOfBirth);
+    console.log(`The student's age as of December 31st is ${age} years.`);
+    this.studentName = this.sgfiStudentData[index].studentName;
+    this.selectedFatherName = this.sgfiStudentData[index].fatherName;
+    this.selectedGameName  = this.sgfiStudentData[index].gameName;
+    this.schoolName =  this.sgfiStudentData[index].schoolName;
+    this.dateOfBirth =  this.sgfiStudentData[index].dateOfBirth;
+    this.schoolAddress = this.sgfiStudentData[index].schoolAddress;
+    this.studentId = this.sgfiStudentData[index].sId;
+    this.ageRange = this.sgfiStudentData[index].ageRange;
+    this.gender = this.sgfiStudentData[index].gender;
+    this.completedYear =  moment.duration(moment().diff(this.sgfiStudentData[index].dateOfBirth));
+    this.schoolContact =this.sgfiStudentData[index].designation1;
+    let genderVal = this.sgfiStudentData[index].gender  === '1' ? 'BOYS' : 'GIRLS'
+    this.dialogHeader = this.studentName+' '+this.sgfiStudentData[index].gameName+' '+'UNDER ' +this.sgfiStudentData[index].ageRange+ ' '+ genderVal;
+    this.sgfiEnrollForm = new FormGroup({
+      'name': new FormControl('', [ Validators.required]),
+      'fatherName': new FormControl('', [ Validators.required]),
+      'motherName': new FormControl('', [ Validators.required]),
+      'studentAddress': new FormControl(''),
+      'admissionNo': new FormControl('', [ Validators.required]),
+      'schoolJoinDate': new FormControl('', [ Validators.required]),
+      'studyingYear': new FormControl('', [ Validators.required]),
+      'sgfiRegNo': new FormControl('', [ Validators.required]),
+      'dicipline': new FormControl('', [ Validators.required]),
+      'studyingLastYear': new FormControl('', [ Validators.required]),
+      'personalIdentity': new FormControl('', [ Validators.required]),
+      'personalIdentitytwo': new FormControl(''),
+      'aadharNo': new FormControl(''),
+      'passport': new FormControl(''),
+      'bankDetails': new FormControl(''),   
+              
+      
+    });
+  }
+  onUpload(event: UploadEvent) {
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+}
+  loadGame(){
+    this.sgfiEntriesService.getGameForStaff(this.schoolId).subscribe(response => {
+      if(response!=='') {
+        this.rootGameServicData = response;
+        this.rootGameData = this.rootGameServicData;
+        let recordCount = JSON.stringify(this.rootGameData.length);
+        if(recordCount !== '0') {
+          this.showSgfi = true;
+          this.gameOptions = []; 
+          this.gameOptions.push({
+            label:"Please select",
+            value: ''
+          });
+          this.rootGameData.forEach(element => {
+            const gameIdAndName = element.gameId +','+ element.gameName +','+ element.gameType;
+            this.gameOptions.push({
+              label: element.gameName,
+              value: gameIdAndName
+            });
+  
+          })
+        } else {
+          this.showSgfi = false;
+        }
+       
+      } else {
+        
+        alert('im blankl=')
+      }
+    } ,
+   error => {
+     //this.errorAlert =true;
+    });
+  }
+  loadGameChange(gameData) {
+    const gameval = gameData.value;
+    this.gameArray =  gameval.split(","); 
+    this.gameId = this.gameArray[0];
+    this.gameName =  this.gameArray[1];
+    this.gameType =  this.gameArray[2];
+    if(gameData.value!='') {
+      this.getStudents();
+      this.getEnrolledStudentDataForStaff();
+    }
+ 
+  }
+ public  getEnrolledStudentDataForStaff() {
+    this.sgfiEntriesService.getEnrolledStudentDataForStaff(this.schoolId,this.gameId).subscribe(response => {
+        if(response!=="") {
+            this.sgfiEnrolledStudentData =   response;
+            console.log(this.sgfiEnrolledStudentData)
+            // this.dateOfBirth =  response[0].dateOfBirth
+            // this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
+
+        }
+    } ,
+    error => {
+      //this.errorAlert =true;
+    });
+ }
+
+  getStudents() {
+    this.sgfiEntriesService.getStudentForStaff(this.schoolId,this.gameId).subscribe(response => {
+          if(response!=="") {
+              this.sgfiStudentData =   response;
+              this.dateOfBirth =  response[0].dateOfBirth
+              this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
+
+          }
+      } ,
+      error => {
+        //this.errorAlert =true;
+      });
+  }
+  
+showDialog() {
+  this.display = true;
+ }
+ setFocus(id: string) {
+  if (isPlatformBrowser(this.platformId)) {
+    this[id].nativeElement.focus();
+  } 
+}
+ 
+ onFileSubmit() {
+    const formData = new FormData();
+    formData.append('schoolId', this.schoolId);
+    formData.append('gameId', this.gameId);
+    formData.append('studentId', this.studentId);
+    formData.append('studentSign', this.sgfiFileEnrollForm.get('studentSign').value,this.fullFilename);
+    formData.append('studentGovDoc', this.sgfiFileEnrollForm.get('studentGovDoc').value,this.aadharFileName);
+    formData.append('studentBonafide', this.sgfiFileEnrollForm.get('studentBonafide').value,this.bonafideFileName);
+    formData.append('lastYearmarkSheet', this.sgfiFileEnrollForm.get('lastYearmarkSheet').value,this.markSheetFileName);
+    formData.append('birthCertificate', this.sgfiFileEnrollForm.get('birthCertificate').value,this.birthCertificateFileName);
+    formData.append('headMasterSign', this.sgfiFileEnrollForm.get('headMasterSign').value,this.headMasterSignFileName);
+    formData.append('studentPhoto', this.sgfiFileEnrollForm.get('studentPhoto').value,this.studentPhotoFileName);
+
+    this.sgfiEntriesService.enrollStudentFile(formData).subscribe(
+      res => {
+          if (res.status === 'error') {
+            this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
+          } else {
+            this.messageService.add({key: 'custom', severity:'success', summary: 'Data Saved Successfully'});
+            this.sgfiFileEnrollForm.reset();
+            this.resetFiles();
+          }
+      },
+      error => this.error = error
+    );
+ }
+ resetFiles() {
+  this.studentSignInput.nativeElement.value = "";
+  this.scannedaadharInput.nativeElement.value = "";
+  this.studentBonafideInput.nativeElement.value = "";
+  this.studentmarksheetInput.nativeElement.value = "";
+  this.studentBirthCertificateInput.nativeElement.value = "";
+  this.headmasterSignInput.nativeElement.value = "";
+  this.studentPhotoInput.nativeElement.value = "";
+}
+ onFormSubmit() {
+ this.sgfiFormData = this.sgfiEnrollForm.value;
+  const formData = new FormData();
+  formData.append('name', this.sgfiEnrollForm.get('name').value);
+  formData.append('fatherName', this.sgfiEnrollForm.get('fatherName').value);
+  formData.append('motherName', this.sgfiEnrollForm.get('motherName').value);
+  formData.append('studentAddress', this.sgfiEnrollForm.get('studentAddress').value);
+  formData.append('admissionNo', this.sgfiEnrollForm.get('admissionNo').value);
+  formData.append('schoolJoinDate', this.sgfiEnrollForm.get('schoolJoinDate').value);
+  formData.append('studyingYear', this.sgfiEnrollForm.get('studyingYear').value);
+  formData.append('sgfiRegNo', this.sgfiEnrollForm.get('sgfiRegNo').value);
+  formData.append('dicipline', this.sgfiEnrollForm.get('dicipline').value);
+  formData.append('studyingLastYear', this.sgfiEnrollForm.get('studyingLastYear').value);
+  formData.append('personalIdentity', this.sgfiEnrollForm.get('personalIdentity').value);
+  formData.append('personalIdentitytwo', this.sgfiEnrollForm.get('personalIdentitytwo').value);
+  formData.append('aadharNo', this.sgfiEnrollForm.get('aadharNo').value);
+  formData.append('passport', this.sgfiEnrollForm.get('passport').value);
+  formData.append('bankDetails', this.sgfiEnrollForm.get('bankDetails').value);
+  formData.append('dateOfBirth', this.gameId);
+  formData.append('schoolId', this.schoolId);
+  formData.append('gameId', this.gameId);
+  formData.append('studentId', this.studentId);
+  formData.append('ageRange', this.ageRange);
+  formData.append('gender', this.gender);
+      this.sgfiEntriesService.enrollStudent(formData).subscribe(
+        res => {
+          if(res.status === 'success') { 
+            this.messageService.add({key: 'custom', severity:'success', summary: 'Student Data Added Successfully'});
+            this.sgfiEnrollForm.reset();
+            this.isDoc = true;
+            this.isForm = false;
+            this.selectedFatherName ='';
+         } 
+         },
+        error => this.error = error
+  
+        );
+}
+openModal(inp: string) {
+  console.log(inp);
+  this.modal='modal-open';
+  this.isForm = true;
+}
+showEnrollDialog(studentId,event) {
+   console.log(studentId);
+   const student = this.sgfiEnrolledStudentData.find(student => student.studentId === studentId);
+   console.log('Data-->'+student)
+  
+  this.visible = true;
+  this.isForm = true;
+  this.isDoc = false;
+  this.isPayment = false;
+  this.initialiseForm(event)
+  this.initialFileForm(event)
+  setTimeout(() => {
+     document.getElementById('studentName').focus();
+  }, 500);
+
+}
+setFocusOnStudent(studentNameText) {    
+  // const ele = this.formDir.nativeElement[studentNameText];    
+  // if (ele) {
+  //   ele.focus();
+  // }
+  document.getElementById('studentName').focus();
+}
+closeModal(){
+  this.sgfiEnrollForm.reset()
+  this.visible = false;
+}
+// (onHide)="cancel()" 
+cancel() {
+  this.sgfiEnrollForm.reset()
+  this.visible = false;
+}
+formMenu(type:string) {
+  if (type=='form') {
+    this.isForm = true;
+    this.isDoc = false;
+    this.isPayment = false;
+  } else  if (type=='doc') {
+    this.isDoc = true;
+    this.isForm = false;
+    this.isPayment = false;
+  }  if (type=='payment') {
+    this.isPayment = true;
+    this.isForm = false;
+    this.isDoc = false;
+  }
+}
+}

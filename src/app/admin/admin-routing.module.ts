@@ -27,7 +27,8 @@ import { ManageTeamReport } from './manage-team-report/manage-team-report.compon
 import { UserManagementComponent } from './user-management/user-management.component';
 import { PermissionGuard } from '../services/permission.guard';
 import { AdminPermission } from '../services/user.service';   
-import { SgfiEntriesComponent } from '../sgfi-entries/sgfi-entries.component';
+import { SgfiEntriesComponent } from './sgfi-entries/sgfi-entries.component';
+
 const routes: Routes = [
   {
      path: 'admin',

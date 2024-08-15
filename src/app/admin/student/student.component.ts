@@ -1043,6 +1043,19 @@ checkSubGameCapacityForStudent(event) {
 setGender() {
   this.genderGameFilter = true;
 }
+filters: any = {};
+
+// Capture and save filter state
+onTableFilter(event: any) {
+    this.filters = event.filters;
+}
+
+// Handle dropdown change without resetting filters
+onDropdownChange(event: any) {
+    // You can handle the dropdown change here
+    // The filters are retained and not reset
+   // console.log('Dropdown changed to:', this.selectedOption);
+}
 loadStudentData(event) {
   this.newSubGameCapacity = [];
   this.schoolvalue = event.value;

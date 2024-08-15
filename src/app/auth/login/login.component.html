@@ -1,8 +1,45 @@
  <div class="limiter">
+    <p-dialog header="Terms and Conditions" [(visible)]="display" [modal]="true" [responsive]="true" [width]="800" [baseZIndex]="10000">
 
-<p-dialog class="align-dialog" header="Privacy and Payment Policy" [(visible)]="display"   [modal]="true" [responsive]="true"   
-        [maximizable]="true" [baseZIndex]="1000">
-         <ul>
+<!-- <p-dialog class="align-dialog" header="Privacy and Payment Policy" [(visible)]="display"   [modal]="true" [responsive]="true"   
+        [maximizable]="true" [baseZIndex]="1000"> -->
+        <div> I hereby agree to the following terms and conditions governing the online official entry from process of participation in ISSO National Games
+        </div>
+        <ol>
+            <li>I declare that the information provided by me is genuine and authentic.</li>
+            <li>I know that during verification of documents at the time of reporting, if any discrepancy is detected in original document including name, father’s name, date of birth, class, admission number, school name, eligibility and gender, then my school’s team / subjected players participation will be liable to be cancelled.
+            </li>
+            <li>Parental consent and medical authorisation from parents is cumpolsary to be taken by school and no direct parent consent required by ISSO .
+            </li>
+            <li>I declare that I will not disclose or share the school ID and Password provided by ISSO for process of filling online official entry form of above said championship with anybody. I understand that I am solely responsible for safeguarding my password and avoid any misuse.
+            </li>
+            <li>I declare that the accompanying coach and managers from our school shall be responsible for the safety and comfort of players of my team during their travel from their home to the venue of tournament and back to their home. The travel ticket expenses and the expenses during travel will be borne by our school / concerning parents . The food expense shall be completely borne by our school / concerning parents during the tournament including travel period. Our school shall bear the expenses of kit etc provided to the players.
+            </li>
+            <li>Our School shall provide medical facilities to our team’s players. Our school  will also provide medical and accidental insurance to our team’s each and every player and member. ISSO will not be held responsible for any medical facility requirement outside the ISSO playing venue.
+            </li>
+            <li>The participation fees 2000 INR can be paid online before the tournament which shall be checked during attendance and registration at venue.
+            </li>
+          </ol>  
+
+          <h5>Privacy and Payment Policy</h5>
+          <ol>
+             <li>All the information and data shared by the school will be used by ISSO and ISSO only, data or information will not be shared under any circumstances. </li>
+             <li>Data shared will be used for communication purpose only.</li>
+             <li>Data will be shared only when a participant advance to other National Games or Tournament through ISSO</li>
+             <li>Any such sharing of data will be done after procuring permission from the school.</li>
+             <li>ISSO will not contact any parents/guardians directly without school’s consent.</li>
+             <li>Payment made on the portal will be towards below mentioned purposes only:</li>
+           
+
+          </ol>
+          <ul>
+            <li>School Affiliation Fess</li>
+            <li>Students Registration Fees</li>
+            <li>Certificate Alteration Fees</li>
+          </ul> 
+
+
+         <!-- <ul>
             <li>All the information and data shared by the school will be used by ISSO and ISSO only, data or information will not be shared under any circumstances.</li>
             <li>Data shared will be used for communication purpose only.</li>
             <li>Data will be shared only when a participant advance to other National Games or Tournament through ISSO.</li>
@@ -14,7 +51,9 @@
                 <dd>- Students Registration Fees</dd>
                 <dd>- Certificate Alteration Fees</dd>
             </dl>
-         </ul> 
+         </ul>  -->
+
+
         
             <p-footer>
                 <p-button  (click)="display=false"  label="I Agree"></p-button> 

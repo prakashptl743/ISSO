@@ -5,6 +5,7 @@
   <button [ngClass]="reportLabel=='receipt' ? 'isMenuActive' : '' "  (click)="onloadMenu(2)" class="tablinks" >Receipt</button>
   <button [ngClass]="reportLabel=='affilationfee' ? 'isMenuActive' : '' "  (click)="onloadMenu(3)" class="tablinks" >Online Fee</button>
   <button [ngClass]="reportLabel=='sgfi' ? 'isMenuActive' : '' "  (click)="onloadMenu(4)" class="tablinks" >SGFI Fee</button>
+  <button [ngClass]="reportLabel=='ifsSchool' ? 'isMenuActive' : '' "  (click)="onloadMenu(5)" class="tablinks" >IFS School Fee</button>
 
 </div>
  
@@ -12,7 +13,7 @@
 <app-download-invoice *ngIf="reportValue == 1"></app-download-invoice>
 <app-download-receipt *ngIf="reportValue == 2"></app-download-receipt>
 <app-configure-sgfi-payment  *ngIf="reportValue == 4"></app-configure-sgfi-payment>
-
+<app-configure-ifs-school-payment  *ngIf="reportValue == 5"></app-configure-ifs-school-payment>
 
 <div class="ui-g-12" *ngIf="reportValue == 3">
   <div class="ui-g-4">

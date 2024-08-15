@@ -1,0 +1,129 @@
+.align-menu {
+  /* margin: auto;
+  width: 32%;
+  border: 3px solid #73AD21;
+  margin-top: 30px; 
+  padding: 10px 10px 27px 10px; */
+
+  margin: auto;
+  width: 100%;
+  /* border: 3px solid #73AD21; */
+  margin-top: 30px;
+  padding: 10px 10px 27px 168px;
+}
+.close-button {
+  margin-right: 15px !important;
+  margin-right: 15px !important;
+  padding-top: 0px !important; 
+}
+:host ::ng-deep .alert-dismissible .close {
+  margin-right: 15px;
+  margin-right: 15px;
+  padding-top: 0px; 
+}  
+.align-error-message {
+  margin-left: 20px;
+}
+.error-class {
+  color: red;
+  padding-top: 15px;
+}
+.align-form {
+  padding: 0 !important;
+  width: 181px !important;
+  margin: 0 !important;
+}
+.padd-top {
+  padding-top: 40px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background:blue;
+    border-radius: 20px;
+    padding-top: 8px;
+    width: 120%;
+ 
+}
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 400px;
+}
+.ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 380px !important;
+  border-radius: 10px !important;
+}
+.ui-toast .ui-toast-message-content {
+  padding: 1em 2em;
+}
+.ui-toast .ui-toast-close-icon {
+  position: absolute;
+  top: 1em;
+  right: 0.25em;
+  cursor: pointer;
+  display: inline-block;
+}
+.error-message {
+  color: red;
+}
+.form-title {
+  padding: 7px;
+  color: white;
+  background: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.align-payment-hint {
+  padding: 0px 10px 10px;
+  color: green;
+}
+.hold-payment-hint {
+    font-size: 15px;
+    color: red;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+}
+.register-form {
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+.align-instruction {
+  padding-bottom: 17px;
+  font-size: 16px;
+  font-style: italic;
+}
+.align-email-error {
+  color: red;
+  padding-top: 10px;
+}
+.submit-button {
+  height: 38px;
+  padding-top: 6px;
+  margin-top: 23px;
+}
+.bgVal {
+  /* background: url('https://issoindia.com/img/sp-bg.png'); */
+  background-image: url('https://issoindia.com/img/sp-bg.png');
+}
+input::file-selector-button {
+  font-weight: bold;
+  color: dodgerblue;
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+}
+.align-file-row {
+  border-bottom: 1px solid;
+  margin-bottom: 11px;
+  border-bottom: 1px solid;
+  /* padding: 10px; */
+  margin-bottom: 18px;
+}
+.form-group.is-invalid {
+  .invalid-feedback {
+      display: block;
+  }
+}

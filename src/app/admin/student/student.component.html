@@ -132,7 +132,7 @@
 <!-- START P TABLE CODE-->
 
 <!-- [resizableColumns]="true" [autoLayout]="true"  [rowsPerPageOptions]="[10,25,50]" -->
-<p-table #dt [value]="customers" *ngIf="!display && studentGrid" [showCurrentPageReport] = "true" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+<p-table #dt [filters]="filters" (onFilter)="onTableFilter($event)" [value]="customers" *ngIf="!display && studentGrid" [showCurrentPageReport] = "true" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
             [rows]="10"  [loading]="loading" [resizableColumns]="true" [autoLayout]="true"
              [paginator]="true"
             [filterDelay]="0">

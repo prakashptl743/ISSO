@@ -48,7 +48,10 @@ export class AdminPayment implements OnInit {
       this.reportLabel = "affilationfee"
     } else if(index == '4') {
       this.reportLabel = "sgfi"
+    } else {
+      this.reportLabel = "ifsSchool"
     }
+    
   }
   getPaymentData() {
     const month = new Date().getMonth();
