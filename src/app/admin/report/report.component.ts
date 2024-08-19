@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 type AOA = any[][];
 
   @Component({
@@ -31,6 +32,7 @@ export class ReportComponent implements OnInit {
     isTeamEventReport: boolean;
     isTshirtReport:boolean;
     istshirtReport: boolean;
+    baseUrl: string;
 
   addMessages() {
     this.messages = [
@@ -166,6 +168,7 @@ clearMessages() {
     this.yearOptions = this.issoUtilService.setYear();
     this.loadMenu();
     this.initialiseData();
+    this.baseUrl = environment.baseUrl;
     // let imageUrl = '../assets/images/studentphoto/avatar51.png';
 
     //  this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {    

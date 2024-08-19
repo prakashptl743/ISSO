@@ -13,6 +13,7 @@ import { Observer } from 'rxjs/Rx';
 // import * as html2canvas from 'html2canvas';
 import * as pdfFonts from './vfs_fonts';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-merit',
@@ -141,7 +142,7 @@ export class MeritComponent implements OnInit {
   timeAndDistanceValue: string;
   isTimeDistance: any;
   indexVal: any;
-
+  baseUrl: string;
   constructor( 
     private confirmation: ConfirmationService,
     private issoUtilService: IssoUtilService, 
@@ -158,6 +159,7 @@ export class MeritComponent implements OnInit {
       {label: 'Print Merit'},
     ];
     this.setPhotoPath();
+    this.baseUrl = environment.baseUrl;
   } 
   setPhotoPath () { 
     this.setPhotoYear = this.issoUtilService.setPhotoYear();

@@ -52,7 +52,6 @@
         <div class="table-cell">Gender</div>
         <div class="table-cell">Action</div>
         <div class="table-cell">Status</div>
-  
         <div class="table-cell">ISSO Status</div>
       </div>
      
@@ -63,7 +62,7 @@
           <div class="table-cell">{{student.ageRange}}</div>
           <div class="table-cell">{{student.gender == '1' ? 'Boys' : 'Girls'}}</div>
           <div class="table-cell">
-            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">ENROLL NOW</button>
+            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">{{student.sId}}ENROLL NOW</button>
             <button *ngIf="student.isForm == '1' && student.isDoc == '1' &&  student.isPaid == '1'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">VIEW/UPDATE</button>
          </div>
          <div class="table-cell">
@@ -118,7 +117,7 @@
                         <div [hidden]="formDir.submitted">
                                 <div class="align-form-column">
                                     <label for="name">Student Name <span class="required-label">*</span></label>
-                                    <input  name="studentNameText" id="studentName" class="form-control" [(ngModel)]="studentName" formControlName="name"
+                                    <input  name="studentNameText" id="studentName" class="form-control" [(ngModel)]="studentName" formControlName="name" readonly
                                     [ngClass]="{'is-invalid error-input-border': name.invalid && (name.dirty || name.touched)}">
  
                                     <div class="error-message" *ngIf="name.invalid && (name.dirty || name.touched)">
@@ -194,7 +193,7 @@
                 <div class="col-md-4">
                     <div [hidden]="formDir.submitted">
                         <div class="align-form-column">
-                            <label for="alterEgo">Game Name {{selectedGameName}} <span class="required-label">*</span></label>
+                            <label for="alterEgo">Game Name<span class="required-label">*</span></label>
                             <input id="dicipline"  formControlName="dicipline" class="form-control" [(ngModel)]="selectedGameName" readonly
                             >
                             
@@ -261,7 +260,9 @@
                         <div class="align-form-column">
                             <label for="alterEgo">Age in Completed years as on 31st December</label>
                             <div> 
-                                <span>{{completedYear.years()}} Years, {{completedYear.months()}} Months, {{completedYear.days() }}Days </span>
+                                <span>
+                                     {{studentCompletedYear['years']}} Year's,  {{studentCompletedYear['months']}} Months, {{studentCompletedYear['days']}} Days
+                                </span>
                             </div>
                          </div>
                         <div class="align-form-column">
@@ -276,7 +277,7 @@
         </div>
             <div>
                 <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-                <button class="align-button" type="submit" (click)="onFormSubmit()" [disabled]="sgfiEnrollForm.invalid" class="btn btn-primary">Save changes</button>
+                <button class="align-button" type="submit" (click)="onFormSubmit()" [disabled]="sgfiEnrollForm.invalid" class="btn btn-primary">{{formButtonVal}}</button>
             </div>  
             
         
@@ -289,7 +290,7 @@
                         <div class="row">
                           <div class="col-md-4">
                             <h5>Candidate Scanned Sign</h5>
-                            <input  id="studentSign" type="file"  (change)="onStudentSignSelected($event)" id="customFile" #studentSignInput/>
+                            <input  id="studentSign" type="file"   (change)="onStudentSignSelected($event)" id="customFile" #studentSignInput/>
                             <div *ngIf="!isStudentSignValidFile">
                                 <span class="error-class">Invalid File type Please select file type in correct format only</span>
                             </div>
@@ -359,8 +360,54 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                        <div [hidden]="formDir.submitted">
+               
+                <div class="table" *ngIf="docArray.length >0">
+                    <div class="table-row table-header">
+                      <div class="table-cell">Birth Certificate</div>
+                      <div class="table-cell">Bonafide</div>
+                      <div class="table-cell">Government Id</div>
+                      <div class="table-cell">Last Year  Mark Sheet</div>
+                      <div class="table-cell">Photo</div>
+                      <div class="table-cell">Student Sign</div>
+                      <div class="table-cell">Head Master Sign</div>
+                    </div>
+                   
+                    <div class="table-row" *ngFor="let student of docArray; let i = index;" >
+                        <div class="table-cell">
+                            <a *ngIf="student.birthCert != 'N/A'" target="_blank" href="{{student.birthCert}}">Download</a>
+                            <a *ngIf="student.birthCert == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                          <a *ngIf="student.bonafide != 'N/A'" target="_blank" href="{{student.bonafide}}">Download</a>
+                          <a *ngIf="student.bonafide == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                          <a *ngIf="student.govID != 'N/A'" target="_blank" href="{{student.govID}}">Download</a>
+                          <a *ngIf="student.govID == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                          <a *ngIf="student.lastYearMarkSheet != 'N/A'" target="_blank" href="{{student.lastYearMarkSheet}}">Download</a>
+                          <a *ngIf="student.lastYearMarkSheet == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                          <a *ngIf="student.Photo != 'N/A'" target="_blank" href="{{student.Photo}}">Download</a>
+                          <a *ngIf="student.Photo == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                            <a *ngIf="student.stdSign != 'N/A'" target="_blank" href="{{student.stdSign}}">Download</a>
+                            <a *ngIf="student.stdSign == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                        <div class="table-cell">
+                          <a *ngIf="student.headMastSign != 'N/A'" target="_blank" href="{{student.headMastSign}}">Download</a>
+                          <a *ngIf="student.headMastSign == 'N/A'" target="_blank">Doc Not uploaded</a>
+                        </div>
+                   </div>
+                    
+                  </div>
+
+
+
+                      
                                 <!-- <div class="align-form-column">
                                     <label for="name">Candidate Scanned Sign</label>
                                         <div class="">
@@ -445,18 +492,15 @@
                                         <span class="error-class">File size too large please select image below 100 KB</span>
                                     </div>                             
                                  </div>-->
-                        </div>
-                  
-                </div>
+                        
+                   
                 </form>
-                <div class="col-md-4">
-
-                </div>
-                <div class="col-md-4"></div>
+                
+  
                 </div>
                 <div>
                     <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-                    <button  [disabled]="sgfiFileEnrollForm.invalid"  class="align-button" type="submit" (click)="onFileSubmit()"  class="btn btn-primary">Save changes</button>
+                    <button  [disabled]="sgfiFileEnrollForm.invalid"  class="align-button" type="submit" (click)="onFileSubmit()"  class="btn btn-primary">{{docButtonVal}}</button>
                 </div>  
        </div>
        <div *ngIf="isPayment">

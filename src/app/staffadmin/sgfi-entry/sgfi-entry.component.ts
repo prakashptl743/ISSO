@@ -6,6 +6,7 @@ import { MessageService, SelectItem,Message } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { PaymentService } from '../service/payment.service';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from 'src/environments/environment';
 interface UploadEvent {
   originalEvent: Event;
   files: File[];
@@ -38,6 +39,7 @@ export class SgfiEntryComponent implements OnInit {
   sgfiStudentData: any;
   sgfiEnrolledStudentData: any;
   studentRecordLength: number;
+  enrolledRecordLength:number
   showSgfi: boolean = false;
   display: boolean= false;
   sgfiEnrollForm: FormGroup;
@@ -54,6 +56,7 @@ export class SgfiEntryComponent implements OnInit {
   schoolAddress: any;
   schoolContact: any;
   completedYear: moment.Duration;
+  studentCompletedYear:any;
   finalCompletedYear: string;
   submitted: boolean;
   sgfiFormData:any;
@@ -103,6 +106,11 @@ export class SgfiEntryComponent implements OnInit {
   studentPhotoFileValidFile: boolean= true;
   studentPhotoFileFileBig: boolean= false;
   selectedGameName: any;
+  formButtonVal:string;
+  docButtonVal: string;
+  docArray: any[];
+  baseUrl: string;
+
 
 
   constructor( 
@@ -142,9 +150,30 @@ export class SgfiEntryComponent implements OnInit {
     this.schoolId = localStorage.getItem('schoolId')
     this.loadGame();
     this.getSgfiAmount();
+    this.initialSgfiForm();
+    this.baseUrl = environment.baseUrl;
   // this.initialiseForm();
     
   }
+ public initialSgfiForm() {
+  this.sgfiEnrollForm = new FormGroup({
+    'name': new FormControl('', [ Validators.required]),
+    'fatherName': new FormControl('', [ Validators.required]),
+    'motherName': new FormControl('', [ Validators.required]),
+    'studentAddress': new FormControl(''),
+    'admissionNo': new FormControl('', [ Validators.required]),
+    'schoolJoinDate': new FormControl('', [ Validators.required]),
+    'studyingYear': new FormControl('', [ Validators.required]),
+    'sgfiRegNo': new FormControl('', [ Validators.required]),
+    'dicipline': new FormControl('', [ Validators.required]),
+    'studyingLastYear': new FormControl('', [ Validators.required]),
+    'personalIdentity': new FormControl('', [ Validators.required]),
+    'personalIdentitytwo': new FormControl(''),
+    'aadharNo': new FormControl(''),
+    'passport': new FormControl(''),
+    'bankDetails': new FormControl(''),   
+  });
+ }
   onStudentSignSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -445,62 +474,103 @@ export class SgfiEntryComponent implements OnInit {
     });
 
     this.schoolForm = this.fb.group({
- 
       profile: ['', Validators.required],
       editStudentPhoto:[],
       schoolId: '',
-    
-      
     });
   }
+ 
   calculateAgeAsOfDecember31(val) {
-    // Get the student's date of birth
-    const dob = moment(val);
+      let monthVal = new Date().getMonth();
+      let yearVal = new Date().getFullYear();
+      let cuurentAcademicYear;
     
-    // Set the reference date to December 31st of the current year
-    const endOfYear = moment().endOf('year');
-    
-    // Calculate the difference between the reference date and date of birth
-    const age = moment.duration(endOfYear.diff(dob)).years();
+      if(monthVal >= 5) {
+        cuurentAcademicYear = yearVal - 1;
+      } else {
+        cuurentAcademicYear = yearVal - 2;
+      }
+      const dobMoment = moment(val);
+      const endOfYear = moment(cuurentAcademicYear+'-12-31'); // Specific year-end or current date
+      const duration = moment.duration(endOfYear.diff(dobMoment));
 
-    return age;
+      const age = {
+        years: Math.floor(duration.asYears()),
+        months: duration.months(),
+        days: duration.days(),
+      };
+    
+      return age;
+
 }
-  initialiseForm(index) {
-    const age = this.calculateAgeAsOfDecember31(this.sgfiStudentData[index].dateOfBirth);
-    console.log(`The student's age as of December 31st is ${age} years.`);
-    this.studentName = this.sgfiStudentData[index].studentName;
-    this.selectedFatherName = this.sgfiStudentData[index].fatherName;
-    this.selectedGameName  = this.sgfiStudentData[index].gameName;
-    this.schoolName =  this.sgfiStudentData[index].schoolName;
-    this.dateOfBirth =  this.sgfiStudentData[index].dateOfBirth;
-    this.schoolAddress = this.sgfiStudentData[index].schoolAddress;
-    this.studentId = this.sgfiStudentData[index].sId;
-    this.ageRange = this.sgfiStudentData[index].ageRange;
-    this.gender = this.sgfiStudentData[index].gender;
-    this.completedYear =  moment.duration(moment().diff(this.sgfiStudentData[index].dateOfBirth));
-    this.schoolContact =this.sgfiStudentData[index].designation1;
-    let genderVal = this.sgfiStudentData[index].gender  === '1' ? 'BOYS' : 'GIRLS'
-    this.dialogHeader = this.studentName+' '+this.sgfiStudentData[index].gameName+' '+'UNDER ' +this.sgfiStudentData[index].ageRange+ ' '+ genderVal;
-    this.sgfiEnrollForm = new FormGroup({
-      'name': new FormControl('', [ Validators.required]),
-      'fatherName': new FormControl('', [ Validators.required]),
-      'motherName': new FormControl('', [ Validators.required]),
-      'studentAddress': new FormControl(''),
-      'admissionNo': new FormControl('', [ Validators.required]),
-      'schoolJoinDate': new FormControl('', [ Validators.required]),
-      'studyingYear': new FormControl('', [ Validators.required]),
-      'sgfiRegNo': new FormControl('', [ Validators.required]),
-      'dicipline': new FormControl('', [ Validators.required]),
-      'studyingLastYear': new FormControl('', [ Validators.required]),
-      'personalIdentity': new FormControl('', [ Validators.required]),
-      'personalIdentitytwo': new FormControl(''),
-      'aadharNo': new FormControl(''),
-      'passport': new FormControl(''),
-      'bankDetails': new FormControl(''),   
-              
-      
-    });
+public initialiseForm(index,studentData) {
+  this.docArray =[];
+  if(studentData !==undefined) {
+    console.log('undefined')
+     this.docArray = [];
+     this.formButtonVal = 'Update Changes';
+     this.docButtonVal  = 'Update Changes';
+      const patchValues = {
+        'name':studentData.studentName,
+        'fatherName': studentData.fatherName,
+        'motherName': studentData.motherName,
+        'studentAddress': studentData.studentAddress,
+        'admissionNo': studentData.admissionNoYear,
+        'schoolJoinDate':studentData.schoolJoinDate,
+        'studyingYear': studentData.studyingYear,
+        'sgfiRegNo': studentData.sgfiRegNo,
+        'dicipline': studentData.discipline,
+        'studyingLastYear': studentData.studyingLastYear,
+        'personalIdentity': studentData.personalMark1,
+        'personalIdentitytwo':studentData.personalMark2,
+        'aadharNo': studentData.aadharNo,
+        'passport': studentData.passport,
+        'bankDetails': studentData.bankDetails,
+      };
+      this.studentCompletedYear = this.calculateAgeAsOfDecember31(studentData.dateofBirth);
+      this.studentName = studentData.studentName;
+      this.selectedFatherName = studentData.fatherName;
+      this.selectedGameName  = studentData.gameName;
+      this.schoolName =  studentData.schoolName;
+      this.dateOfBirth =  studentData.dateofBirth;
+      this.schoolAddress = studentData.schoolAddress;
+      this.studentId = studentData.studentId;
+      this.ageRange = studentData.ageRange;
+      this.gender = studentData.gender;
+      this.schoolContact = studentData.designation1;
+      let genderVal = studentData.gender  === '1' ? 'BOYS' : 'GIRLS'
+      this.dialogHeader = studentData.studentName+' '+studentData.gameName+' '+'UNDER ' +studentData.ageRange+ ' '+ genderVal;
+      this.sgfiEnrollForm.patchValue(patchValues);
+     
+      this.docArray.push({
+        'birthCert': studentData.birthCertificate == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.birthCertificate,
+        'bonafide': studentData.studentBonafide == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.studentBonafide,
+        'govID':studentData.studentGovDoc == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.studentGovDoc,
+        'lastYearMarkSheet':studentData.lastYearmarkSheet == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.lastYearmarkSheet,
+        'Photo':studentData.studentPhoto == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.studentPhoto,
+        'stdSign':studentData.studentSign == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.studentSign,
+        'headMastSign':studentData.headMasterSign == null? 'N/A': this.baseUrl+'upload/sgfi/'+studentData.headMasterSign
+      })
+     } else {
+ 
+      this.formButtonVal = 'Save Changes';
+      this.docButtonVal ='Save Changes';
+      this.studentName = this.sgfiStudentData[index].studentName;
+      this.selectedFatherName = this.sgfiStudentData[index].fatherName;
+      this.selectedGameName  = this.sgfiStudentData[index].gameName;
+      this.schoolName =  this.sgfiStudentData[index].schoolName;
+      this.dateOfBirth =  this.sgfiStudentData[index].dateOfBirth;
+      this.schoolAddress = this.sgfiStudentData[index].schoolAddress;
+      this.studentId = this.sgfiStudentData[index].sId;
+      this.ageRange = this.sgfiStudentData[index].ageRange;
+      this.gender = this.sgfiStudentData[index].gender;
+      this.studentCompletedYear = this.calculateAgeAsOfDecember31(this.sgfiStudentData[index].dateOfBirth);
+      this.schoolContact =this.sgfiStudentData[index].designation1;
+      let genderVal = this.sgfiStudentData[index].gender  === '1' ? 'BOYS' : 'GIRLS'
+      this.dialogHeader = this.studentName+' '+this.sgfiStudentData[index].gameName+' '+'UNDER ' +this.sgfiStudentData[index].ageRange+ ' '+ genderVal;
   }
+}
+
   onUpload(event: UploadEvent) {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
 }
@@ -555,8 +625,7 @@ export class SgfiEntryComponent implements OnInit {
         if(response!=="") {
             this.sgfiEnrolledStudentData =   response;
             console.log(this.sgfiEnrolledStudentData)
-            // this.dateOfBirth =  response[0].dateOfBirth
-            // this.studentRecordLength = Object.keys( this.sgfiStudentData).length;
+            this.enrolledRecordLength = Object.keys(this.sgfiEnrolledStudentData).length;
 
         }
     } ,
@@ -606,6 +675,7 @@ showDialog() {
           if (res.status === 'error') {
             this.messageService.add({severity:'error', summary: 'Error Message', detail:'Validation failed'});
           } else {
+            this.docButtonVal ='Update Changes';
             this.messageService.add({key: 'custom', severity:'success', summary: 'Data Saved Successfully'});
             this.sgfiFileEnrollForm.reset();
             this.resetFiles();
@@ -641,20 +711,26 @@ showDialog() {
   formData.append('aadharNo', this.sgfiEnrollForm.get('aadharNo').value);
   formData.append('passport', this.sgfiEnrollForm.get('passport').value);
   formData.append('bankDetails', this.sgfiEnrollForm.get('bankDetails').value);
-  formData.append('dateOfBirth', this.gameId);
+  formData.append('dateOfBirth', this.dateOfBirth);
   formData.append('schoolId', this.schoolId);
   formData.append('gameId', this.gameId);
   formData.append('studentId', this.studentId);
   formData.append('ageRange', this.ageRange);
   formData.append('gender', this.gender);
+  formData.append('formStatus', this.formButtonVal);
+
+
       this.sgfiEntriesService.enrollStudent(formData).subscribe(
         res => {
           if(res.status === 'success') { 
             this.messageService.add({key: 'custom', severity:'success', summary: 'Student Data Added Successfully'});
-            this.sgfiEnrollForm.reset();
+            this.formButtonVal ='Update Changes';
+            this.docButtonVal = 'Save Changes';
+           // this.sgfiEnrollForm.reset();
             this.isDoc = true;
             this.isForm = false;
-            this.selectedFatherName ='';
+           // this.selectedFatherName ='';
+            this.getEnrolledStudentDataForStaff();
          } 
          },
         error => this.error = error
@@ -668,14 +744,18 @@ openModal(inp: string) {
 }
 showEnrollDialog(studentId,event) {
    console.log(studentId);
-   const student = this.sgfiEnrolledStudentData.find(student => student.studentId === studentId);
-   console.log('Data-->'+student)
+   let student
+   if(this.enrolledRecordLength > 0) {
+    student = this.sgfiEnrolledStudentData.find(student => student.studentId === studentId);
+    console.log('Data-->'+student)
+   } 
+
   
   this.visible = true;
   this.isForm = true;
   this.isDoc = false;
   this.isPayment = false;
-  this.initialiseForm(event)
+  this.initialiseForm(event,student)
   this.initialFileForm(event)
   setTimeout(() => {
      document.getElementById('studentName').focus();
@@ -703,11 +783,12 @@ formMenu(type:string) {
     this.isForm = true;
     this.isDoc = false;
     this.isPayment = false;
-  } else  if (type=='doc') {
+  } else {
+  // } else  if (type=='doc' && this.formButtonVal !== 'Save Changes') {
     this.isDoc = true;
     this.isForm = false;
     this.isPayment = false;
-  }  if (type=='payment') {
+  }  if (type=='payment' && this.formButtonVal !== 'Save Changes') {
     this.isPayment = true;
     this.isForm = false;
     this.isDoc = false;

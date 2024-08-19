@@ -46,7 +46,7 @@ export class IsfSchoolComponent implements OnInit {
   editStudentPhoto: string;
   studentPhoto: any;
   reactiveForm!: FormGroup;
- 
+  isButtonDisabled: boolean  = false; 
   showEmailErrorMessage: boolean  = false; 
   emailOfSchool:string;
   isMoreDot: boolean;
@@ -177,6 +177,8 @@ onMobChange(mobValue: string): void {
 
 } 
 onFileUpload() {
+  if (this.fileForm.valid) {
+  this.isButtonDisabled = true;
   const formData = new FormData();
   formData.append('name', this.fileForm.get('name').value);
   formData.append('mobNo', this.fileForm.get('mobNo').value);
@@ -193,11 +195,12 @@ onFileUpload() {
           this.messageService.add({key: 'custom', severity:'success', summary: 'Data Saved Successfully'});
           this.fileForm.reset();
           this.resetFiles();
-          
+          this.isButtonDisabled = false;
         }
     },
     error => this.error = error
   );
+}
 }
 onPassportSelected(event: Event): void {
   this.isPassportUpload = false;
