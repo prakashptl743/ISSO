@@ -104,6 +104,12 @@ table {
     text-align: center;
     font-weight: bold;
 }
+.pdf-icon {
+  color: red;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+}
 :host ::ng-deep.table>thead>tr>th { 
   vertical-align: text-top !important;
 }

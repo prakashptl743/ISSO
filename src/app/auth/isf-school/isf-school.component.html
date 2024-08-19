@@ -76,10 +76,10 @@
           
                </div>
              
-            </div>  
+            </div> 
             <div class="form-row align-file-row">
             <div class="form-group col-md-6"> 
-                 <button [disabled]="fileForm.invalid" class="btn btn-primary marginR10" type="button" (click)="onFileUpload()">Submit</button>
+                 <button [disabled]="fileForm.invalid || isButtonDisabled" class="btn btn-primary marginR10" type="button" (click)="onFileUpload()">Submit</button>
             </div>
             </div>
         </form>

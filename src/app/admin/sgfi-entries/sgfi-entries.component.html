@@ -226,8 +226,8 @@
       <div class="table-cell">Gender</div>
       <div class="table-cell">School</div>
       <div class="table-cell">View Doc</div>
+      <div class="table-cell">View PDF</div>
       <div class="table-cell">Status</div>
-
       <div class="table-cell">ISSO Status</div>
     </div>
    
@@ -239,11 +239,20 @@
         <div class="table-cell">{{student.gender == '1' ? 'Boys' : 'Girls'}}</div>
         <div class="table-cell">{{student.schoolName}}</div>
         <div class="table-cell"><span  class="align-condition cursor-point" (click)="showDialog(student)">VIEW</span></div>
+        <div class="table-cell">
+            <!-- <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">
+              <i class="pdf-icon align-icon fas fa-file-pdf"></i>
+            </a> -->  
+            <a   href="{{baseUrl}}Sgfipdf/sgfiViewPdf/{{student.studentId}}/{{student.schoolId}}/{{student.gameId}}">
+              <i class="pdf-icon fas fa-file-pdf"></i>
+            </a>
+        </div>
         <div  class="table-cell">
-        <span class="p-3 mb-2 bg-success text-white" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
-        <span class="p-3 mb-2 bg-warning text-dark" *ngIf="student.isForm == '1' && (student.isDoc == '0' || student.isPaid == '0') || student.isDoc == '1' && student.isPaid == '0' || student.isPaid == '1' && (student.isForm == '0' || student.isDoc == '0')">In Progress</span>
-        <span class="p-3 mb-2 bg-danger text-white" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
+          <span class="p-3 mb-2 bg-success text-white" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
+          <span class="p-3 mb-2 bg-warning text-dark" *ngIf="student.isForm == '1' && (student.isDoc == '0' || student.isPaid == '0') || student.isDoc == '1' && student.isPaid == '0' || student.isPaid == '1' && (student.isForm == '0' || student.isDoc == '0')">In Progress</span>
+          <span class="p-3 mb-2 bg-danger text-white" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
        </div>
+    
        <div class="table-cell">
           <span class="p-3 mb-2 bg-success text-white cursor-point" (click)="changeEventStatus(student.sId,student.issoadminstatus)" *ngIf="student.issoadminstatus == '1'">APPROVED</span>
           <span class="p-3 mb-2 bg-warning text-dark cursor-point" (click)="changeEventStatus(student.sId,student.issoadminstatus)" *ngIf="student.issoadminstatus == '0'">PENDING</span>

@@ -176,6 +176,9 @@
     white-space: nowrap;
   }
 }
+h5{
+  font-weight: bold;
+}
 .fancy-column {
   background-color: #f8f9fa; /* Light gray background */
   border: 2px solid #007bff; /* Blue border */
