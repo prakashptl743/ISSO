@@ -27,6 +27,12 @@ getCalenderList() {
         catchError(this.handleError)
   );
 }
+getEventByYear(selecteYear) { 
+  let str = 'webcalender/getEventByYear/' + selecteYear;
+  return this.http.get(this.serverUrl + str).pipe(
+    catchError(this.handleError)
+  );
+}
 getStudentList() {
   return this.http.get(this.serverUrl + 'student/studentlList').pipe(
        catchError(this.handleError)

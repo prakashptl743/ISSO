@@ -3,8 +3,12 @@
 <div class="tab">
   <button [ngClass]="reportLabel=='Web Calender' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Web Calender</button>
   <button [ngClass]="reportLabel=='IFS Data' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >ISF Data</button>
- 
 </div>
+<div class="form-group col-md-4"> 
+  <label for="inputEmail4">Select Year</label>
+  <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+</div>
+
 <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
 
  <div class="container mt-5 align-web-container">
@@ -174,7 +178,7 @@
     <div style="padding:.5em" class="ui-g-12 ui-md-6">
         <div class="item-box">
             <div class="item-header1">
-                <h4 class="ev-name1" title="{{school.title}}">Event Data</h4>
+                <h4 class="ev-name1" title="{{school.title}}">{{school.sportName}}</h4>
                 <div class="icons-wrap">
                     <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
                     </button>
@@ -183,10 +187,7 @@
                     
                 </div>
             </div>
-            <div class="item-description">
-                <label>Sport Name:</label>
-                <span class="item-value">{{school.sportName}}</span>
-            </div>
+          
             <div class="item-description">
                 <label>Event Start Date:</label>
                 <span class="item-value">{{school.eventStartDate  | date: 'd MMMM , y'}}</span>
