@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
   filteredPages: any[];
   schoolListArray =[];
   newSchoolId: any;
+  isEmail: boolean;
+  userEnteredEmail: any;
   
   constructor(
     private fb: FormBuilder,
@@ -47,10 +49,24 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.prefillCredentials();  
     this.authService.logout();
     this.loadAllSchool();
   }
  
+  prefillCredentials() {
+    if (window['PasswordCredential']) {
+      console.log(navigator)
+      // navigator.credentials.get({ password: true }).then((credential) => {
+      //   if (credential) {
+      //     this.loginForm.patchValue({
+      //       username: credential.id,
+      //       password: credential.password
+      //     });
+      //   }
+      // });
+    }
+  }
   get username() { return this.loginForm.get('username'); }
   get password() { return this.loginForm.get('password'); }
   filterPages(event) {
@@ -68,12 +84,15 @@ export class LoginComponent implements OnInit {
      var checkEmail = /@/gi; 
     const string = event.target.value;
     const substring = "@";
-    console.log(string.includes(substring)); // true
-
-    if (string.includes(substring) ) { 
+    console.log('Email val-->'+string.includes(substring)); // true
+    
+   if (string.includes(substring) ) { 
       console.log("email" ); 
+      this.isEmail = true;
+      this.userEnteredEmail = event.target.value;
    } else { 
       console.log("scholl Name" ); 
+      this.isEmail = false;
    }
   }
   
@@ -114,9 +133,20 @@ export class LoginComponent implements OnInit {
     console.log('this.newSchoolId'+evt.id);
     this.isSchoolSelect = true;
     this.userId =  this.newSchoolId;
+    localStorage.setItem('userIdForLogin',  this.userId);
   }
   onSubmit() {
+    console.log('Usert Id-->'+localStorage.getItem('userIdForLogin'))
     this.submitted = true;
+    if(this.isEmail) {
+      this.userId = this.userEnteredEmail;
+    } else {
+      if(localStorage.getItem('userIdForLogin') !=='') {
+        this.userId = localStorage.getItem('userIdForLogin'); 
+      } else {
+        this.userId = this.newSchoolId;
+      }
+   }
     this.authService.login(this.userId, this.password.value).subscribe((data) => {
       console.log('IM API RESPONSE--->'+data);
        if (this.authService.isLoggedIn) {

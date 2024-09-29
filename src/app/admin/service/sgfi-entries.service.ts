@@ -54,6 +54,12 @@ enrollStudentFile(fileData) {
     catchError(this.handleError)
   );
 }
+editEnrollStudentFile(fileData) { 
+  return this.http.post<any>(this.serverUrl + 'staffadmin/SgfiEntries/editEnrollStudentFile',fileData)
+  .pipe(
+    catchError(this.handleError)
+  );
+}
  
 
 getStudentForStaff(schoolId,gameId) {
@@ -61,6 +67,12 @@ getStudentForStaff(schoolId,gameId) {
     catchError(this.handleError)
   );
 } 
+getStudentDocStaff(studentId) {
+  return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/getStudentDocStaff/' + studentId).pipe(
+    catchError(this.handleError)
+  );
+} 
+
 getEnrolledStudentDataForStaff(schoolId,gameId) {
   return this.http.get(this.serverUrl + 'staffadmin/SgfiEntries/getEnrolledStudentDataForStaff/' + schoolId +'/'+gameId).pipe(
     catchError(this.handleError)

@@ -95,7 +95,20 @@ export class AuthService {
     console.log('Im logout')
     localStorage.removeItem('currentUser');
     localStorage.removeItem('roleId');
-    localStorage.clear();
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('roleId');
+   // localStorage.removeItem('userId');
+    localStorage.removeItem('isAffiliate');          
+    localStorage.removeItem('schoolId');
+    localStorage.removeItem('schoolName');
+    localStorage.removeItem('isVoulnteer');
+    localStorage.removeItem('schoolZone');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('dateDiff');
+    localStorage.removeItem('eventId');
+    localStorage.removeItem('eventYear');
+
+   // localStorage.clear();
    // this.router.navigate(['/','login']);
    // this.router.navigate(['/user_invitation'],
   }

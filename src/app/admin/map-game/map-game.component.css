@@ -3,9 +3,7 @@
     width: 100%;
  }
  .map-game-list {
-    width: 100%;
-    border: 1px solid;
-    padding: 5px 15px;
+    padding: 5px 0;
     color: white;
     background-color: #007ad9;
  }
@@ -71,4 +69,8 @@ ul {
 } */
 ::ng-deep .ui-multiselect {
     width: inherit !important;
+}
+.align-header {
+    display: block;
+    padding-bottom: 20px;
 }

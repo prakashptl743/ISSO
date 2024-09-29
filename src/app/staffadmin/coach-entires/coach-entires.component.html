@@ -98,9 +98,9 @@
   
   </div>
 
-  <div class="form-group col-md-12 pad-bot-zero">Hii {{isButtonEnabled}}
-    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}">1111</p-button>
-    <p-button *ngIf="isEdit" [disabled]="!studentEnroolForm.valid && isFileBig && isValidFile"   label="{{submitButtonLabel}}">asfffffasf</p-button>
+  <div class="form-group col-md-12 pad-bot-zero">
+    <p-button *ngIf="!isEdit" [disabled]="!studentEnroolForm.valid" label="{{submitButtonLabel}}"></p-button>
+    <p-button *ngIf="isEdit" [disabled]="!studentEnroolForm.valid && isFileBig && isValidFile"   label="{{submitButtonLabel}}"></p-button>
     <button style="margin-left: 20px;" class="second-btn" type="button" pButton (click)="makeEmptyForm()" label="Reset"></button>
  
   </div>
