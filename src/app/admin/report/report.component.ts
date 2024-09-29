@@ -33,6 +33,7 @@ export class ReportComponent implements OnInit {
     isTshirtReport:boolean;
     istshirtReport: boolean;
     baseUrl: string;
+    isIdCardShow: boolean;
 
   addMessages() {
     this.messages = [
@@ -218,15 +219,18 @@ clearMessages() {
       this.reportLabel = "Print Report"
       this.isCertificateContent = false;
       this.isEventReport = false;
+      this.isIdCardShow = false;
     } else if(index == '1') {
       this.isConsolited = false;
       this.isCertificateContent = false;
       this.isEventReport = false;
+      this.isIdCardShow = false;
       this.reportLabel = "Print Certificate"
     } else  if(index == '2') {
       this.isConsolited = false;
       this.isCertificateContent = false;
       this.isEventReport = false;
+      this.isIdCardShow = false;
       this.reportLabel = "Print Coach Certificate"
     } else  if(index == '3') {
       this.isConsolited = true;
@@ -234,11 +238,13 @@ clearMessages() {
       this.isEventReport = false;
       this.isConsolitedData = false;
       this.isCertificateContent = false;
+      this.isIdCardShow = false;
       this.reportLabel = "Print Consolidated"
     } else if(index == '4') {
       this.isConsolited = false;
       this.isEventReport = false;
       this.isCertificateContent = false;
+      this.isIdCardShow = false;
       this.reportLabel = "Print Volunteer Certificate"
     } else if(index == '5') {
       this.isReportShow = false
@@ -247,17 +253,27 @@ clearMessages() {
       this.yearvalue = null;
       this.isTeamEventReport = false;
       this.isCertificateContent = false;
+      this.isIdCardShow = false;
       this.reportLabel = "Print Event Report"
-    } else {
+    } else  if(index == '6'){
       this.isEventReport = false;
       this.isConsolited = false;
       this.isCertificateContent = true;
       this.isReportShow = false
       this.reportLabel = "Certificate content";
       this.istshirtReport = false;
+      this.isIdCardShow = false;
       this.getCertificateData();
       this.initialForm();
-    }  
+    } else {
+      this.isEventReport = false;
+      this.isConsolited = false;
+      this.isCertificateContent = false;
+      this.isReportShow = false
+      this.reportLabel = "Download ID Card";
+      this.istshirtReport = false; 
+      this.isIdCardShow = true;
+    } 
   }
   makeEmptyDropdown() { 
     this.isReportShow =true;

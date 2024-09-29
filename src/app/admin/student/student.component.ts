@@ -662,14 +662,26 @@ checkCapacity() {
   this.meritService.checkGameCapacity(this.gameId).subscribe(
     response => {
       if(response!=="") {
+        if(response[0].fourteen_boys > 0) {
+          console.log('im if')
+        } else {
+          console.log('im else')
+        }
        
+        if(this.selectedAge == '14') {
+        
+          console.log('im i12131f' +this.selectedAge)
+        } else {
+          console.log('im e 313134lse')
+        }
+
         if (response[0].eleven_boys > 0 && this.selectedAge == '11' ) {
            this.studentCapacity = response[0].eleven_boys;
            this.isMessageshow = true
         } else if (response[0].eleven_girls > 0 && this.selectedAge == '11') {
            this.studentCapacity = response[0].eleven_girls;
            this.isMessageshow = true;
-        } else if (response[0].fourteen_boys > 0 && this.selectedAge == '14') {
+        } else if ((Number(response[0].fourteen_boys) > 0 )&& (this.selectedAge === '14')) {
           this.studentCapacity = response[0].fourteen_boys;
           this.isMessageshow = true;
         } else if (response[0].fourteen_girls > 0 && this.selectedAge == '14') {
@@ -696,12 +708,13 @@ checkCapacity() {
         } else {
           this.isMessageshow = false;
         }
-        console.log(this.studentCapacity);
+        console.log('capacaity-->'+this.studentCapacity);
         
         if (this.isMessageshow) {
           //this.isAddNewStudent = true;
           this.meritService.checkGameCapacityForStudent(this.eventIdForStudent,this.selectedAge,this.selectedGender,this.gameId,this.newSchoolId).subscribe(
             response => {
+              console.log('im resp-->'+JSON.stringify(response))
               if (response!=="") {
                  if (response == this.studentCapacity ) {
                    this.messageService.add({key: 'custom', severity:'error', summary: 'Capacity is full!'});

@@ -62,8 +62,8 @@
           <div class="table-cell">{{student.ageRange}}</div>
           <div class="table-cell">{{student.gender == '1' ? 'Boys' : 'Girls'}}</div>
           <div class="table-cell">
-            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">{{student.sId}}ENROLL NOW</button>
-            <button *ngIf="student.isForm == '1' && student.isDoc == '1' &&  student.isPaid == '1'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(i)">VIEW/UPDATE</button>
+            <button *ngIf="student.isForm == '0' || student.isDoc == '0' ||  student.isPaid == '0'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">ENROLL NOW</button>
+            <button *ngIf="student.isForm == '1' && student.isDoc == '1' &&  student.isPaid == '1'" class="btn btn-primary sgfi-enroll-button"  type="button" (click)="showEnrollDialog(student.sId,i)">VIEW/UPDATE</button>
          </div>
          <div class="table-cell">
             <span class="p-3 mb-2 bg-success text-white" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
@@ -78,9 +78,15 @@
       
     </div>
   </div>
- </div>
-<div *ngIf="!showSgfi">
-    <img class="align-img" src="assets/images/web/noData.JPG">
+ </div> 
+<div *ngIf="!showSgfi"> 
+     <div class="not-found-container">
+        <div class="not-found-content">
+            <h1>404</h1>
+            <p>Sorry, the data you're looking for could not be found.</p>
+            <a href="javascript:void(0)" class="btn btn-primary">Please connect with ISSO admin !</a>
+        </div>
+    </div>
 </div>
  
 
@@ -361,7 +367,11 @@
                     </div>
                 </div>
                
-                <div class="table" *ngIf="docArray.length >0">
+                <div class="bg-primary" *ngIf="docArray.length > 0">
+                    <p class="align-table-header">ALREADY UPLOADED DOCUMENTS</p>
+                </div>
+                <div class="table" *ngIf="docArray.length > 0">
+                   
                     <div class="table-row table-header">
                       <div class="table-cell">Birth Certificate</div>
                       <div class="table-cell">Bonafide</div>
@@ -374,31 +384,31 @@
                    
                     <div class="table-row" *ngFor="let student of docArray; let i = index;" >
                         <div class="table-cell">
-                            <a *ngIf="student.birthCert != 'N/A'" target="_blank" href="{{student.birthCert}}">Download</a>
+                            <a *ngIf="student.birthCert != 'N/A'" target="_blank" href="{{student.birthCert}}">VIEW</a>
                             <a *ngIf="student.birthCert == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                          <a *ngIf="student.bonafide != 'N/A'" target="_blank" href="{{student.bonafide}}">Download</a>
+                          <a *ngIf="student.bonafide != 'N/A'" target="_blank" href="{{student.bonafide}}">VIEW</a>
                           <a *ngIf="student.bonafide == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                          <a *ngIf="student.govID != 'N/A'" target="_blank" href="{{student.govID}}">Download</a>
+                          <a *ngIf="student.govID != 'N/A'" target="_blank" href="{{student.govID}}">VIEW</a>
                           <a *ngIf="student.govID == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                          <a *ngIf="student.lastYearMarkSheet != 'N/A'" target="_blank" href="{{student.lastYearMarkSheet}}">Download</a>
+                          <a *ngIf="student.lastYearMarkSheet != 'N/A'" target="_blank" href="{{student.lastYearMarkSheet}}">VIEW</a>
                           <a *ngIf="student.lastYearMarkSheet == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                          <a *ngIf="student.Photo != 'N/A'" target="_blank" href="{{student.Photo}}">Download</a>
+                            <img src="{{student.Photo}}" height="50" width="50">
                           <a *ngIf="student.Photo == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                            <a *ngIf="student.stdSign != 'N/A'" target="_blank" href="{{student.stdSign}}">Download</a>
+                            <img src="{{student.stdSign}}" height="50" width="50">
                             <a *ngIf="student.stdSign == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                         <div class="table-cell">
-                          <a *ngIf="student.headMastSign != 'N/A'" target="_blank" href="{{student.headMastSign}}">Download</a>
+                         <img src="{{student.headMastSign}}" height="50" width="50">
                           <a *ngIf="student.headMastSign == 'N/A'" target="_blank">Doc Not uploaded</a>
                         </div>
                    </div>
@@ -498,20 +508,29 @@
                 
   
                 </div>
+         
                 <div>
                     <button  type="button" class="close-button btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-                    <button  [disabled]="sgfiFileEnrollForm.invalid"  class="align-button" type="submit" (click)="onFileSubmit()"  class="btn btn-primary">{{docButtonVal}}</button>
+                    <button *ngIf="docButtonVal == 'Save Changes'" [disabled]="sgfiFileEnrollForm.invalid"  class="align-button" type="submit" (click)="onFileSubmit()"  class="btn btn-primary">{{docButtonVal}}</button>
+                    <button *ngIf="docButtonVal == 'Update Changes'"  class="align-button" type="submit" (click)="onEditFileSubmit()"  class="btn btn-primary">{{docButtonVal}}</button>
                 </div>  
        </div>
        <div *ngIf="isPayment">
             <div class="col-md-12 align-sgfi-form">
-                <div class="alert alert-success" role="alert">
-                     you have already make payment please connect with ISSO admin for more details !
+                <div class="alert alert-success" role="alert" *ngIf="isPaidStatus">
+                     You have already made payment please connect with ISSO admin for more details !
                 </div>
-                <h3>Total Payable Amount</h3>
-                <div><h3>{{payableAmount | number: '.2'}} Rs.</h3></div>
+                <div>
+                    <h4 *ngIf="!isPaidStatus">Total Payable Amount</h4>
+                    <h4 *ngIf="isPaidStatus">Total Paid Amount</h4>
+                    <div>
+                        <h4>{{payableAmount | number: '.2'}} Rs.</h4>
+                    </div>
+                </div>
+              
+              
             </div>
-            <div class="form-group pad-zero">
+            <div class="form-group pad-zero" *ngIf="!isPaidStatus">
                 <button [class.disabled]="!(payableAmount > 0)"  class="btn pay-now-button"  type="button" (click)="payNow(payableAmount,studentId,'sgfi')">PAY NOW</button>
            </div>
        </div>

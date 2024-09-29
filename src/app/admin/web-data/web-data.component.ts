@@ -78,7 +78,8 @@ export class WebDataComponent implements OnInit {
   minimumDate = new Date();
   isWebVisible: boolean = true;
   reportLabel: string;
- 
+  yearOptions: SelectItem[];
+  yearvalue: any;
   constructor(
     private confirmation: ConfirmationService,
     private messageService: MessageService,
@@ -93,6 +94,7 @@ export class WebDataComponent implements OnInit {
    }
 
 ngOnInit() {
+   this.yearOptions = this.issoUtilService.setYear();
     this.initialForm();
     this.fileUpladForm();
     this.loading = true;
@@ -196,6 +198,7 @@ ngOnInit() {
 //     }
 // ];
 }
+
 fileUpladForm() {
   this.profileForm= this.pb.group({
     name:[''],
@@ -228,7 +231,24 @@ onSortChange(event) {
       this.sortField = value;
   }
 }
- 
+onyeareChange(event) {
+  this.yearvalue = event.value;
+  this.schoolServiceDATA ='';
+  this.calenderData =[];
+  this.webcalenderService.getEventByYear(this.yearvalue).subscribe(response => {
+    if(response!=="") {
+     // this.showspinner = false;
+      this.schoolServiceData =response;
+      this.calenderData = this.schoolServiceData;
+    } else {
+      alert('im blankl=')
+    }
+
+  } ,
+  error => {
+    //this.errorAlert =true;
+  });
+}
 getCalderData(){
       this.webcalenderService.getCalenderList().subscribe(response => {
         if(response!=="") {

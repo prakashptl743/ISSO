@@ -90,7 +90,7 @@
                         <label class="usernameLbl">User / School Login</label>
                         <!-- <input type="text" formControlName="username"   class="form-control text-align" placeholder="Username" required> -->
                         <p-autoComplete [(ngModel)]="schoolName" formControlName="username"   [suggestions]="filteredPages" (completeMethod)="filterPages($event)" field="text"
-                        placeholder="Enter school Name"  [size]="100" emptyMessage = "School Not found" [minLength]="1" (onBlur)="checkuserName($event)" (onSelect)="onPageSelect($event)">
+                        placeholder="Enter school Name"   autocomplete="username" [size]="100" emptyMessage = "School Not found" [minLength]="1" (onBlur)="checkuserName($event)" (onSelect)="onPageSelect($event)">
                             <ng-template let-brand pTemplate="item">
                                 <div class="ui-helper-clearfix" style="padding:0;border-bottom:1px solid #D5D5D5">
                                     <div style="padding:0;font-size:14px;float:left;margin:10px">
@@ -109,7 +109,7 @@
                     <div class="form-group">
                      
                         <label>Password</label>
-                        <input type="password" formControlName="password"   class="form-control text-align" placeholder="Password" required>
+                        <input type="password"  autocomplete="current-password"  formControlName="password"   class="form-control text-align" placeholder="Password" required>
                         <div *ngIf="password.invalid && (password.dirty || password.touched)" class="handle-error">
                             <div *ngIf="password.errors">
                               Password is required.

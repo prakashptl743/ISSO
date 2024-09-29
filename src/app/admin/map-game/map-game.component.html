@@ -49,55 +49,15 @@
               </tr>
             </tbody>
         </table>
-
-
-
-        <!-- <ul>
-          <li *ngFor="let item of list | slice:0:5; let i=index">
-            <input type="checkbox" class="checkbox-width chk"    (change) ="onChange($event,item.id)" > {{item.title}}
-          </li>
-        </ul> -->
+ 
       </div>
-      <!-- <div  class="form-group col-md-3">
-        <ul>
-          <li *ngFor="let item of list  | slice:5:10; let i=index">
-            <input type="checkbox" class="checkbox-width chk"   (change) ="onChange($event,item.id)" > {{item.title}}
-          </li>
-        </ul>
-      </div> -->
-      <!-- <div class="form-group col-md-2">
-         <label for="inputEmail4" class="game-list">Age Range</label>
-           <p-multiSelect 
-              [options]="ageOptions"
-              (onChange)="loadGameChange($event)"
-              formControlName="gameList" 
-              [(ngModel)]="selectedAge"
-              [panelStyle]="{minWidth:'12em'}">
-          </p-multiSelect> 
-      </div>   
-      <div class="form-group col-md-2">
-        <label for="inputEmail4" class="game-list">Gender</label>
-          <p-multiSelect 
-             [options]="genderOptions"
-             (onChange)="onGenderChange($event)"
-             formControlName="gameList" 
-             [(ngModel)]="selectedGender"
-             [panelStyle]="{minWidth:'12em'}">
-         </p-multiSelect>  
-      </div>-->
+  
       <div class="form-group col-md-2">
            <div>
             <button  [disabled]="!eventForm.valid" class="btn btn-primary" type="button" (click)="addMapEvent()">Add</button>
         </div>
       </div>  
-    
  
-        <!-- <div class="form-group col-md-6">
-          <label for="inputEmail4" class="game-list">Age Range</label>
-             <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange()" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
-          
-        </div> -->
-     
    
     <table class="table"  *ngIf="showMapData">
       <thead class="thead-dark">
@@ -163,8 +123,8 @@
 <ng-template let-event pTemplate="gridItem"  style="word-wrap: break-word;">
       <div style="padding:.5em" class="ui-g-12 ui-md-6">
       <div class="item-box">
-          <div class="item-header">
-              <span title="{{event.eventName}}"><b>{{event.eventName}}</b></span>
+          <div class="item-header align-header">
+              <span  title="{{event.eventName}}"><b>{{event.eventName}}</b></span>
                
               <div class="icons-wrap">
                   <button  *ngIf="event.event_status === '1' && event.startDate > today" class="glyphicon glyphicon-edit item-icons" (click)="addNewEvent(event,'edit')">
@@ -185,16 +145,34 @@
                     </span>    
                 </div> -->
              
-             <label for="inputEmail4" class="map-game-list">Game List          
+             <!-- <label for="inputEmail4" class="map-game-list">Game List          
                 <span class="align-gender">Boys</span>
                 <span class="align-gender">Girls</span>
-             </label>
+             </label> -->
+             <div class="row map-game-list">
+                 <div class="col-xs-4">Game List</div>
+                 <div class="col-xs-4">Boys</div>
+                 <div class="col-xs-4">Girls</div>
+             </div>
             <div *ngFor="let data of mapEventResponse">
-                <div class="mapgame" *ngIf="data.eventId === event.eventId">
+
+              <div class="row "  *ngIf="data.eventId === event.eventId">
+                <div class="col-xs-4"><span  [innerHTML]="data.game_name | texttransform: data.gameComma">   </span></div>
+                <div class="col-xs-4">  
+                  <span *ngIf="data.ageRange !== 'null'" [innerHTML]="data.ageRange |  texttransform: data.ageComma"></span>
+                  <span *ngIf="data.ageRange == 'null'">N/A</span>
+                </div>
+                <div class="col-xs-4"> 
+                   <span *ngIf="data.girlsageRange !== 'null'" [innerHTML]="data.girlsageRange |  texttransform: data.ageComma"></span>
+                   <span *ngIf="data.girlsageRange == 'null'">N/A</span>
+
+                  </div>
+              </div>
+                <!-- <div class="mapgame" *ngIf="data.eventId === event.eventId">
                   <span  [innerHTML]="data.game_name | texttransform: data.gameComma">   </span>
                    <span  [innerHTML]="data.ageRange |  texttransform: data.ageComma"></span>
                    <span  [innerHTML]="data.girlsageRange |  texttransform: data.ageComma"></span>
-                </div>
+                </div> -->
             </div>  
           </div>
     

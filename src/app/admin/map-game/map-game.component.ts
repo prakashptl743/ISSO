@@ -305,6 +305,7 @@ getMappedGameData() {
     
       }
    console.log('DATA===>'+JSON.stringify(this.mapEventResponse))
+ 
 
     } else {
       alert('im blankl=')
@@ -314,7 +315,7 @@ getMappedGameData() {
    //this.errorAlert =true;
   });
 } 
-
+ 
  
 onyeareChange(event) {
   this.yearvalue = event.value;

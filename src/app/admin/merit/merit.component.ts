@@ -391,9 +391,16 @@ export class MeritComponent implements OnInit {
   setAgeMap() {
     this.meritService.setAgeMapForMerit(this.eventValue,this.gameId).subscribe(
       response => {
-   
-       if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
-      const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+        let ageList;
+       if(response[0].ageRange !== 'null' ||  response[0].girlsAgeRange !== 'null') {
+          if (response[0].ageRange == 'null') {
+            ageList =  response[0].girlsAgeRange;
+          } else if( response[0].girlsAgeRange !== 'null') {
+            ageList =  response[0].ageRange;
+          } else {
+            ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+          }
+    //  const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
       this.ageMeritArray= ageList.split(" ");
       const x = Array.from(new Set(ageList.split(" "))).toString();
       
@@ -407,7 +414,7 @@ export class MeritComponent implements OnInit {
       });
 
       for(var i = 0; i < ageArrayLength; i++) {
-        if(myarray[i] !==''){
+        if(myarray[i] !=='' && myarray[i] !=='null'){
         this.ageOptions.push({
           label: myarray[i],
           value: myarray[i]
@@ -415,6 +422,8 @@ export class MeritComponent implements OnInit {
       }
       }
 
+    } else {
+      console.log('im else')
     }
       } ,
       error => {

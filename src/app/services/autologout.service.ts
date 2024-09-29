@@ -64,7 +64,21 @@ export class AutoLogoutService {
      const isTimeout = diff < 0;
  
      if (isTimeout)  {
-       localStorage.clear();
+      // localStorage.clear();
+       localStorage.removeItem('currentUser');
+       localStorage.removeItem('roleId');
+       localStorage.removeItem('currentUser');
+       localStorage.removeItem('roleId');
+      // localStorage.removeItem('userId');
+       localStorage.removeItem('isAffiliate');          
+       localStorage.removeItem('schoolId');
+       localStorage.removeItem('schoolName');
+       localStorage.removeItem('isVoulnteer');
+       localStorage.removeItem('schoolZone');
+       localStorage.removeItem('currentUser');
+       localStorage.removeItem('dateDiff');
+       localStorage.removeItem('eventId');
+       localStorage.removeItem('eventYear');
        this.router.navigate(['./login']);
      }
    }

@@ -141,7 +141,6 @@ table {
 .cursor-point {
   cursor: pointer;
   color: blue;
-  text-decoration: underline;
 }
 .align-sr {
   text-align: center;

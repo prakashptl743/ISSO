@@ -127,7 +127,6 @@
   display: table;
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
 }
 
 .table-row {
@@ -138,10 +137,16 @@
   display: table-cell;
   padding: 10px;
   border: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
 }
-
+.align-table-header {
+  color: white;
+  padding: 5px;
+  margin-top: 17px;
+  font-size: 14px;
+  text-align: center;
+}
 /* Header styling */
 .table-header {
   background-color: #f4f4f4;
@@ -208,4 +213,28 @@ h5{
   margin-top: 15px;
   display: inline-block;
   font-weight: bold;
+}
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+ }
+.not-found-content {
+  max-width: 500px;
+  padding: 20px;
+   border-radius: 8px;
+ }
+.not-found-content h1 {
+  font-size: 4rem;
+  color: #dc3545;
+}
+.not-found-content p {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+.not-found-content a {
+  margin-top: 20px;
+  display: inline-block;
 }
