@@ -307,7 +307,7 @@
 
           <div  *ngIf="studentListArray.length > 0 && gameType ==='Both'">
             <div *ngFor="let gameData of incompleteTeamSubGame">
-              <div *ngIf="gameData.remainingCapacity < gameData.minCapacity" class="manage-alert alert alert-danger alert-dismissible">
+              <div *ngIf="(gameData.remainingCapacity < gameData.minCapacity) && (gameData.remainingCapacity !== -1) " class="manage-alert alert alert-danger alert-dismissible">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <strong >Warning!</strong> 
               <span class="align-message">Your <b>{{gameData.subGameName}}</b> team is incomplete you have to add  <b>{{gameData.remainingCapacity}}</b> student's to participate in this game</span>

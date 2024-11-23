@@ -128,7 +128,9 @@
   width: 100%;
   border-collapse: collapse;
 }
-
+.note-hint {
+  color: #dc3545;
+}
 .table-row {
   display: table-row;
 }

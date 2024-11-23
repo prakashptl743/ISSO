@@ -7,7 +7,7 @@
             <section class="upper-body"><img src="assets/images/newImages/sp1.png" /></section>
             <section class="certificate-section">
                 <h1>{{student.certifiacteHeaderContent}}</h1>
-                <div class="venue-section"><span>VENUE:</span><span>{{student.location}}</span>
+                <div class="venue-section"><span>VENUE:</span><span>{{student.location | uppercase}}</span>
                     <div>{{student.startDate | date: 'd-MMM-y'}} - {{student.endDate  | date: 'd-MMM-y'}}</div>
                 </div>
              
@@ -53,7 +53,7 @@
                 <div class="summary-section">
                     <p>HAS PARTICIPATED IN <span>{{student.certifiacteMainContent}}</span> IN "{{student.gameName}}" 
                         <span *ngIf="isMerit && student.gameType === 'Both'">SUBGAME {{student.subGameName}}</span>
-                        "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location}}"<span *ngIf="isMerit">AND  <span *ngIf="student.subgameType === 'Team'" >TEAM</span> SECURED {{rankText}} POSITION</span><br/>
+                        "UNDER {{student.ageRange}}" <span *ngIf="student.gender === '1'"> "BOYS"</span><span *ngIf="student.gender === '2'"> "GIRLS"</span>   HELD AT "{{student.location | uppercase}}"<span *ngIf="isMerit">AND  <span *ngIf="student.subgameType === 'Team'" >TEAM</span> SECURED {{rankText}} POSITION</span><br/>
                         <span *ngIf="showTime" class="time-distance">TIME/DISTANCE/POINT {{student.timeDistance}}</span>
                     </p>
                 </div>             

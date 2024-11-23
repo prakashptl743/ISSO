@@ -157,14 +157,14 @@ export class SgfiEntriesComponent implements OnInit {
     this.studentData = [];
     this.studentRecordLength = 0;
     if(gameData.value!='') {
-      if(this.gameType == 'Both') {
-        this.ageReadble = false;
-        this.loadSubGameData();
-      } else {
+      // if(this.gameType == 'Both') {
+      //   this.ageReadble = false;
+      //   this.loadSubGameData();
+      // } else {
         this.ageReadble = true; 
         this.selectedSubGame = '';
         this.subGameReadable = false;
-      }
+     // }
      
     } else {
       this.selectedAge = '';

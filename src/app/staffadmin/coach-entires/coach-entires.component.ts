@@ -156,7 +156,7 @@ ngOnInit() {
  this.coachListArray.length = 0;
  this.coachDataAvailable = true;
   this.ageReaadble = false;
-  this.ageOptions = this.issoUtilService.setAge();
+ // this.ageOptions = this.issoUtilService.setAge();
   this.isCertificate =false
   this.isDataAvailble = false
   this.yearOptions = this.issoUtilService.setYearToStaffadmin();
@@ -185,27 +185,48 @@ let paymentId = response.razorpay_payment_id;
   //TODO
 }
 setAgeMap(evenVal) {
-  this.meritService.setAgeMap(evenVal).subscribe(
-    response => {
-     const myArray = response[0].ageRange.split(" ");
-     const ageList = response[0].ageRange;
-     var spaceCount = (ageList.split(" ").length - 1);
-     console.log(spaceCount);
-     this.ageOptions =[];
-     this.ageOptions.push({
+  this.meritService.setAgeMapForMerit(evenVal,this.gameID).subscribe(
+   response => {
+      let ageList;
+      const ageListArray = [];
+      if(response[0].ageRange !== 'null' ||  response[0].girlsAgeRange !== 'null') {
+        if (response[0].ageRange == 'null') {
+          ageList =  response[0].girlsAgeRange;
+        } else if( response[0].girlsAgeRange !== 'null') {
+          ageList =  response[0].ageRange;
+        } else {
+          ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+        }
+  //  const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+    //this.ageMeritArray= ageList.split(" ");
+    const x = Array.from(new Set(ageList.split(" "))).toString();
+    
+    var myarray = x.split(',');
+    let ageArrayLength =  myarray.length;
+
+    this.ageOptions =[];
+    this.ageOptions.push({
       label: "Please Select",
       value: ''
     });
-     for(let i=0;i<=spaceCount;i++) {
-        this.ageOptions.push({
-          label: myArray[i],
-          value: myArray[i]
-        });
-      } 
+
+    for(var i = 0; i < ageArrayLength; i++) {
+      if(myarray[i] !=='' && myarray[i] !=='null'){
+      this.ageOptions.push({
+        label: myarray[i],
+        value: myarray[i]
+      });
+    }
+    }
+
+  } else {
+    console.log('im else')
+  }
     } ,
     error => {
       //this.errorAlert =true;
    });
+
 }
 
 onKeypressEvent(amount) {
@@ -607,7 +628,7 @@ onEventChange(event) {
   this.eventArray =  eventval.split(","); 
   this.eventValue = this.eventArray[0];
   this.eventName =  this.eventArray[1];
-  this.setAgeMap(this.eventValue);
+
   if(this.eventValue !== '') {
   this.meritService.loadGameForStaff(this.eventValue).subscribe(
     response => {
@@ -673,7 +694,6 @@ loadGameChange(gameData) {
   this.isEdit = false;
   this.gameID = gameData.value;
   this.genderReadble = false;
-  
   this.selectedAge='';
   this.meritService.checkAlredayPayment(this.eventValue, this.gameID).subscribe(
     response => {
@@ -698,6 +718,7 @@ loadGenderChange(gender) {
  // this.ageRange = ageData.value;
   this.genderVal = gender.value;
   console.log(this.ageRange);
+  
  // this.loadCoachData();
 }
 loadAgeChange(ageData) {
@@ -729,6 +750,7 @@ loadschoolChange(gameData) {
     //this.errorAlert =true;
       });
      this.loadCoachData()
+     this.setAgeMap(this.eventValue)
 }
  
 getGameData(gameID) {

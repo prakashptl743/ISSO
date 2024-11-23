@@ -6,7 +6,7 @@ export class MyDataType
 {
   public id: number;
   public name: string;
-}
+} 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

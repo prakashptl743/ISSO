@@ -1,25 +1,50 @@
 <div class="tab">
-    <button [ngClass]="isAddStudent ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Add Student</button>
-    <button [ngClass]="isViewStudent ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">View Student</button>
+  <button
+    [ngClass]="isAddStudent ? 'isMenuActive' : ''"
+    (click)="onloadMenu(0)"
+    class="tablinks"
+  >
+    Add Student
+  </button>
+  <button
+    [ngClass]="isViewStudent ? 'isMenuActive' : ''"
+    (click)="onloadMenu(1)"
+    class="tablinks"
+  >
+    View Student
+  </button>
 </div>
 <div>
-<div class="ui-g-12">
+  <div class="ui-g-12">
     <div class="ui-g-4">
-      <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+      <p-dropdown
+        [options]="yearOptions"
+        [(ngModel)]="selectedYear"
+        placeholder="Select Year"
+        (onChange)="onyeareChange($event)"
+        [style]="{ 'min-width': '140px' }"
+      ></p-dropdown>
     </div>
     <div class="ui-g-4">
-        <p-dropdown [disabled]="!gameReadble"  [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [options]="gameOptions"  size="30" ></p-dropdown>
+      <p-dropdown
+        [disabled]="!gameReadble"
+        [(ngModel)]="selectedGame"
+        (onChange)="loadGameChange($event)"
+        [options]="gameOptions"
+        size="30"
+      ></p-dropdown>
     </div>
     <div class="ui-g-4">
-        <p-multiSelect 
-        [disabled]="!subGameReadable" 
-        [(ngModel)]="selectedSubGame" 
-        [options]="subgameOptions" 
-        placeholder="Select Sub Game" 
+      <p-multiSelect
+        [disabled]="!subGameReadable"
+        [(ngModel)]="selectedSubGame"
+        [options]="subgameOptions"
+        placeholder="Select Sub Game"
         (onChange)="loadSubGameChange($event)"
-        [panelStyle]="{minWidth:'12em'}">
-   </p-multiSelect>  
-        <!-- <p-dropdown 
+        [panelStyle]="{ minWidth: '12em' }"
+      >
+      </p-multiSelect>
+      <!-- <p-dropdown 
              [disabled]="!subGameReadable" 
              [(ngModel)]="selectedSubGame" 
              [options]="subgameOptions" 
@@ -28,198 +53,319 @@
               [style]="{'min-width':'140px'}">
         </p-dropdown> -->
     </div>
+  </div>
+  <p-toast
+    [style]="{ marginTop: '50px' }"
+    styleClass="toast-body custom-toast"
+    key="custom"
+    position="bottom-center"
+  ></p-toast>
+  <div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <p-dropdown
+          [disabled]="!ageReadble"
+          [(ngModel)]="selectedAge"
+          [options]="ageOptions"
+          (onChange)="loadAgeChange($event)"
+          placeholder="Select Age"
+          [style]="{ 'min-width': '20px' }"
+        ></p-dropdown>
+      </div>
+      <div class="ui-g-4">
+        <p-dropdown
+          [disabled]="!genderReadble"
+          [(ngModel)]="selectedGender"
+          [options]="genderOptions"
+          placeholder="Select Gender"
+          (onChange)="loadGenderChange($event)"
+          [style]="{ 'min-width': '20px' }"
+        ></p-dropdown>
+      </div>
+      <div class="ui-g-4">
+        <p-dropdown
+          *ngIf="isAddStudent"
+          [disabled]="!schoolReadble"
+          [(ngModel)]="selectedSchool"
+          (onChange)="loadSchoolChange($event)"
+          [options]="schoolOptions"
+          placeholder="Select School"
+          [style]="{ 'min-width': '140px' }"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
 
-</div>
-<p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
-<div>
-<div class="ui-g-12">
-<div class="ui-g-4">
-    <p-dropdown [disabled]="!ageReadble" [(ngModel)]="selectedAge" [options]="ageOptions" (onChange)="loadAgeChange($event)" placeholder="Select Age"  [style]="{'min-width':'20px'}"></p-dropdown>
-  </div>
-  <div class="ui-g-4">
-    <p-dropdown  [disabled]="!genderReadble"  [(ngModel)]="selectedGender"  [options]="genderOptions"  placeholder="Select Gender" (onChange)="loadGenderChange($event)" [style]="{'min-width':'20px'}"></p-dropdown>
-  </div>
-  <div class="ui-g-4">
-    <p-dropdown *ngIf="isAddStudent" [disabled]="!schoolReadble" [(ngModel)]="selectedSchool"  (onChange)="loadSchoolChange($event)" [options]="schoolOptions"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
-  </div>
-</div>
-</div>
- 
-<div class="accordion" id="accordionExample">
-  <div class="ui-g-12" *ngIf="studentRecordLength > 0">
-   <div class="card">
-     <div class="card-header card-bg" id="headingTwo">
-       <h5 class="mb-0">
-         <div class="floatLeft">ALREADY ADDED RECORDS</div>
-         <!-- <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1">
+  <div class="accordion" id="accordionExample">
+    <div class="ui-g-12" *ngIf="studentRecordLength > 0">
+      <div class="card">
+        <div class="card-header card-bg" id="headingTwo">
+          <h5 class="mb-0">
+            <div class="floatLeft">ALREADY ADDED RECORDS</div>
+            <!-- <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1">
           View More
         </button> -->
 
-         <div class="btn btn-link collapsed float-right"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-           <i class="fa-solid fa-plus"></i>
-           <i class="fa-regular fa-plus"></i>
-           <i class="fas fa-plus"></i>
-         </div>
-        
-       </h5>
-     </div>
-     <div id="collapseTwo" class="collapse align-table" aria-labelledby="headingTwo" data-parent="#accordionExample">
-       <table class="table">
-         <thead class="thead-dark">
-           <tr>
-             <th scope="col">Student Id</th>
-             <th scope="col">Student Name</th>
-             <th scope="col">School Name</th>
-             <th scope="col">Action</th>
-          </tr>
-         </thead>
-         <tbody>
-           <tr *ngFor="let student of alreadyAddedStudentList; let i = index;">
-             <td>{{student.sId}}</td>
-             <td>{{student.studentName}}</td>
-             <td>{{student.schoolName}}</td>
-             <td>
-               <div class="icons-wrap">
-                 <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="confirmDeleteStudent(student.id)">
-               </button>
+            <div
+              class="btn btn-link collapsed float-right"
+              data-toggle="collapse"
+              data-target="#collapseTwo"
+              aria-expanded="false"
+              aria-controls="collapseTwo"
+            >
+              <i class="fa-solid fa-plus"></i>
+              <i class="fa-regular fa-plus"></i>
+              <i class="fas fa-plus"></i>
             </div>
-              </td> 
-           </tr>
-         </tbody>
-       </table>
-     </div>
-   </div>
-
-</div>
-
-
-</div>
-<div  class="ui-g-12 align-box" *ngIf="isShowStudent">
-  <div class="card-header card-bg" id="headingTwo">
-    <div class="ui-g-6">ADD NEW STUDENT</div>
-    <div class="ui-g-6">Total Selected student: {{sgfiStudentArray.length}}</div>
-  </div>
-  
-<div class="ui-g-4">
-  <div class="ui-g-12 align-merit-content">
-          <table class="table"  [ngClass]="{ 'hide-table':studentData.length ==0 }">
+          </h5>
+        </div>
+        <div
+          id="collapseTwo"
+          class="collapse align-table"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionExample"
+        >
+          <table class="table">
             <thead class="thead-dark">
               <tr>
+                <th scope="col">Student Id</th>
                 <th scope="col">Student Name</th>
-                <th scope="col">Sub Game Name</th>
+                <th scope="col">School Name</th>
                 <th scope="col">Action</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let student of studentData; let i = index;">
-                <td>{{student.studentName}}</td>
-                <td>{{student.subGameName == 'undefined' ? 'N/A' : 'student.subGameName'}}</td>
+              <tr
+                *ngFor="let student of alreadyAddedStudentList; let i = index"
+              >
+                <td>{{ student.sId }}</td>
+                <td>{{ student.studentName }}</td>
+                <td>{{ student.schoolName }}</td>
                 <td>
-                  <p-button class="align-submit"   label="Add" (click)="addStudent(student)">
-                  </p-button>
-                </td> 
+                  <div class="icons-wrap">
+                    <button
+                      href="#"
+                      class="glyphicon glyphicon-trash item-icons"
+                      (click)="confirmDeleteStudent(student.id)"
+                    ></button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
-    </div>
-</div>
-<div class="ui-g-8">
-    <div class="ui-g-12 align-merit-content"  *ngIf="sgfiStudentArray.length > 0">
-           <table class="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Student Name</th>
-                  <th scope="col">Game Name</th>
-                  <th scope="col">Sub Game Name</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">School Name</th>
-                  <th scope="col">Action</th>
-               </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let student of sgfiStudentArray; let i = index;">
-                  <td>{{student.studentName}}</td>
-                  <td>{{student.gameName}}</td>
-                  <td><span *ngIf="student.subGameName == 'undefined'">N/A</span><span *ngIf="student.subGameName !== 'undefined'">{{student.subGameName}}</span></td>
-                  <td>{{student.agerange}}</td>
-                  <td><span *ngIf="student.genderId == '1'">Boys</span> <span *ngIf="student.genderId == '2'">Girls</span></td>
-                  <td>{{student.schoolName}}</td>
-                  <td>
-                    <div class="icons-wrap">
-                      <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="removeStudnetData(i)">
-                    </button>
-                 </div>
-                   </td> 
-                </tr>
-              </tbody>
-            </table>
-            <button  class="btn btn-primary marginR10" type="button" (click)="confirmAddStudent()">Save</button>
+        </div>
       </div>
+    </div>
+  </div>
+  <div class="ui-g-12 align-box" *ngIf="isShowStudent">
+    <div class="card-header card-bg" id="headingTwo">
+      <div class="ui-g-6">ADD NEW STUDENT</div>
+      <div class="ui-g-6">
+        Total Selected student: {{ sgfiStudentArray.length }}
+      </div>
+    </div>
+
+    <div class="ui-g-4">
+      <div class="ui-g-12 align-merit-content">
+        <table
+          class="table"
+          [ngClass]="{ 'hide-table': studentData.length == 0 }"
+        >
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Student Name</th>
+              <!-- <th scope="col">Sub Game Name</th> -->
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of studentData; let i = index">
+              <td>{{ student.studentName }}</td>
+              <!-- <td>{{student.subGameName == 'undefined' ? 'N/A' : 'student.subGameName'}}</td> -->
+              <td>
+                <p-button
+                  class="align-submit"
+                  label="Add"
+                  (click)="addStudent(student)"
+                >
+                </p-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ui-g-8">
+      <div
+        class="ui-g-12 align-merit-content"
+        *ngIf="sgfiStudentArray.length > 0"
+      >
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Student Name</th>
+              <th scope="col">Game Name</th>
+              <!-- <th scope="col">Sub Game Name</th> -->
+              <th scope="col">Age</th>
+              <th scope="col">Gender</th>
+              <th scope="col">School Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of sgfiStudentArray; let i = index">
+              <td>{{ student.studentName }}</td>
+              <td>{{ student.gameName }}</td>
+              <!-- <td><span *ngIf="student.subGameName == 'undefined'">N/A</span><span *ngIf="student.subGameName !== 'undefined'">{{student.subGameName}}</span></td> -->
+              <td>{{ student.agerange }}</td>
+              <td>
+                <span *ngIf="student.genderId == '1'">Boys</span>
+                <span *ngIf="student.genderId == '2'">Girls</span>
+              </td>
+              <td>{{ student.schoolName }}</td>
+              <td>
+                <div class="icons-wrap">
+                  <button
+                    href="#"
+                    class="glyphicon glyphicon-trash item-icons"
+                    (click)="removeStudnetData(i)"
+                  ></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+          class="btn btn-primary marginR10"
+          type="button"
+          (click)="confirmAddStudent()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
- 
 
-
- 
-
- 
-
-<p-dialog header="{{dialogTitle}}" [(visible)]="display" [modal]="true" [responsive]="true" [width]="auto" [baseZIndex]="10000">
+<p-dialog
+  header="{{ dialogTitle }}"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [width]="auto"
+  [baseZIndex]="10000"
+>
   <div class="table">
     <div class="table-row table-header">
       <div class="table-cell">Birth Certificate</div>
       <div class="table-cell">Bonafide</div>
       <div class="table-cell">Government Id</div>
-      <div class="table-cell">Last Year  Mark Sheet</div>
+      <div class="table-cell">Last Year Mark Sheet</div>
       <div class="table-cell">Photo</div>
       <div class="table-cell">Student Sign</div>
       <div class="table-cell">Head Master Sign</div>
     </div>
-   
-    <div class="table-row" *ngFor="let student of docArray; let i = index;" >
-        <div class="table-cell">
-            <a *ngIf="student.birthCert != 'N/A'" target="_blank" href="{{student.birthCert}}">VIEW</a>
-            <a *ngIf="student.birthCert == 'N/A'" target="_blank">Doc Not uploaded</a>
-        </div>
-        <div class="table-cell">
-          <a *ngIf="student.bonafide != 'N/A'" target="_blank" href="{{student.bonafide}}">VIEW</a>
-          <a *ngIf="student.bonafide == 'N/A'" target="_blank">Doc Not uploaded</a>
-        </div>
-        <div class="table-cell">
-          <a *ngIf="student.govID != 'N/A'" target="_blank" href="{{student.govID}}">VIEW</a>
-          <a *ngIf="student.govID == 'N/A'" target="_blank">Doc Not uploaded</a>
-        </div>
-        <div class="table-cell">
-          <a *ngIf="student.lastYearMarkSheet != 'N/A'" target="_blank" href="{{student.lastYearMarkSheet}}">VIEW</a>
-          <a *ngIf="student.lastYearMarkSheet == 'N/A'" target="_blank">Doc Not uploaded</a>
-        </div>
-        <div class="table-cell"> 
-          <img src="{{student.Photo}}" height="60" width="60">
-          <a *ngIf="student.Photo == 'N/A'" target="_blank">Doc Not uploaded</a>
-          <a *ngIf="student.Photo != 'N/A'" target="_blank" href="{{student.Photo}}">VIEW</a>
-        </div>
-        <div class="table-cell"> 
-            <img src="{{student.stdSign}}" height="60" width="60">
-            <a *ngIf="student.stdSign == 'N/A'" target="_blank">Doc Not uploaded</a>
-            <a *ngIf="student.stdSign != 'N/A'" target="_blank" href="{{student.stdSign}}">VIEW</a>
-        </div>
-        <div class="table-cell"> 
-          <img src="{{student.headMastSign}}" height="60" width="60">
-          <a *ngIf="student.headMastSign == 'N/A'" target="_blank">Doc Not uploaded</a>
-          <a *ngIf="student.headMastSign != 'N/A'" target="_blank" href="{{student.headMastSign}}">VIEW</a>
-        </div>
-   </div>
-    
+
+    <div class="table-row" *ngFor="let student of docArray; let i = index">
+      <div class="table-cell">
+        <a
+          *ngIf="student.birthCert != 'N/A'"
+          target="_blank"
+          href="{{ student.birthCert }}"
+          >VIEW</a
+        >
+        <a *ngIf="student.birthCert == 'N/A'" target="_blank"
+          >Doc Not uploaded</a
+        >
+      </div>
+      <div class="table-cell">
+        <a
+          *ngIf="student.bonafide != 'N/A'"
+          target="_blank"
+          href="{{ student.bonafide }}"
+          >VIEW</a
+        >
+        <a *ngIf="student.bonafide == 'N/A'" target="_blank"
+          >Doc Not uploaded</a
+        >
+      </div>
+      <div class="table-cell">
+        <a
+          *ngIf="student.govID != 'N/A'"
+          target="_blank"
+          href="{{ student.govID }}"
+          >VIEW</a
+        >
+        <a *ngIf="student.govID == 'N/A'" target="_blank">Doc Not uploaded</a>
+      </div>
+      <div class="table-cell">
+        <a
+          *ngIf="student.lastYearMarkSheet != 'N/A'"
+          target="_blank"
+          href="{{ student.lastYearMarkSheet }}"
+          >VIEW</a
+        >
+        <a *ngIf="student.lastYearMarkSheet == 'N/A'" target="_blank"
+          >Doc Not uploaded</a
+        >
+      </div>
+      <div class="table-cell">
+        <img
+          *ngIf="student.stdSign != 'N/A'"
+          src="{{ student.Photo }}"
+          height="60"
+          width="60"
+        />
+        <a *ngIf="student.Photo == 'N/A'" target="_blank">Doc Not uploaded</a>
+        <a
+          *ngIf="student.Photo != 'N/A'"
+          target="_blank"
+          href="{{ student.Photo }}"
+          >VIEW</a
+        >
+      </div>
+      <div class="table-cell">
+        <img
+          *ngIf="student.stdSign != 'N/A'"
+          src="{{ student.stdSign }}"
+          height="60"
+          width="60"
+        />
+        <a *ngIf="student.stdSign == 'N/A'" target="_blank">Doc Not uploaded</a>
+        <a
+          *ngIf="student.stdSign != 'N/A'"
+          target="_blank"
+          href="{{ student.stdSign }}"
+          >VIEW</a
+        >
+      </div>
+      <div class="table-cell">
+        <img
+          *ngIf="student.stdSign != 'N/A'"
+          src="{{ student.headMastSign }}"
+          height="60"
+          width="60"
+        />
+        <a *ngIf="student.headMastSign == 'N/A'" target="_blank"
+          >Doc Not uploaded</a
+        >
+        <a
+          *ngIf="student.headMastSign != 'N/A'"
+          target="_blank"
+          href="{{ student.headMastSign }}"
+          >VIEW</a
+        >
+      </div>
+    </div>
   </div>
-      <p-footer>
-          <p-button  (click)="display=false"  label="Close"></p-button> 
-        </p-footer>
-      
-  </p-dialog>
-<div class="ui-g-12 align-merit-content" *ngIf="enrolledStudentRecordLength > 0">
- 
+  <p-footer>
+    <p-button (click)="display = false" label="Close"></p-button>
+  </p-footer>
+</p-dialog>
+<div
+  class="ui-g-12 align-merit-content"
+  *ngIf="enrolledStudentRecordLength > 0"
+>
   <div class="table">
     <div class="table-row table-header">
       <div class="table-cell align-sr">Sr No.</div>
@@ -233,46 +379,101 @@
       <div class="table-cell">Status</div>
       <div class="table-cell">ISSO Status</div>
     </div>
-   
-    <div class="table-row" *ngFor="let student of enrolledStudentData; let i = index;" >
-        <div class="table-cell align-sr">{{i+1}}</div>
-        <div class="table-cell">{{student.studentName}}</div>
-        <div class="table-cell">{{student.gameName}}</div>
-        <div class="table-cell">{{student.ageRange}}</div>
-        <div class="table-cell">{{student.gender == '1' ? 'Boys' : 'Girls'}}</div>
-        <div class="table-cell">{{student.schoolName}}</div>
-        <div class="table-cell"><span  class="align-condition cursor-point" (click)="showDialog(student)">VIEW</span></div>
-        <div class="table-cell">
-            <!-- <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">
+
+    <div
+      class="table-row"
+      *ngFor="let student of enrolledStudentData; let i = index"
+    >
+      <div class="table-cell align-sr">{{ i + 1 }}</div>
+      <div class="table-cell">{{ student.studentName }}</div>
+      <div class="table-cell">{{ student.gameName }}</div>
+      <div class="table-cell">{{ student.ageRange }}</div>
+      <div class="table-cell">
+        {{ student.gender == "1" ? "Boys" : "Girls" }}
+      </div>
+      <div class="table-cell">{{ student.schoolName }}</div>
+      <div class="table-cell">
+        <span class="align-condition cursor-point" (click)="showDialog(student)"
+          >VIEW</span
+        >
+      </div>
+      <!-- {{ baseUrl }}testmergePDF/index_tcpdf.php/mergePdf?studentId=22460&schoolId=306&gameId=1 -->
+      <div class="table-cell">
+        <!-- <a  class="btn btn-primary" href="https://issoindia.com/isso-php/tcpdf/meritCertificate/{{selectedYearVal}}/{{genderVal}}/1/{{eventValue}}/{{gameId}}/{{subGameId}}/{{school.schoolId}}/{{selectedAge}}/{{school.rank}}">
               <i class="pdf-icon align-icon fas fa-file-pdf"></i>
-            </a> -->  
-            <a target="_blank"  *ngIf="student.isDoc == '1'"  href="{{baseUrl}}Sgfipdf/sgfiViewPdf/{{student.studentId}}/{{student.schoolId}}/{{student.gameId}}">
-              <i class="pdf-icon fas fa-file-pdf"></i>
-            </a>
-            <span  *ngIf="student.isDoc == '0'">DOC Not Uploaded</span>
-        </div>
-        <div  class="table-cell">
-          <span class="p-3 mb-2 bg-success text-white" *ngIf="student.isForm == '1' && student.isDoc == '1' && student.isPaid == '1'">Completed</span>
-          <span class="p-3 mb-2 bg-warning text-dark" *ngIf="student.isForm == '1' && (student.isDoc == '0' || student.isPaid == '0') || student.isDoc == '1' && student.isPaid == '0' || student.isPaid == '1' && (student.isForm == '0' || student.isDoc == '0')">In Progress</span>
-          <span class="p-3 mb-2 bg-danger text-white" *ngIf="student.isForm == '0' && student.isDoc == '0' &&  student.isPaid == '0'"> Pending</span>
-       </div>
-    
-       <div class="table-cell">
-          <span class="p-3 mb-2 bg-success text-white cursor-point" (click)="changeEventStatus(student.sId,student.issoadminstatus)" *ngIf="student.issoadminstatus == '1'">APPROVED</span>
-          <span class="p-3 mb-2 bg-warning text-dark cursor-point" (click)="changeEventStatus(student.sId,student.issoadminstatus)" *ngIf="student.issoadminstatus == '0'">PENDING</span>
-       </div> 
-   </div>
-    
+            </a> -->
+        <a
+          target="_blank"
+          *ngIf="student.isDoc == '1'"
+          href="{{ baseUrl }}Sgfipdf/sgfiViewPdf/{{ student.studentId }}/{{
+            student.schoolId
+          }}/{{ student.gameId }}"
+        >
+          <i class="pdf-icon fas fa-file-pdf"></i>
+        </a>
+        <!-- <a
+          target="_blank"
+          *ngIf="student.isDoc == '1'"
+          href="{{ baseUrl }}testmergePDF/index_tcpdf.php/mergePdf?studentId={{
+            student.studentId
+          }}"
+        >
+          <i class="pdf-icon fas fa-file-pdf"></i>
+        </a> -->
+        <span *ngIf="student.isDoc == '0'">DOC Not Uploaded</span>
+      </div>
+      <div class="table-cell">
+        <span
+          class="p-3 mb-2 bg-success text-white"
+          *ngIf="
+            student.isForm == '1' &&
+            student.isDoc == '1' &&
+            student.isPaid == '1'
+          "
+          >Completed</span
+        >
+        <span
+          class="p-3 mb-2 bg-warning text-dark"
+          *ngIf="
+            (student.isForm == '1' &&
+              (student.isDoc == '0' || student.isPaid == '0')) ||
+            (student.isDoc == '1' && student.isPaid == '0') ||
+            (student.isPaid == '1' &&
+              (student.isForm == '0' || student.isDoc == '0'))
+          "
+          >In Progress</span
+        >
+        <span
+          class="p-3 mb-2 bg-danger text-white"
+          *ngIf="
+            student.isForm == '0' &&
+            student.isDoc == '0' &&
+            student.isPaid == '0'
+          "
+        >
+          Pending</span
+        >
+      </div>
+
+      <div class="table-cell">
+        <span
+          class="p-3 mb-2 bg-success text-white cursor-point"
+          (click)="changeEventStatus(student.sId, student.issoadminstatus)"
+          *ngIf="student.issoadminstatus == '1'"
+          >APPROVED</span
+        >
+        <span
+          class="p-3 mb-2 bg-warning text-dark cursor-point"
+          (click)="changeEventStatus(student.sId, student.issoadminstatus)"
+          *ngIf="student.issoadminstatus == '0'"
+          >PENDING</span
+        >
+      </div>
+    </div>
   </div>
 </div>
 
-
-
-
-
-
-
-  <!-- <table class="table"  [ngClass]="{ 'hide-table':enrolledStudentData.length ==0 }">
+<!-- <table class="table"  [ngClass]="{ 'hide-table':enrolledStudentData.length ==0 }">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Student Name</th>
@@ -304,7 +505,16 @@
    
     </tbody>
   </table> -->
- 
-<p-confirmDialog key="confirm-delete-student" header="Delete SGFI Student" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
-<p-confirmDialog key="confirm-add-student" header="Add SGFI Student" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog>
 
+<p-confirmDialog
+  key="confirm-delete-student"
+  header="Delete SGFI Student"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>
+<p-confirmDialog
+  key="confirm-add-student"
+  header="Add SGFI Student"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>
