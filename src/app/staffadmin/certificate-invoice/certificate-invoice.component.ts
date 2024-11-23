@@ -131,6 +131,7 @@ ngOnInit() {
 } 
 makeCssEnable(type) {
   this.certType = type;
+  this.showMeritData = false;
   if (type == 'certificate') {
     this.isPartCssEnable = true;
     this.isMeritCssEnable = false;
@@ -227,10 +228,18 @@ onyeareChange(val,yearText) {
       }
 
    } ,
+
+
+
    error => {
      //this.errorAlert =true;
     });
+    // this.isPartCssEnable = true;
+    // this.isMeritCssEnable = false;
+    // this.isInvoiceCssEnable = false;
+    // this.isReceiptCssEnable= false;
   } else {
+    console.log('sdf')
     this.eventOptions = [];
     this.gameOptions = [];
     this.eventReadable = false;

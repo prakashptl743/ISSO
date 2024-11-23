@@ -12,6 +12,7 @@ export class StaffadminMenuComponent implements OnInit {
   activeItem: MenuItem;
   schoolName: string;
   isvolunteer: string | null;
+  currentYear: number = new Date().getFullYear();
   constructor(private router: Router) { }
 
   ngOnInit() {

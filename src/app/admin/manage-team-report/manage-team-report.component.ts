@@ -112,7 +112,7 @@ filterCountry(query, countries: any[]): any[] {
 }
 loadInitialData() {
   this.yearOptions = this.issoUtilService.setYear();
-  this.ageOptions = this.issoUtilService.setAge();
+  //this.ageOptions = this.issoUtilService.setAge();
   this.genderOptions =this.issoUtilService.setGender();
 }
 onyeareChange(event) {
@@ -218,30 +218,62 @@ onEventChange(event) {
         this.selectedAge = '';
         this.selectedGender = '';
         this.genderReadble = false;
-        if(response[0].ageRange !== 'null' && response[0].girlsAgeRange !== 'null') {
-        const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
-        this.ageArray= ageList.split(" ");
-        const x = Array.from(new Set(ageList.split(" "))).toString();
+        let ageList;
+        if(response[0].ageRange !== 'null' ||  response[0].girlsAgeRange !== 'null') {
+          
+      //   const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+      //   this.ageArray= ageList.split(" ");
+      //   const x = Array.from(new Set(ageList.split(" "))).toString();
         
-        var myarray = x.split(',');
-        let ageArrayLength =  myarray.length;
+      //   var myarray = x.split(',');
+      //   let ageArrayLength =  myarray.length;
     
-        this.ageOptions =[];
-        this.ageOptions.push({
-          label: "Please Select",
-          value: ''
-        });
+      //   this.ageOptions =[];
+      //   this.ageOptions.push({
+      //     label: "Please Select",
+      //     value: ''
+      //   });
+
+      // for(var i = 0; i < ageArrayLength; i++) {
+      //   if(myarray[i] !==''){
+      //   this.ageOptions.push({
+      //     label: myarray[i],
+      //     value: myarray[i]
+      //   });
+      // }
+      // }
+          if (response[0].ageRange == 'null') {
+            ageList =  response[0].girlsAgeRange;
+          } else if( response[0].girlsAgeRange !== 'null') {
+            ageList =  response[0].ageRange;
+          } else {
+            ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+          }
+    //  const ageList = response[0].ageRange + " " + response[0].girlsAgeRange;
+      //this.ageMeritArray= ageList.split(" ");
+      const x = Array.from(new Set(ageList.split(" "))).toString();
+      
+      var myarray = x.split(',');
+      let ageArrayLength =  myarray.length;
+
+      this.ageOptions =[];
+      this.ageOptions.push({
+        label: "Please Select",
+        value: ''
+      });
 
       for(var i = 0; i < ageArrayLength; i++) {
-        if(myarray[i] !==''){
+        if(myarray[i] !=='' && myarray[i] !=='null'){
         this.ageOptions.push({
           label: myarray[i],
           value: myarray[i]
         });
       }
       }
-    }
- 
+    } 
+  
+
+
       } ,
       error => {
         //this.errorAlert =true;
