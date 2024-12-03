@@ -52,6 +52,7 @@
         <div class="table-cell">Gender</div>
         <div class="table-cell">Action</div>
         <div class="table-cell">Status</div>
+        <div class="table-cell">View PDF</div>
         <div class="table-cell">ISSO Status</div>
       </div>
 
@@ -102,6 +103,7 @@
             "
             >Completed</span
           >
+
           <span
             class="p-3 mb-2 bg-warning text-dark"
             *ngIf="
@@ -123,6 +125,42 @@
           >
             Pending</span
           >
+        </div>
+        <div class="table-cell">
+          <span
+            class="p-3 mb-2 bg-danger text-white"
+            *ngIf="
+              student.isForm == '0' &&
+              student.isDoc == '0' &&
+              student.isPaid == '0'
+            "
+          >
+            N/A</span
+          >
+          <span
+            class="p-3 mb-2 bg-warning text-dark"
+            *ngIf="
+              (student.isForm == '1' &&
+                (student.isDoc == '0' || student.isPaid == '0')) ||
+              (student.isDoc == '1' && student.isPaid == '0') ||
+              (student.isPaid == '1' &&
+                (student.isForm == '0' || student.isDoc == '0'))
+            "
+            >N/A</span
+          >
+          <a
+            target="_blank"
+            *ngIf="
+              student.isForm == '1' &&
+              student.isDoc == '1' &&
+              student.isPaid == '1'
+            "
+            href="{{ baseUrl }}Sgfipdf/sgfiViewPdf/{{ student.sId }}/{{
+              student.schoolId
+            }}/{{ student.gameId }}"
+          >
+            <i class="pdf-icon fas fa-file-pdf"></i>
+          </a>
         </div>
         <div class="table-cell">
           <span
@@ -680,7 +718,7 @@
                   >
                 </div>
               </div>
-              <div class="col-md-4">
+              <!-- <div class="col-md-4">
                 <h5>Head Master/Principal Sign with stamp</h5>
                 <input
                   type="file"
@@ -699,7 +737,7 @@
                     >File size too large please select file below 100 KB</span
                   >
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-4">
                 <h5>Student Photo</h5>
                 <input
@@ -734,9 +772,9 @@
               <div class="table-cell">Last Year Mark Sheet</div>
               <div class="table-cell">Photo</div>
               <div class="table-cell">Student Sign</div>
-              <div class="table-cell">
+              <!-- <div class="table-cell">
                 Head Master/Principal Sign with stamp
-              </div>
+              </div> -->
             </div>
 
             <div
@@ -799,12 +837,12 @@
                   >Doc Not uploaded</a
                 >
               </div>
-              <div class="table-cell">
+              <!-- <div class="table-cell">
                 <img src="{{ student.headMastSign }}" height="50" width="50" />
                 <a *ngIf="student.headMastSign == 'N/A'" target="_blank"
                   >Doc Not uploaded</a
                 >
-              </div>
+              </div> -->
             </div>
           </div>
 
