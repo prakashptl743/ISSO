@@ -210,7 +210,9 @@
     ></button>
   </div>
 </div>
-
+<div class="align-note">
+  Note: Dark Brwon color indicates that student is absent.
+</div>
 <!-- START P TABLE CODE-->
 
 <!-- [resizableColumns]="true" [autoLayout]="true"  [rowsPerPageOptions]="[10,25,50]" -->
@@ -332,8 +334,9 @@
       <th pSortableColumn="activity">Actions</th>
     </tr>
   </ng-template>
+  <!-- [ngClass]="{ bgColor: customer.gender == '1' }" -->
   <ng-template pTemplate="body" let-customer>
-    <tr class="p-selectable-row">
+    <tr class="p-selectable-row" [ngClass]="getRowClass(customer)">
       <td>
         {{ customer.sId }}
       </td>
