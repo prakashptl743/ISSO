@@ -708,13 +708,13 @@ export class StudentComponent implements OnInit {
               this.isMessageshow = true;
             } else if (
               response[0].sixteen_boys > 0 &&
-              this.selectedAge == "16"
+              this.selectedAge == "9"
             ) {
               this.studentCapacity = response[0].sixteen_boys;
               this.isMessageshow = true;
             } else if (
               response[0].sixteen_girls > 0 &&
-              this.selectedAge == "16"
+              this.selectedAge == "9"
             ) {
               this.studentCapacity = response[0].sixteen_girls;
               this.isMessageshow = true;
