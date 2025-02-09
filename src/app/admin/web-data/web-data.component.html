@@ -1,43 +1,142 @@
- 
-
 <div class="tab">
-  <button [ngClass]="reportLabel=='Web Calender' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Web Calender</button>
-  <button [ngClass]="reportLabel=='IFS Data' ? 'isMenuActive' : '' "  (click)="onloadMenu(1)" class="tablinks" >ISF Data</button>
+  <button
+    [ngClass]="reportLabel == 'Web Calender' ? 'isMenuActive' : ''"
+    (click)="onloadMenu(0)"
+    class="tablinks"
+  >
+    Web Calender
+  </button>
+  <button
+    [ngClass]="reportLabel == 'IFS Data' ? 'isMenuActive' : ''"
+    (click)="onloadMenu(1)"
+    class="tablinks"
+  >
+    ISF Data
+  </button>
 </div>
-<div class="form-group col-md-4"> 
+<div class="form-group col-md-4">
   <label for="inputEmail4">Select Year</label>
-  <p-dropdown  [options]="yearOptions" [(ngModel)]="selectedYear"  placeholder="Select Year" (onChange)="onyeareChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+  <p-dropdown
+    [options]="yearOptions"
+    [(ngModel)]="selectedYear"
+    placeholder="Select Year"
+    (onChange)="onyeareChange($event)"
+    [style]="{ 'min-width': '140px' }"
+  ></p-dropdown>
 </div>
 
-<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
 
- <div class="container mt-5 align-web-container">
- 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarColor02"
-          aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor02">
+<div class="container mt-5 align-web-container">
+  <!-- <div class="card">
+    <p-menubar [model]="items">
+      <ng-template #item let-item>
+        <ng-container *ngIf="item.route; else urlRef">
+          <a [routerLink]="item.route" class="p-menubar-item-link">
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+          </a>
+        </ng-container>
+        <ng-template #urlRef>
+          <a
+            *ngIf="item.url; else noLink"
+            [href]="item.url"
+            class="p-menubar-item-link"
+          >
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+          </a>
+        </ng-template>
+        <ng-template #noLink>
+          <div class="p-menubar-item-link">
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+            <span class="pi pi-fw pi-angle-down ml-2"></span>
+          </div>
+        </ng-template>
+      </ng-template>
+    </p-menubar>
+  </div> -->
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarColor02"
+        aria-controls="navbarColor02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Dropdown link
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="#">Action</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item active">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class="nav-link" aria-current="page" href="#">Menu</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="#">Items</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-          
+
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-mdb-toggle="dropdown" aria-expanded="false">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Dropdown link
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
                 <li>
                   <a class="dropdown-item" href="#">Action</a>
                 </li>
@@ -50,195 +149,301 @@
               </ul>
             </li>
           </ul>
-          <div class="d-flex align-items-center">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item active">
-                <a class="nav-link" aria-current="page" href="#">Menu</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Items</a>
-              </li>
-           
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                  data-mdb-toggle="dropdown" aria-expanded="false">
-                  Dropdown link
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li>
-                    <a class="dropdown-item" href="#">Action</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Another action</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
-    </nav> -->
-<div class="wrapper">
+    </div>
+  </nav> -->
+  <div class="wrapper">
     <!-- <p-menubar [model]="items" class="custom-menubar"></p-menubar>
     <p-menubar [model]="items1" class="custom-menubar"></p-menubar>   -->
-   
-<div id="content1" class="content-wrapper" *ngIf="isWebVisible">
-    <div class="sub-view-wrapper" *ngIf="display">
-    <h2 class="headingSubview">{{subViewTitle}}</h2>
-    <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-      
-        <div class="form-row">  
+
+    <div id="content1" class="content-wrapper" *ngIf="isWebVisible">
+      <div class="sub-view-wrapper" *ngIf="display">
+        <h2 class="headingSubview">{{ subViewTitle }}</h2>
+        <form
+          [formGroup]="schoolForm"
+          class="align-form-div"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">Sport Name</label>
-              <input class="form-control" formControlName="schoolname" name="schoolName" type="text" required>
+              <input
+                class="form-control"
+                formControlName="schoolname"
+                name="schoolName"
+                type="text"
+                required
+              />
             </div>
-         </div>   
-         <div class="form-row">  
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputPassword4">Age Title</label>
-              <input class="form-control" formControlName="schoolEmail" name="schoolEmail"  type="text" required>
+              <input
+                class="form-control"
+                formControlName="schoolEmail"
+                name="schoolEmail"
+                type="text"
+                required
+              />
             </div>
-        </div>
-        <div class="form-row">
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">Venue</label>
-              <input class="form-control" formControlName="schoolBoard" name ="schoolBoard" type="text" required>
+              <input
+                class="form-control"
+                formControlName="schoolBoard"
+                name="schoolBoard"
+                type="text"
+                required
+              />
             </div>
-        </div>
-        <div class="form-row">
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">Event Start Date</label>
-              <p-calendar   [minDate]="minimumDate" formControlName="startDate" onkeydown="return false;"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}"  [showIcon]="true" inputId="icon"></p-calendar>
+              <p-calendar
+                [minDate]="minimumDate"
+                formControlName="startDate"
+                onkeydown="return false;"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+                [showIcon]="true"
+                inputId="icon"
+              ></p-calendar>
 
               <!-- <p-calendar   [showIcon]="true" onkeydown="return false;"   formControlName="startDate"    dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" ></p-calendar>  -->
- 
             </div>
-        </div>
-        <div class="form-row">
+          </div>
+          <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">Event End Date</label>
-              <p-calendar   [minDate]="minimumDate" formControlName="endDate" onkeydown="return false;"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}"  [showIcon]="true" inputId="icon"></p-calendar>
+              <p-calendar
+                [minDate]="minimumDate"
+                formControlName="endDate"
+                onkeydown="return false;"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+                [showIcon]="true"
+                inputId="icon"
+              ></p-calendar>
 
               <!-- <p-calendar [defaultDate]="minDate"  [showIcon]="true" onkeydown="return false;"  formControlName="endDate"  dateFormat="dd/mm/yy"  [style]="{'width':'100%'}" [inputStyle]="{'width':'93%'}"  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>  -->
- 
             </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group col-md-6"> 
-              <label for="inputEmail4">Attach PDF</label> 
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Attach PDF</label>
               <!-- <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control"> -->
 
-              <input type="file" id="my-input"  [(ngModel)]="selectedProfile" formControlName="profile" (change)="onFileSelected($event)" class="form-control" required>
-              <span class="file-hint">Please upload file below 100 KB</span><br/>
+              <input
+                type="file"
+                id="my-input"
+                [(ngModel)]="selectedProfile"
+                formControlName="profile"
+                (change)="onFileSelected($event)"
+                class="form-control"
+                required
+              />
+              <span class="file-hint">Please upload file below 100 KB</span
+              ><br />
               <span class="form-group" *ngIf="!isValidFile">
-                <span class="error-class">Invalid File type Please select file PDF format only</span>
-              </span><br/>
+                <span class="error-class"
+                  >Invalid File type Please select file PDF format only</span
+                > </span
+              ><br />
               <span class="form-group" *ngIf="isFileBig">
-                <span class="error-class">File size too large please select image below 100 KB</span>
-              </span> 
-              <input type="hidden" [(ngModel)]="editStudentPhoto" formControlName="editStudentPhoto" class="form-control"
-              id="inputWarning1">
+                <span class="error-class"
+                  >File size too large please select image below 100 KB</span
+                >
+              </span>
+              <input
+                type="hidden"
+                [(ngModel)]="editStudentPhoto"
+                formControlName="editStudentPhoto"
+                class="form-control"
+                id="inputWarning1"
+              />
             </div>
-            
-          
-        </div>
-     
+          </div>
 
-        <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
-        <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
-
-    </form>
- 
-</div>
-<p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="calenderData" class="no-padding" filterBy="title,sportName" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-
-    <p-header>
-        <div class="ui-helper-clearfix">
+          <button
+            [disabled]="!schoolForm.valid"
+            class="btn btn-primary marginR10"
+            type="button"
+            (click)="onSubmit()"
+          >
+            Submit
+          </button>
+          <button
+            class="btn btn-primary-outline"
+            type="button"
+            (click)="display = false"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+      <p-dataView
+        #dv
+        [paginator]="true"
+        paginatorPosition="bottom"
+        *ngIf="!display"
+        [rows]="10"
+        [value]="calenderData"
+        class="no-padding"
+        filterBy="title,sportName"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        layout="grid"
+      >
+        <p-header>
+          <div class="ui-helper-clearfix">
             <div class="ui-g">
-               <div class="ui-g-12 ui-md-12 filter-container">
-                        <div>
-                            <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-                            <!-- <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)"> -->
-                            <div style="float: right;">
-                                 <button *ngIf="!display" type="button" (click)="addNewSchool($event, '','add')" pButton label="Add New Calender Data"></button>
-                                <!-- <button type="button" *ngIf="!display" (click)="addNewEvent($event, '','add')" pButton icon="pi pi-plus" label="Add Upcoming Event"></button> -->
-                            </div>
-                        </div>
- 
+              <div class="ui-g-12 ui-md-12 filter-container">
+                <div>
+                  <input
+                    class="search-text"
+                    type="search"
+                    pInputText
+                    placeholder="Search by Name"
+                    (input)="dv.filter($event.target.value)"
+                  />
+                  <!-- <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)"> -->
+                  <div style="float: right">
+                    <button
+                      *ngIf="!display"
+                      type="button"
+                      (click)="addNewSchool($event, '', 'add')"
+                      pButton
+                      label="Add New Calender Data"
+                    ></button>
+                    <!-- <button type="button" *ngIf="!display" (click)="addNewEvent($event, '','add')" pButton icon="pi pi-plus" label="Add Upcoming Event"></button> -->
+                  </div>
                 </div>
-    
+              </div>
             </div>
-        </div>
-    </p-header>
-<ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
-    <div style="padding:.5em" class="ui-g-12 ui-md-6">
-        <div class="item-box">
-            <div class="item-header1">
-                <h4 class="ev-name1" title="{{school.title}}">{{school.sportName}}</h4>
+          </div>
+        </p-header>
+        <ng-template
+          let-school
+          pTemplate="gridItem"
+          style="word-wrap: break-word"
+        >
+          <div style="padding: 0.5em" class="ui-g-12 ui-md-6">
+            <div class="item-box">
+              <div class="item-header1">
+                <h4 class="ev-name1" title="{{ school.title }}">
+                  {{ school.sportName }}
+                </h4>
                 <div class="icons-wrap">
-                    <button class="glyphicon glyphicon-edit item-icons" (click)="addNewSchool($event, school,'edit')">
-                    </button>
-                     <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteSchoolData($event, school)">
-                    </button>
-                    
+                  <button
+                    class="glyphicon glyphicon-edit item-icons"
+                    (click)="addNewSchool($event, school, 'edit')"
+                  ></button>
+                  <button
+                    href="#"
+                    class="glyphicon glyphicon-trash item-icons"
+                    (click)="deleteSchoolData($event, school)"
+                  ></button>
                 </div>
-            </div>
-          
-            <div class="item-description">
+              </div>
+
+              <div class="item-description">
                 <label>Event Start Date:</label>
-                <span class="item-value">{{school.eventStartDate  | date: 'd MMMM , y'}}</span>
-            </div>
-            <div class="item-description">
+                <span class="item-value">{{
+                  school.eventStartDate | date : "d MMMM , y"
+                }}</span>
+              </div>
+              <div class="item-description">
                 <label>Event End Date:</label>
-                <span class="item-value">{{school.eventEndDate  | date: 'd MMMM , y'}}</span>
-            </div>
-          
-             <div class="item-description">
+                <span class="item-value">{{
+                  school.eventEndDate | date : "d MMMM , y"
+                }}</span>
+              </div>
+
+              <div class="item-description">
                 <label>Age Group:</label>
                 <div class="item-parent">
-                    <div class="item-value" title="{{school.address}}">{{school.ageTitle}}</div>
+                  <div class="item-value" title="{{ school.address }}">
+                    {{ school.ageTitle }}
+                  </div>
                 </div>
-            </div>
-             <div class="item-description">
+              </div>
+              <div class="item-description">
                 <label>Venue:</label>
                 <div class="item-parent">
-                    <div class="item-value" title="{{school.schoolInfrastructure}}">{{school.sportLocation}}</div>
+                  <div
+                    class="item-value"
+                    title="{{ school.schoolInfrastructure }}"
+                  >
+                    {{ school.sportLocation }}
+                  </div>
                 </div>
+              </div>
+              <div class="item-description">
+                <label>Attachment:</label>
+                <div class="item-parent" *ngIf="school.eventFile !== ''">
+                  <span class="item-value"
+                    ><a
+                      target="_blank"
+                      href="https://issoindia.com/isso-php/upload/calender-doc/{{
+                        school.eventFile
+                      }}"
+                    >
+                      <i class="align-icon fas fa-file-pdf"></i></a
+                  ></span>
+                </div>
+                <div class="item-parent" *ngIf="school.eventFile == ''">
+                  <span class="item-value">Doc Not Uploaded</span>
+                </div>
+              </div>
             </div>
-            <div class="item-description">
-                <label>Attachment:</label>  
-                <div class="item-parent" *ngIf="school.eventFile !== '' ">
-                    <span class="item-value"><a target="_blank" href="https://issoindia.com/isso-php/upload/calender-doc/{{school.eventFile}}"> <i class="align-icon fas fa-file-pdf"></i></a></span>
-                </div>
-                <div class="item-parent" *ngIf="school.eventFile == '' ">
-                    <span class="item-value">Doc Not Uploaded</span>
-                </div>
-            </div>
-            
-        </div>
-    </div>   
-   
-</ng-template>
-</p-dataView>
- 
-<p-confirmDialog key="confirm-delete-school" header="Delete school data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>
-<p-dialog header="Add New Calender data" [(visible)]="displayDialog"  showEffect="fade" [modal]="true" [responsive]="true"   
-    [maximizable]="true" [baseZIndex]="10000">
-    <h5>Edit Calender data</h5>
-    <p-footer>
-        <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-       <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-    </p-footer>
+          </div>
+        </ng-template>
+      </p-dataView>
 
+      <p-confirmDialog
+        key="confirm-delete-school"
+        header="Delete school data"
+        acceptLabel="Yes"
+        rejectLabel="No"
+        [(visible)]="confirmDropDatabaseDialogVisible"
+      ></p-confirmDialog>
+      <p-dialog
+        header="Add New Calender data"
+        [(visible)]="displayDialog"
+        showEffect="fade"
+        [modal]="true"
+        [responsive]="true"
+        [maximizable]="true"
+        [baseZIndex]="10000"
+      >
+        <h5>Edit Calender data</h5>
+        <p-footer>
+          <p-button
+            icon="pi pi-check"
+            [disabled]="!schoolForm.valid"
+            label="Submit"
+            (onClick)="onSubmit()"
+          ></p-button>
+          <button
+            type="button"
+            pButton
+            icon="pi pi-close"
+            (click)="display = false"
+            label="No"
+            class="ui-button-secondary"
+          ></button>
+        </p-footer>
+      </p-dialog>
+    </div>
 
-</p-dialog>    
- </div>
- 
-  <div *ngIf="!isWebVisible">
-     <app-ifs-school-data></app-ifs-school-data>
- </div>  
+    <div *ngIf="!isWebVisible">
+      <app-ifs-school-data></app-ifs-school-data>
+    </div>
+  </div>
 </div>

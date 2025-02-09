@@ -354,7 +354,11 @@ export class PaymentInvoice implements OnInit {
     this.schooName = this.schoolDataArray[1];
     if (this.schoolID !== "") {
       this.meritService
-        .getStudentData(this.eventValue, this.gameID, this.schoolDataArray[0])
+        .getStudentDataForPayment(
+          this.eventValue,
+          this.gameID,
+          this.schoolDataArray[0]
+        )
         .subscribe(
           (response) => {
             if (response !== "") {

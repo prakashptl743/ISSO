@@ -295,6 +295,14 @@ export class ReportMeritService {
 
   getStudentData(eventValue, gameVal, schoolvalue) {
     let str =
+      "report/getStudentData/" + eventValue + "/" + gameVal + "/" + schoolvalue;
+    return this.http
+      .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
+
+  getStudentDataForPayment(eventValue, gameVal, schoolvalue) {
+    let str =
       "report/getStudentDataForPayment/" +
       eventValue +
       "/" +
@@ -305,7 +313,6 @@ export class ReportMeritService {
       .get(this.serverUrl + str)
       .pipe(catchError(this.handleError));
   }
-
   checkGameType(gameId) {
     let str = "student/checkGameType/" + gameId;
     return this.http
