@@ -13,6 +13,13 @@
   >
     View Student
   </button>
+  <button
+    [ngClass]="isShowPayment ? 'isMenuActive' : ''"
+    (click)="onloadMenu(2)"
+    class="tablinks"
+  >
+    Download Payments
+  </button>
 </div>
 <div>
   <div class="ui-g-12">
@@ -36,6 +43,7 @@
     </div>
     <div class="ui-g-4">
       <p-multiSelect
+        *ngIf="!isShowPayment"
         [disabled]="!subGameReadable"
         [(ngModel)]="selectedSubGame"
         [options]="subgameOptions"
@@ -44,6 +52,25 @@
         [panelStyle]="{ minWidth: '12em' }"
       >
       </p-multiSelect>
+      <!-- <a
+        *ngIf="isShowPayment"
+        class="btn btn-primary"
+        [class.disabled]="!(yearvalue && gameId)"
+        href="{{ baseUrl }}/SgfiEntries/downloadSgfiPayment/{{ yearvalue }}/{{
+          gameId
+        }}"
+        >Download Sheet
+      </a> -->
+      <button
+        *ngIf="isShowPayment"
+        class="align-game-button"
+        type="button"
+        [disabled]="!isPaymentData"
+        (click)="exportAsGameXLSX()"
+        pButton
+        label="Download Sheet"
+      ></button>
+
       <!-- <p-dropdown 
              [disabled]="!subGameReadable" 
              [(ngModel)]="selectedSubGame" 
@@ -64,6 +91,7 @@
     <div class="ui-g-12">
       <div class="ui-g-4">
         <p-dropdown
+          *ngIf="!isShowPayment"
           [disabled]="!ageReadble"
           [(ngModel)]="selectedAge"
           [options]="ageOptions"
@@ -74,6 +102,7 @@
       </div>
       <div class="ui-g-4">
         <p-dropdown
+          *ngIf="!isShowPayment"
           [disabled]="!genderReadble"
           [(ngModel)]="selectedGender"
           [options]="genderOptions"
