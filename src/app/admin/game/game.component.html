@@ -11,277 +11,554 @@
 </div> -->
 
 <div class="tab">
-    <button [ngClass]="isGame ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Game</button>
-    <button [ngClass]="isSubGame ? 'isMenuActive' : '' " (click)="onloadMenu(1)"  class="tablinks">Subgame</button>
-  </div>
+  <button
+    [ngClass]="isGame ? 'isMenuActive' : ''"
+    (click)="onloadMenu(0)"
+    class="tablinks"
+  >
+    Game
+  </button>
+  <button
+    [ngClass]="isSubGame ? 'isMenuActive' : ''"
+    (click)="onloadMenu(1)"
+    class="tablinks"
+  >
+    Subgame
+  </button>
+</div>
 <app-loading *ngIf="showspinner"></app-loading>
 
 <div *ngIf="isSubGame">
-    <app-subgame></app-subgame>
+  <app-subgame></app-subgame>
 </div>
 <!-- <div *ngIf="!isSubGame">
     <div style="float: right;"> <button type="button" *ngIf="!display" (click)="addNewGame($event, '','add')" pButton icon="pi pi-plus" label="Add New Game"></button>
       <button class="btn btn-primary-small float-right" *ngIf="display" (click)="hideExtraView()">Back</button>
    </div>
  </div> -->
- <br/>
-<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+<br />
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
 <div id="content1" class="content-wrapper">
-    <div class="sub-view-wrapper" *ngIf="display">
-        <form [formGroup]="gameForm" class="align-form-div" (ngSubmit)="onSubmit()">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Game Name</label>
-                    <input class="form-control" [(ngModel)]="gameName" formControlName="gameName" name="gameName"
-                        type="text" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">Game Type</label>
-                    <p-dropdown [disabled]="isBothGameReadble" [(ngModel)]="gameType" [options]="options"
-                        (onChange)="onGameChange($event)" formControlName="gameType"></p-dropdown>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Game Description</label>
-                    <textarea [rows]="5" [cols]="30" class="form-control" [(ngModel)]="gameDescription"
-                        name="gameDescription" formControlName="gameDescription"></textarea>
-                </div>
+  <div class="sub-view-wrapper" *ngIf="display">
+    <form [formGroup]="gameForm" class="align-form-div" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Game Name</label>
+          <input
+            class="form-control"
+            [(ngModel)]="gameName"
+            formControlName="gameName"
+            name="gameName"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Game Type</label>
+          <p-dropdown
+            [disabled]="isBothGameReadble"
+            [(ngModel)]="gameType"
+            [options]="options"
+            (onChange)="onGameChange($event)"
+            formControlName="gameType"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Game Description</label>
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            class="form-control"
+            [(ngModel)]="gameDescription"
+            name="gameDescription"
+            formControlName="gameDescription"
+          ></textarea>
+        </div>
+      </div>
+      <br />
+      <div
+        class="col-md-12 form-row marginT20 align-game"
+        *ngIf="isTeamGame && gameType !== 'Both'"
+      >
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">9 Boys Max Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'sixteen_boys')"
+              [(ngModel)]="sixteen_boys"
+              numbersOnly
+              formControlName="sixteen_boys"
+              name="sixteen_boys"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4"
+              >9 Boys Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minsixteenteenboys')"
+              [(ngModel)]="minsixteenteenboys"
+              numbersOnly
+              formControlName="minsixteenteenboys"
+              name="sixteen_boys"
+              type="text"
+            />
+            <label for="inputEmail4" class="marginT20"
+              >9 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'sixteen_girls')"
+              [(ngModel)]="sixteen_girls"
+              numbersOnly
+              formControlName="sixteen_girls"
+              name="sixteen_girls"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20"
+              >9 Girls Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minsixteengirls')"
+              [(ngModel)]="minsixteengirls"
+              numbersOnly
+              formControlName="minsixteengirls"
+              name="sixteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
 
-            </div>
-            <br/>
-            <div class="col-md-12 form-row marginT20 align-game" *ngIf="isTeamGame && gameType!=='Both'">
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">11 Boys Max Capacity
-                        </label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'eleven_boys')" [(ngModel)]="eleven_boys"
-                            numbersOnly formControlName="eleven_boys" name="eleven_boys" type="text">
-                        <label *ngIf="!isIndividualGame" isIndividualGamefor="inputEmail4">11 Boys Min Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control" (blur)="chkZeroVal($event,'minElevenboys')"
-                            [(ngModel)]="minElevenboys" numbersOnly formControlName="minElevenboys" name="eleven_boys"
-                            type="text">
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">11 Boys Max Capacity </label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'eleven_boys')"
+              [(ngModel)]="eleven_boys"
+              numbersOnly
+              formControlName="eleven_boys"
+              name="eleven_boys"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" isIndividualGamefor="inputEmail4"
+              >11 Boys Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minElevenboys')"
+              [(ngModel)]="minElevenboys"
+              numbersOnly
+              formControlName="minElevenboys"
+              name="eleven_boys"
+              type="text"
+            />
 
+            <label for="inputEmail4" class="marginT20"
+              >11 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'eleven_girls')"
+              [(ngModel)]="eleven_girls"
+              numbersOnly
+              formControlName="eleven_girls"
+              name="eleven_girls"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20"
+              >11 Girls Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minElevengirls')"
+              [(ngModel)]="minElevengirls"
+              numbersOnly
+              formControlName="minElevengirls"
+              name="eleven_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">14 Boys Max Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'fourteen_boys')"
+              [(ngModel)]="fourteen_boys"
+              numbersOnly
+              formControlName="fourteen_boys"
+              name="fourteen_boys"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4"
+              >14 Boys Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minfourteenboys')"
+              [(ngModel)]="minfourteenboys"
+              numbersOnly
+              formControlName="minfourteenboys"
+              name="fourteen_boys"
+              type="text"
+            />
+            <label for="inputEmail4" class="marginT20"
+              >14 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'fourteen_girls')"
+              [(ngModel)]="fourteen_girls"
+              numbersOnly
+              formControlName="fourteen_girls"
+              name="fourteen_girls"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20"
+              >14 Girls Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minfourteengirls')"
+              [(ngModel)]="minfourteengirls"
+              numbersOnly
+              formControlName="minfourteengirls"
+              name="fourteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
 
-                        <label for="inputEmail4" class="marginT20">11 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'eleven_girls')"
-                            [(ngModel)]="eleven_girls" numbersOnly formControlName="eleven_girls" name="eleven_girls"
-                            type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20">11 Girls Min
-                            Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control" (blur)="chkZeroVal($event,'minElevengirls')"
-                            [(ngModel)]="minElevengirls" numbersOnly formControlName="minElevengirls"
-                            name="eleven_girls" type="text">
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">17 Boys Max Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'seventeen_boys')"
+              [(ngModel)]="seventeen_boys"
+              numbersOnly
+              formControlName="seventeen_boys"
+              name="seventeen_boys"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4"
+              >17 Boys Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minSeventeenboys')"
+              [(ngModel)]="minSeventeenboys"
+              numbersOnly
+              formControlName="minSeventeenboys"
+              name="seventeen_boys"
+              type="text"
+            />
+            <label for="inputEmail4" class="marginT20"
+              >17 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'seventeen_girls')"
+              [(ngModel)]="seventeen_girls"
+              numbersOnly
+              formControlName="seventeen_girls"
+              name="seventeen_girls"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20"
+              >17 Girls Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minSeventeengirls')"
+              [(ngModel)]="minSeventeengirls"
+              numbersOnly
+              formControlName="minSeventeengirls"
+              name="seventeen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+        <div class="form-group col-md-2">
+          <fieldset>
+            <!-- <legend>Under 19</legend> -->
+            <label for="inputEmail4">19 Boys Max Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'ninteen_boys')"
+              [(ngModel)]="ninteen_boys"
+              numbersOnly
+              formControlName="ninteen_boys"
+              name="ninteen_boys"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4"
+              >19 Boys Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minNinteenboys')"
+              [(ngModel)]="minNinteenboys"
+              numbersOnly
+              formControlName="minNinteenboys"
+              name="fourteen_boys"
+              type="text"
+            />
+            <label for="inputEmail4" class="marginT20"
+              >19 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'ninteen_girls')"
+              [(ngModel)]="ninteen_girls"
+              numbersOnly
+              formControlName="ninteen_girls"
+              name="ninteen_girls"
+              type="text"
+            />
+            <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20"
+              >19 Girls Min Capacity</label
+            >
+            <input
+              *ngIf="!isIndividualGame"
+              class="form-control"
+              (blur)="chkZeroVal($event, 'minNinteengirls')"
+              [(ngModel)]="minNinteengirls"
+              numbersOnly
+              formControlName="minNinteengirls"
+              name="ninteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+      </div>
 
-                    </fieldset>
-                </div>
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">14 Boys Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'fourteen_boys')"
-                            [(ngModel)]="fourteen_boys" numbersOnly formControlName="fourteen_boys" name="fourteen_boys"
-                            type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4">14 Boys Min Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minfourteenboys')" [(ngModel)]="minfourteenboys" numbersOnly
-                            formControlName="minfourteenboys" name="fourteen_boys" type="text">
-                        <label for="inputEmail4" class="marginT20">14 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'fourteen_girls')"
-                            [(ngModel)]="fourteen_girls" numbersOnly formControlName="fourteen_girls"
-                            name="fourteen_girls" type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20">14 Girls Min
-                            Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minfourteengirls')" [(ngModel)]="minfourteengirls" numbersOnly
-                            formControlName="minfourteengirls" name="fourteen_girls" type="text">
-                    </fieldset>
-                </div>
+      <br />
+      <div
+        class="col-md-12 form-row marginT20 align-game"
+        *ngIf="!isTeamGame && gameType !== 'Both'"
+      >
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">9 Boys Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'sixteen_boys')"
+              [(ngModel)]="sixteen_boys"
+              numbersOnly
+              formControlName="sixteen_boys"
+              name="sixteen_boys"
+              type="text"
+            />
 
-                <div class="form-group col-md-2"> 
-                    <fieldset>
-                        <label for="inputEmail4">16 Boys Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'sixteen_boys')"
-                            [(ngModel)]="sixteen_boys" numbersOnly formControlName="sixteen_boys" name="sixteen_boys"
-                            type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4">16 Boys Min Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minsixteenteenboys')" [(ngModel)]="minsixteenteenboys" numbersOnly
-                            formControlName="minsixteenteenboys" name="sixteen_boys" type="text">
-                        <label for="inputEmail4" class="marginT20">16 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'sixteen_girls')"
-                            [(ngModel)]="sixteen_girls" numbersOnly formControlName="sixteen_girls"
-                            name="sixteen_girls" type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20">16 Girls Min
-                            Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minsixteengirls')" [(ngModel)]="minsixteengirls" numbersOnly
-                            formControlName="minsixteengirls" name="sixteen_girls" type="text">
-                    </fieldset>
-                </div>
+            <label for="inputEmail4" class="marginT20">9 Girls Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'sixteen_girls')"
+              [(ngModel)]="sixteen_girls"
+              numbersOnly
+              formControlName="sixteen_girls"
+              name="sixteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">11 Boys Capacity </label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'eleven_boys')"
+              [(ngModel)]="eleven_boys"
+              numbersOnly
+              formControlName="eleven_boys"
+              name="eleven_boys"
+              type="text"
+            />
 
+            <label for="inputEmail4" class="marginT20">11 Girls Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'eleven_girls')"
+              [(ngModel)]="eleven_girls"
+              numbersOnly
+              formControlName="eleven_girls"
+              name="eleven_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">14 Boys Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'fourteen_boys')"
+              [(ngModel)]="fourteen_boys"
+              numbersOnly
+              formControlName="fourteen_boys"
+              name="fourteen_boys"
+              type="text"
+            />
 
+            <label for="inputEmail4" class="marginT20">14 Girls Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'fourteen_girls')"
+              [(ngModel)]="fourteen_girls"
+              numbersOnly
+              formControlName="fourteen_girls"
+              name="fourteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
 
+        <div class="form-group col-md-2">
+          <fieldset>
+            <label for="inputEmail4">17 Boys Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'seventeen_boys')"
+              [(ngModel)]="seventeen_boys"
+              numbersOnly
+              formControlName="seventeen_boys"
+              name="seventeen_boys"
+              type="text"
+            />
 
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">17 Boys Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'seventeen_boys')"
-                            [(ngModel)]="seventeen_boys" numbersOnly formControlName="seventeen_boys"
-                            name="seventeen_boys" type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4">17 Boys Min Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minSeventeenboys')" [(ngModel)]="minSeventeenboys" numbersOnly
-                            formControlName="minSeventeenboys" name="seventeen_boys" type="text">
-                        <label for="inputEmail4" class="marginT20">17 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'seventeen_girls')"
-                            [(ngModel)]="seventeen_girls" numbersOnly formControlName="seventeen_girls"
-                            name="seventeen_girls" type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20">17 Girls Min
-                            Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minSeventeengirls')" [(ngModel)]="minSeventeengirls" numbersOnly
-                            formControlName="minSeventeengirls" name="seventeen_girls" type="text">
-                    </fieldset>
-                </div>
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <!-- <legend>Under 19</legend> -->
-                        <label for="inputEmail4">19 Boys Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'ninteen_boys')"
-                            [(ngModel)]="ninteen_boys" numbersOnly formControlName="ninteen_boys" name="ninteen_boys"
-                            type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4">19 Boys Min Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minNinteenboys')" [(ngModel)]="minNinteenboys" numbersOnly
-                            formControlName="minNinteenboys" name="fourteen_boys" type="text">
-                        <label for="inputEmail4" class="marginT20">19 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'ninteen_girls')"
-                            [(ngModel)]="ninteen_girls" numbersOnly formControlName="ninteen_girls" name="ninteen_girls"
-                            type="text">
-                        <label *ngIf="!isIndividualGame" for="inputEmail4" class="marginT20">19 Girls Min
-                            Capacity</label>
-                        <input *ngIf="!isIndividualGame" class="form-control"
-                            (blur)="chkZeroVal($event,'minNinteengirls')" [(ngModel)]="minNinteengirls" numbersOnly
-                            formControlName="minNinteengirls" name="ninteen_girls" type="text">
-                    </fieldset>
-                </div>
-            </div>
-    
-            <br/>
-            <div class="col-md-12 form-row marginT20 align-game" *ngIf="!isTeamGame && gameType!=='Both'">
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">11 Boys Capacity
-                        </label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'eleven_boys')" [(ngModel)]="eleven_boys"
-                            numbersOnly formControlName="eleven_boys" name="eleven_boys" type="text">
-                      
-                        <label for="inputEmail4" class="marginT20">11 Girls  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'eleven_girls')"
-                            [(ngModel)]="eleven_girls" numbersOnly formControlName="eleven_girls" name="eleven_girls"
-                            type="text">
-                    
+            <label for="inputEmail4" class="marginT20">17 Girls Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'seventeen_girls')"
+              [(ngModel)]="seventeen_girls"
+              numbersOnly
+              formControlName="seventeen_girls"
+              name="seventeen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+        <div class="form-group col-md-2">
+          <fieldset>
+            <!-- <legend>Under 19</legend> -->
+            <label for="inputEmail4">19 Boys Capacity</label>
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'ninteen_boys')"
+              [(ngModel)]="ninteen_boys"
+              numbersOnly
+              formControlName="ninteen_boys"
+              name="ninteen_boys"
+              type="text"
+            />
 
-                    </fieldset>
-                </div>
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">14 Boys  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'fourteen_boys')"
-                            [(ngModel)]="fourteen_boys" numbersOnly formControlName="fourteen_boys" name="fourteen_boys"
-                            type="text">
-                 
-                        <label for="inputEmail4" class="marginT20">14 Girls  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'fourteen_girls')"
-                            [(ngModel)]="fourteen_girls" numbersOnly formControlName="fourteen_girls"
-                            name="fourteen_girls" type="text">
-                     
-                    </fieldset> 
-                </div>
+            <label for="inputEmail4" class="marginT20"
+              >19 Girls Max Capacity</label
+            >
+            <input
+              class="form-control"
+              (blur)="chkZeroVal($event, 'ninteen_girls')"
+              [(ngModel)]="ninteen_girls"
+              numbersOnly
+              formControlName="ninteen_girls"
+              name="ninteen_girls"
+              type="text"
+            />
+          </fieldset>
+        </div>
+      </div>
 
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">16 Boys  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'sixteen_boys')"
-                            [(ngModel)]="sixteen_boys" numbersOnly formControlName="sixteen_boys" name="sixteen_boys"
-                            type="text">
-                 
-                        <label for="inputEmail4" class="marginT20">16 Girls  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'sixteen_girls')"
-                            [(ngModel)]="sixteen_girls" numbersOnly formControlName="sixteen_girls"
-                            name="sixteen_girls" type="text">
-                     
-                    </fieldset>
-                </div>
+      <input
+        id="float-input"
+        formControlName="gameId"
+        [(ngModel)]="gameId"
+        type="hidden"
+        pInputText
+      />
+      <div class="col-md-12 align-button">
+        <button
+          [disabled]="!gameForm.valid"
+          type="button"
+          (click)="onSubmit()"
+          class="btn btn-primary"
+        >
+          Submit
+        </button>
+        <button
+          class="btn btn-primary-outline"
+          type="button"
+          (click)="display = false"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 
+  <p-dataView
+    *ngIf="isGame && !display"
+    #dv
+    paginatorPosition="bottom"
+    [rows]="10"
+    [value]="schoolData"
+    class="no-padding clearBoth"
+    filterBy="gameName,gameType,gameDescription"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    layout="grid"
+  >
+    <p-header>
+      <div class="ui-helper-clearfix">
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">Select Game Type</label>
+          <p-dropdown
+            [(ngModel)]="gameFiletrType"
+            [options]="options"
+            (onChange)="filterGame($event, 1)"
+          ></p-dropdown>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">Search Game</label>
+          <input
+            type="search"
+            pInputText
+            placeholder="Search by Name"
+            (input)="dv.filter($event.target.value)"
+          />
+        </div>
+        <div class="form-group col-md-4 align-add-button">
+          <button
+            type="button"
+            *ngIf="!display"
+            (click)="addNewGame($event, '', 'add')"
+            pButton
+            label="Add New Game"
+          ></button>
+        </div>
+      </div>
 
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <label for="inputEmail4">17 Boys  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'seventeen_boys')"
-                            [(ngModel)]="seventeen_boys" numbersOnly formControlName="seventeen_boys"
-                            name="seventeen_boys" type="text">
-              
-                        <label for="inputEmail4" class="marginT20">17 Girls  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'seventeen_girls')"
-                            [(ngModel)]="seventeen_girls" numbersOnly formControlName="seventeen_girls"
-                            name="seventeen_girls" type="text">
-                         
-                    </fieldset>
-                </div>
-                <div class="form-group col-md-2">
-                    <fieldset>
-                        <!-- <legend>Under 19</legend> -->
-                        <label for="inputEmail4">19 Boys  Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'ninteen_boys')"
-                            [(ngModel)]="ninteen_boys" numbersOnly formControlName="ninteen_boys" name="ninteen_boys"
-                            type="text">
-                
-                        <label for="inputEmail4" class="marginT20">19 Girls Max Capacity</label>
-                        <input class="form-control" (blur)="chkZeroVal($event,'ninteen_girls')"
-                            [(ngModel)]="ninteen_girls" numbersOnly formControlName="ninteen_girls" name="ninteen_girls"
-                            type="text">
-                      
-                    </fieldset>
-                </div>
-            </div>
-
- 
-            
-
-            <input id="float-input" formControlName="gameId" [(ngModel)]="gameId" type="hidden" pInputText>
-            <div class="col-md-12 align-button">
-            <button  [disabled]="!gameForm.valid" type="button"  (click)="onSubmit()" class="btn btn-primary">Submit</button>
-            <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
-            </div>
-        </form>
-
-    </div>
-
-    <p-dataView *ngIf="isGame && !display" #dv paginatorPosition="bottom" [rows]="10" [value]="schoolData"
-        class="no-padding clearBoth" filterBy="gameName,gameType,gameDescription" [sortField]="sortField"
-        [sortOrder]="sortOrder" layout="grid">
-        <p-header>
-
-
-            <div class="ui-helper-clearfix">
-                <div class="form-group col-md-4"> 
-                    <label for="inputEmail4">Select Game Type</label>
-                    <p-dropdown  [(ngModel)]="gameFiletrType" [options]="options" (onChange)="filterGame($event,1)"></p-dropdown>
-                </div>
-               <div class="form-group col-md-4"> 
-                <label for="inputEmail4">Search  Game</label>
-                <input  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-             </div>
-              <div class="form-group col-md-4 align-add-button"> 
-                <button type="button" *ngIf="!display" (click)="addNewGame($event, '','add')" pButton label="Add New Game"></button>
-              </div>
-            </div>
-
-
-
-
-           <!--  <div class="ui-helper-clearfix">
+      <!--  <div class="ui-helper-clearfix">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-12 filter-container">
                         <div>
@@ -309,133 +586,134 @@
                     </div>
                 </div>    
             </div>-->
-        </p-header>
-        <ng-template let-game pTemplate="gridItem" style="word-wrap: break-word;">
-            <div style="padding:.5em" class="ui-g-12 ui-md-6">
-                <div class="item-box">
-                    <div class="item-header1">
-                        <h4 class="ev-name1" title="{{game.name}}">{{game.gameName}}</h4>
-                        <div class="icons-wrap">
-                            <button class="glyphicon glyphicon-edit item-icons" (click)="editGame($event, game,'edit')">
-                            </button>
-                            <button href="#" class="glyphicon glyphicon-trash item-icons"
-                                (click)="deleteSchoolData($event, game)">
-                            </button>
+    </p-header>
+    <ng-template let-game pTemplate="gridItem" style="word-wrap: break-word">
+      <div style="padding: 0.5em" class="ui-g-12 ui-md-6">
+        <div class="item-box">
+          <div class="item-header1">
+            <h4 class="ev-name1" title="{{ game.name }}">
+              {{ game.gameName }}
+            </h4>
+            <div class="icons-wrap">
+              <button
+                class="glyphicon glyphicon-edit item-icons"
+                (click)="editGame($event, game, 'edit')"
+              ></button>
+              <button
+                href="#"
+                class="glyphicon glyphicon-trash item-icons"
+                (click)="deleteSchoolData($event, game)"
+              ></button>
+            </div>
+          </div>
 
-                        </div>
-                    </div>
+          <div class="item-description">
+            <label>Type:</label>
+            <span class="item-value">{{ game.gameType }}</span>
+          </div>
+          <div class="item-description">
+            <label>Description:</label>
+            <div class="item-parent">
+              <div class="item-value" title="{{ game.gameDescription }}">
+                {{ game.gameDescription }}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="game.gameType == 'Individual'">
+            <div class="item-header capacity-header">
+              <div class="align-capacity-header" title="{{ game.name }}">
+                Age Capacity
+              </div>
+            </div>
 
-                    <div class="item-description">
-                        <label>Type:</label>
-                        <span class="item-value">{{game.gameType}}</span>
-                    </div>
-                    <div class="item-description">
-                        <label>Description:</label>
-                        <div class="item-parent">
-                            <div class="item-value" title="{{game.gameDescription}}">{{game.gameDescription}}</div>
-                        </div>
-                    </div>
-                    <div *ngIf="game.gameType == 'Individual'">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">9</th>
+                  <th scope="col">11</th>
+                  <th scope="col">14</th>
+                  <th scope="col">17</th>
+                  <th scope="col">19</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Boys</th>
+                  <td>{{ game.sixteen_boys }}</td>
+                  <td>{{ game.eleven_boys }}</td>
+                  <td>{{ game.fourteen_boys }}</td>
+                  <td>{{ game.seventeen_boys }}</td>
+                  <td>{{ game.ninteen_boys }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Girls</th>
+                  <td>{{ game.sixteen_girls }}</td>
+                  <td>{{ game.eleven_girls }}</td>
+                  <td>{{ game.fourteen_girls }}</td>
+                  <td>{{ game.seventeen_girls }}</td>
+                  <td>{{ game.ninteen_girls }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                        <div class="item-header capacity-header">
-                            <div class="align-capacity-header" title="{{game.name}}">Age Capacity</div>
-                        </div>
+          <div *ngIf="game.gameType == 'Team'">
+            <div class="item-header capacity-header">
+              <div class="align-capacity-header" title="{{ game.name }}">
+                Age Capacity
+              </div>
+            </div>
 
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">11</th>
-                                <th scope="col">14</th>
-                                <th scope="col">16</th>
-                                <th scope="col">17</th>
-                                <th scope="col">19</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Boys</th>
-                                <td>{{game.eleven_boys}}</td>
-                                <td>{{game.fourteen_boys}}</td>
-                                <td>{{game.sixteen_boys}}</td>
-                                <td>{{game.seventeen_boys}}</td>
-                                <td>{{game.ninteen_boys}}</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Girls</th>
-                                <td>{{game.eleven_girls}}</td>
-                                <td>{{game.fourteen_girls}}</td>
-                                <td>{{game.sixteen_girls}}</td>
-                                <td>{{game.seventeen_girls}}</td>
-                                <td>{{game.ninteen_girls}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">9</th>
+                  <th scope="col">11</th>
+                  <th scope="col">14</th>
+                  <th scope="col">17</th>
+                  <th scope="col">19</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Max Boys</th>
+                  <td>{{ game.sixteen_boys }}</td>
+                  <td>{{ game.eleven_boys }}</td>
+                  <td>{{ game.fourteen_boys }}</td>
+                  <td>{{ game.seventeen_boys }}</td>
+                  <td>{{ game.ninteen_boys }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Max Girls</th>
+                  <td>{{ game.sixteen_girls }}</td>
+                  <td>{{ game.eleven_girls }}</td>
+                  <td>{{ game.fourteen_girls }}</td>
+                  <td>{{ game.seventeen_girls }}</td>
+                  <td>{{ game.ninteen_girls }}</td>
+                </tr>
 
+                <tr>
+                  <th scope="row">Min Boys</th>
+                  <td>{{ game.min_sixteen_boys }}</td>
+                  <td>{{ game.min_eleven_boys }}</td>
+                  <td>{{ game.min_fourteen_boys }}</td>
+                  <td>{{ game.min_seventeen_boys }}</td>
+                  <td>{{ game.min_ninteen_boys }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Min Girls</th>
+                  <td>{{ game.min_sixteen_girls }}</td>
+                  <td>{{ game.min_eleven_girls }}</td>
+                  <td>{{ game.min_fourteen_girls }}</td>
+                  <td>{{ game.min_seventeen_girls }}</td>
+                  <td>{{ game.min_ninteen_girls }}</td>
+                </tr>
+              </tbody>
+            </table>
 
-
-
-                    <div *ngIf="game.gameType == 'Team'">
-                        <div class="item-header capacity-header">
-                            <div class="align-capacity-header" title="{{game.name}}">Age Capacity</div>
-                        </div>
-
-
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">11</th>
-                                <th scope="col">14</th>
-                                <th scope="col">16</th>
-                                <th scope="col">17</th>
-                                <th scope="col">19</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Max Boys</th>
-                                <td>{{game.eleven_boys}}</td>
-                                <td>{{game.fourteen_boys}}</td>
-                                <td>{{game.sixteen_boys}}</td>
-                                <td>{{game.seventeen_boys}}</td>
-                                <td>{{game.ninteen_boys}}</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Max Girls</th>
-                                <td>{{game.eleven_girls}}</td>
-                                <td>{{game.fourteen_girls}}</td>
-                                <td>{{game.sixteen_girls}}</td>
-                                <td>{{game.seventeen_girls}}</td>
-                                <td>{{game.ninteen_girls}}</td>
-                              </tr>
-
-                              <tr>
-                                <th scope="row">Min Boys</th>
-                                <td>{{game.min_eleven_boys}}</td>
-                                <td>{{game.min_fourteen_boys}}</td>
-                                <td>{{game.min_sixteen_boys}}</td>
-                                <td>{{game.min_seventeen_boys}}</td>
-                                <td>{{game.min_ninteen_boys}}</td>
-                              </tr> 
-                              <tr>
-                                <th scope="row">Min Girls</th>
-                                <td>{{game.min_eleven_girls}}</td>
-                                <td>{{game.min_fourteen_girls}}</td>
-                                <td>{{game.min_sixteen_girls}}</td>
-                                <td>{{game.min_seventeen_girls}}</td>
-                                <td>{{game.min_ninteen_girls}}</td>
-                              </tr>
-
-                            </tbody>
-                          </table>
-
-
-
-
-
-                        <!-- <div class="item-description">
+            <!-- <div class="item-description">
                             <div>
                                 <label>Max Eleven Boys:</label>
                                 <span class="item-value">{{game.eleven_boys}}</span>
@@ -516,27 +794,45 @@
                                 </div>
                             </div>
                         </div> -->
-                    </div>
-
-
-
-
-                </div>
-            </div>
-
-        </ng-template>
-    </p-dataView>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
 </div>
-<p-confirmDialog key="confirm-delete-school" header="Delete Game data" acceptLabel="Yes" rejectLabel="No"
-    [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>
-<p-dialog header="Add New School" [(visible)]="displayDialog" showEffect="fade" [modal]="true" [responsive]="true"
-    [maximizable]="true" [baseZIndex]="10000">
-    <h5>Edit school</h5>
-    <p-footer>
-
-        <button type="button" [disabled]="!gameForm.valid" (onClick)="onSubmit()" pButton label="Submit"></button>
-        <!-- <p-button icon="pi pi-check" [disabled]="!gameForm.valid" label="Submit" (onClick)="onSubmit()"></p-button> -->
-        <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No"
-            class="ui-button-secondary"></button>
-    </p-footer>
+<p-confirmDialog
+  key="confirm-delete-school"
+  header="Delete Game data"
+  acceptLabel="Yes"
+  rejectLabel="No"
+  [(visible)]="confirmDropDatabaseDialogVisible"
+></p-confirmDialog>
+<p-dialog
+  header="Add New School"
+  [(visible)]="displayDialog"
+  showEffect="fade"
+  [modal]="true"
+  [responsive]="true"
+  [maximizable]="true"
+  [baseZIndex]="10000"
+>
+  <h5>Edit school</h5>
+  <p-footer>
+    <button
+      type="button"
+      [disabled]="!gameForm.valid"
+      (onClick)="onSubmit()"
+      pButton
+      label="Submit"
+    ></button>
+    <!-- <p-button icon="pi pi-check" [disabled]="!gameForm.valid" label="Submit" (onClick)="onSubmit()"></p-button> -->
+    <button
+      type="button"
+      pButton
+      icon="pi pi-close"
+      (click)="display = false"
+      label="No"
+      class="ui-button-secondary"
+    ></button>
+  </p-footer>
 </p-dialog>

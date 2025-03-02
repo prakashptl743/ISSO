@@ -585,7 +585,7 @@ export class SgfiEntryComponent implements OnInit {
       studentBonafide: new FormControl("", [Validators.required]),
       lastYearmarkSheet: new FormControl("", [Validators.required]),
       birthCertificate: new FormControl("", [Validators.required]),
-      headMasterSign: new FormControl("", [Validators.required]),
+      //  headMasterSign: new FormControl("", [Validators.required]),
       studentPhoto: new FormControl("", [Validators.required]),
     });
 
@@ -700,10 +700,6 @@ export class SgfiEntryComponent implements OnInit {
             studentData.studentSign == null
               ? "N/A"
               : this.baseUrl + "upload/sgfi/" + studentData.studentSign,
-          headMastSign:
-            studentData.headMasterSign == null
-              ? "N/A"
-              : this.baseUrl + "upload/sgfi/" + studentData.headMasterSign,
         });
       } else {
         this.docButtonVal = "Save Changes";
@@ -902,17 +898,17 @@ export class SgfiEntryComponent implements OnInit {
       );
       this.isEditFileUpload = true;
     }
-    if (
-      this.sgfiFileEnrollForm.get("headMasterSign").value !== "" &&
-      this.sgfiFileEnrollForm.get("headMasterSign").value !== null
-    ) {
-      formData.append(
-        "headMasterSign",
-        this.sgfiFileEnrollForm.get("headMasterSign").value,
-        this.headMasterSignFileName
-      );
-      this.isEditFileUpload = true;
-    }
+    // if (
+    //   this.sgfiFileEnrollForm.get("headMasterSign").value !== "" &&
+    //   this.sgfiFileEnrollForm.get("headMasterSign").value !== null
+    // ) {
+    //   formData.append(
+    //     "headMasterSign",
+    //     this.sgfiFileEnrollForm.get("headMasterSign").value,
+    //     this.headMasterSignFileName
+    //   );
+    //   this.isEditFileUpload = true;
+    // }
     if (
       this.sgfiFileEnrollForm.get("studentPhoto").value !== "" &&
       this.sgfiFileEnrollForm.get("studentPhoto").value !== null
@@ -990,11 +986,11 @@ export class SgfiEntryComponent implements OnInit {
       this.sgfiFileEnrollForm.get("birthCertificate").value,
       this.birthCertificateFileName
     );
-    formData.append(
-      "headMasterSign",
-      this.sgfiFileEnrollForm.get("headMasterSign").value,
-      this.headMasterSignFileName
-    );
+    // formData.append(
+    //   "headMasterSign",
+    //   this.sgfiFileEnrollForm.get("headMasterSign").value,
+    //   this.headMasterSignFileName
+    // );
     formData.append(
       "studentPhoto",
       this.sgfiFileEnrollForm.get("studentPhoto").value,
@@ -1079,7 +1075,7 @@ export class SgfiEntryComponent implements OnInit {
     this.studentBonafideInput.nativeElement.value = "";
     this.studentmarksheetInput.nativeElement.value = "";
     this.studentBirthCertificateInput.nativeElement.value = "";
-    this.headmasterSignInput.nativeElement.value = "";
+    //   this.headmasterSignInput.nativeElement.value = "";
     this.studentPhotoInput.nativeElement.value = "";
   }
   onFormSubmit() {

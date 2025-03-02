@@ -1,0 +1,151 @@
+<app-loading *ngIf="showspinner"></app-loading>
+<div class="align-table">
+  <button
+    class="align-event-button btn btn-danger-small active-state"
+    type="button"
+    (click)="addNewEvent()"
+  >
+    ADD NEW
+  </button>
+
+  <p-dialog
+    header="Event Active/Inactive"
+    [(visible)]="display"
+    [modal]="true"
+    [responsive]="true"
+    [width]="800"
+    [contentStyle]="{ height: '300px', overflow: 'auto' }"
+    [baseZIndex]="10000"
+  >
+    <div class="custom-dialog">
+      <div class="col-md-12 align-event-dropdown">
+        <label for="inputEmail4">Select Event</label>
+        <p-dropdown
+          [(ngModel)]="selectedEvent"
+          [options]="eventOptions"
+          placeholder="Select Event"
+          (onChange)="onEventChange($event)"
+          [style]="{ 'min-width': '140px' }"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-md-12 p-0">
+        <div class="col-md-6">
+          <label for="inputEmail4">Select School</label>
+          <p-autoComplete
+            [(ngModel)]="schoolName"
+            [style]="{ width: '100%' }"
+            class="p-autocomplete"
+            [suggestions]="filteredPages"
+            (completeMethod)="filterPages($event)"
+            field="text"
+            placeholder="Enter school Name"
+            emptyMessage="School Not found"
+            [minLength]="1"
+            (onSelect)="onSchoolSelect($event)"
+          >
+            <ng-template let-brand pTemplate="item">
+              <div
+                class="ui-helper-clearfix"
+                style="border-bottom: 1px solid #d5d5d5"
+              >
+                <div style="font-size: 14px; float: left; margin: 10px">
+                  {{ brand.text }}
+                </div>
+                <br />
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Active Till Date</label>
+          <p-calendar
+            [(ngModel)]="selectedEventDate"
+            (onSelect)="changeEndDate($event)"
+            dateFormat="dd/mm/yy"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            [monthNavigator]="true"
+            [minDate]="minDate"
+          ></p-calendar>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <p-button
+        [disabled]="
+          !(eventId && selectedSchoolVal && changeDateVal && selectedEventDate)
+        "
+        (click)="display = false"
+        (click)="onSubmitEvent()"
+        label="Save"
+      ></p-button>
+    </p-footer>
+  </p-dialog>
+
+  <table class="table" *ngIf="showTable">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>Event Name</th>
+        <th>School Name</th>
+        <th>Active Date</th>
+        <th>Event Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of activeEventInfo; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ event.eventName }}</td>
+        <td>{{ event.schoolName }}</td>
+        <td>{{ event.activetillDate | date : "d MMMM , y" }}</td>
+        <td *ngIf="event.status == 0">
+          <span class="item-value"
+            ><button
+              class="btn btn-danger-small pendig-state"
+              type="button"
+              (click)="changeEventStatus(event.eventId, event.status)"
+            >
+              Inactive
+            </button></span
+          >
+        </td>
+        <td *ngIf="event.status == 1">
+          <span class="item-value"
+            ><button
+              class="btn btn-danger-small active-state"
+              type="button"
+              (click)="changeEventStatus(event.eventId, event.schoolId)"
+            >
+              Active
+            </button></span
+          >
+        </td>
+        <td>
+          <span class="item-value"
+            ><button
+              class="btn btn-danger"
+              type="button"
+              (click)="deleteEventStatus(event.eventId, event.schoolId)"
+            >
+              Delete
+            </button></span
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
+<p-confirmDialog
+  key="confirm-delete-event"
+  header="Delete event data"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>
