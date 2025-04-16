@@ -25,6 +25,7 @@
             [(ngModel)]="subgame_name"
             formControlName="gameName"
             placeholder="Enter sub game name"
+            (blur)="chekDuplicateGame($event)"
             name="gameName"
             type="text"
             required

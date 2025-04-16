@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import {InputTextModule} from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import { NgModule } from "@angular/core";
+import { CommonModule, DatePipe } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
+import { InputTextModule } from "primeng/inputtext";
+import { FormsModule } from "@angular/forms";
+import { AutoCompleteModule } from "primeng/autocomplete";
 
-import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './login/login.component';
-import { SchoolRegistrationComponent } from './school-registration/school-registration.component';
-import { PrimengModule } from '../primeng-module';
-import { StudentCertificateComponent } from './student-certificate/student-certificate.component';
-import { IsfSchoolComponent } from './isf-school/isf-school.component';
+import { AuthRoutingModule } from "./auth-routing.module";
+import { LoginComponent } from "./login/login.component";
+import { SchoolRegistrationComponent } from "./school-registration/school-registration.component";
+import { PrimengModule } from "../primeng-module";
+import { StudentCertificateComponent } from "./student-certificate/student-certificate.component";
+import { IsfSchoolComponent } from "./isf-school/isf-school.component";
+import { StudentRegistrationComponent } from "./student-registration/student-registration.component";
 
 @NgModule({
   imports: [
@@ -20,10 +21,15 @@ import { IsfSchoolComponent } from './isf-school/isf-school.component';
     InputTextModule,
     FormsModule,
     PrimengModule,
-    AutoCompleteModule
-    
+    AutoCompleteModule,
   ],
- 
-  declarations: [LoginComponent,SchoolRegistrationComponent,StudentCertificateComponent,IsfSchoolComponent]
+
+  declarations: [
+    LoginComponent,
+    SchoolRegistrationComponent,
+    StudentCertificateComponent,
+    StudentRegistrationComponent,
+    IsfSchoolComponent,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}
