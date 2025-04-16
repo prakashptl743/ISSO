@@ -254,6 +254,27 @@ export class IssoUtilService {
     ];
     return this.genderOptions;
   }
+  setMapGender(genderType: String) {
+    if (genderType === "boy") {
+      this.genderOptions = [
+        { label: "Select Gender", value: "" },
+        { label: "Boys", value: "1" },
+      ];
+    } else if (genderType === "girl") {
+      this.genderOptions = [
+        { label: "Select Gender", value: "" },
+        { label: "Girls", value: "2" },
+      ];
+    } else {
+      this.genderOptions = [
+        { label: "Select Gender", value: "" },
+        { label: "Boys", value: "1" },
+        { label: "Girls", value: "2" },
+      ];
+    }
+
+    return this.genderOptions;
+  }
   setDateOfBirthValidation_bk(ageRange) {
     var date = new Date();
     var newdate = new Date(date);

@@ -54,6 +54,7 @@
             [(ngModel)]="gameName"
             formControlName="gameName"
             name="gameName"
+            (blur)="chekDuplicateGame($event)"
             type="text"
             required
           />
@@ -557,35 +558,6 @@
           ></button>
         </div>
       </div>
-
-      <!--  <div class="ui-helper-clearfix">
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-12 filter-container">
-                        <div>
-
-                            <div class="form-group col-md-6">
-                                <label for="inputPassword4">Game Type</label>
-                                <p-dropdown [disabled]="isBothGameReadble" [(ngModel)]="gameFiletrType" [options]="options"
-                                    (onChange)="filterGame($event)"></p-dropdown>
-                            </div>
-
-                            <input class="search-text" type="search" pInputText placeholder="Search by Name"
-                                (input)="dv.filter($event.target.value)">
-                            <div style="float: right;">
-                                <button type="button" *ngIf="!display" (click)="addNewGame($event, '','add')" pButton
-                                     label="Add New Game"></button>
-                            </div>
-                        </div> 
-
-                       
-                        <div *ngIf="!isSubGame">
-                            <div style="float: right;">
-                              <button class="btn btn-primary-small float-right" *ngIf="display" (click)="hideExtraView()">Back</button>
-                           </div>
-                         </div>  
-                    </div>
-                </div>    
-            </div>-->
     </p-header>
     <ng-template let-game pTemplate="gridItem" style="word-wrap: break-word">
       <div style="padding: 0.5em" class="ui-g-12 ui-md-6">
@@ -712,88 +684,6 @@
                 </tr>
               </tbody>
             </table>
-
-            <!-- <div class="item-description">
-                            <div>
-                                <label>Max Eleven Boys:</label>
-                                <span class="item-value">{{game.eleven_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Max Eleven Girls:</label>
-                                    <span class="item-value">{{game.eleven_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Min Eleven Girls:</label>
-                                <span class="item-value">{{game.min_eleven_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Min Eleven Girls:</label>
-                                    <span class="item-value">{{game.min_eleven_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item-description">
-                            <div>
-                                <label>Max Fourteen Boys:</label>
-                                <span class="item-value">{{game.fourteen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Max Fourteen Girls:</label>
-                                    <span class="item-value">{{game.fourteen_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Min Fourteen Boys:</label>
-                                <span class="item-value">{{game.min_fourteen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Min Fourteen Girls:</label>
-                                    <span class="item-value">{{game.min_fourteen_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Max Seventeen Boys:</label>
-                                <span class="item-value">{{game.seventeen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Min Seventeen Girls:</label>
-                                    <span class="item-value">{{game.seventeen_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Min Seventeen Boys:</label>
-                                <span class="item-value">{{game.min_seventeen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Min Seventeen Girls:</label>
-                                    <span class="item-value">{{game.min_seventeen_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Max Ninteen Boys:</label>
-                                <span class="item-value">{{game.ninteen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Max Ninteen Girls:</label>
-                                    <span class="item-value">{{game.ninteen_girls}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-description">
-                            <div>
-                                <label>Min Ninteen Boys:</label>
-                                <span class="item-value">{{game.min_ninteen_boys}}</span>
-                                <div class="item_label">
-                                    <label class="item_label-width">Min Ninteen Girls:</label>
-                                    <span class="item-value">{{game.min_ninteen_girls}}</span>
-                                </div>
-                            </div>
-                        </div> -->
           </div>
         </div>
       </div>
