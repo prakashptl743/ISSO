@@ -22,6 +22,7 @@ import { IssoUtilService } from "../../services/isso-util.service";
 export class EventComponent implements OnInit {
   text2: string;
   zoneOptions: SelectItem[];
+  yesNoOptions: SelectItem[];
   options: SelectItem[];
   checked1: boolean = true;
   es: any;
@@ -62,13 +63,17 @@ export class EventComponent implements OnInit {
   manageReport: boolean;
   zoneValue: any;
   isReadonly = true;
+  isExtraTabRequired: boolean = false;
   //eventZoneVal: [];
 
   public form: FormGroup;
   eventZoneVal: any[];
   eventType: string;
+  extraTabRequired: string;
   teamEventReport: boolean;
   makeActiveEvent: boolean;
+  schoolYearRange: string;
+
   //eventZoneVal: void;
   // eventZoneVal: string;
   constructor(
@@ -78,11 +83,7 @@ export class EventComponent implements OnInit {
     private messageService: MessageService,
     private issoUtilService: IssoUtilService,
     private fb: FormBuilder
-  ) {
-    setTimeout(() => {
-      this.disable = true;
-    }, 5000);
-  }
+  ) {}
 
   ngOnInit() {
     this.minDate = new Date();
@@ -95,6 +96,24 @@ export class EventComponent implements OnInit {
   }
   loadInitialData() {
     this.yearOptions = this.issoUtilService.setYear();
+    ``;
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1; // getMonth() is zero-based
+
+    let startYear: number;
+    let endYear: number;
+
+    if (currentMonth >= 6) {
+      // June or later: school year is current year - next year
+      startYear = today.getFullYear();
+      endYear = startYear + 1;
+    } else {
+      // Before June: school year is previous year - current year
+      endYear = today.getFullYear();
+      startYear = endYear - 1;
+    }
+
+    this.schoolYearRange = `${startYear}:${endYear}`;
   }
   resetform() {
     console.log("Im reset");
@@ -124,6 +143,13 @@ export class EventComponent implements OnInit {
         //this.errorAlert =true;
       }
     );
+  }
+  onTabChange(event) {
+    if (event.value === "Yes") {
+      this.isExtraTabRequired = true;
+    } else {
+      this.isExtraTabRequired = false;
+    }
   }
   seCurrenttDate() {
     const now = new Date();
@@ -248,13 +274,17 @@ export class EventComponent implements OnInit {
       eventNote: ["", Validators.required],
       certificateHeaderContent: ["", Validators.required],
       certificateMainContent: ["", Validators.required],
+      extraTabRequired: [""],
+      extraTabValues: [""],
     });
     this.options = [
       { label: "Please select", value: "" },
       { label: "International", value: "International" },
       { label: "Domestic", value: "Domestic" },
     ];
+    this.yesNoOptions = this.issoUtilService.setYesNo();
     this.control = new FormControl(this.options[2].value);
+    this.extraTabRequired == "1";
   }
   showDialog() {
     this.display = true;
@@ -368,12 +398,15 @@ export class EventComponent implements OnInit {
         eventNote: eventInfo.note,
         certificateHeaderContent: eventInfo.certifiacteHeaderContent,
         certificateMainContent: eventInfo.certifiacteMainContent,
+        extraTabRequired: eventInfo.extraTabRequired,
+        extraTabValues: eventInfo.extraTabValues,
       });
       this.subViewTitle = "Edit Event";
     } else {
       //if (eventInfo.startDate > this.today) {
       this.isReadonly = false;
       // }
+
       this.eventForm.setValue({
         eventId: "",
         eventName: "",
@@ -385,8 +418,12 @@ export class EventComponent implements OnInit {
         eventLocation: " ",
         eventDesc: " ",
         eventNote: "",
-        certificateHeaderContent: "ISSO NATIONAL GAMES  2023-24",
-        certificateMainContent: "ISSO NATIONAL GAMES  2023-24",
+        certificateHeaderContent:
+          "ISSO NATIONAL GAMES " + this.issoUtilService.getAcademicYear(),
+        certificateMainContent:
+          "ISSO NATIONAL GAMES " + this.issoUtilService.getAcademicYear(),
+        extraTabRequired: "1",
+        extraTabValues: "",
       });
     }
     this.display = true;
@@ -471,7 +508,14 @@ export class EventComponent implements OnInit {
       "certificateMainContent",
       this.eventForm.get("certificateMainContent").value
     );
-
+    formData.append(
+      "extraTabRequired",
+      this.eventForm.get("extraTabRequired").value
+    );
+    formData.append(
+      "extraTabValues",
+      this.eventForm.get("extraTabValues").value
+    );
     if (eventId == "") {
       this.eventService.saveEventData(formData).subscribe(
         (res) => {

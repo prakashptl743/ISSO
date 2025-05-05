@@ -1,56 +1,56 @@
 <style>
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-body {
+  @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+  body {
     background: #fafafa;
-}
+  }
 
-p {
+  p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
-}
+  }
 
-a,
-a:hover,
-a:focus {
+  a,
+  a:hover,
+  a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
-}
+  }
 
-.navbar {
+  .navbar {
     padding: 15px 10px;
     background: #fff;
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
+  }
 
-.navbar-btn {
+  .navbar-btn {
     box-shadow: none;
     outline: none !important;
     border: none;
-}
+  }
 
-.line {
+  .line {
     width: 100%;
     height: 1px;
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
-}
+  }
 
-/* ---------------------------------------------------
+  /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
-.wrapper {
+  .wrapper {
     /* display: flex; */
     width: 100%;
-}
+  }
 
-#sidebar {
+  #sidebar {
     width: 200px;
     position: fixed;
     top: 50px;
@@ -60,114 +60,112 @@ a:focus {
     background: #333437;
     color: #fff;
     transition: all 0.3s;
-}
+  }
 
-#sidebar.active {
+  #sidebar.active {
     margin-left: -250px;
     display: block;
-}
+  }
 
-#sidebar .sidebar-header {
+  #sidebar .sidebar-header {
     padding: 20px;
     background: #6d7fcc;
-}
+  }
 
-/* #sidebar ul.components {
+  /* #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
 } */
 
-#sidebar ul p {
+  #sidebar ul p {
     color: #fff;
     padding: 10px;
-}
+  }
 
-#sidebar ul li a {
+  #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
-}
+  }
 
-#sidebar ul li a:hover {
-    color: #F7B781;
-   
-}
+  #sidebar ul li a:hover {
+    color: #f7b781;
+  }
 
-#sidebar ul li a:hover #ic_perm_contact_calendar_24px, 
-#sidebar ul li a:hover #ic_account_balance_24px,
-#sidebar ul li a:hover #ic_account_balance_wallet_24px,
-#sidebar ul li a:hover #ic_date_range_24px,
-#sidebar ul li a:hover #ic_library_books_24px,
-#sidebar ul li a:hover #ic_line_style_24px,
-#sidebar ul li a:hover #ic_pan_tool_24px,
-#sidebar ul li a:hover #Subtraction_4
-{
-    fill: #F7B781;
-}
+  #sidebar ul li a:hover #ic_perm_contact_calendar_24px,
+  #sidebar ul li a:hover #ic_account_balance_24px,
+  #sidebar ul li a:hover #ic_account_balance_wallet_24px,
+  #sidebar ul li a:hover #ic_date_range_24px,
+  #sidebar ul li a:hover #ic_library_books_24px,
+  #sidebar ul li a:hover #ic_line_style_24px,
+  #sidebar ul li a:hover #ic_pan_tool_24px,
+  #sidebar ul li a:hover #Subtraction_4 {
+    fill: #f7b781;
+  }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #F7B781;
-}
+  #sidebar ul li.active > a,
+  a[aria-expanded="true"] {
+    color: #f7b781;
+  }
 
-a[data-toggle="collapse"] {
+  a[data-toggle="collapse"] {
     position: relative;
-}
+  }
 
-.dropdown-toggle::after {
+  .dropdown-toggle::after {
     display: block;
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
-}
+  }
 
-ul ul a {
+  ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #6d7fcc;
-}
+  }
 
-ul.CTAs {
+  ul.CTAs {
     padding: 20px;
-}
+  }
 
-ul.CTAs a {
+  ul.CTAs a {
     text-align: center;
     font-size: 0.9em !important;
     display: block;
     border-radius: 5px;
     margin-bottom: 5px;
-}
+  }
 
-a.download {
+  a.download {
     background: #fff;
-    color: #7386D5;
-}
+    color: #7386d5;
+  }
 
-a.article,
-a.article:hover {
+  a.article,
+  a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
-}
+  }
 
-/* ---------------------------------------------------
+  /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#content {
+  #content {
     width: calc(100% - 180px);
     padding: 40px 20px 40px 40px;
     min-height: 100vh;
     transition: all 0.3s;
     margin-left: 180px;
-}
+  }
 
-#content.active {
+  #content.active {
     width: 100%;
-}
+  }
 
-#sidebarCollapse  {
+  #sidebarCollapse {
     position: fixed;
     background: #333437;
     border: 1px solid #333437;
@@ -175,273 +173,392 @@ a.article:hover {
     width: 45px;
     right: 0;
     top: 74px;
-    }
-.align-lhn{
-   margin-top: 50px;
-}
-.navbar{
+  }
+  .align-lhn {
+    margin-top: 50px;
+  }
+  .navbar {
     display: none;
-}
-.school-header1{
+  }
+  .school-header1 {
     display: none;
-}
-/* ---------------------------------------------------
+  }
+  /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 767px) {
+  @media (max-width: 767px) {
     #sidebar {
-        display: none;
+      display: none;
     }
     #sidebar.active {
-        margin-left: 0;
+      margin-left: 0;
     }
-   #content {
-        width: 100%;
-        margin-left: 0;
-        padding: 15px;
+    #content {
+      width: 100%;
+      margin-left: 0;
+      padding: 15px;
     }
     #content.active {
-        width: calc(100% - 180px);
+      width: calc(100% - 180px);
     }
-    .align-lhn{
-    margin-top: 20px;
+    .align-lhn {
+      margin-top: 20px;
     }
-    .navbar{
-        top: 50px;
-    padding: 0 10px;
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    display: block;
-    position: fixed;
-    z-index: 999;
-
+    .navbar {
+      top: 50px;
+      padding: 0 10px;
+      background: #fff;
+      border: none;
+      border-radius: 0;
+      margin-bottom: 40px;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      display: block;
+      position: fixed;
+      z-index: 999;
     }
     /* .event-container {
     margin-top: 30px;
 } */
-.school-header{
-    display: none;
-}
-.school-header1{
-    display: block;
-    color: #000;
-    padding-top: 15px;
-}
-.navbar-inverse .navbar-toggle .icon-bar {
-    background-color: #000!important;
-
-}
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color: #101010;
-    position: absolute;
-    left: 0;
-    top: 50px;
-    z-index: 999;
-    background: #333437;
-    color: #fff;
-    transition: all 0.3s;
-}
-.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
-    background-color: #fff!important;
-}
-.navbar-collapse ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-    border-bottom: 1px solid #515151;
-    box-shadow: 4px 1px 2px #00000029;
-}   
-.navbar-collapse ul li a.active, a[aria-expanded="true"] {
-    color: #F7B781;
-}
-}
+    .school-header {
+      display: none;
+    }
+    .school-header1 {
+      display: block;
+      color: #000;
+      padding-top: 15px;
+    }
+    .navbar-inverse .navbar-toggle .icon-bar {
+      background-color: #000 !important;
+    }
+    .navbar-inverse .navbar-collapse,
+    .navbar-inverse .navbar-form {
+      border-color: #101010;
+      position: absolute;
+      left: 0;
+      top: 50px;
+      z-index: 999;
+      background: #333437;
+      color: #fff;
+      transition: all 0.3s;
+    }
+    .navbar-inverse .navbar-toggle:focus,
+    .navbar-inverse .navbar-toggle:hover {
+      background-color: #fff !important;
+    }
+    .navbar-collapse ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+      border-bottom: 1px solid #515151;
+      box-shadow: 4px 1px 2px #00000029;
+    }
+    .navbar-collapse ul li a.active,
+    a[aria-expanded="true"] {
+      color: #f7b781;
+    }
+  }
 </style>
-    
+
 <div class="wrapper">
-    <header class="isso-header">
-        <div class="row">
-              <!--
+  <header class="isso-header">
+    <div class="row">
+      <!--
         Mobile menu only
      -->
-    <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">
+      <!-- <button type="button" id="sidebarCollapse" class="btn btn-info">
         <i class="fas fa-align-left"></i>
         
     </button>   -->
-        <div class="col-md-7 text-center"><img class="align-logo" src="assets/images/web/logo_retina.png"> </div>
-        <div class="col-md-5 text-right usertitle">Welcome {{schoolName}}<img class="logged-logo" src="assets/images/web/logo_retina.png"></div>
-        </div>
-    </header>
+      <div class="col-md-7 text-center">
+        <img class="align-logo" src="assets/images/web/logo_retina.png" />
+      </div>
+      <div class="col-md-5 text-right usertitle">
+        Welcome {{ schoolName
+        }}<img class="logged-logo" src="assets/images/web/logo_retina.png" />
+      </div>
+    </div>
+  </header>
 
-   <nav class="navbar navbar-inverse navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header"> <!-- Controls the Heading portion of the nav -->
-          <button id="navButton" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="school-header school-header1">{{schoolName}}</span>
-        </div>
-    
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <nav class="navbar navbar-inverse navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <!-- Controls the Heading portion of the nav -->
+      <button
+        id="navButton"
+        type="button"
+        class="navbar-toggle"
+        data-toggle="collapse"
+        data-target="#bs-example-navbar-collapse-1"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="school-header school-header1">{{ schoolName }}</span>
+    </div>
 
-            <ul class="list-unstyled components mobile-list" > 
-            
-                <!-- <p class="school-name">{{schoolName}}</p> -->
-                <li class="align-lhn nav-item">
-                    <a (click)="closeMenu()" class="link-color" routerLink="./event-dashboard" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="15.522" height="17.247" viewBox="0 0 15.522 17.247">
-                        <path id="ic_date_range_24px" d="M8.174,9.761H6.449v1.725H8.174Zm3.449,0H9.9v1.725h1.725Zm3.449,0H13.348v1.725h1.725ZM16.8,3.725h-.862V2H14.211V3.725h-6.9V2H5.587V3.725H4.725A1.717,1.717,0,0,0,3.009,5.449L3,17.522a1.724,1.724,0,0,0,1.725,1.725H16.8a1.73,1.73,0,0,0,1.725-1.725V5.449A1.73,1.73,0,0,0,16.8,3.725Zm0,13.8H4.725V8.037H16.8Z" transform="translate(-3 -2)" fill="#bbbebf"/>
-                      </svg>  <span class="left-link">Event Dashboard</span></a>
-                </li>
-                <li class="nav-item">
-                    <a (click)="closeMenu()" routerLink="./student-dashboard" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="18.267" height="15.044" viewBox="0 0 18.267 15.044">
-                        <path id="Subtraction_4" data-name="Subtraction 4" d="M-7173.56,8879.043h-14.614a1.857,1.857,0,0,1-1.827-1.881v-11.281a1.857,1.857,0,0,1,1.827-1.882h14.614a1.856,1.856,0,0,1,1.826,1.882v11.281A1.856,1.856,0,0,1-7173.56,8879.043Zm-3.653-3.762v1.881h3.653v-1.881Zm-10.961,0v1.881h9.133v-1.881Zm5.48-3.76v1.881h9.134v-1.881Zm-5.48,0v1.881h3.653v-1.881Zm1.889-5.342a2.1,2.1,0,0,0-2.068,2.13,2.1,2.1,0,0,0,2.068,2.13,2.1,2.1,0,0,0,2.069-2.13A2.1,2.1,0,0,0-7186.285,8866.18Zm0,3.662a1.479,1.479,0,0,1-1.242-.686c.007-.425.824-.656,1.242-.656s1.234.231,1.241.656A1.479,1.479,0,0,1-7186.285,8869.842Zm0-1.744a.631.631,0,0,1-.621-.64.63.63,0,0,1,.621-.639.63.63,0,0,1,.621.639A.631.631,0,0,1-7186.285,8868.1Z" transform="translate(7190 -8863.999)" fill="#bbbebf"/>
-                      </svg><span class="left-link">Student Dashboard</span></a>
-                </li>
-                <li class="nav-item">
-                    <a (click)="closeMenu()" routerLink="./coach-entires" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="14.518" height="16.131" viewBox="0 0 14.518 16.131">
-                        <path id="ic_perm_contact_calendar_24px" d="M15.9,2.613H15.1V1H13.485V2.613H7.033V1H5.42V2.613H4.613A1.613,1.613,0,0,0,3,4.226V15.518a1.613,1.613,0,0,0,1.613,1.613H15.9a1.618,1.618,0,0,0,1.613-1.613V4.226A1.618,1.618,0,0,0,15.9,2.613Zm-5.646,2.42a2.42,2.42,0,1,1-2.42,2.42A2.416,2.416,0,0,1,10.259,5.033ZM15.1,14.711H5.42V13.9c0-1.613,3.226-2.5,4.839-2.5s4.839.887,4.839,2.5Z" transform="translate(-3 -1)" fill="#bbbebf"/>
-                      </svg><span class="left-link">Coach Entries</span></a>
-                </li>
-                <li class="nav-item">
-                    <a (click)="closeMenu()" routerLink="./report" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="16.089" height="14.302" viewBox="0 0 16.089 14.302">
-                        <path id="ic_line_style_24px" d="M3,14.726H7.469V12.939H3Zm5.81,0h4.469V12.939H8.81Zm5.81,0h4.469V12.939H14.62ZM3,18.3H4.788V16.514H3Zm3.575,0H8.363V16.514H6.575Zm3.575,0h1.788V16.514H10.151Zm3.575,0h1.788V16.514H13.726Zm3.575,0h1.788V16.514H17.3ZM3,11.151h7.151V9.363H3Zm8.939,0h7.151V9.363H11.939ZM3,4V7.575H19.089V4Z" transform="translate(-3 -4)" fill="#bbbebf"/>
-                      </svg><span class="left-link">Report</span></a>
-                </li> 
-                <li class="nav-item">
-                    <a (click)="closeMenu()" routerLink="./certificate-invoice" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="16.928" height="16.928" viewBox="0 0 16.928 16.928">
-                        <path id="ic_library_books_24px" d="M3.693,5.386H2v11.85a1.7,1.7,0,0,0,1.693,1.693h11.85V17.235H3.693ZM17.235,2H7.078A1.7,1.7,0,0,0,5.386,3.693V13.85a1.7,1.7,0,0,0,1.693,1.693H17.235a1.7,1.7,0,0,0,1.693-1.693V3.693A1.7,1.7,0,0,0,17.235,2Zm-.846,7.618H7.925V7.925h8.464ZM13,13H7.925V11.311H13Zm3.386-6.771H7.925V4.539h8.464Z" transform="translate(-2 -2)" fill="#bbbebf"/>
-                      </svg><span class="left-link">Certificate/Invoice</span></a>
-                </li>
-                <li class="nav-item">
-                    <a (click)="closeMenu()" routerLink="./pay-now" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="16.889" height="16" viewBox="0 0 16.889 16">
-                        <path id="ic_account_balance_wallet_24px" d="M19,16.333v.889A1.783,1.783,0,0,1,17.222,19H4.778A1.777,1.777,0,0,1,3,17.222V4.778A1.777,1.777,0,0,1,4.778,3H17.222A1.783,1.783,0,0,1,19,4.778v.889H11A1.777,1.777,0,0,0,9.222,7.444v7.111A1.777,1.777,0,0,0,11,16.333Zm-8-1.778h8.889V7.444H11Zm3.556-2.222A1.333,1.333,0,1,1,15.889,11,1.332,1.332,0,0,1,14.556,12.333Z" transform="translate(-3 -3)" fill="#bbbebf"/>
-                      </svg> <span class="left-link">Pay Now</span></a>
-                </li>
-                <li>
-                    <a (click)="closeMenu()"  routerLink="./my-profile" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="16.85" height="18.623" viewBox="0 0 16.85 18.623">
-                        <path id="ic_account_balance_24px" d="M3.774,8.981v6.208h2.66V8.981Zm5.321,0v6.208h2.66V8.981ZM2,19.623H18.85v-2.66H2ZM14.416,8.981v6.208h2.66V8.981ZM10.425,1,2,5.434V7.208H18.85V5.434Z" transform="translate(-2 -1)" fill="#bbbebf"/>
-                      </svg><span class="left-link">SGFI Entries</span></a>
-                </li>   
-                <li>
-                    <a (click)="closeMenu()"  routerLink="./my-profile" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="16.85" height="18.623" viewBox="0 0 16.85 18.623">
-                        <path id="ic_account_balance_24px" d="M3.774,8.981v6.208h2.66V8.981Zm5.321,0v6.208h2.66V8.981ZM2,19.623H18.85v-2.66H2ZM14.416,8.981v6.208h2.66V8.981ZM10.425,1,2,5.434V7.208H18.85V5.434Z" transform="translate(-2 -1)" fill="#bbbebf"/>
-                      </svg><span class="left-link">My Profile</span></a>
-                </li>  
-                <li  *ngIf="isvolunteer == 'Yes'">
-                    <a (click)="closeMenu()"  routerLink="./volunteer-entires" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="17.91" height="19.538" viewBox="0 0 17.91 19.538">
-                        <path id="ic_pan_tool_24px" d="M18.91,4.477v11.8a3.266,3.266,0,0,1-3.256,3.256H9.711a3.251,3.251,0,0,1-2.32-.969L1,12.073s1.026-1,1.058-1.018a.965.965,0,0,1,.643-.236,1,1,0,0,1,.488.13c.033.008,3.509,2,3.509,2v-9.7a1.221,1.221,0,0,1,2.442,0v5.7h.814V1.221a1.221,1.221,0,0,1,2.442,0V8.955h.814V2.035a1.221,1.221,0,1,1,2.442,0v6.92h.814V4.477a1.221,1.221,0,1,1,2.442,0Z" transform="translate(-1)" fill="#bbbebf"/>
-                      </svg><span class="left-link">Volunteer Entries</span></a>
-                </li>   
-                  
-                <li>
-                    <a (click)="closeMenu()" [routerLink]="['/login']" routerLinkActive="active" class="menu-color"><i class="fas fa-sign-out-alt"></i> <span class="left-link">Log Out</span></a>
-                </li> 
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </nav>
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-       
-        <ul class="list-unstyled components" > 
-            
-            <!-- <p class="school-name">{{schoolName}}</p> -->
-            <li class="align-lhn">
-                <a  class="link-color" routerLink="./event-dashboard" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="15.522" height="17.247" viewBox="0 0 15.522 17.247">
-                    <path id="ic_date_range_24px" d="M8.174,9.761H6.449v1.725H8.174Zm3.449,0H9.9v1.725h1.725Zm3.449,0H13.348v1.725h1.725ZM16.8,3.725h-.862V2H14.211V3.725h-6.9V2H5.587V3.725H4.725A1.717,1.717,0,0,0,3.009,5.449L3,17.522a1.724,1.724,0,0,0,1.725,1.725H16.8a1.73,1.73,0,0,0,1.725-1.725V5.449A1.73,1.73,0,0,0,16.8,3.725Zm0,13.8H4.725V8.037H16.8Z" transform="translate(-3 -2)" fill="#bbbebf"/>
-                  </svg>  <span class="left-link">Event Dashboard</span></a>
-            </li>
-            <li>
-                <a  routerLink="./student-dashboard" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="18.267" height="15.044" viewBox="0 0 18.267 15.044">
-                    <path id="Subtraction_4" data-name="Subtraction 4" d="M-7173.56,8879.043h-14.614a1.857,1.857,0,0,1-1.827-1.881v-11.281a1.857,1.857,0,0,1,1.827-1.882h14.614a1.856,1.856,0,0,1,1.826,1.882v11.281A1.856,1.856,0,0,1-7173.56,8879.043Zm-3.653-3.762v1.881h3.653v-1.881Zm-10.961,0v1.881h9.133v-1.881Zm5.48-3.76v1.881h9.134v-1.881Zm-5.48,0v1.881h3.653v-1.881Zm1.889-5.342a2.1,2.1,0,0,0-2.068,2.13,2.1,2.1,0,0,0,2.068,2.13,2.1,2.1,0,0,0,2.069-2.13A2.1,2.1,0,0,0-7186.285,8866.18Zm0,3.662a1.479,1.479,0,0,1-1.242-.686c.007-.425.824-.656,1.242-.656s1.234.231,1.241.656A1.479,1.479,0,0,1-7186.285,8869.842Zm0-1.744a.631.631,0,0,1-.621-.64.63.63,0,0,1,.621-.639.63.63,0,0,1,.621.639A.631.631,0,0,1-7186.285,8868.1Z" transform="translate(7190 -8863.999)" fill="#bbbebf"/>
-                  </svg><span class="left-link">Student Dashboard</span></a>
-            </li>
-            <li>
-                <a  routerLink="./coach-entires" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="14.518" height="16.131" viewBox="0 0 14.518 16.131">
-                    <path id="ic_perm_contact_calendar_24px" d="M15.9,2.613H15.1V1H13.485V2.613H7.033V1H5.42V2.613H4.613A1.613,1.613,0,0,0,3,4.226V15.518a1.613,1.613,0,0,0,1.613,1.613H15.9a1.618,1.618,0,0,0,1.613-1.613V4.226A1.618,1.618,0,0,0,15.9,2.613Zm-5.646,2.42a2.42,2.42,0,1,1-2.42,2.42A2.416,2.416,0,0,1,10.259,5.033ZM15.1,14.711H5.42V13.9c0-1.613,3.226-2.5,4.839-2.5s4.839.887,4.839,2.5Z" transform="translate(-3 -1)" fill="#bbbebf"/>
-                  </svg><span class="left-link">Coach Entries</span></a>
-            </li>
-            <li>
-                <a  routerLink="./report" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="16.089" height="14.302" viewBox="0 0 16.089 14.302">
-                    <path id="ic_line_style_24px" d="M3,14.726H7.469V12.939H3Zm5.81,0h4.469V12.939H8.81Zm5.81,0h4.469V12.939H14.62ZM3,18.3H4.788V16.514H3Zm3.575,0H8.363V16.514H6.575Zm3.575,0h1.788V16.514H10.151Zm3.575,0h1.788V16.514H13.726Zm3.575,0h1.788V16.514H17.3ZM3,11.151h7.151V9.363H3Zm8.939,0h7.151V9.363H11.939ZM3,4V7.575H19.089V4Z" transform="translate(-3 -4)" fill="#bbbebf"/>
-                  </svg><span class="left-link">Report</span></a>
-            </li> 
-            <li>
-                <a  routerLink="./certificate-invoice" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="16.928" height="16.928" viewBox="0 0 16.928 16.928">
-                    <path id="ic_library_books_24px" d="M3.693,5.386H2v11.85a1.7,1.7,0,0,0,1.693,1.693h11.85V17.235H3.693ZM17.235,2H7.078A1.7,1.7,0,0,0,5.386,3.693V13.85a1.7,1.7,0,0,0,1.693,1.693H17.235a1.7,1.7,0,0,0,1.693-1.693V3.693A1.7,1.7,0,0,0,17.235,2Zm-.846,7.618H7.925V7.925h8.464ZM13,13H7.925V11.311H13Zm3.386-6.771H7.925V4.539h8.464Z" transform="translate(-2 -2)" fill="#bbbebf"/>
-                  </svg><span class="left-link">Certificate/Invoice</span></a>
-            </li>
-            <li>
-                <a  routerLink="./pay-now" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="16.889" height="16" viewBox="0 0 16.889 16">
-                    <path id="ic_account_balance_wallet_24px" d="M19,16.333v.889A1.783,1.783,0,0,1,17.222,19H4.778A1.777,1.777,0,0,1,3,17.222V4.778A1.777,1.777,0,0,1,4.778,3H17.222A1.783,1.783,0,0,1,19,4.778v.889H11A1.777,1.777,0,0,0,9.222,7.444v7.111A1.777,1.777,0,0,0,11,16.333Zm-8-1.778h8.889V7.444H11Zm3.556-2.222A1.333,1.333,0,1,1,15.889,11,1.332,1.332,0,0,1,14.556,12.333Z" transform="translate(-3 -3)" fill="#bbbebf"/>
-                  </svg> <span class="left-link">Pay Now</span></a>
-            </li>
-            <li>
-                <a (click)="closeMenu()"  routerLink="./sgfi" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="17.91" height="19.538" viewBox="0 0 17.91 19.538">
-                    <path id="ic_pan_tool_24px" d="M18.91,4.477v11.8a3.266,3.266,0,0,1-3.256,3.256H9.711a3.251,3.251,0,0,1-2.32-.969L1,12.073s1.026-1,1.058-1.018a.965.965,0,0,1,.643-.236,1,1,0,0,1,.488.13c.033.008,3.509,2,3.509,2v-9.7a1.221,1.221,0,0,1,2.442,0v5.7h.814V1.221a1.221,1.221,0,0,1,2.442,0V8.955h.814V2.035a1.221,1.221,0,1,1,2.442,0v6.92h.814V4.477a1.221,1.221,0,1,1,2.442,0Z" transform="translate(-1)" fill="#bbbebf"/>
-                  </svg><span class="left-link">SGFI Entries</span></a>
-            </li> 
-            <li>
-                <a  routerLink="./my-profile" routerLinkActive="active" class="menu-color"> <svg xmlns="http://www.w3.org/2000/svg" width="16.85" height="18.623" viewBox="0 0 16.85 18.623">
-                    <path id="ic_account_balance_24px" d="M3.774,8.981v6.208h2.66V8.981Zm5.321,0v6.208h2.66V8.981ZM2,19.623H18.85v-2.66H2ZM14.416,8.981v6.208h2.66V8.981ZM10.425,1,2,5.434V7.208H18.85V5.434Z" transform="translate(-2 -1)" fill="#bbbebf"/>
-                  </svg><span class="left-link">My Profile</span></a>
-            </li>   
-            <li  *ngIf="isvolunteer == 'Yes'">
-                <a   routerLink="./volunteer-entires" routerLinkActive="active" class="menu-color"><svg xmlns="http://www.w3.org/2000/svg" width="17.91" height="19.538" viewBox="0 0 17.91 19.538">
-                    <path id="ic_pan_tool_24px" d="M18.91,4.477v11.8a3.266,3.266,0,0,1-3.256,3.256H9.711a3.251,3.251,0,0,1-2.32-.969L1,12.073s1.026-1,1.058-1.018a.965.965,0,0,1,.643-.236,1,1,0,0,1,.488.13c.033.008,3.509,2,3.509,2v-9.7a1.221,1.221,0,0,1,2.442,0v5.7h.814V1.221a1.221,1.221,0,0,1,2.442,0V8.955h.814V2.035a1.221,1.221,0,1,1,2.442,0v6.92h.814V4.477a1.221,1.221,0,1,1,2.442,0Z" transform="translate(-1)" fill="#bbbebf"/>
-                  </svg><span class="left-link">Volunteer Entries</span></a>
-            </li>      
-            <li>
-                <a [routerLink]="['/login']" routerLinkActive="active" class="menu-color"><i class="fas fa-sign-out-alt"></i> <span class="left-link">Log Out</span></a>
-            </li> 
-        </ul>
-  
-       
-    </nav>
-   
-  </div>
- 
+    <!-- /.navbar-collapse -->
+  </nav>
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <ul class="list-unstyled components">
+      <!-- <p class="school-name">{{schoolName}}</p> -->
+      <li class="align-lhn">
+        <a
+          class="link-color"
+          routerLink="./event-dashboard"
+          routerLinkActive="active"
+          class="menu-color"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15.522"
+            height="17.247"
+            viewBox="0 0 15.522 17.247"
+          >
+            <path
+              id="ic_date_range_24px"
+              d="M8.174,9.761H6.449v1.725H8.174Zm3.449,0H9.9v1.725h1.725Zm3.449,0H13.348v1.725h1.725ZM16.8,3.725h-.862V2H14.211V3.725h-6.9V2H5.587V3.725H4.725A1.717,1.717,0,0,0,3.009,5.449L3,17.522a1.724,1.724,0,0,0,1.725,1.725H16.8a1.73,1.73,0,0,0,1.725-1.725V5.449A1.73,1.73,0,0,0,16.8,3.725Zm0,13.8H4.725V8.037H16.8Z"
+              transform="translate(-3 -2)"
+              fill="#bbbebf"
+            />
+          </svg>
+          <span class="left-link">Event Dashboard</span></a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="./student-dashboard"
+          routerLinkActive="active"
+          class="menu-color"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18.267"
+            height="15.044"
+            viewBox="0 0 18.267 15.044"
+          >
+            <path
+              id="Subtraction_4"
+              data-name="Subtraction 4"
+              d="M-7173.56,8879.043h-14.614a1.857,1.857,0,0,1-1.827-1.881v-11.281a1.857,1.857,0,0,1,1.827-1.882h14.614a1.856,1.856,0,0,1,1.826,1.882v11.281A1.856,1.856,0,0,1-7173.56,8879.043Zm-3.653-3.762v1.881h3.653v-1.881Zm-10.961,0v1.881h9.133v-1.881Zm5.48-3.76v1.881h9.134v-1.881Zm-5.48,0v1.881h3.653v-1.881Zm1.889-5.342a2.1,2.1,0,0,0-2.068,2.13,2.1,2.1,0,0,0,2.068,2.13,2.1,2.1,0,0,0,2.069-2.13A2.1,2.1,0,0,0-7186.285,8866.18Zm0,3.662a1.479,1.479,0,0,1-1.242-.686c.007-.425.824-.656,1.242-.656s1.234.231,1.241.656A1.479,1.479,0,0,1-7186.285,8869.842Zm0-1.744a.631.631,0,0,1-.621-.64.63.63,0,0,1,.621-.639.63.63,0,0,1,.621.639A.631.631,0,0,1-7186.285,8868.1Z"
+              transform="translate(7190 -8863.999)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">Student Dashboard</span></a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="./coach-entires"
+          routerLinkActive="active"
+          class="menu-color"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14.518"
+            height="16.131"
+            viewBox="0 0 14.518 16.131"
+          >
+            <path
+              id="ic_perm_contact_calendar_24px"
+              d="M15.9,2.613H15.1V1H13.485V2.613H7.033V1H5.42V2.613H4.613A1.613,1.613,0,0,0,3,4.226V15.518a1.613,1.613,0,0,0,1.613,1.613H15.9a1.618,1.618,0,0,0,1.613-1.613V4.226A1.618,1.618,0,0,0,15.9,2.613Zm-5.646,2.42a2.42,2.42,0,1,1-2.42,2.42A2.416,2.416,0,0,1,10.259,5.033ZM15.1,14.711H5.42V13.9c0-1.613,3.226-2.5,4.839-2.5s4.839.887,4.839,2.5Z"
+              transform="translate(-3 -1)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">Coach Entries</span></a
+        >
+      </li>
+      <li>
+        <a routerLink="./report" routerLinkActive="active" class="menu-color">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16.089"
+            height="14.302"
+            viewBox="0 0 16.089 14.302"
+          >
+            <path
+              id="ic_line_style_24px"
+              d="M3,14.726H7.469V12.939H3Zm5.81,0h4.469V12.939H8.81Zm5.81,0h4.469V12.939H14.62ZM3,18.3H4.788V16.514H3Zm3.575,0H8.363V16.514H6.575Zm3.575,0h1.788V16.514H10.151Zm3.575,0h1.788V16.514H13.726Zm3.575,0h1.788V16.514H17.3ZM3,11.151h7.151V9.363H3Zm8.939,0h7.151V9.363H11.939ZM3,4V7.575H19.089V4Z"
+              transform="translate(-3 -4)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">Report</span></a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="./certificate-invoice"
+          routerLinkActive="active"
+          class="menu-color"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16.928"
+            height="16.928"
+            viewBox="0 0 16.928 16.928"
+          >
+            <path
+              id="ic_library_books_24px"
+              d="M3.693,5.386H2v11.85a1.7,1.7,0,0,0,1.693,1.693h11.85V17.235H3.693ZM17.235,2H7.078A1.7,1.7,0,0,0,5.386,3.693V13.85a1.7,1.7,0,0,0,1.693,1.693H17.235a1.7,1.7,0,0,0,1.693-1.693V3.693A1.7,1.7,0,0,0,17.235,2Zm-.846,7.618H7.925V7.925h8.464ZM13,13H7.925V11.311H13Zm3.386-6.771H7.925V4.539h8.464Z"
+              transform="translate(-2 -2)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">Certificate/Invoice</span></a
+        >
+      </li>
+      <li>
+        <a routerLink="./pay-now" routerLinkActive="active" class="menu-color"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16.889"
+            height="16"
+            viewBox="0 0 16.889 16"
+          >
+            <path
+              id="ic_account_balance_wallet_24px"
+              d="M19,16.333v.889A1.783,1.783,0,0,1,17.222,19H4.778A1.777,1.777,0,0,1,3,17.222V4.778A1.777,1.777,0,0,1,4.778,3H17.222A1.783,1.783,0,0,1,19,4.778v.889H11A1.777,1.777,0,0,0,9.222,7.444v7.111A1.777,1.777,0,0,0,11,16.333Zm-8-1.778h8.889V7.444H11Zm3.556-2.222A1.333,1.333,0,1,1,15.889,11,1.332,1.332,0,0,1,14.556,12.333Z"
+              transform="translate(-3 -3)"
+              fill="#bbbebf"
+            />
+          </svg>
+          <span class="left-link">Pay Now</span></a
+        >
+      </li>
+      <li>
+        <a
+          (click)="closeMenu()"
+          routerLink="./sgfi"
+          routerLinkActive="active"
+          class="menu-color"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17.91"
+            height="19.538"
+            viewBox="0 0 17.91 19.538"
+          >
+            <path
+              id="ic_pan_tool_24px"
+              d="M18.91,4.477v11.8a3.266,3.266,0,0,1-3.256,3.256H9.711a3.251,3.251,0,0,1-2.32-.969L1,12.073s1.026-1,1.058-1.018a.965.965,0,0,1,.643-.236,1,1,0,0,1,.488.13c.033.008,3.509,2,3.509,2v-9.7a1.221,1.221,0,0,1,2.442,0v5.7h.814V1.221a1.221,1.221,0,0,1,2.442,0V8.955h.814V2.035a1.221,1.221,0,1,1,2.442,0v6.92h.814V4.477a1.221,1.221,0,1,1,2.442,0Z"
+              transform="translate(-1)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">SGFI Entries</span></a
+        >
+      </li>
+      <li>
+        <a
+          (click)="closeMenu()"
+          routerLink="./student-profile"
+          routerLinkActive="active"
+          class="menu-color"
+        >
+          <i class="fas fa-user"></i>
+          <span class="left-link">
+            <!-- <i class="fas fa-sign-out-alt"></i> -->
+            Student Profiles</span
+          ></a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="./my-profile"
+          routerLinkActive="active"
+          class="menu-color"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16.85"
+            height="18.623"
+            viewBox="0 0 16.85 18.623"
+          >
+            <path
+              id="ic_account_balance_24px"
+              d="M3.774,8.981v6.208h2.66V8.981Zm5.321,0v6.208h2.66V8.981ZM2,19.623H18.85v-2.66H2ZM14.416,8.981v6.208h2.66V8.981ZM10.425,1,2,5.434V7.208H18.85V5.434Z"
+              transform="translate(-2 -1)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">My Profile</span></a
+        >
+      </li>
+      <li *ngIf="isvolunteer == 'Yes'">
+        <a
+          routerLink="./volunteer-entires"
+          routerLinkActive="active"
+          class="menu-color"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="17.91"
+            height="19.538"
+            viewBox="0 0 17.91 19.538"
+          >
+            <path
+              id="ic_pan_tool_24px"
+              d="M18.91,4.477v11.8a3.266,3.266,0,0,1-3.256,3.256H9.711a3.251,3.251,0,0,1-2.32-.969L1,12.073s1.026-1,1.058-1.018a.965.965,0,0,1,.643-.236,1,1,0,0,1,.488.13c.033.008,3.509,2,3.509,2v-9.7a1.221,1.221,0,0,1,2.442,0v5.7h.814V1.221a1.221,1.221,0,0,1,2.442,0V8.955h.814V2.035a1.221,1.221,0,1,1,2.442,0v6.92h.814V4.477a1.221,1.221,0,1,1,2.442,0Z"
+              transform="translate(-1)"
+              fill="#bbbebf"
+            /></svg
+          ><span class="left-link">Volunteer Entries</span></a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/login']"
+          routerLinkActive="active"
+          class="menu-color"
+          ><i class="fas fa-sign-out-alt"></i>
+          <span class="left-link">Log Out</span></a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>
 
-  <!-- jQuery CDN - Slim version (=without AJAX) -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- Popper.JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  <!-- jQuery Custom Scroller CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-  
-  <script type="text/javascript">
-    $(document).ready(function () {
-        $("#sidebar").mCustomScrollbar({ 
-            theme: "minimal"
-        });
-  
-        // $('#sidebarCollapse').on('click', function () {
-        //    // $('#sidebar').slideToggle();
-        //     // $('#sidebar').toggle();
-        //     $('#sidebar, #content').toggleClass('active');
-        //     $('.collapse.in').toggleClass('in');
-        //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-        // });
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"
+></script>
+<!-- Popper.JS -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+  integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+  crossorigin="anonymous"
+></script>
+<!-- Bootstrap JS -->
+<script
+  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+  integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+  crossorigin="anonymous"
+></script>
+<!-- jQuery Custom Scroller CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#sidebar").mCustomScrollbar({
+      theme: "minimal",
     });
-  </script>
-   
- 
-    <!-- Page Content  -->
-    <div class="container-fluid align-content" id="content">
-        
-    <router-outlet></router-outlet>
-    
-</div> 
- <div><img src="assets/images/footer-logo.png" class="img-responsive f-logo"></div>
+
+    // $('#sidebarCollapse').on('click', function () {
+    //    // $('#sidebar').slideToggle();
+    //     // $('#sidebar').toggle();
+    //     $('#sidebar, #content').toggleClass('active');
+    //     $('.collapse.in').toggleClass('in');
+    //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    // });
+  });
+</script>
+
+<!-- Page Content  -->
+<div class="container-fluid align-content" id="content">
+  <router-outlet></router-outlet>
+</div>
+<div>
+  <img src="assets/images/footer-logo.png" class="img-responsive f-logo" />
+</div>
 <footer class="footer">
-    <div class="footer-text">© iSSO {{currentYear}}. All Rights Reserved.</div>
+  <div class="footer-text">© iSSO {{ currentYear }}. All Rights Reserved.</div>
 </footer>

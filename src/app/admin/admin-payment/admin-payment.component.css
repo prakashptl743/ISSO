@@ -1,10 +1,10 @@
 input.largerCheckbox {
-      transform : scale(2);
+  transform: scale(2);
 }
-  .not-paid-column {
-    background: red;
-    color: white;
-    text-align: center;
+.not-paid-column {
+  background: red;
+  color: white;
+  text-align: center;
 }
 .align-checkbox {
   text-align: center;
@@ -18,82 +18,83 @@ input.largerCheckbox {
 .align-button {
   padding-top: 30px;
 }
-
+.align-drop-down {
+  padding: 0 0 0 20px;
+}
 .paid-column {
-    background: green;
-    color: white; 
-    text-align: center;
+  background: green;
+  color: white;
+  text-align: center;
 }
 .table-color {
   color: #fff;
-  background-color: #007ad9;       
+  background-color: #007ad9;
 }
 :host ::ng-deep .custom-toast .ui-toast-message {
-    color: #ffffff;
-    background:blue;
-    border-radius: 20px;
-    padding-top: 8px;
-    width: 150%;
+  color: #ffffff;
+  background: blue;
+  border-radius: 20px;
+  padding-top: 8px;
+  width: 150%;
 }
 :host ::ng-deep .custom-toast .ui-toast-close-icon {
-    position: absolute;
-    font-size: 2em;
-    top: 11px;
-    text-decoration: none;
+  position: absolute;
+  font-size: 2em;
+  top: 11px;
+  text-decoration: none;
 }
 .align-message {
-    padding: 8px;
+  padding: 8px;
 }
 .isMenuActive {
-    background: #007ad9;
-    color: white;
-  }
-  .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    margin: 20px;
-  }
-  
-  /* Style the buttons inside the tab */
-  .tab button {
-   
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  /* Change background color of buttons on hover */
-  /* .tab button:hover {
+  background: #007ad9;
+  color: white;
+}
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  margin: 20px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+/* .tab button:hover {
     background-color: #ddd;
   } */
-  
-  /* Create an active/current tablink class */
-  .tab button.active {
-    background-color: #ccc;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-  }
-  .totalAmount{
-    color: green;
-    font-weight:bold;
-    float: right;
-  }
-  .float-right {
-    float: right;
-  }
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.totalAmount {
+  color: green;
+  font-weight: bold;
+  float: right;
+}
+.float-right {
+  float: right;
+}
 :host ::ng-deep .ui-toast .ui-toast-icon {
-    padding-top: 4px;
+  padding-top: 4px;
 }
 /* :host ::ng-deep .custom-toast .ui-toast-close-icon {
     padding-top: 10px;
@@ -101,10 +102,12 @@ input.largerCheckbox {
     color: #ffffff;
 } */
 
-:host ::ng-deep .custom-toast  .ui-toast .ui-toast-message-text-content {
-    margin-left: 2.5em;
+:host ::ng-deep .custom-toast .ui-toast .ui-toast-message-text-content {
+  margin-left: 2.5em;
 }
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
   border-collapse: collapse;
 }

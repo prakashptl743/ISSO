@@ -46,6 +46,7 @@ import { SgfiEntriesComponent } from "./sgfi-entries/sgfi-entries.component";
 import { ConfigureIfsSchoolPaymentComponent } from "./admin-payment/configure-ifs-school-payment/configure-ifs-school-payment.component";
 import { IfsSchoolDataComponent } from "./ifs-school-data/ifs-school-data.component";
 import { ManageEvent } from "./mange-event/manage-event.component";
+import { IndianCurrencyPipeModule } from "./pipe/indian-currency.pipe";
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { ManageEvent } from "./mange-event/manage-event.component";
     ReactiveFormsModule,
     AdminRoutingModule,
     SumPipeModule,
+    IndianCurrencyPipeModule,
     TextTransformPipeModule,
     FormsModule,
     AutoCompleteModule,
@@ -100,6 +102,7 @@ import { ManageEvent } from "./mange-event/manage-event.component";
   ],
   providers: [
     SumPipeModule,
+    IndianCurrencyPipeModule,
     DatePipe,
     TextTransformPipeModule,
     AutoCompleteModule,

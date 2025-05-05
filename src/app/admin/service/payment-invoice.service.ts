@@ -26,8 +26,8 @@ export class PaymentInvoiceService {
     this.http = new HttpClient(handler);
 }
 
-getPaymentData(yearVal){ 
-  let str = 'paymentInvoice/getPaymentData/' + yearVal +'/';
+getPaymentData(feeType,yearVal){ 
+  let str = 'paymentInvoice/getPaymentData/' + feeType +'/'+ yearVal;
   return this.http.get(this.serverUrl + str).pipe(
     catchError(this.handleError)
  );

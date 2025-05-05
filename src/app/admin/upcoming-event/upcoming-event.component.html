@@ -1,123 +1,176 @@
 <app-loading *ngIf="showspinner"></app-loading>
 <div class="row">
-  <div class="col-sm">
-      <!-- <p>Current date: {{control.value | date}}</p> -->
-      <!-- <p-dropdown
-        [options]="options"
-        [formControl]="control">
-      </p-dropdown> -->
-  </div>
-  <!-- <div class="col-sm">
-      <input type="text"   style="width:100px" pInputText placeholder="Search"  /> 
-  </div>  -->
-  <!-- <div class="col-sm">
-     <div style="float: right;"> <button type="button" *ngIf="!display" (click)="addNewEvent($event, '','add')" pButton icon="pi pi-plus" label="Add Upcoming Event"></button>
-       <button class="btn btn-primary-small float-right" *ngIf="display" (click)="hideExtraView()">Back</button>
-     </div>
-    </div> -->
+  <div class="col-sm"></div>
 </div>
 <div class="wrapper">
-<div id="content1" class="content-wrapper">
-<p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
-<div class="sub-view-wrapper" *ngIf="display">
-   <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-      <div class="form-row">
-        <div class="form-group col-md-6">
+  <div id="content1" class="content-wrapper">
+    <p-toast
+      [style]="{ marginTop: '50px' }"
+      styleClass="custom-toast"
+      key="custom"
+      position="bottom-center"
+    ></p-toast>
+    <div class="sub-view-wrapper" *ngIf="display">
+      <form
+        [formGroup]="schoolForm"
+        class="align-form-div"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-6">
             <label for="inputEmail4">Event Name</label>
-            <input class="form-control" formControlName="event_name" type="text" required>
+            <input
+              class="form-control"
+              formControlName="event_name"
+              type="text"
+              required
+            />
           </div>
-      </div>
-      <div class="form-row">
+        </div>
+        <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputPassword4">Description</label>
-             <textarea rows="5" cols="30" class="form-control" name="event_desc" formControlName="event_desc"></textarea>
+            <textarea
+              rows="5"
+              cols="30"
+              class="form-control"
+              name="event_desc"
+              formControlName="event_desc"
+            ></textarea>
           </div>
-          <input id="float-input" formControlName="id"  type="hidden"  pInputText>  
-      </div>
-       <button [disabled]="!schoolForm.valid" class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
-        <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
-<!--           <div class="col-md-10 mx-auto" class="align-form">
-              <div class="form-group row">
-                  <div class="col-sm-6" class="align-text">
-                        <span class="ui-float-label">
-                            <input formControlName="event_name" name="event_name" type="text" size="30" pInputText required>  
-                            <label for="float-input">Event Name</label>
-                        </span>
-                  </div>
-                  <div class="col-sm-6" class="align-text">
-                      <span class="ui-float-label">
-                        <textarea rows="5" cols="30" name="event_desc" formControlName="event_desc" pInputTextarea></textarea>
-                        <label for="float-input">Event Description</label>
-                      </span>
-                  </div>
-              </div>
-                               
-             
-        </div> -->
-   </form>
-<!--   <p-footer class="btn-footer">
-      <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-     <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-  </p-footer> -->
-  </div>
-<p-dataView #dv [paginator]="true" paginatorPosition="bottom" *ngIf="!display"  [rows]="10" [value]="schoolData" class="no-padding" filterBy="event_name,event_desc" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-
-  <p-header>
-      <div class="ui-helper-clearfix">
-          <div class="ui-g">
-              <div class="ui-g-12 ui-md-12 filter-container">
-                    <div>
-                        <input class="search-text"  type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-                         <div style="float: right;">
-                            <button type="button" *ngIf="!display" (click)="addNewEvent($event, '','add')" pButton  label="Add Upcoming Event"></button>
-                         </div>
-                   </div>
-<!-- 
-                  <div style="position:relative">
-                      <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
-                  </div> -->
-              </div>
-
-          </div>
-      </div>
-  </p-header>
-
-<ng-template let-school pTemplate="gridItem"  style="word-wrap: break-word;">
-  <div style="padding:.5em" class="ui-g-12 ui-md-6">
-        <div class="item-box">
-            <div class="item-header">
-                <h4 title="{{school.event_name}}">{{school.event_name}}</h4>
-                <div class="icons-wrap">
-                    <button class="glyphicon glyphicon-edit item-icons" (click)="addNewEvent($event, school,'edit')">
-                    </button>
-                     <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteSchoolData($event, school)">
-                    </button>
-                    
-                </div>
-            </div>
-             <div class="item-description">
-                <label>Description:</label>
-                <div class="item-parent">
-                    <div class="item-value" title="{{school.event_desc}}">{{school.event_desc}}</div>
-                </div>
-            </div>
+          <input
+            id="float-input"
+            formControlName="id"
+            type="hidden"
+            pInputText
+          />
         </div>
-    </div>    
- 
-</ng-template>
-</p-dataView>
+        <button
+          [disabled]="!schoolForm.valid"
+          class="btn btn-primary"
+          type="button"
+          (click)="onSubmit()"
+        >
+          Submit
+        </button>
+        <button
+          class="btn btn-primary-outline"
+          type="button"
+          (click)="display = false"
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
+    <p-dataView
+      #dv
+      [paginator]="true"
+      paginatorPosition="bottom"
+      *ngIf="!display"
+      [rows]="10"
+      [value]="schoolData"
+      class="no-padding"
+      filterBy="event_name,event_desc"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+      layout="grid"
+    >
+      <p-header>
+        <div class="ui-helper-clearfix">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 filter-container">
+              <div>
+                <input
+                  class="search-text"
+                  type="search"
+                  pInputText
+                  placeholder="Search by Name"
+                  (input)="dv.filter($event.target.value)"
+                />
+                <div style="float: right">
+                  <button
+                    type="button"
+                    *ngIf="!display"
+                    (click)="addNewEvent($event, '', 'add')"
+                    pButton
+                    label="Add Upcoming Event"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-header>
 
-<p-confirmDialog key="confirm-delete-school" header="Delete upcoming event data" acceptLabel="Yes" rejectLabel="No" [(visible)]="confirmDropDatabaseDialogVisible"></p-confirmDialog>
-<p-dialog header="Add New School" [(visible)]="displayDialog"  showEffect="fade" [modal]="true" [responsive]="true"   
-  [maximizable]="true" [baseZIndex]="10000">
-  <h5>Edit school</h5>
-  <p-footer>
-      <p-button icon="pi pi-check" [disabled]="!schoolForm.valid"  label="Submit" (onClick)="onSubmit()"></p-button>
-     <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
-  </p-footer>
+      <ng-template
+        let-school
+        pTemplate="gridItem"
+        style="word-wrap: break-word"
+      >
+        <div style="padding: 0.5em" class="ui-g-12 ui-md-6">
+          <div class="item-box">
+            <div class="item-header1">
+              <div class="ev-name" title="{{ school.event_name }}">
+                <b>{{ school.event_name }}</b>
+              </div>
+              <div class="icons-wrap">
+                <button
+                  class="glyphicon glyphicon-edit item-icons"
+                  (click)="addNewEvent($event, school, 'edit')"
+                ></button>
+                <button
+                  href="#"
+                  class="glyphicon glyphicon-trash item-icons"
+                  (click)="deleteSchoolData($event, school)"
+                ></button>
+              </div>
+            </div>
+            <div class="item-description">
+              <label>Description:</label>
+              <div class="item-parent">
+                <div class="item-value" title="{{ school.event_desc }}">
+                  {{ school.event_desc }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
 
-
-</p-dialog>    
+    <p-confirmDialog
+      key="confirm-delete-school"
+      header="Delete upcoming event data"
+      acceptLabel="Yes"
+      rejectLabel="No"
+      [(visible)]="confirmDropDatabaseDialogVisible"
+    ></p-confirmDialog>
+    <p-dialog
+      header="Add New School"
+      [(visible)]="displayDialog"
+      showEffect="fade"
+      [modal]="true"
+      [responsive]="true"
+      [maximizable]="true"
+      [baseZIndex]="10000"
+    >
+      <h5>Edit school</h5>
+      <p-footer>
+        <p-button
+          icon="pi pi-check"
+          [disabled]="!schoolForm.valid"
+          label="Submit"
+          (onClick)="onSubmit()"
+        ></p-button>
+        <button
+          type="button"
+          pButton
+          icon="pi pi-close"
+          (click)="display = false"
+          label="No"
+          class="ui-button-secondary"
+        ></button>
+      </p-footer>
+    </p-dialog>
+  </div>
 </div>
-</div>
-
