@@ -96,7 +96,8 @@ export class SgfiEntryComponent implements OnInit {
   editStudentPhoto: string;
   schoolForm: FormGroup;
   studentSignFile: boolean;
-
+  minDate: Date;
+  maxDate: Date;
   fullFilename: string;
   isStudentSignValidFile: boolean = true;
   isStudentFileBig: boolean = false;
@@ -203,6 +204,13 @@ export class SgfiEntryComponent implements OnInit {
     this.initialSgfiForm();
     this.baseUrl = environment.baseUrl;
     // this.initialiseForm();
+    const today = new Date();
+    this.maxDate = today;
+    this.minDate = new Date(
+      today.getFullYear() - 100,
+      today.getMonth(),
+      today.getDate()
+    );
   }
   public initialSgfiForm() {
     this.sgfiEnrollForm = new FormGroup({
@@ -630,7 +638,7 @@ export class SgfiEntryComponent implements OnInit {
         motherName: studentData.motherName,
         studentAddress: studentData.studentAddress,
         admissionNo: studentData.admissionNoYear,
-        schoolJoinDate: studentData.schoolJoinDate,
+        schoolJoinDate: new Date(studentData.schoolJoinDate),
         studyingYear: studentData.studyingYear,
         sgfiRegNo: studentData.sgfiRegNo,
         dicipline: studentData.discipline,
@@ -1092,10 +1100,21 @@ export class SgfiEntryComponent implements OnInit {
       "admissionNo",
       this.sgfiEnrollForm.get("admissionNo").value
     );
-    formData.append(
-      "schoolJoinDate",
-      this.sgfiEnrollForm.get("schoolJoinDate").value
-    );
+    // formData.append(
+    //   "schoolJoinDate",
+    //   this.sgfiEnrollForm.get("schoolJoinDate").value
+    // );
+
+    let schoolJoiningDate = this.sgfiEnrollForm.get("schoolJoinDate").value;
+    let formatted_schoolJoiningDate =
+      schoolJoiningDate.getFullYear() +
+      "-" +
+      (schoolJoiningDate.getMonth() + 1) +
+      "-" +
+      schoolJoiningDate.getDate();
+
+    formData.append("schoolJoinDate", formatted_schoolJoiningDate);
+
     formData.append(
       "studyingYear",
       this.sgfiEnrollForm.get("studyingYear").value

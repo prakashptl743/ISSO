@@ -356,7 +356,20 @@
                   >Date of Joining the School
                   <span class="required-label">*</span></label
                 >
-                <input
+                <p-calendar
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
+                  dateFormat="dd/mm/yy"
+                  formControlName="schoolJoinDate"
+                  [monthNavigator]="true"
+                  [yearNavigator]="true"
+                  yearRange="{{ minDate.getFullYear() }}:{{
+                    maxDate.getFullYear()
+                  }}"
+                  [style]="{ width: '100%' }"
+                  placeholder="Select Date of Birth"
+                ></p-calendar>
+                <!-- <input
                   id="schoolJoinDate"
                   class="form-control"
                   formControlName="schoolJoinDate"
@@ -365,7 +378,7 @@
                       schoolJoinDate.invalid &&
                       (schoolJoinDate.dirty || schoolJoinDate.touched)
                   }"
-                />
+                /> -->
                 <div
                   class="error-message"
                   *ngIf="

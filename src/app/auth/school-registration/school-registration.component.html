@@ -1,197 +1,435 @@
 <div class="container">
-    <div>
-       <div style="float:left"><img class="align-logo" height="100" width="100" src="assets/images/web/logo_retina.png"></div>
-        <div class="align-menu">
-            <ul class="nav nav-pills">
-                <li   [ngClass]="isRegisteredSchool ? 'active' : '' "  (click) ="registerSchool()"><a href="javascript: void(0)">REGISTER SCHOOL</a></li>
-                <li  [ngClass]="isDocUpload ? 'active' : '' "  (click) ="uploadDoc()"><a href="javascript: void(0)">DOWNLOAD DOCUMENT AND UPLOAD SIGNED DOCUMENT</a></li>
-            </ul>
-        </div>
+  <div>
+    <div style="float: left">
+      <img
+        class="align-logo"
+        height="100"
+        width="100"
+        src="assets/images/web/logo_retina.png"
+      />
     </div>
-    <hr/>
-    <div *ngIf="isRegisteredSchool" class="register-form">
-        <form [formGroup]="schoolForm"  class="align-form-div" (ngSubmit)="onSubmit()">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputEmail4">NAME OF THE SCHOOL:</label>
-                <input class="form-control" formControlName="schoolname" name="schoolName" type="text" [ngClass]="{ 'is-invalid': f.schoolname.touched && f.schoolname.errors }">
-                <div *ngIf="f.schoolname.touched && f.schoolname.errors" class="invalid-feedback">
-                    <div *ngIf="f.schoolname.errors.required">School Name is required</div>
-                </div>
-                </div>
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">E-MAIL ID:</label>
-                   <input class="form-control" formControlName="schoolEmail" [(ngModel)]="emailOfSchool" (blur)="checkEmail($event)" name="schoolEmail"  type="text" [ngClass]="{ 'is-invalid': f.schoolEmail.touched && f.schoolEmail.errors }">
-                   <span class="align-email-error" *ngIf="showEmailErrorMessage">This email already exists</span>
-                   <div *ngIf="f.schoolEmail.touched && f.schoolEmail.errors" class="invalid-feedback">
-                    <div *ngIf="f.schoolEmail.errors.required">Email id is required</div>
-                    <div *ngIf="f.schoolEmail.hasError('pattern')">Email must be a valid email address</div>
-                  </div>
-                </div> 
+    <div class="align-menu">
+      <ul class="nav nav-pills">
+        <li
+          [ngClass]="isRegisteredSchool ? 'active' : ''"
+          (click)="registerSchool()"
+        >
+          <a href="javascript: void(0)">REGISTER SCHOOL</a>
+        </li>
+        <li [ngClass]="isDocUpload ? 'active' : ''" (click)="uploadDoc()">
+          <a href="javascript: void(0)"
+            >DOWNLOAD DOCUMENT AND UPLOAD SIGNED DOCUMENT</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <div *ngIf="isRegisteredSchool" class="register-form">
+    <form
+      [formGroup]="schoolForm"
+      class="align-form-div"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">NAME OF THE SCHOOL:</label>
+          <input
+            class="form-control"
+            formControlName="schoolname"
+            name="schoolName"
+            type="text"
+            [ngClass]="{
+              'is-invalid': f.schoolname.touched && f.schoolname.errors
+            }"
+          />
+          <div
+            *ngIf="f.schoolname.touched && f.schoolname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.schoolname.errors.required">
+              School Name is required
             </div>
-        
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">CONTACT NO.:</label>
-                <input class="form-control" id="float-input"  formControlName="schoolTelePhone"  type="text"   [ngClass]="{ 'is-invalid': f.schoolTelePhone.touched && f.schoolTelePhone.errors }">  
-                <div *ngIf="f.schoolTelePhone.touched && f.schoolTelePhone.errors" class="invalid-feedback">
-                    <div *ngIf="f.schoolTelePhone.errors.required">Contact Number is  required</div>
-                    <div *ngIf="f.schoolTelePhone.hasError('pattern')">Please enter valid contact number</div>
-                    <div *ngIf="f.schoolTelePhone.hasError('min')">Contact number should be 10 digit</div>
-                    <div *ngIf="f.schoolTelePhone.hasError('max')">Contact number should be 10 digit</div>
-                </div> 
-              
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">E-MAIL ID:</label>
+          <input
+            class="form-control"
+            formControlName="schoolEmail"
+            [(ngModel)]="emailOfSchool"
+            (blur)="checkEmail($event)"
+            name="schoolEmail"
+            type="text"
+            [ngClass]="{
+              'is-invalid': f.schoolEmail.touched && f.schoolEmail.errors
+            }"
+          />
+          <span class="align-email-error" *ngIf="showEmailErrorMessage"
+            >This email already exists</span
+          >
+          <div
+            *ngIf="f.schoolEmail.touched && f.schoolEmail.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.schoolEmail.errors.required">
+              Email id is required
             </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">IB/IGCSC/OTHER INTERNATIONAL BOARD ENROLLMENT NO.:</label>
-                    <input class="form-control" id="float-input"  formControlName="enrollNo"  type="text" size="30" [ngClass]="{ 'is-invalid': f.enrollNo.touched && f.enrollNo.errors }" numbersOnly>  
-                    <div *ngIf="f.enrollNo.touched && f.enrollNo.errors" class="invalid-feedback">
-                        <div *ngIf="f.enrollNo.errors.required">Board or Enrollment number  required</div>
-                    </div>  
-                </div>
-            </div> 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION:</label>
-                <input class="form-control" id="float-input"  formControlName="author1"  type="text" size="30"  [ngClass]="{ 'is-invalid': f.author1.touched && f.author1.errors }" numbersOnly>  
-                <div *ngIf="f.author1.touched && f.author1.errors" class="invalid-feedback">
-                    <div *ngIf="f.author1.errors.required">Concerned Person Name is  required</div>
-                </div>      
+            <div *ngIf="f.schoolEmail.hasError('pattern')">
+              Email must be a valid email address
             </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">CONTACT NO.: </label>
-                    <input class="form-control" id="float-input"  formControlName="designation1"  type="text" size="30" [ngClass]="{ 'is-invalid': f.designation1.touched && f.designation1.errors }">  
-                    <div *ngIf="f.designation1.touched && f.designation1.errors" class="invalid-feedback">
-                        <div *ngIf="f.designation1.errors.required">Contact Number is  required</div>
-                        <div *ngIf="f.designation1.hasError('pattern')">Please enter valid contact number</div>
-                        <div *ngIf="f.designation1.hasError('min')">Contact number should be 10 digit</div>
-                        <div *ngIf="f.designation1.hasError('max')">Contact number should be 10 digit</div>
-                    </div>  
-                </div>
-            </div> 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION  :</label>
-                <input class="form-control" id="float-input"  formControlName="author2"  type="text" size="30" [ngClass]="{ 'is-invalid': f.author2.touched && f.author2.errors }" numbersOnly>  
-                <div *ngIf="f.author2.touched && f.author2.errors" class="invalid-feedback">
-                    <div *ngIf="f.author2.errors.required">Concerned Person Name is  required</div>
-                </div>     
-            </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">CONTACT NO.:  </label>
-                    <input class="form-control" id="float-input"  formControlName="designation2"  type="text" size="30" [ngClass]="{ 'is-invalid': f.designation2.touched && f.designation2.errors }" numbersOnly>  
-                    <div *ngIf="f.designation2.touched && f.designation2.errors" class="invalid-feedback">
-                        <div *ngIf="f.designation2.errors.required">Contact Number is  required</div>
-                        <div *ngIf="f.designation2.hasError('pattern')">Please enter valid contact number</div>
-                        <div *ngIf="f.designation2.hasError('min')">Contact number should be 10 digit</div>
-                        <div *ngIf="f.designation2.hasError('max')">Contact number should be 10 digit</div>
-                    </div> 
-                </div>
-            </div> 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">SPORTS INFRASTRUCTURE:</label>
-                    <textarea [rows]="5" [cols]="30" class="form-control" formControlName="schoolInfra"  [ngClass]="{ 'is-invalid': f.schoolInfra.touched && f.schoolInfra.errors }"></textarea>
-                    <div *ngIf="f.schoolInfra.touched && f.schoolInfra.errors" class="invalid-feedback">
-                        <div *ngIf="f.schoolInfra.errors.required">Spots Infrastructure is  required</div>
-                    </div>   
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">NO. OF COACHES AND THEIR SPECIALISED GAMES:</label>
-                    <textarea [rows]="5" [cols]="30" class="form-control" formControlName="gameCoach"  [ngClass]="{ 'is-invalid': f.gameCoach.touched && f.gameCoach.errors }"></textarea>
-                    <div *ngIf="f.gameCoach.touched && f.gameCoach.errors" class="invalid-feedback">
-                        <div *ngIf="f.gameCoach.errors.required">Coach Information is  required</div>
-                    </div> 
-                </div>
-       
-            </div> 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">ADDRESS:</label>
-                    <textarea [rows]="5" [cols]="30" class="form-control" formControlName="schoolAddress" [ngClass]="{ 'is-invalid': f.schoolAddress.touched && f.schoolAddress.errors }"></textarea>
-                    <div *ngIf="f.schoolAddress.touched && f.schoolAddress.errors" class="invalid-feedback">
-                        <div *ngIf="f.schoolAddress.errors.required">Address is  required</div>
-                    </div> 
-                </div>
-            </div>  
-            <div class="form-row">
-                <div class="align-instruction">
-                      AFTER CLICKING SUBMIT BUTTON KINDLY CLICK ON THE UPLOAD PDF BUTTON OPTION AND UPLOAD THE SIGNED PDF TO GET THE LOGIN CRENDENTIAL FOR ONLINE ENTRIES OF PARTICIPANTS.
-                </div>
-            </div>  
-            <button [disabled]="!schoolForm.valid" class="btn btn-primary marginR10" type="button" (click)="onSubmit()">Submit</button>
-            <button class="btn btn-primary-outline" type="button" (click)="display=false">Cancel</button>
+          </div>
+        </div>
+      </div>
 
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">CONTACT NO.:</label>
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="schoolTelePhone"
+            type="text"
+            [ngClass]="{
+              'is-invalid':
+                f.schoolTelePhone.touched && f.schoolTelePhone.errors
+            }"
+          />
+          <div
+            *ngIf="f.schoolTelePhone.touched && f.schoolTelePhone.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.schoolTelePhone.errors.required">
+              Contact Number is required
+            </div>
+            <div *ngIf="f.schoolTelePhone.hasError('pattern')">
+              Please enter valid contact number
+            </div>
+            <div *ngIf="f.schoolTelePhone.hasError('min')">
+              Contact number should be 10 digit
+            </div>
+            <div *ngIf="f.schoolTelePhone.hasError('max')">
+              Contact number should be 10 digit
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4"
+            >IB/IGCSC/OTHER INTERNATIONAL BOARD ENROLLMENT NO.:</label
+          >
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="enrollNo"
+            type="text"
+            size="30"
+            [ngClass]="{
+              'is-invalid': f.enrollNo.touched && f.enrollNo.errors
+            }"
+            numbersOnly
+          />
+          <div
+            *ngIf="f.enrollNo.touched && f.enrollNo.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.enrollNo.errors.required">
+              Board or Enrollment number required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION:</label>
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="author1"
+            type="text"
+            size="30"
+            [ngClass]="{ 'is-invalid': f.author1.touched && f.author1.errors }"
+            numbersOnly
+          />
+          <div
+            *ngIf="f.author1.touched && f.author1.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.author1.errors.required">
+              Concerned Person Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">CONTACT NO.: </label>
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="designation1"
+            type="text"
+            size="30"
+            [ngClass]="{
+              'is-invalid': f.designation1.touched && f.designation1.errors
+            }"
+          />
+          <div
+            *ngIf="f.designation1.touched && f.designation1.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.designation1.errors.required">
+              Contact Number is required
+            </div>
+            <div *ngIf="f.designation1.hasError('pattern')">
+              Please enter valid contact number
+            </div>
+            <div *ngIf="f.designation1.hasError('min')">
+              Contact number should be 10 digit
+            </div>
+            <div *ngIf="f.designation1.hasError('max')">
+              Contact number should be 10 digit
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">CONCERNED PERSON AND DESIGNATION :</label>
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="author2"
+            type="text"
+            size="30"
+            [ngClass]="{ 'is-invalid': f.author2.touched && f.author2.errors }"
+            numbersOnly
+          />
+          <div
+            *ngIf="f.author2.touched && f.author2.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.author2.errors.required">
+              Concerned Person Name is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">CONTACT NO.: </label>
+          <input
+            class="form-control"
+            id="float-input"
+            formControlName="designation2"
+            type="text"
+            size="30"
+            [ngClass]="{
+              'is-invalid': f.designation2.touched && f.designation2.errors
+            }"
+            numbersOnly
+          />
+          <div
+            *ngIf="f.designation2.touched && f.designation2.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.designation2.errors.required">
+              Contact Number is required
+            </div>
+            <div *ngIf="f.designation2.hasError('pattern')">
+              Please enter valid contact number
+            </div>
+            <div *ngIf="f.designation2.hasError('min')">
+              Contact number should be 10 digit
+            </div>
+            <div *ngIf="f.designation2.hasError('max')">
+              Contact number should be 10 digit
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">SPORTS INFRASTRUCTURE:</label>
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            class="form-control"
+            formControlName="schoolInfra"
+            [ngClass]="{
+              'is-invalid': f.schoolInfra.touched && f.schoolInfra.errors
+            }"
+          ></textarea>
+          <div
+            *ngIf="f.schoolInfra.touched && f.schoolInfra.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.schoolInfra.errors.required">
+              Spots Infrastructure is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4"
+            >NO. OF COACHES AND THEIR SPECIALISED GAMES:</label
+          >
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            class="form-control"
+            formControlName="gameCoach"
+            [ngClass]="{
+              'is-invalid': f.gameCoach.touched && f.gameCoach.errors
+            }"
+          ></textarea>
+          <div
+            *ngIf="f.gameCoach.touched && f.gameCoach.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.gameCoach.errors.required">
+              Coach Information is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">ADDRESS:</label>
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            class="form-control"
+            formControlName="schoolAddress"
+            [ngClass]="{
+              'is-invalid': f.schoolAddress.touched && f.schoolAddress.errors
+            }"
+          ></textarea>
+          <div
+            *ngIf="f.schoolAddress.touched && f.schoolAddress.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.schoolAddress.errors.required">
+              Address is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="align-instruction">
+          AFTER CLICKING SUBMIT BUTTON KINDLY CLICK ON THE UPLOAD PDF BUTTON
+          OPTION AND UPLOAD THE SIGNED PDF TO GET THE LOGIN CRENDENTIAL FOR
+          ONLINE ENTRIES OF PARTICIPANTS.
+        </div>
+      </div>
+      <button
+        [disabled]="!schoolForm.valid"
+        class="btn btn-primary marginR10"
+        type="button"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+      <button
+        class="btn btn-primary-outline"
+        type="button"
+        (click)="display = false"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+  <div *ngIf="!isRegisteredSchool">
+    <form [formGroup]="verifyEmail">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">E-MAIL ID:</label>
+          <input
+            class="form-control"
+            formControlName="varifyEmail"
+            name="varifyEmail"
+            type="text"
+            required
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4"> </label>
+          <div>
+            <button
+              [disabled]="!verifyEmail.valid"
+              class="btn btn-primary marginR10"
+              type="button"
+              (click)="onEmailVerify()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="showErrorMessage">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close close-button" data-dismiss="alert">
+          &times;
+        </button>
+        <strong>Error! </strong>
+        <span class="align-message"> Data not found for this email id</span>
+      </div>
+    </div>
+    <div class="padd-top" *ngIf="schoolId && !showErrorMessage">
+      <div>
+        <div class="form-group col-md-4 align-form">
+          <a
+            class="btn btn-primary"
+            href="https://issoindia.com/isso-php/schoolRegistration/downloadPdf/{{
+              schoolId
+            }}"
+            >Download PDF</a
+          >
+        </div>
+        <form [formGroup]="fileForm">
+          <div class="form-group col-md-4">
+            <div>
+              <input
+                type="file"
+                [(ngModel)]="selectedProfile"
+                formControlName="profile"
+                (change)="onFileSelected($event)"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="!isValidFile">
+              <span class="error-class"
+                >Invalid File type Please select file PDF format only</span
+              >
+            </div>
+            <div *ngIf="isFileBig">
+              <span class="error-class"
+                >File size too large please select image below 100 KB</span
+              >
+            </div>
+
+            <input
+              type="hidden"
+              [(ngModel)]="schoolId"
+              formControlName="schoolId"
+              class="form-control"
+              id="inputWarning1"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <button
+              [disabled]="!fileForm.valid"
+              class="btn btn-primary marginR10"
+              type="button"
+              (click)="onFileUpload()"
+            >
+              Submit
+            </button>
+          </div>
         </form>
-    </div> 
-   <div *ngIf="!isRegisteredSchool">
-        <form [formGroup]="verifyEmail">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">E-MAIL ID:</label>
-                    <input class="form-control" formControlName="varifyEmail" name="varifyEmail"  type="text" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4"> </label>
-                <div>
-                    <button [disabled]="!verifyEmail.valid" class="btn btn-primary marginR10" type="button" (click)="onEmailVerify()">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        
-        <div  *ngIf="showErrorMessage">
-            <div class="alert alert-danger  alert-dismissible">
-            <button type="button" class="close close-button" data-dismiss="alert">&times;</button>
-            <strong>Error! </strong> 
-            <span class="align-message"> Data not found for this email id</span>
-            </div>
-        </div>  
-        <div class="padd-top" *ngIf="schoolId && !showErrorMessage">
-            <div> 
-                <div class="form-group col-md-4 align-form">
-                    <a  class="btn btn-primary" href="https://issoindia.com/isso-php/schoolRegistration/downloadPdf/{{schoolId}}">Download PDF</a>
-                </div>
-                <form [formGroup]="fileForm">
-                    <div class="form-group col-md-4">
-                        <div>
-                            <input type="file"   [(ngModel)]="selectedProfile"  formControlName="profile" (change)="onFileSelected($event)" class="form-control">
-                        </div>
-                        <div *ngIf="!isValidFile">
-                            <span class="error-class">Invalid File type Please select file PDF format only</span>
-                        </div>
-                        <div *ngIf="isFileBig">
-                            <span class="error-class">File size too large please select image below 100 KB</span>
-                        </div> 
-
-                        <input type="hidden" [(ngModel)]="schoolId" formControlName="schoolId" class="form-control"
-                        id="inputWarning1">
-
-                    </div>
-                    <div class="form-group col-md-4">
-                        <button [disabled]="!fileForm.valid" class="btn btn-primary marginR10" type="button" (click)="onFileUpload()">Submit</button>
-                    </div>
-               </form>
-
-
-            </div>  
-           
-              
-
-            
-        </div>   
-   </div> 
+      </div>
+    </div>
+  </div>
 </div>
-    <p-toast [style]="{marginTop: '50px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
-
-
-
-    
- 
-
-
-
-
- 
-
-  
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>

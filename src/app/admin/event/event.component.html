@@ -106,7 +106,7 @@
             [inputStyle]="{ width: '100%' }"
             [monthNavigator]="true"
             [yearNavigator]="true"
-            yearRange="2000:2099"
+            [yearRange]="schoolYearRange"
             [disabled]="isReadonly"
           ></p-calendar>
         </div>
@@ -121,7 +121,7 @@
             [inputStyle]="{ width: '100%' }"
             [monthNavigator]="true"
             [yearNavigator]="true"
-            yearRange="2000:2099"
+            [yearRange]="schoolYearRange"
             [disabled]="isReadonly"
           ></p-calendar>
         </div>
@@ -189,8 +189,18 @@
           </textarea>
         </div>
       </div>
+
       <div class="form-row">
         <div class="form-group col-md-6">
+          <label for="inputPassword4">Extra Tab Required</label>
+          <p-dropdown
+            [options]="yesNoOptions"
+            size="30"
+            [(ngModel)]="extraTabRequired"
+            (onChange)="onTabChange($event)"
+            formControlName="extraTabRequired"
+          >
+          </p-dropdown>
           <label for="inputPassword4">Event Zone</label>
           <div>
             <p-multiSelect
@@ -203,7 +213,21 @@
             </p-multiSelect>
           </div>
         </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4"
+            >Extra Tab Label Values(Add comma seperated)
+          </label>
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            class="form-control"
+            formControlName="extraTabValues"
+            [readonly]="!isExtraTabRequired"
+          >
+          </textarea>
+        </div>
       </div>
+
       <input
         id="float-input1"
         formControlName="eventId"

@@ -43,6 +43,7 @@ export class IssoUtilService {
   eventZone: { label: string; value: string }[];
   genderOptions: { label: string; value: string }[];
   gameOptions: { label: string; value: string }[];
+  yesNoOptions: { label: string; value: string }[];
   standardClass: { label: string; value: string }[];
   tShirtSize: { label: string; value: string }[];
   // constructor(private http: HttpClient) { }
@@ -246,6 +247,16 @@ export class IssoUtilService {
     ];
     return this.gameOptions;
   }
+
+  setYesNo() {
+    this.yesNoOptions = [
+      { label: "Select", value: "" },
+      { label: "Yes", value: "Yes" },
+      { label: "No", value: "No" },
+    ];
+    return this.yesNoOptions;
+  }
+
   setGender() {
     this.genderOptions = [
       { label: "Select Gender", value: "" },
@@ -275,6 +286,18 @@ export class IssoUtilService {
 
     return this.genderOptions;
   }
+  getAcademicYear(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0 = January, 5 = June
+
+    // If current date is before June (i.e., between Jan - May), school year started last year
+    const startYear = month < 5 ? year - 1 : year;
+    const endYear = startYear + 1;
+
+    return `${startYear}-${endYear.toString().slice(-2)}`;
+  }
+
   setDateOfBirthValidation_bk(ageRange) {
     var date = new Date();
     var newdate = new Date(date);

@@ -1,0 +1,299 @@
+ 
+ SELECT 
+    s.schoolName,
+    sg.gender,
+    sg.ageRange,
+    COUNT(sg.studentId) as totalStudents,
+    CASE
+        -- Event is active → no team completion check
+        WHEN e.event_status = 1 OR e.startDate >= CURDATE() THEN 'Event Active'
+
+        -- Team subgame only check
+        WHEN (g.gameType = 'Team' OR sub.gameType = 'Team') THEN
+            CASE 
+                WHEN sg.gender = 1 AND sg.ageRange = 11 AND COUNT(sg.studentId) >= acm.min_eleven_boys THEN 'Complete Team'
+                WHEN sg.gender = 1 AND sg.ageRange = 14 AND COUNT(sg.studentId) >= acm.min_fourteen_boys THEN 'Complete Team'
+                WHEN sg.gender = 1 AND sg.ageRange = 17 AND COUNT(sg.studentId) >= acm.min_seventeen_boys THEN 'Complete Team'
+                WHEN sg.gender = 1 AND sg.ageRange = 19 AND COUNT(sg.studentId) >= acm.min_ninteen_boys THEN 'Complete Team'
+
+                WHEN sg.gender = 2 AND sg.ageRange = 11 AND COUNT(sg.studentId) >= acm.min_eleven_girls THEN 'Complete Team'
+                WHEN sg.gender = 2 AND sg.ageRange = 14 AND COUNT(sg.studentId) >= acm.min_fourteen_girls THEN 'Complete Team'
+                WHEN sg.gender = 2 AND sg.ageRange = 17 AND COUNT(sg.studentId) >= acm.min_seventeen_girls THEN 'Complete Team'
+                WHEN sg.gender = 2 AND sg.ageRange = 19 AND COUNT(sg.studentId) >= acm.min_ninteen_girls THEN 'Complete Team'
+                ELSE 'Incomplete Team'
+            END
+        ELSE 'Individual / Not Checked'
+    END as teamStatus
+
+FROM tbl_student_game_mapping sg
+JOIN tbl_school s ON sg.schoolId = s.schoolId
+JOIN tbl_subgame sub ON sg.subgameId = sub.id
+JOIN tbl_game g ON g.gameId = sub.gameId
+JOIN tbl_events e ON sg.eventId = e.eventId
+LEFT JOIN tbl_age_capacity_mapping acm ON acm.gameId = g.gameId AND acm.subgameId = sub.id
+
+WHERE sg.eventId = 76 AND g.gameId = 15
+GROUP BY s.schoolId, sg.gender, sg.ageRange
+ORDER BY s.schoolName;
+---------------------------------------------------------------------------------------------------------- 
+ I have few database tables tbl_events which contains few columns eventId (value contains 1,2,3), event_year ( value contains 2023-2024 ,2024-2025 ) ,Table tbl_school which contains few columns schoolId (value contains 1,2,3) ,schoolName(New high school,ABC school, Great School) . Table  tbl_game  which contains few columns gameId  (value contains 1,2,3),Table tbl_merit which contains few columns eventId(value contains 1,2,3),schoolId (value contains 1,2,3), gameId (value contains 1,2,3) ,rank (value contains 1,2,3)
+ 
+Summarise above data create sql query to get data in below format 
+need total medal count in max to min count and  top 5 schools only disply for each game  also greater than 2023-2024 event year
+  Game              School Name            Total Medals             EventYear 
+-----------------------------------------------------------------------------------------------
+  FOOTBALL          New school(id=1)          5                      2023-2024
+                    Great school              4                      2023-2024
+                    Test school               3                      2023-2024
+
+
+ SWIMMING           Great school(id=1)        15                      2023-2024
+                    New school                10                      2023-2024
+                    Test school               9                       2023-2024
+
+
+
+
+WITH MedalCounts AS (
+    SELECT 
+        g.gameName AS `Game`,
+        s.schoolName AS `School Name`,
+        e.event_year AS `Event Year`,
+        COUNT(*) AS `Total Medals`
+    FROM 
+        tbl_merit m
+    INNER JOIN 
+        tbl_school s ON m.schoolId = s.schoolId
+    INNER JOIN 
+        tbl_game g ON m.gameId = g.gameId
+    INNER JOIN 
+        tbl_events e ON m.eventId = e.eventId
+    WHERE 
+        e.event_year >= '2023-2024'
+    GROUP BY 
+        g.gameName, s.schoolName, e.event_year
+),
+RankedMedals AS (
+    SELECT 
+        mc.*,
+        DENSE_RANK() OVER (PARTITION BY mc.Game, mc.`Event Year` ORDER BY mc.`Total Medals` DESC) AS `rank_per_game_year`
+    FROM 
+        MedalCounts mc
+)
+SELECT 
+    `Game`,
+    `School Name`,
+    `Total Medals`,
+    `Event Year`
+FROM 
+    RankedMedals
+WHERE 
+    rank_per_game_year <= 5
+ORDER BY 
+    `Event Year`, `Game`, `Total Medals` DESC;
+
+
+WITH MedalCounts AS (
+    SELECT 
+        g.gameName AS `Game`,
+        s.schoolName AS `School Name`,
+        e.event_year AS `Event Year`,
+        COUNT(*) AS `Total Medals`
+    FROM 
+        tbl_merit m
+    INNER JOIN 
+        tbl_school s ON m.schoolId = s.schoolId
+    INNER JOIN 
+        tbl_game g ON m.gameId = g.gameId
+    INNER JOIN 
+        tbl_events e ON m.eventId = e.eventId
+    WHERE 
+        e.event_year >= '2023-2024'
+    GROUP BY 
+        g.gameName, s.schoolName, e.event_year
+),
+RankedMedals AS (
+    SELECT 
+        mc.*,
+        DENSE_RANK() OVER (PARTITION BY mc.Game, mc.`Event Year` ORDER BY mc.`Total Medals` DESC) AS rank_per_game_year
+    FROM 
+        MedalCounts mc
+)
+SELECT 
+    `Event Year`,
+    `Game`,
+    `School Name`,
+    `Total Medals`
+FROM 
+    RankedMedals
+WHERE 
+    rank_per_game_year <= 5
+ORDER BY 
+    `Event Year` ASC, 
+    `Game` ASC, 
+    `Total Medals` DESC;
+
+
+---------------------
+WITH MedalCounts AS (
+    SELECT 
+        g.gameName AS `Game`,
+        s.schoolName AS `School Name`,
+        e.event_year AS `Event Year`,
+        COUNT(*) AS `Total Medals`
+    FROM 
+        tbl_merit m
+    INNER JOIN 
+        tbl_school s ON m.schoolId = s.schoolId
+    INNER JOIN 
+        tbl_game g ON m.gameId = g.gameId
+    INNER JOIN 
+        tbl_events e ON m.eventId = e.eventId
+    WHERE 
+        e.event_year >= '2023-2024'
+    GROUP BY 
+        g.gameName, s.schoolName, e.event_year
+),
+RankedMedals AS (
+    SELECT 
+        mc.*,
+        DENSE_RANK() OVER (PARTITION BY mc.Game, mc.`Event Year` ORDER BY mc.`Total Medals` DESC) AS `rank_per_game_year`
+    FROM 
+        MedalCounts mc
+)
+SELECT 
+    `Game`,
+    `School Name`,
+    `Total Medals`,
+    `Event Year`
+FROM 
+    RankedMedals
+WHERE 
+    rank_per_game_year <= 5
+ORDER BY 
+    `Event Year`, `Game`, `Total Medals` DESC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ I have few database tables tbl_events which contains few columns eventId (value contains 1,2,3), event_year ( value contains 2023-2024 ,2024-2025 ), tbl_student_game_mapping which contains few columns studentId (value contains 1,2,3),schoolId (value contains 10,11,12) ,eventId (value contains 1,2,3), gameId (value contains 1,2,3) .Table tbl_school which contains few columns schoolId (value contains 1,2,3) ,schoolName(New high school,ABC school, Great School) . Table  tbl_game  which contains few columns gameId  (value contains 1,2,3),
+ gameName ( value contains FOOTBALL, BASKETBALL,SWIMMING)
+ 
+ Multiple Schools (multiple students) is participating in multiple events  using games(gameId) as below format
+ 
+ Event Name         School Name            Student Name               Game             EventYear 
+-----------------------------------------------------------------------------------------------
+FOOTBALL Event      New school(id=1)         Amol                   FOOTBALL(id=1)     2023-2024
+                    New school(id=1)         diya                   FOOTBALL(id=1)
+					New school(id=1)         amar                   FOOTBALL(id=1)
+					Great school(id=2)       Rekha                  FOOTBALL(id=1)
+					Great school(id=2)       Monu                   FOOTBALL(id=1)
+					
+SWIMMING Event      New school(id=1)         Amol                   SWIMMING(id=2)
+					New school(id=1)         diya                   SWIMMING(id=2)
+					Great school(id=1)       Vinod                  SWIMMING(id=2)
+					Great school(id=2)       Rekha                  SWIMMING(id=2)
+					Great school(id=2)       Monu                   SWIMMING(id=2)
+					
+FOOTBALL Event      New school(id=1)         Amol                   FOOTBALL(id=1)     2024-2025
+                    Great school(id=2)       Rekha                  FOOTBALL(id=1)
+					Great school(id=2)       Monu                   FOOTBALL(id=1)
+					
+SWIMMING Event      New school(id=1)         Amol                   SWIMMING(id=2)
+					New school(id=1)         diya                   SWIMMING(id=2)
+					New school(id=1)         amar                   SWIMMING(id=2)
+					Great school(id=2)       Rekha                  SWIMMING(id=2)
+					Great school(id=2)       Monu                   SWIMMING(id=2)
+					
+					
+Summarise above data create sql query to get data in below format 
+
+School Name    Game Name      EventYear          Total students                           
+----------------------------------------------------------------------------------------------- 	
+New school		FOOTBALL	  2023-2024	              3
+                SWIMMING                              2
+Great school    FOOTBALL                              2
+                SWIMMING                              3
+New school		FOOTBALL	  2024-2025               1
+                SWIMMING                              3
+Great school    FOOTBALL                              2
+                SWIMMING                              2
+				
+				
+SELECT 
+    s.schoolName AS `School Name`,
+    g.gameName AS `Game Name`,
+    e.event_year AS `Event Year`,
+    COUNT(DISTINCT sg.studentId) AS `Total Students`
+FROM 
+    tbl_student_game_mapping sg
+INNER JOIN 
+    tbl_school s ON sg.schoolId = s.schoolId
+INNER JOIN 
+    tbl_game g ON sg.gameId = g.gameId
+INNER JOIN 
+    tbl_events e ON sg.eventId = e.eventId
+GROUP BY 
+    s.schoolName, g.gameName, e.event_year
+ORDER BY 
+    e.event_year, s.schoolName, g.gameName;
+	
+-------------------------------------------------------------------------------------------
+SELECT 
+    s.schoolName AS `School Name`,
+    g.gameName AS `Game Name`,
+    e.event_year AS `Event Year`,
+    COUNT(DISTINCT sg.studentId) AS `Total Students`
+FROM 
+    tbl_student_game_mapping sg
+INNER JOIN 
+    tbl_school s ON sg.schoolId = s.schoolId
+INNER JOIN 
+    tbl_game g ON sg.gameId = g.gameId
+INNER JOIN 
+    tbl_events e ON sg.eventId = e.eventId
+WHERE 
+    e.event_year >= '2023-2024'
+GROUP BY 
+    e.event_year, s.schoolName, g.gameName
+ORDER BY 
+    e.event_year, s.schoolName, g.gameName;	
+	
+-------------------------------------------------------------------------------------------
+ BELOW IS IMP QUERY
+-------------------------------------------------------------------------------------------
+SELECT 
+    s.schoolName AS `School Name`,
+    g.gameName AS `Game Name`,
+    e.event_year AS `Event Year`,
+    COUNT(DISTINCT sg.studentId) AS `Total Students`
+FROM 
+    tbl_student_game_mapping sg
+INNER JOIN 
+    tbl_school s ON sg.schoolId = s.schoolId
+INNER JOIN 
+    tbl_game g ON sg.gameId = g.gameId
+INNER JOIN 
+    tbl_events e ON sg.eventId = e.eventId
+INNER JOIN
+    tbl_students st ON sg.studentId = st.sId
+WHERE 
+    e.event_year >= '2023-2024'
+    AND st.isPresent = 0 -- only present students
+GROUP BY 
+    e.event_year, s.schoolName, g.gameName
+ORDER BY 
+    e.event_year, s.schoolName, g.gameName;

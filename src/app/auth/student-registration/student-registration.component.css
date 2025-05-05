@@ -1,3 +1,51 @@
 .select-val {
   font-size: medium;
 }
+.bg-image {
+  background: url(https://issoindia.com/img/sp-bg.png);
+  background-size: 100%;
+}
+.align-isso-button {
+  margin-top: 20px;
+}
+.custom-rounded {
+  padding: 0px 15px 0 15px;
+  border-radius: 12px;
+}
+.underline-text {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bg-color {
+  background-color: red;
+  color: white;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+  color: #ffffff;
+  background: blue;
+  border-radius: 20px;
+  padding-top: 8px;
+  width: 120%;
+}
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 400px;
+}
+.ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 380px !important;
+  border-radius: 10px !important;
+}
+.ui-toast .ui-toast-message-content {
+  padding: 1em 2em;
+}
+.ui-toast .ui-toast-close-icon {
+  position: absolute;
+  top: 1em;
+  right: 0.25em;
+  cursor: pointer;
+  display: inline-block;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+  padding-top: 10px;
+  padding-right: 15px;
+  color: #ffffff;
+}

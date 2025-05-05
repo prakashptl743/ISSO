@@ -1,0 +1,73 @@
+<div *ngIf="showSgfi">
+  <div class="event-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn-nav"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<h1>Student</h1>
+
+<div class="ui-g-12 align-merit-content" *ngIf="studentDataLength > 0">
+  <div class="table">
+    <div class="table-row table-header">
+      <div class="table-cell align-sr">Sr No.</div>
+      <div class="table-cell">Student Name</div>
+      <div class="table-cell">Father Name</div>
+      <div class="table-cell">Date Of Birth</div>
+      <div class="table-cell">Gender</div>
+      <div class="table-cell">Photo</div>
+      <!--  <div class="table-cell">Status</div>-->
+      <div class="table-cell">Approved Status</div>
+    </div>
+
+    <div
+      class="table-row"
+      *ngFor="let student of studentProfileData; let i = index"
+    >
+      <div class="table-cell align-sr">{{ i + 1 }}</div>
+      <div class="table-cell">{{ student.studentName }}</div>
+      <div class="table-cell">{{ student.fatherName }}</div>
+      <div class="table-cell">
+        {{ student.dateOfBirth | date : "MMM d, y" }}
+      </div>
+      <div class="table-cell">
+        {{ student.gender == "1" ? "Boys" : "Girls" }}
+      </div>
+      <div class="table-cell">
+        <!-- <img
+          height="50"
+          width="50"
+          src="{{ setPhotoYear }}/{{ student.photo }}"
+        /> -->
+
+        <img
+          height="50"
+          width="50"
+          src="{{ setPhotoYear }}/{{ student.photo }}"
+          (error)="onImageError($event)"
+        />
+      </div>
+      <div class="table-cell">
+        <span
+          class="p-3 mb-2 bg-success text-white"
+          *ngIf="student.approvedStatus == '1'"
+          >Approved</span
+        >
+        <span
+          class="p-3 mb-2 bg-danger text-white"
+          *ngIf="student.approvedStatus == '0'"
+        >
+          Pending</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
