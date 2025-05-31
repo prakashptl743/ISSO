@@ -11,6 +11,7 @@ export enum Permission {
   Volunteer = "Volunteer",
   Sgfi = "Sgfi",
   StudentProfile = "StudentProfile",
+  StudentProfileEnrollment = "StudentProfileEnrollment",
   Profile = "Profile",
 }
 export enum AdminPermission {
@@ -51,6 +52,7 @@ export class UserService {
     Permission.Volunteer,
     Permission.Sgfi,
     Permission.StudentProfile,
+    Permission.StudentProfileEnrollment,
     Permission.Profile,
   ];
 

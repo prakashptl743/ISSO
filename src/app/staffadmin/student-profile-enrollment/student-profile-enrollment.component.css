@@ -2,17 +2,51 @@
   color: #ffffff;
   background: blue;
   border-radius: 20px;
-  padding-top: 7px;
-  width: 160%;
+  padding-top: 8px;
+  width: 120%;
 }
-:host ::ng-deep .ui-toast .ui-toast-close-icon {
-  padding-top: 15px;
-  padding-right: 21px;
-  text-decoration: none;
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 400px;
 }
+
+.ui-toast .ui-toast-message.ui-toast-message-success {
+  width: 380px !important;
+  border-radius: 10px !important;
+}
+.ui-toast .ui-toast-message-content {
+  padding: 1em 2em;
+}
+.ui-toast .ui-toast-close-icon {
+  position: absolute;
+  top: 1em;
+  right: 0.25em;
+  cursor: pointer;
+  display: inline-block;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+  padding-top: 10px;
+  padding-right: 15px;
+  color: #ffffff;
+}
+
+:host
+  ::ng-deep
+  .ui-autocomplete-panel
+  .ui-autocomplete-items
+  .ui-autocomplete-list-item {
+  padding: 0 !important;
+}
+.align-aadhar {
+  padding-left: 20px;
+}
+.p-autocomplete {
+  width: 100%;
+}
+
 .align-heading {
   padding: 10px;
   margin: 0;
+
   color: #080808;
   text-align: center;
   border-radius: 20px;
@@ -21,6 +55,9 @@
 }
 :host::ng-deep .modal-open {
   overflow: unset !important;
+}
+.table-responsive {
+  border-radius: 0 !important;
 }
 :host::ng-deep .modal-dialog {
   margin: 0 !important;
@@ -211,4 +248,129 @@ h5 {
 .not-found-content a {
   margin-top: 20px;
   display: inline-block;
+}
+/* Define slide-in animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-list li {
+  opacity: 0;
+  animation: fadeSlideIn 0.6s ease forwards;
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+
+/* Stagger animation using nth-child */
+.animated-list li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.animated-list li:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.animated-list li:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.animated-list li:nth-child(4) {
+  animation-delay: 0.7s;
+}
+.subgagme-dropdown {
+  height: 150px;
+}
+.added-student {
+  text-align: center;
+  background: gray;
+  font-size: 15px;
+  padding: 7px;
+  text-decoration: blink;
+  color: white;
+  margin: 0;
+  text-transform: uppercase;
+}
+.student-header {
+  padding: 3px 25px;
+  border-radius: 10px;
+  background: white;
+  color: black;
+}
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top of everything */
+}
+
+.pulsing-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.pulsing-dots div {
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pulsing-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulsing-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* New CSS to freeze the screen */
+body.no-scroll {
+  overflow: hidden;
+  height: 100%; /* Important for some browsers/scenarios */
+}
+.fade-in {
+  animation: fadeIn ease 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.align-success-message {
+  margin: 0;
+  padding: 10px;
+  background: green;
+  color: white;
+  border-radius: 12px;
+}
+.team-complete-message {
+  padding: 10px;
 }

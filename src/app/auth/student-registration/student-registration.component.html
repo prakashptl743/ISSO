@@ -1,11 +1,22 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
 <div class="bg-image">
   <div class="container mt-4">
     <div class="card shadow-lg custom-rounded">
       <div class="row text-center border-bottom p-3 bg-color">
-        <div class="col underline-text border-right" (click)="changeMenu()">
+        <div
+          class="col underline-text border-right"
+          (click)="changeMenu('enroll')"
+        >
           Student Enrollment Form
         </div>
-        <div class="col underline-text" (click)="changeMenu()">
+        <div class="col underline-text" (click)="changeMenu('issoId')">
           Having Already ISSO ID
         </div>
       </div>
@@ -14,7 +25,7 @@
       <form
         [formGroup]="studentForm"
         (ngSubmit)="onSubmit()"
-        *ngIf="isStudentEnrollForm"
+        *ngIf="isStudentEnrollForm && !validStudentId"
       >
         <div class="row">
           <div class="col-md-6 mb-4">
@@ -236,7 +247,8 @@
           </button>
         </div>
       </form>
-      <div *ngIf="!isStudentEnrollForm">
+
+      <div *ngIf="!isStudentEnrollForm && !validStudentId">
         <form [formGroup]="issoEnrolledForm" (ngSubmit)="onIssoEnrollSubmit()">
           <div class="row">
             <div class="col-md-6 mb-4">
@@ -247,6 +259,8 @@
                 formControlName="studentId"
                 (blur)="issoEnrolledForm.controls.studentId.markAsTouched()"
                 placeholder="Enter student ID"
+                [(ngModel)]="studentId"
+                (input)="studentId = studentId?.toUpperCase()"
               />
               <div
                 class="text-danger"
@@ -279,3 +293,230 @@
   key="custom"
   position="bottom-center"
 ></p-toast>
+<!-- <div class="container">
+  <h1>Student Subgame Assignment</h1>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Father Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th colspan="3">Assigned Subgames (Min 1, Max 3)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i = index">
+        <td>{{ student.name }}</td>
+        <td>{{ student.fatherName }}</td>
+        <td>{{ student.dateOfBirth }}</td>
+        <td>{{ student.gender }}</td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 0, $event)"
+            [ngModel]="student.selectedSubGameIds[0]"
+          >
+            <option value="">-- Select SubGame 1 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 0)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[0]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 1, $event)"
+            [ngModel]="student.selectedSubGameIds[1]"
+          >
+            <option value="">-- Select SubGame 2 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 1)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[1]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 2, $event)"
+            [ngModel]="student.selectedSubGameIds[2]"
+          >
+            <option value="">-- Select SubGame 3 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 2)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[2]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary">
+    <h3>Global Subgame Capacity Status:</h3>
+    <ul>
+      <li *ngFor="let subgame of allSubGames">
+        {{ subgame.name }} (ID: {{ subgame.id }}): Current:
+        {{ currentSubGameCounts[subgame.id] || 0 }} / Max:
+        {{ subgame.maxCapacity }}
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] < subgame.minCapacity"
+          class="warning"
+        >
+          (Min: {{ subgame.minCapacity }} - Not Met!)
+        </span>
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] >= subgame.maxCapacity"
+          class="error"
+        >
+          (Max Capacity Reached!)
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <button (click)="submitDataTable()">Submit Assignments</button>
+</div> -->
+
+<!--Belo Code is IMP-->
+
+<!-- <div class="container">
+  <h1>Student Subgame Assignment</h1>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Father Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th colspan="3">Assigned Subgames (Min 1, Max 3)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i = index">
+        <td>{{ student.name }}</td>
+        <td>{{ student.fatherName }}</td>
+        <td>{{ student.dateOfBirth }}</td>
+        <td>{{ student.gender }}</td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 0, $event)"
+            [ngModel]="student.selectedSubGameIds[0]"
+          >
+            <option value="">-- Select SubGame 1 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 0)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= getMaxCapacity(subgame) &&
+                subgame.id !== student.selectedSubGameIds[0]
+              "
+            >
+              {{ subgame.subGameName }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                getMaxCapacity(subgame)
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 1, $event)"
+            [ngModel]="student.selectedSubGameIds[1]"
+          >
+            <option value="">-- Select SubGame 2 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 1)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= getMaxCapacity(subgame) &&
+                subgame.id !== student.selectedSubGameIds[1]
+              "
+            >
+              {{ subgame.subGameName }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                getMaxCapacity(subgame)
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 2, $event)"
+            [ngModel]="student.selectedSubGameIds[2]"
+          >
+            <option value="">-- Select SubGame 3 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 2)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= getMaxCapacity(subgame) &&
+                subgame.id !== student.selectedSubGameIds[2]
+              "
+            >
+              {{ subgame.subGameName }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                getMaxCapacity(subgame)
+              }})
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary">
+    <h3>Global Subgame Capacity Status:</h3>
+    <ul>
+      <li *ngFor="let subgame of allSubGames">
+        {{ subgame.subGameName }} (ID: {{ subgame.id }}): Current:
+        {{ currentSubGameCounts[subgame.id] || 0 }} / Max:
+        {{ getMaxCapacity(subgame) }}
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] < getMinCapacity(subgame)"
+          class="warning"
+        >
+          (Min: {{ getMinCapacity(subgame) }} - Not Met!)
+        </span>
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] >= getMaxCapacity(subgame)"
+          class="error"
+        >
+          (Max Capacity Reached!)
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <button [disabled]="isSubmitButtonDisabled" (click)="submitDataTable()">
+    Submit Assignments
+  </button>
+</div> -->

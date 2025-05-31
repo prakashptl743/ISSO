@@ -1,0 +1,401 @@
+<!-- <div class="bg-image">
+  <div class="container mt-4">
+    <div class="card shadow-lg custom-rounded">
+      <div class="row text-center border-bottom p-3 bg-color">
+        <div class="col underline-text border-right" (click)="changeMenu()">
+          Parent Enrollment Form
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <header>
+ 
+  <input type="checkbox" id="menu-checkbox" />
+ 
+  <label class="menu-toggle" for="menu-checkbox">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+
+  <div class="nav-wrapper">
+    <nav>
+      <a
+        [ngClass]="menuLabel == 'dashboard' ? 'active' : ''"
+        (click)="changeMenu('dashboard')"
+        >DASHBOARD</a
+      >
+      <a
+        [ngClass]="menuLabel == 'certificate' ? 'active' : ''"
+        (click)="changeMenu('certificate')"
+        >CERTIFCATE</a
+      >
+      <a
+        [ngClass]="menuLabel == 'profile' ? 'active' : ''"
+        (click)="changeMenu('profile')"
+        >PROFILE</a
+      >
+      <a (click)="changeMenu('exit')">EXIT</a>
+    </nav>
+  </div>
+</header> -->
+<nav class="navbar navbar-expand-lg navbar-dark fancy-navbar">
+  <div class="">
+    <!-- <a class="navbar-brand fancy-brand" href="#"
+      >ISSO <span class="brand-highlight">App</span></a
+    > -->
+    <!-- <img src="https://issoindia.com/img/logo.png" height="60" width="60" /> -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse float-end" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            [ngClass]="menuLabel == 'dashboard' ? 'active' : ''"
+            class="nav-link fancy-link"
+            aria-current="page"
+            (click)="changeMenu('dashboard')"
+            data-page="home"
+            ><i class="bi bi-house-door-fill"></i> DASHBOAD</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            [ngClass]="menuLabel == 'certificate' ? 'active' : ''"
+            class="nav-link fancy-link"
+            (click)="changeMenu('certificate')"
+            data-page="features"
+            ><i class="bi bi-award"></i> CERTIFICATE</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            [ngClass]="menuLabel == 'profile' ? 'active' : ''"
+            class="nav-link fancy-link"
+            (click)="changeMenu('profile')"
+            data-page="data"
+            ><i class="bi bi-person-check"></i>PROFILE</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            (click)="changeMenu('exit')"
+            class="nav-link fancy-link"
+            data-page="info"
+            ><i class="bi bi-box-arrow-right"></i>EXIT</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div *ngIf="menuLabel == 'certificate'">
+    <certificate-dashboard [studentData]="studentData"></certificate-dashboard>
+  </div>
+  <div *ngIf="menuLabel == 'profile'">
+    <div class="" *ngIf="studentData[0]">
+      <div class="table-responsive no-borer" *ngIf="studentData[0]">
+        <table class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <th><strong>Student Name:</strong></th>
+              <td>{{ studentData[0].studentName }}</td>
+              <th><strong>Father Name:</strong></th>
+              <td>{{ studentData[0].fatherName }}</td>
+            </tr>
+            <tr>
+              <th><strong>Date of Birth:</strong></th>
+              <td>{{ studentData[0].dateOfBirth | date : "dd-MMM-yyyy" }}</td>
+              <th><strong>Gender:</strong></th>
+              <td>{{ studentData[0].gender == "1" ? "Boys" : "Girls" }}</td>
+            </tr>
+            <tr>
+              <th><strong>Class:</strong></th>
+              <td>{{ studentData[0].standardClass }}</td>
+              <th><strong>Aadhar No:</strong></th>
+              <td>{{ studentData[0].aadharNumber }}</td>
+            </tr>
+            <tr>
+              <th><strong>Contact No:</strong></th>
+              <td>{{ studentData[0].contactNo }}</td>
+              <th><strong>Admission No:</strong></th>
+              <td>{{ studentData[0].admissionNumber }}</td>
+            </tr>
+            <tr>
+              <th><strong>T-Shirt Size:</strong></th>
+              <td>{{ studentData[0].tShirtSize }}</td>
+              <th><strong>Curriculum:</strong></th>
+              <td>{{ studentData[0].curruclm }}</td>
+            </tr>
+            <tr>
+              <th><strong>Passport:</strong></th>
+              <td>
+                {{
+                  studentData[0].passport === ""
+                    ? "N/A"
+                    : studentData[0].passport
+                }}
+              </td>
+              <th><strong>Registered Date:</strong></th>
+              <td>{{ studentData[0].createdDate | date : "dd-MMM-yyyy" }}</td>
+            </tr>
+            <tr>
+              <th><strong>School Name:</strong></th>
+              <td>{{ studentData[0].schoolName }}</td>
+              <th><strong>Student ID:</strong></th>
+              <td>{{ studentData[0].studentUniqueId }}</td>
+            </tr>
+            <tr>
+              <th><strong>Photo:</strong></th>
+              <td>
+                <img
+                  height="50"
+                  width="50"
+                  src="{{ setPhotoYear }}/{{ studentData[0].photo }}"
+                  (error)="onImageError($event)"
+                />
+              </td>
+              <th><strong>Status:</strong></th>
+              <td
+                [ngClass]="
+                  studentData[0].approvedStatus == '0'
+                    ? 'isPending'
+                    : 'isApproved'
+                "
+              >
+                {{
+                  studentData[0].approvedStatus == "0" ? "Pending" : "Approved"
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-content-wrapper">
+  <div class="container py-5" *ngIf="menuLabel == 'dashboard'">
+    <div
+      *ngIf="studentDataLength > 0"
+      class="fancy-section p-5 mb-5 animate__animated animate__fadeInUp animate__delay-1s"
+    >
+      <h4 class="text-center mb-5 text-dark">CURRENT EVENTS</h4>
+      <div class="row g-4">
+        <div
+          class="col-md-4"
+          *ngFor="let student of studentProfileData; let i = index"
+        >
+          <div
+            class="fancy-feature-card h-100"
+            *ngIf="student.event_status === '1' && student.startDate > today"
+          >
+            <!-- <i class="bi bi-speedometer2 feature-icon"></i> -->
+            <div class="text-center">
+              <img
+                class="rounded-circle"
+                height="70"
+                width="70"
+                src="{{ setPhotoYear }}/{{ student.photo }}"
+                (error)="onImageError($event)"
+              />
+            </div>
+            <h4 class="card-title mt-3">{{ student.eventName }}</h4>
+            <h4>{{ student.studentName }}</h4>
+            <p class="card-text">
+              {{ student.gameName }} UNDER {{ student.ageRange }}
+              {{ student.gender == "1" ? "Boys" : "Girls" }}
+            </p>
+            <p *ngIf="student.subGameName !== ''" class="card-text">
+              <b>SUBGAME:</b> {{ student.subGameName }}
+            </p>
+            <button
+              *ngIf="student.paidStatus == ''"
+              class="btn btn-warning btn-block"
+              type="button"
+              (click)="
+                payNow(
+                  student.isAffiliate == 'Yes'
+                    ? student.price
+                    : student.price * 2,
+                  student
+                )
+              "
+            >
+              PAY NOW
+              {{
+                student.isAffiliate == "Yes" ? student.price : student.price * 2
+              }}
+              Rs.
+            </button>
+            <span
+              *ngIf="student.paidStatus == 'Yes'"
+              class="pe-none btn btn-success btn-block"
+            >
+              PAID
+              {{
+                student.isAffiliate == "Yes" ? student.price : student.price * 2
+              }}
+              Rs.</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-5" *ngIf="studentDataLength == '0'">
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+          <div class="no-data-found-container p-5 text-center">
+            <div class="icon-wrapper mb-4">
+              <i class="bi bi-exclamation-triangle-fill animated-icon"></i>
+            </div>
+            <h2 class="display-5 fw-bold text-danger mb-3">No Data Found!</h2>
+            <p class="lead text-muted mb-4">
+              It seems there's no active event match for your profile please try
+              again later or contact school admin .
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div
+      class="fancy-section p-4 mb-5 animate__animated animate__fadeInUp animate__delay-1s"
+    >
+      <h2 class="text-center mb-4 text-dark">Recent Activity Log</h2>
+      <div class="table-responsive">
+        <table class="table fancy-table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Event</th>
+              <th scope="col">User</th>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>
+                <i class="bi bi-file-earmark-text-fill text-info me-2"></i>
+                Document Upload
+              </td>
+              <td>Alice Johnson</td>
+              <td>2025-05-26 10:30 AM</td>
+              <td>
+                <span class="badge bg-success fancy-badge">Completed</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>
+                <i class="bi bi-envelope-fill text-warning me-2"></i> Email Sent
+              </td>
+              <td>Bob Williams</td>
+              <td>2025-05-26 11:15 AM</td>
+              <td><span class="badge bg-primary fancy-badge">Pending</span></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>
+                <i class="bi bi-person-fill-add text-success me-2"></i> New User
+                Registered
+              </td>
+              <td>System</td>
+              <td>2025-05-26 11:40 AM</td>
+              <td>
+                <span class="badge bg-success fancy-badge">Completed</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>
+                <i class="bi bi-gear-fill text-secondary me-2"></i> Settings
+                Updated
+              </td>
+              <td>Charlie Brown</td>
+              <td>2025-05-26 12:05 PM</td>
+              <td>
+                <span class="badge bg-success fancy-badge">Completed</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>
+                <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+                Login Attempt Failed
+              </td>
+              <td>Unknown User</td>
+              <td>2025-05-26 01:00 PM</td>
+              <td><span class="badge bg-danger fancy-badge">Alert</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+   <div
+      class="fancy-section p-5 animate__animated animate__fadeInUp animate__delay-3s"
+    >
+      <h2 class="text-center mb-4 text-dark">Important Information</h2>
+      <div class="fancy-panel p-4">
+        <div class="d-flex align-items-center mb-3">
+          <i class="bi bi-bell-fill panel-icon me-3"></i>
+          <div>
+            <h4 class="mb-1">Upcoming Maintenance Scheduled</h4>
+            <p class="text-muted mb-0">
+              Our services will undergo a brief maintenance on June 1st, 2025,
+              from 2 AM to 3 AM IST. Minimal disruption expected.
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex align-items-center">
+          <i class="bi bi-chat-dots-fill panel-icon me-3"></i>
+          <div>
+            <h4 class="mb-1">New Support Channels Launched</h4>
+            <p class="text-muted mb-0">
+              We've expanded our customer support options. Visit our help center
+              for details.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
+<!-- <div class="container mt-5">
+  <h1>My Application Content</h1>
+  <p>This is where your table and other elements would be.</p>
+  <button class="btn btn-primary" (click)="toggleLoader()">
+    Toggle Loader
+  </button>
+</div> -->
+
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>

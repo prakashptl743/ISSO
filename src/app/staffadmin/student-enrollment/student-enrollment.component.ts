@@ -36,10 +36,9 @@ import { EventService } from "../service/event.service";
 export class StudentEnrollmentComponent implements OnInit {
   @ViewChildren("checkboxes") checkboxes: QueryList<ElementRef>;
   profileForm: FormGroup;
-
+  parentMessage = "message from parent";
   messages1: Message[] | undefined;
 
-  selectedCities: string[] = [];
   categories1: any[] = [
     { name: "Accounting", key: "A" },
     { name: "sds", key: "M" },
@@ -140,6 +139,8 @@ export class StudentEnrollmentComponent implements OnInit {
   isSubGameSelected: boolean;
   newSubGameCapacity = [];
   testArray = [];
+  studentEnrollData = [];
+  studentSubgameData = [];
   selectedSubGame1: string;
   toalSubGameSelected: boolean;
   minCapcity: number;
@@ -202,19 +203,6 @@ export class StudentEnrollmentComponent implements OnInit {
     this.setPhotoPath();
     this.eventDayDiff = Number(localStorage.getItem("dateDiff"));
     console.log("Im localstorage-->" + this.eventDayDiff);
-
-    this.messages1 = [
-      {
-        severity: "warn",
-        summary: "Waning",
-        detail: "Closable Message Content",
-      },
-      {
-        severity: "error",
-        summary: "Error",
-        detail: "Closable Message Content",
-      },
-    ];
   }
 
   get f1() {
@@ -553,6 +541,8 @@ export class StudentEnrollmentComponent implements OnInit {
   }
   testfun(eventData: any, capacity: any, minCapcity, gender: any, ageRange) {
     this.initialForm();
+    this.studentEnrollData = [];
+    this.studentSubgameData = [];
     this.ageRange = ageRange;
     this.gameId = eventData.gameId;
     if (capacity > 0 && gender == "boy") {
@@ -565,7 +555,16 @@ export class StudentEnrollmentComponent implements OnInit {
       this.gender = "2";
       this.setCapacity = capacity;
     }
-
+    this.studentEnrollData = [
+      this.eventId,
+      eventData.gameId,
+      this.gender,
+      ageRange,
+      minCapcity,
+      capacity,
+      eventData.gameType,
+    ];
+    console.log("Im data-->" + this.studentEnrollData);
     if (eventData.gameType == "Team") {
       if (this.eventDayDiff >= 15) {
         this.studentEnrollmentService
@@ -707,6 +706,8 @@ export class StudentEnrollmentComponent implements OnInit {
 
   setSubGame(gameName, gameType, gameId, ageRange, gender, category) {
     // this.url = '';
+    this.studentEnrollData = [];
+    console.log("after empty");
     this.gameType = gameType;
     this.minDate = this.issoUtilService.setDateOfBirthValidation(ageRange);
     console.log("HELLO Im min Date==>" + this.minDate);
@@ -731,6 +732,16 @@ export class StudentEnrollmentComponent implements OnInit {
       this.panelHeading = gameName + " " + "Girls Under " + ageRange;
     }
     this.subGameoptions = [];
+    this.studentEnrollData = [
+      this.eventId,
+      gameId,
+      this.gender,
+      ageRange,
+      "min",
+      "max",
+      gameType,
+    ];
+    console.log("Subgamr Im data-->" + this.studentEnrollData);
     // const gameID = gameId.replace(/'/g, "")
     this.studentEnrollmentService
       .getSubGameData(this.gameId, ageRange, gender, "staffadmin")
@@ -738,6 +749,8 @@ export class StudentEnrollmentComponent implements OnInit {
         (response) => {
           if (response !== "") {
             this.subGameResponseData = response;
+
+            this.studentSubgameData = this.subGameResponseData;
             this.subGameoptions = [];
             this.subGameoptions.push({
               label: "Please select",
@@ -1078,7 +1091,7 @@ export class StudentEnrollmentComponent implements OnInit {
         this.messageService.add({
           key: "custom",
           severity: "error",
-          summary: "Capacity is full",
+          summary: "Capacity is full 12",
         });
       }
       // for(let i=0;i <=this.incompleteTeamSubGame.length;i++) {
@@ -1089,16 +1102,20 @@ export class StudentEnrollmentComponent implements OnInit {
       //    }
       // }
     } else {
+      console.log(
+        "NEW newSubGameCapacity" + JSON.stringify(this.newSubGameCapacity)
+      );
       capaCityCount = this.newSubGameCapacity.filter(
         (obj) => obj.subGameId === subGameIDForCapcity
       ).length;
+      console.log("Im length-->" + capaCityCount);
       if (capaCityCount == this.subGameCapacity) {
         this.selectedSubGame1 = "";
         this.isSubGameSelected = false;
         this.messageService.add({
           key: "custom",
           severity: "error",
-          summary: "Capacity is full",
+          summary: "Capacity is full 123",
         });
       }
     }

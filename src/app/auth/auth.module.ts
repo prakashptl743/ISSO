@@ -12,6 +12,8 @@ import { PrimengModule } from "../primeng-module";
 import { StudentCertificateComponent } from "./student-certificate/student-certificate.component";
 import { IsfSchoolComponent } from "./isf-school/isf-school.component";
 import { StudentRegistrationComponent } from "./student-registration/student-registration.component";
+import { ParentDashboardComponent } from "./parent-dashboard/parent-dashboard.component";
+import { CertificateDashboardComponent } from "./certificate-dashboard/certificate-dashboard.component";
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { StudentRegistrationComponent } from "./student-registration/student-reg
     SchoolRegistrationComponent,
     StudentCertificateComponent,
     StudentRegistrationComponent,
+    ParentDashboardComponent,
+    CertificateDashboardComponent,
     IsfSchoolComponent,
   ],
 })

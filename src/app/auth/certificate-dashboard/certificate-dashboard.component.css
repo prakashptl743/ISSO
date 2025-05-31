@@ -1,0 +1,189 @@
+:host::ng-deep .ui-table {
+  border: 1px solid #c8c8c8;
+}
+/* Basic styling for the table */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 10px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+.align-table-header {
+  color: white;
+  padding: 5px;
+  margin-top: 17px;
+  font-size: 14px;
+  text-align: center;
+}
+/* Header styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .table,
+  .table-row,
+  .table-cell {
+    display: block;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .table-cell::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+
+.align-row {
+  padding: 0;
+  text-align: center;
+  background: blueviolet;
+  color: white;
+  margin-bottom: 15px;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+.active-menu {
+  background: white;
+  border-radius: 10px;
+  padding: 5px;
+  color: black;
+}
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top of everything */
+}
+
+.pulsing-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.pulsing-dots div {
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pulsing-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulsing-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* New CSS to freeze the screen */
+body.no-scroll {
+  overflow: hidden;
+  height: 100%; /* Important for some browsers/scenarios */
+}
+.empty-state {
+  height: 300px;
+  text-align: center;
+  background: gainsboro;
+  text-transform: uppercase;
+  color: red;
+}
+.fancy-table {
+  font-size: medium;
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: separate; /* Allow border-radius on table cells */
+  border-spacing: 0 10px; /* Space between rows */
+}
+.align-drop-down {
+  height: 100px;
+}
+.fancy-table th,
+.fancy-table td {
+  padding: 15px;
+  border: none; /* Remove default borders */
+  background-color: #fdfefe; /* Very light background for cells */
+  vertical-align: middle; /* Align content vertically */
+}
+
+.fancy-table thead th {
+  background-color: #e9ecef; /* Header background */
+  font-weight: 600;
+
+  text-transform: uppercase;
+  font-size: 16px;
+  border-bottom: none; /* No bottom border for header cells */
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.fancy-table tbody tr {
+  background-color: #fff; /* Row background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for each row */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fancy-table tbody tr:hover {
+  transform: translateY(-3px); /* Lift rows on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
+}
+
+/* Border radius for first/last cells in the table rows */
+.fancy-table tbody tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+}
+.fancy-table tbody tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
+.fancy-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+.fancy-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
