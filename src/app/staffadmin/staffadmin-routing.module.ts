@@ -17,6 +17,7 @@ import { PermissionGuard } from "../services/permission.guard";
 import { Permission } from "../services/user.service";
 import { SgfiEntryComponent } from "./sgfi-entry/sgfi-entry.component";
 import { StudentProfileComponent } from "./student-profile/student-profile.component";
+import { StudentProfileEnrollmentComponent } from "./student-profile-enrollment/student-profile-enrollment.component";
 
 // import { PayNowComponent } from '../pay-now/pay-now.component';
 
@@ -91,6 +92,13 @@ const routes: Routes = [
             component: StudentProfileComponent,
             canActivate: [PermissionGuard],
             data: { permission: Permission.StudentProfile },
+          },
+          {
+            path: "student-profile-enrollment",
+            pathMatch: "full",
+            component: StudentProfileEnrollmentComponent,
+            canActivate: [PermissionGuard],
+            data: { permission: Permission.StudentProfileEnrollment },
           },
           {
             path: "pay-now",

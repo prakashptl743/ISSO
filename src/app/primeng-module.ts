@@ -21,6 +21,7 @@ import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { MessagesModule } from "primeng/messages";
 import { MenubarModule } from "primeng/menubar";
 import { FileUploadModule } from "primeng/fileupload";
+import { AutoCompleteModule } from "primeng/autocomplete";
 
 @NgModule({
   exports: [
@@ -46,6 +47,7 @@ import { FileUploadModule } from "primeng/fileupload";
     MessagesModule,
     MenubarModule,
     FileUploadModule,
+    AutoCompleteModule,
   ],
 })
 export class PrimengModule {}

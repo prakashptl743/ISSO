@@ -22,6 +22,7 @@ import { PrimengModule } from "../primeng-module";
 import { CertificateInvoiceComponent } from "./certificate-invoice/certificate-invoice.component";
 import { SgfiEntryComponent } from "./sgfi-entry/sgfi-entry.component";
 import { StudentProfileComponent } from "./student-profile/student-profile.component";
+import { StudentProfileEnrollmentComponent } from "./student-profile-enrollment/student-profile-enrollment.component";
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { StudentProfileComponent } from "./student-profile/student-profile.compo
     VolunteerDataComponent,
     SgfiEntryComponent,
     StudentProfileComponent,
+    StudentProfileEnrollmentComponent,
   ],
   providers: [SafeUrlPipeModule],
 })

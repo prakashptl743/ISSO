@@ -1,0 +1,403 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<p-dialog
+  header="Student Details"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+</p-dialog>
+<div class="ui-g-12 border-bottom border-dark">
+  <div class="col-md-6 border-right border-dark">
+    <div class="pt-4 form-label fw-bold">Student Name</div>
+    <p-autoComplete
+      [style]="{ width: '70%' }"
+      class="p-autocomplete"
+      [(ngModel)]="schoolName"
+      [disabled]="isMaxTeamComplete"
+      [suggestions]="filteredPages"
+      (completeMethod)="filterPages($event)"
+      field="studentName"
+      filterMode="contains"
+      placeholder="Enter student Name"
+      emptyMessage="Student Not found"
+      [minLength]="1"
+      (onSelect)="onPageSelect($event)"
+    >
+      <ng-template let-brand pTemplate="item">
+        <div
+          class="ui-helper-clearfix"
+          style="border-bottom: 1px solid #d5d5d5"
+        >
+          <div style="font-size: 14px; float: left; margin: 10px">
+            {{ brand.studentName }}
+          </div>
+          <br />
+        </div>
+      </ng-template>
+    </p-autoComplete>
+    <div class="pt-4" *ngIf="studentSubgameData.length > 0">
+      <!-- <select [ngModelOptions]="{ standalone: true }" class="form-select">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let option of subGameOptions" [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      </select> -->
+    </div>
+  </div>
+  <div class="col-md-6">
+    🌟Please follow below Rules while selecting student:
+    <ul class="animated-list">
+      <li class="text-primary">Please assign subgame to each student.</li>
+      <li class="text-primary">
+        Maximum 3 subgame can assign to each student.
+      </li>
+      <li class="text-primary">Review student data before save.</li>
+      <li class="text-primary">
+        Only Paid student considered as final selection.
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ui-g-12 pt-5" *ngIf="studentDataArray.length > 0">
+  <div class="table">
+    <div class="table-row table-header">
+      <div class="table-cell align-sr">Sr No.</div>
+      <div class="table-cell">Student Name</div>
+      <div class="table-cell">Father Name</div>
+      <div class="table-cell">Date of Birth</div>
+      <div class="table-cell">Gender</div>
+      <div class="table-cell">Photo</div>
+      <div class="table-cell" *ngIf="studentSubgameData.length > 0">
+        SubGame
+      </div>
+
+      <div class="table-cell">View</div>
+      <div class="table-cell">Action</div>
+    </div>
+
+    <div
+      class="table-row"
+      *ngFor="let student of studentDataArray; let i = index"
+    >
+      <div class="table-cell align-sr">{{ i + 1 }}</div>
+      <div class="table-cell">{{ student.studentName }}</div>
+      <div class="table-cell">{{ student.fatherName }}</div>
+      <div class="table-cell">
+        {{ student.dateOfBirth | date : "dd-MMM-yyyy" }}
+      </div>
+      <div class="table-cell">
+        {{ student.gender == "1" ? "Boys" : "Girls" }}
+      </div>
+
+      <div class="table-cell">
+        <img
+          height="50"
+          width="50"
+          src="{{ setPhotoYear }}/{{ student.photo }}"
+          (error)="onImageError($event)"
+        />
+      </div>
+      <div class="table-cell" *ngIf="studentSubgameData.length > 0">
+        <span
+          *ngIf="student.subGameName !== ''"
+          (click)="showSubgameDialog(student)"
+          class="p-3 mb-2 bg-primary text-white cusror-pointer"
+          >Change Subgame</span
+        >
+        <span
+          *ngIf="student.subGameName == ''"
+          (click)="showSubgameDialog(student)"
+          class="p-3 mb-2 bg-primary text-white cusror-pointer"
+          >ADD Subgame</span
+        >
+        {{ student.subGameName }}
+      </div>
+      <div class="table-cell">
+        <span
+          (click)="showDialog(student)"
+          class="p-3 mb-2 bg-primary text-white cusror-pointer"
+          >View</span
+        >
+      </div>
+      <div class="table-cell">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="removeSelectedStudentData(i)"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+    <div class="p-4">
+      <span
+        (click)="saveStudentEnroll()"
+        class="p-3 mb-2 bg-success text-white cusror-pointer"
+        >Save</span
+      >
+    </div>
+  </div>
+</div>
+
+<div
+  class="ui-g-12 pt-5 align-merit-content"
+  *ngIf="
+    alreadyAddedStudentArray &&
+    alreadyAddedStudentArray.length > 0 &&
+    !isLoading
+  "
+>
+  <p-toast position="bottom-center"></p-toast>
+  <div
+    *ngIf="isTeamComplete"
+    class="align-success-message alert alert-success alert-dismissible fade show d-flex align-items-center shadow-sm p-3 mb-4 rounded-3 animate__animated animate__fadeInDown"
+    role="alert"
+  >
+    <div class="text-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        class="bi bi-check-circle me-2"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M15.854 8a7.854 7.854 0 1 1-15.708 0 7.854 7.854 0 0 1 15.708 0zM8 1.146a6.854 6.854 0 1 0 0 13.708A6.854 6.854 0 0 0 8 1.146z"
+        />
+        <path
+          d="M10.97 5.97a.75.75 0 0 1 1.06 1.06L7.477 11.58a.75.75 0 0 1-1.06 0L4.47 9.633a.75.75 0 0 1 1.06-1.06l1.397 1.396L10.97 5.97z"
+        />
+      </svg>
+      <strong>Success!</strong>
+      <span class="team-complete-message"
+        >Congratulations your team is complete.</span
+      >
+    </div>
+  </div>
+
+  <div class="added-student">
+    <span class="student-header">Already Added Students</span>
+  </div>
+
+  <div class="table">
+    <div class="table-row table-header">
+      <div class="table-cell align-sr">Sr No.</div>
+      <div class="table-cell">Student Name</div>
+      <div class="table-cell">Father Name</div>
+      <div class="table-cell">Date of Birth</div>
+      <div class="table-cell">Gender</div>
+      <div class="table-cell">Photo</div>
+      <div class="table-cell" *ngIf="studentSubgameData.length > 0">
+        SubGame
+      </div>
+      <div class="table-cell">Paid Status</div>
+      <div class="table-cell">Action</div>
+    </div>
+
+    <div
+      class="table-row"
+      *ngFor="let student of alreadyAddedStudentData; let i = index"
+    >
+      <div class="table-cell align-sr">{{ i + 1 }}</div>
+      <div class="table-cell">{{ student.studentName }}</div>
+      <div class="table-cell">{{ student.fatherName }}</div>
+      <div class="table-cell">
+        {{ student.dateOfBirth | date : "dd-MMM-yyyy" }}
+      </div>
+      <div class="table-cell">
+        {{ student.gender == "1" ? "Boys" : "Girls" }}
+      </div>
+      <div class="table-cell">
+        <img
+          height="50"
+          width="50"
+          src="{{ setPhotoYear }}/{{ student.photo }}"
+          (error)="onImageError($event)"
+        />
+      </div>
+      <div class="table-cell" *ngIf="studentSubgameData.length > 0">
+        {{ student.subGameName }}
+      </div>
+      <div
+        class="table-cell"
+        [ngClass]="
+          student.paidStatus == ''
+            ? 'alert alert-danger text-center'
+            : 'alert alert-success text-center'
+        "
+      >
+        {{ student.paidStatus == "" ? "NOT PAID" : "PAID" }}
+      </div>
+      <div class="table-cell">
+        <button
+          *ngIf="student.paidStatus == ''"
+          class="btn btn-primary"
+          type="button"
+          (click)="deleteStudentEnroll(student)"
+        >
+          Delete
+        </button>
+        <span *ngIf="student.paidStatus == 'Yes'">N/A</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Student Details"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+  <div class="" *ngIf="selectedStudent">
+    <div class="table-responsive" *ngIf="selectedStudent">
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th><strong>Student Name:</strong></th>
+            <td>{{ selectedStudent.studentName }}</td>
+            <th><strong>Father Name:</strong></th>
+            <td>{{ selectedStudent.fatherName }}</td>
+          </tr>
+          <tr>
+            <th><strong>Date of Birth:</strong></th>
+            <td>{{ selectedStudent.dateOfBirth | date : "dd-MMM-yyyy" }}</td>
+            <th><strong>Gender:</strong></th>
+            <td>{{ selectedStudent.gender == "1" ? "Boys" : "Girls" }}</td>
+          </tr>
+          <tr>
+            <th><strong>Class:</strong></th>
+            <td>{{ selectedStudent.standardClass }}</td>
+            <th><strong>Aadhar No:</strong></th>
+            <td>{{ selectedStudent.aadharNumber }}</td>
+          </tr>
+          <tr>
+            <th><strong>Contact No:</strong></th>
+            <td>{{ selectedStudent.contactNo }}</td>
+            <th><strong>Admission No:</strong></th>
+            <td>{{ selectedStudent.admissionNumber }}</td>
+          </tr>
+          <tr>
+            <th><strong>T-Shirt Size:</strong></th>
+            <td>{{ selectedStudent.tShirtSize }}</td>
+            <th><strong>Curriculum:</strong></th>
+            <td>{{ selectedStudent.curruclm }}</td>
+          </tr>
+          <tr>
+            <th><strong>Passport:</strong></th>
+            <td>
+              {{
+                selectedStudent.passport === ""
+                  ? "N/A"
+                  : selectedStudent.passport
+              }}
+            </td>
+            <th><strong>Registered Date:</strong></th>
+            <td>{{ selectedStudent.createdDate | date : "dd-MMM-yyyy" }}</td>
+          </tr>
+          <tr>
+            <th><strong>Photo:</strong></th>
+            <td>
+              <img
+                height="50"
+                width="50"
+                src="{{ setPhotoYear }}/{{ selectedStudent.photo }}"
+                (error)="onImageError($event)"
+              />
+            </td>
+            <th><strong>Status:</strong></th>
+            <td
+              [ngClass]="
+                selectedStudent.approvedStatus == '0'
+                  ? 'isPending'
+                  : 'isApproved'
+              "
+            >
+              {{
+                selectedStudent.approvedStatus == "0" ? "Pending" : "Approved"
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Assign Subgame to student"
+  [(visible)]="displaySubgameDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+  (onHide)="onDialogClose()"
+>
+  <div class="col-md-12">
+    <div class="subgagme-dropdown col-md-9">
+      <p-dropdown
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="selectedSubgame"
+        (onChange)="loadGameChange($event)"
+        [options]="subGameoptions"
+        [showClear]="true"
+        size="30"
+      ></p-dropdown>
+    </div>
+    <div class="col-md-3">
+      <button
+        pButton
+        label="Add Subgame"
+        icon="pi pi-plus"
+        (click)="addSubgame()"
+      ></button>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <p-table [value]="selectedSubgamesTable">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Subgame Name</th>
+          <th>Min Capacity</th>
+          <th>Max Capacity</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sub>
+        <tr>
+          <td>{{ sub.name }}</td>
+          <td>{{ sub.min }}</td>
+          <td>{{ sub.max }}</td>
+          <td>
+            <button
+              pButton
+              icon="pi pi-times"
+              class="p-button-danger"
+              (click)="removeSubgame(sub)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <button pButton label="Save All" (click)="saveSubgames()"></button>
+</p-dialog>
+
+<p-toast position="bottom-center"></p-toast>
+<p-confirmDialog
+  key="confirm-save-enroll"
+  header="Save student data"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>

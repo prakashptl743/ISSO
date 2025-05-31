@@ -13,7 +13,7 @@
           <div class="row event-container">
             <div>
               <div class="col-md-12">
-                <div class="event-namebox">
+                <div class="">
                   <span class="back align-back">
                     <a *ngIf="showGoBack" (click)="goBack()">
                       <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
@@ -96,6 +96,33 @@
                             <div
                               class="col-md-4 caps-b"
                               *ngIf="
+                                game.sixteen_boys > '0' &&
+                                game.gameType != 'Both' &&
+                                gameData[0].sixteenAgeMap == 9
+                              "
+                              (click)="
+                                testfun(
+                                  game,
+                                  game.sixteen_boys,
+                                  game.min_sixteen_boys,
+                                  'boy',
+                                  9
+                                )
+                              "
+                            >
+                              <button type="button" class="btn capsule-btn">
+                                Under 9
+                              </button>
+                              <div class="capsule-right">
+                                <i
+                                  class="fa fa-arrow-right"
+                                  aria-hidden="true"
+                                ></i>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-4 caps-b"
+                              *ngIf="
                                 game.eleven_boys > '0' &&
                                 game.gameType != 'Both' &&
                                 gameData[0].elevenAgeMap == 11
@@ -140,34 +167,6 @@
                             >
                               <button type="button" class="btn capsule-btn">
                                 Under 14
-                              </button>
-                              <div class="capsule-right">
-                                <i
-                                  class="fa fa-arrow-right"
-                                  aria-hidden="true"
-                                ></i>
-                              </div>
-                            </div>
-
-                            <div
-                              class="col-md-4 caps-b"
-                              *ngIf="
-                                game.sixteen_boys > '0' &&
-                                game.gameType != 'Both' &&
-                                gameData[0].sixteenAgeMap == 9
-                              "
-                              (click)="
-                                testfun(
-                                  game,
-                                  game.sixteen_boys,
-                                  game.min_sixteen_boys,
-                                  'boy',
-                                  9
-                                )
-                              "
-                            >
-                              <button type="button" class="btn capsule-btn">
-                                Under 9
                               </button>
                               <div class="capsule-right">
                                 <i
@@ -272,6 +271,33 @@
                             <div
                               class="col-md-4 caps-b"
                               *ngIf="
+                                game.sixteen_girls > '0' &&
+                                game.gameType != 'Both' &&
+                                gameData[0].sixteenGilrsMap == 9
+                              "
+                              (click)="
+                                testfun(
+                                  game,
+                                  game.sixteen_girls,
+                                  game.min_sixteen_girls,
+                                  'girl',
+                                  9
+                                )
+                              "
+                            >
+                              <button type="button" class="btn capsule-btn">
+                                Under 9
+                              </button>
+                              <div class="capsule-right">
+                                <i
+                                  class="fa fa-arrow-right"
+                                  aria-hidden="true"
+                                ></i>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-4 caps-b"
+                              *ngIf="
                                 game.eleven_girls > '0' &&
                                 game.gameType != 'Both' &&
                                 gameData[0].elevenGirlsMap == 11
@@ -316,34 +342,6 @@
                             >
                               <button type="button" class="btn capsule-btn">
                                 Under 14
-                              </button>
-                              <div class="capsule-right">
-                                <i
-                                  class="fa fa-arrow-right"
-                                  aria-hidden="true"
-                                ></i>
-                              </div>
-                            </div>
-
-                            <div
-                              class="col-md-4 caps-b"
-                              *ngIf="
-                                game.sixteen_girls > '0' &&
-                                game.gameType != 'Both' &&
-                                gameData[0].sixteenGilrsMap == 9
-                              "
-                              (click)="
-                                testfun(
-                                  game,
-                                  game.sixteen_girls,
-                                  game.min_sixteen_girls,
-                                  'girl',
-                                  9
-                                )
-                              "
-                            >
-                              <button type="button" class="btn capsule-btn">
-                                Under 9
                               </button>
                               <div class="capsule-right">
                                 <i
@@ -420,6 +418,33 @@
                               <div
                                 class="col-md-4 caps-b"
                                 *ngIf="
+                                  gameData[0].sixteenAgeMap == 9 &&
+                                  gameData[0].sixteenAgeMap == 9
+                                "
+                                (click)="
+                                  setSubGame(
+                                    gameData[0].gameName,
+                                    gameData[0].gameType,
+                                    gameIdArray[i],
+                                    9,
+                                    'boy',
+                                    'sixteen_boys'
+                                  )
+                                "
+                              >
+                                <button type="button" class="btn capsule-btn">
+                                  Under 9
+                                </button>
+                                <div class="capsule-right">
+                                  <i
+                                    class="fa fa-arrow-right"
+                                    aria-hidden="true"
+                                  ></i>
+                                </div>
+                              </div>
+                              <div
+                                class="col-md-4 caps-b"
+                                *ngIf="
                                   gameData[0].elevenAgeMap == 11 &&
                                   gameData[0].elevenAgeMap == 11
                                 "
@@ -471,33 +496,7 @@
                                   ></i>
                                 </div>
                               </div>
-                              <div
-                                class="col-md-4 caps-b"
-                                *ngIf="
-                                  gameData[0].sixteenAgeMap == 9 &&
-                                  gameData[0].sixteenAgeMap == 9
-                                "
-                                (click)="
-                                  setSubGame(
-                                    gameData[0].gameName,
-                                    gameData[0].gameType,
-                                    gameIdArray[i],
-                                    9,
-                                    'boy',
-                                    'sixteen_boys'
-                                  )
-                                "
-                              >
-                                <button type="button" class="btn capsule-btn">
-                                  Under 9
-                                </button>
-                                <div class="capsule-right">
-                                  <i
-                                    class="fa fa-arrow-right"
-                                    aria-hidden="true"
-                                  ></i>
-                                </div>
-                              </div>
+
                               <div
                                 class="col-md-4 caps-b"
                                 *ngIf="
@@ -573,6 +572,30 @@
                             <div class="categories">
                               <div
                                 class="col-md-4 caps-b"
+                                *ngIf="gameData[0].sixteenGilrsMap == 9"
+                                (click)="
+                                  setSubGame(
+                                    gameData[0].gameName,
+                                    gameData[0].gameType,
+                                    gameIdArray[i],
+                                    9,
+                                    'girl',
+                                    'sixteen_girls'
+                                  )
+                                "
+                              >
+                                <button type="button" class="btn capsule-btn">
+                                  Under 9
+                                </button>
+                                <div class="capsule-right">
+                                  <i
+                                    class="fa fa-arrow-right"
+                                    aria-hidden="true"
+                                  ></i>
+                                </div>
+                              </div>
+                              <div
+                                class="col-md-4 caps-b"
                                 *ngIf="gameData[0].elevenGirlsMap == 11"
                                 (click)="
                                   setSubGame(
@@ -619,30 +642,7 @@
                                   ></i>
                                 </div>
                               </div>
-                              <div
-                                class="col-md-4 caps-b"
-                                *ngIf="gameData[0].sixteenGilrsMap == 9"
-                                (click)="
-                                  setSubGame(
-                                    gameData[0].gameName,
-                                    gameData[0].gameType,
-                                    gameIdArray[i],
-                                    9,
-                                    'girl',
-                                    'sixteen_girls'
-                                  )
-                                "
-                              >
-                                <button type="button" class="btn capsule-btn">
-                                  Under 9
-                                </button>
-                                <div class="capsule-right">
-                                  <i
-                                    class="fa fa-arrow-right"
-                                    aria-hidden="true"
-                                  ></i>
-                                </div>
-                              </div>
+
                               <div
                                 class="col-md-4 caps-b"
                                 *ngIf="gameData[0].seventeenGirlsMap == 17"
@@ -739,21 +739,22 @@
   </p-dialog>
 
   <div *ngIf="testBo">
-    <div class="container-fluid">
-      <div class="panel panel-default">
-        <div class="align-game-header text-center row" *ngIf="!showSubGameList">
-          <div class="col-md-6 enroll-head">
-            {{ panelHeading }} Capacity is {{ setCapacity }}
-          </div>
-          <div
-            *ngIf="gameType == 'Team'"
-            (click)="onCencelEvent()"
-            class="delete-confim col-md-6"
-          >
-            Click here for to delete team confirmation
-          </div>
-        </div>
-
+    <div class="align-game-header text-center row" *ngIf="!showSubGameList">
+      <div class="col-md-6 enroll-head">
+        {{ panelHeading }} Capacity is {{ setCapacity }}
+      </div>
+      <div *ngIf="gameType == 'Team'" class="col-md-6">
+        <span (click)="onCencelEvent()" class="delete-confim">
+          Click here for to delete team confirmation</span
+        >
+      </div>
+    </div>
+    <app-student-profile-enrollment
+      [studentEnrollData]="studentEnrollData"
+      [studentSubgameData]="studentSubgameData"
+    ></app-student-profile-enrollment>
+    <!--  <div class="container-fluid">
+          <div class="panel panel-default">
         <div class="panel-body">
           <div *ngIf="studentListArray.length > 0 && gameType !== 'Both'">
             <div
@@ -904,9 +905,6 @@
                 />Date of Birth</label
               ><br />
 
-              <!-- appendTo="body" -->
-
-              <!-- <p-calendar  [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"></p-calendar> -->
               <p-calendar
                 appendTo="body"
                 [defaultDate]="minDate"
@@ -935,9 +933,6 @@
                   Student Date of birth is required
                 </div>
               </div>
-              <!-- <p-calendar [(ngModel)]="datOfBirth" formControlName="dateOfBirth" placeholder="Date of Birth"
-                dateFormat="dd/mm/yy"  [minDate]="minDate" [maxDate]="maxDate" showAnim="slideDown" [style]="{'width':'105%'}" [inputStyle]="{'width':'95%'}"
-                ></p-calendar>   -->
             </div>
             <div class="form-group col-md-4">
               <label class="form-control-label"
@@ -1128,11 +1123,7 @@
                   class="form-control"
                 />
                 <span class="file-hint">Please upload file below 100 KB</span>
-                <!-- <img *ngIf="isEdit" height="50" width="50"  src="https://issoindia.com/isso-php/upload/{{studentPhoto}}">
-                <img class="align-image" *ngIf="url != ''" [src]="url"  >
-                <input type="file" id="my-input" [(ngModel)]="selectedProfile" formControlName="profile"
-                  (change)="onFileSelected($event)" class="form-control" id="inputWarning1">
-                  -->
+
                 <div *ngIf="!isValidFile">
                   <span class="error-class"
                     >Invalid File type Please select file JPEG,PNG format
@@ -1145,7 +1136,7 @@
                   >
                 </div>
               </div>
-              <!-- <input type="file" value="../../assets/images/general/defaulUser.png"> -->
+
               <div class="display-none">
                 <label class="form-control-label">Student Id</label>
                 <input
@@ -1256,13 +1247,13 @@
                       <th scope="col">Father's/Mother's Name</th>
                       <th scope="col">Admission No</th>
                       <th scope="col">Date of birth</th>
-                      <!-- <th scope="col">Contact No.</th> -->
+
                       <th scope="col">Class</th>
-                      <!-- <th scope="col">Age Range</th> -->
+
                       <th scope="col">Aadhar No</th>
                       <th scope="col">Passport</th>
                       <th scope="col" *ngIf="showSubGameList">Sub Game Name</th>
-                      <!-- <th scope="col">Enrolled Date</th> -->
+
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -1282,8 +1273,6 @@
                           src="{{ setPhotoYear }}/{{ studentList.photo }}"
                           alt="banner"
                         />
-                        <!-- <img height="50" width="50" src="http://issoindia.com/uploads/studentphoto/{{photoUrl}}" height="60"
-                          alt="banner" /> -->
                       </td>
                       <td *ngIf="studentList.photo == ''">
                         <img
@@ -1298,9 +1287,7 @@
                       <td>{{ studentList.fatherName }}</td>
                       <td>{{ studentList.admissionNumber }}</td>
                       <td>{{ studentList.dateOfBirth | date : "MMM d, y" }}</td>
-                      <!-- <td>{{studentList.contactNo}}</td> -->
                       <td>{{ studentList.standardClass }}</td>
-                      <!-- <td>{{studentList.ageRange}}</td> -->
                       <td *ngIf="studentList.aadharNumber !== ''">
                         {{ studentList.aadharNumber }}
                       </td>
@@ -1322,8 +1309,6 @@
                           </li>
                         </ol>
                       </td>
-
-                      <!-- <td>{{studentList.createdDate | date: 'MMM d, y'}}</td> -->
 
                       <td class="action">
                         <a
@@ -1347,15 +1332,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
-  <!-- <button class="bg-white glyphicon glyphicon-edit item-icons" (click)="editStudent(i)">
-            </button>
-             <button  class="bg-white"  (click)="deleteStudentList(i)"><i class="fa fa-trash"></i></button> -->
-
-  <!-- <button href="#" class="glyphicon glyphicon-trash item-icons" (click)="deleteStudentList(i)"></button> -->
-  <!-- <p-confirmDialog key="confirm-delete-student" header="Delete Student data" acceptLabel="Yes" rejectLabel="No"></p-confirmDialog> -->
   <p-confirmDialog
     key="confirm-team-delete"
     header="Delete team confirmation"
@@ -1438,106 +1417,6 @@
         </div>
       </ng-template>
     </p-toast>
-
-    <!--<div  *ngFor="let gameData of gameResponseData;  let i = index">
- 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{gameData[0].gameName}}</h3>
-          </div>
-          <div class="panel-body">
-          <div *ngFor="let game of gameData">
-            <div class="col-md-12">
-              <div *ngIf="game.eleven_boys > '0'  && game.gameType != 'Both'" (click)="testfun(game,game.eleven_boys,'boy',11)" class="game-align btn-info">
-               <a  class="cusror-pointer"><span>Boys Under 11</span></a>
-             </div>
-             <div  *ngIf="game.eleven_girls > '0' && game.gameType != 'Both' " (click)="testfun(game,game.eleven_girls,'girl',11)">
-               <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 11</span></a>
-             </div> 
-           </div>  
-            <div class="col-md-12">
-             <div class="game-align btn btn-info" *ngIf="game.fourteen_boys > '0'  && game.gameType != 'Both'" (click)="testfun(game,game.fourteen_boys,'boy',14)">
-               <a  class="cusror-pointer"><span>Boys Under 14</span></a>
-             </div>
-             <div  *ngIf="game.fourteen_girls > '0' && game.gameType != 'Both' " (click)="testfun(game,game.fourteen_girls,'girl',14)">
-               <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 14</span></a>
-             </div>
-           </div>  
-           <div class="col-md-12">
-             <div class="game-align btn btn-info" *ngIf="game.seventeen_boys > '0'  && game.gameType != 'Both'" (click)="testfun(game,game.seventeen_boys,'boy',17)">
-               <a  class="cusror-pointer"><span>Boys Under 17</span></a>
-             </div>
-             <div *ngIf="game.seventeen_girls > '0'  && game.gameType != 'Both'"  (click)="testfun(game,game.seventeen_girls,'girl',17)">
-               <a  class="cusror-pointer align-game btn btn-success"><span>Girls Under 17</span></a>
-             </div>
-           </div>  
-           <div class="col-md-12"  style="margin-bottom:20px;">
-             <div class="game-align btn btn-info" *ngIf="game.ninteen_boys > '0' && game.gameType != 'Both'" (click)="testfun(game,game.ninteen_boys,'boy',19)">
-               <a  class="cusror-pointer" ><span>Boys Under 19</span></a>
-             </div>
-             <div *ngIf="game.ninteen_girls > '0' && game.gameType != 'Both' " (click)="testfun(game,game.ninteen_girls,'girl',19)">
-               <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 19</span></a>
-             </div> 
-           </div> 
-
-           <div  *ngIf="game.gameType === 'Both'">
-            <div class="col-md-12">
-              <div  (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 11,'boy','eleven_boys')" class="game-align btn-info">
-                <a  class="cusror-pointer"><span>Boys Under 11</span></a>
-              </div>
-              <div (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 11,'girl','eleven_girls')">
-                <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 11</span></a>
-              </div> 
-            </div>  
-             <div class="col-md-12">
-              <div class="game-align btn btn-info"  (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 14,'boy','fourteen_boys')">
-                <a  class="cusror-pointer"><span>Boys Under 14</span></a>
-              </div>
-              <div (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 14,'girl','fourteen_girls')">
-                <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 14</span></a>
-              </div>
-            </div>  
-            <div class="col-md-12">
-              <div class="game-align btn btn-info"   (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 17,'boy','seventeen_boys')">
-                <a  class="cusror-pointer"><span>Boys Under 17</span></a>
-              </div>
-              <div   (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 17,'girl','seventeen_girls')">
-                <a  class="cusror-pointer align-game btn btn-success"><span>Girls Under 17</span></a>
-              </div>
-            </div>  
-            <div class="col-md-12"  style="margin-bottom:20px;">
-              <div class="game-align btn btn-info"  (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 19,'boy','ninteen_boys')">
-                <a  class="cusror-pointer" ><span>Boys Under 19</span></a>
-              </div>
-              <div  (click)="setSubGame(gameData[0].gameName,gameIdArray[i], 19,'girl','ninteen_girls')">
-                <a  class="cusror-pointer align-game btn btn-success" ><span>Girls Under 19</span></a>
-              </div> 
-          </div>   
-           
-
-         </div>
-        </div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </div>
- </div> 
-</div>-->
-    <!-- <div class="form-group col-md-4">
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit1()">
-  <label class="form-control-label">Upload Photo</label>
-  <input type="text" formControlName="name">
-  <img [src]="url" height="100">
-  <input type="file" (change)="onFileSelected($event)" class="form-control" id="inputWarning1">
-  <button type="submit" class="btn btn-success" label="Upload">Upload</button>
-  </form>
-</div> -->
 
     <div
       *ngIf="showStudentEnrollForm && studentListArray.length != setCapacity"

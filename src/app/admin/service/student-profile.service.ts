@@ -34,20 +34,82 @@ export class StudentProfileService {
       )
       .pipe(catchError(this.handleError));
   }
+  checkStudentEnroll(studentInfo) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "staffadmin/studentProfile/studentRegistration/checkStudentEnroll",
+        studentInfo
+      )
+      .pipe(catchError(this.handleError));
+  }
 
-  getStudentProfileData(schoolId) {
-    // return this.http
-    //   .get(
-    //     this.serverUrl +
-    //       "staffadmin/studentProfile/studentProfileForStaff/getStudentProfileData/"
-    //   )
-    //   .pipe(catchError(this.handleError));
-
+  getStudentProfileData(yearVal, schoolId) {
     let str =
       "staffadmin/studentProfile/studentProfileForStaff/getStudentProfileData/" +
+      yearVal +
+      "/" +
       schoolId;
     return this.http
       .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
+
+  getStudenteDataForEnroll(gender, selectedAgeCategory, schoolId) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/getStudenteDataForEnroll/" +
+      gender +
+      "/" +
+      selectedAgeCategory +
+      "/" +
+      schoolId;
+    return this.http
+      .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
+  alreadyEnrolledStudent(enrolledData, schoolId) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/alreadyEnrolledStudent/" +
+      enrolledData +
+      "/" +
+      schoolId;
+    return this.http
+      .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
+  saveEnrolledStudentData(formData) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/saveEnrolledStudentData/";
+    return this.http
+      .post<any>(this.serverUrl + str, formData)
+      .pipe(catchError(this.handleError));
+  }
+
+  changeApprovalStatus(id, formData) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/changeApprovalStatus/" +
+      id;
+    return this.http
+      .post<any>(this.serverUrl + str, formData)
+      .pipe(catchError(this.handleError));
+  }
+  deleteStudentData(id: number) {
+    return this.http
+      .delete(
+        this.serverUrl +
+          "staffadmin/studentProfile/studentProfileForStaff/deleteStudentData/" +
+          id
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteenrolledStudentData(id: number) {
+    return this.http
+      .delete(
+        this.serverUrl +
+          "staffadmin/studentProfile/studentProfileForStaff/deleteenrolledStudentData/" +
+          id
+      )
       .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {
@@ -64,7 +126,7 @@ export class StudentProfileService {
     // return an observable with a user-facing error message
     this.errorData = {
       errorTitle: "Oops! Request for document failed",
-      errorDesc: "Something bad happened. Please try again later.",
+      errorDesc: "Something went wrong. Please try again later.",
     };
     return throwError(this.errorData);
   }

@@ -1,0 +1,263 @@
+<!-- <div class="bg-image">
+  <div class="container mt-4">
+    <div class="card shadow-lg custom-rounded">
+      <div class="row text-center border-bottom p-3 bg-color">
+        <div class="col underline-text border-right" (click)="changeMenu()">
+          Parent Enrollment Form
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<section class="our-webcoderskull"></section>
+
+<!-- <a
+          class=""
+          href="https://issoindia.com/isso-php/tcpdf/individualMeritCertificate/{{
+            printMerit.schoolId
+          }}/{{ printMerit.eventId }}/{{ printMerit.gameId }}/N/{{
+            printMerit.ageRange
+          }}/{{ printMerit.gender }}/{{ printMerit.studentID }}/{{
+            printMerit.rank
+          }}"
+          ><i class="fas fa-download"></i
+        ></a> -->
+
+<div class="container">
+  <div class="">
+    <div class="col-md-6">
+      <div>Select Year:</div>
+      <p-dropdown
+        [options]="yearOptions"
+        [(ngModel)]="selectedYear"
+        placeholder="Select Year"
+        (onChange)="onyeareChange($event)"
+        [style]="{ 'min-width': '140px' }"
+      ></p-dropdown>
+    </div>
+    <div class="col-md-6">
+      <!-- <div class="text-center mb-4 text-dark">Download Certificate Here</div> -->
+    </div>
+  </div>
+
+  <div class="table-responsive" *ngIf="studentDataLength > 0">
+    <!-- <div *ngFor="let student of studentProfileData">
+      <div class="card p-3 mb-4 border shadow-sm">
+        <h4>{{ student.studentName }}</h4>
+
+        <p>
+          <strong>Game:</strong> {{ student.gameName }} ({{ student.gameType }})
+        </p>
+        <p>
+          <strong>Event:</strong> {{ student.eventName }} ({{
+            student.event_year
+          }})
+        </p>
+        <p><strong>SubGame Name(s):</strong> {{ student.subGameName }}</p>
+        <p><strong>Rank:</strong> {{ student.rank }}</p>
+
+        <div *ngIf="hasSubgames(student)">
+          <h5>Subgames:</h5>
+          <ul>
+            <li *ngFor="let key of getSubgameKeys(student)">
+              <div *ngFor="let sg of student[key]">
+                <p><strong>SubGame Name:</strong> {{ sg.subGameName }}</p>
+                <p><strong>Game Type:</strong> {{ sg.gameType }}</p>
+                <p><strong>Rank:</strong> {{ sg.rank }}</p>
+                <img [src]="'/path/to/qrcodes/' + sg.meritQR" width="80" />
+                <hr />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+
+    <table class="table fancy-table align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Sr No.</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Certificate Details</th>
+          <th scope="col">Participation</th>
+          <th scope="col">Merit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of studentProfileData; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ studentProfileData[i].eventName }}
+          </td>
+          <td>{{ studentProfileData[i].studentName }}</td>
+          <td>
+            {{ studentProfileData[i].gameName }} Under
+            {{ studentProfileData[i].ageRange }}
+            {{ studentProfileData[i].gender == "1" ? "Boys" : "Girls" }}
+            <div *ngIf="studentProfileData[i].isMerit == '1'">
+              <div *ngIf="hasSubgames(student)">
+                <ul>
+                  <li *ngFor="let key of getSubgameKeys(student)">
+                    <div *ngFor="let sg of student[key]">
+                      <p><strong>SubGame Name:</strong> {{ sg.subGameName }}</p>
+                      <!-- <p><strong>Rank:</strong> {{ sg.meritRank }}</p> -->
+                      <span *ngIf="sg.meritQR !== ''">
+                        Download Merit Certificate<a
+                          class="btn btn-primary"
+                          href="{{
+                            baseUrl
+                          }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                            studentProfileData[i].schoolId
+                          }}/{{ studentProfileData[i].eventId }}/{{
+                            studentProfileData[i].gameId
+                          }}/{{ studentProfileData[i].ageRange }}/{{
+                            studentProfileData[i].gender
+                          }}/{{ studentProfileData[i].sId }}/merit"
+                        >
+                          <i class="bi bi-download"></i
+                        ></a>
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="studentProfileData[i].isCertificate == '0'">
+              <span class="badge bg-danger fancy-badge"
+                >Certificate Not Uploaded</span
+              >
+            </div>
+
+            <div *ngIf="studentProfileData[i].isCertificate == '1'">
+              <a
+                class="btn btn-primary"
+                href="{{
+                  baseUrl
+                }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                  studentProfileData[i].schoolId
+                }}/{{ studentProfileData[i].eventId }}/{{
+                  studentProfileData[i].gameId
+                }}/{{ studentProfileData[i].ageRange }}/{{
+                  studentProfileData[i].gender
+                }}/{{ studentProfileData[i].sId }}/participate"
+              >
+                <i class="bi bi-download"></i
+              ></a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="studentProfileData[i].isMerit == '0'">
+              <span class="badge bg-danger fancy-badge"
+                >Certificate Not Uploaded</span
+              >
+            </div>
+            <!-- <div
+              *ngIf="
+                studentProfileData[i].isMerit == '1' &&
+                studentProfileData[i].meritQR !== null
+              "
+            >
+              <a
+                class="btn btn-primary"
+                href="{{
+                  baseUrl
+                }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                  studentProfileData[i].schoolId
+                }}/{{ studentProfileData[i].eventId }}/{{
+                  studentProfileData[i].gameId
+                }}/{{ studentProfileData[i].ageRange }}/{{
+                  studentProfileData[i].gender
+                }}/{{ studentProfileData[i].sId }}/merit"
+              >
+                <i class="bi bi-download"></i
+              ></a>
+            </div> -->
+            <div
+              *ngIf="
+                studentProfileData[i].isMerit == '1' &&
+                studentProfileData[i].meritQR == null
+              "
+            >
+              N/A
+            </div>
+          </td>
+        </tr>
+        <!-- <tr>
+          <th scope="row">2</th>
+          <td>
+            <i class="bi bi-envelope-fill text-warning me-2"></i> Email Sent
+          </td>
+          <td>Bob Williams</td>
+          <td>2025-05-26 11:15 AM</td>
+          <td><span class="badge bg-primary fancy-badge">Pending</span></td>
+        </tr>
+         <tr>
+          <th scope="row">3</th>
+          <td>
+            <i class="bi bi-person-fill-add text-success me-2"></i> New User
+            Registered
+          </td>
+          <td>System</td>
+          <td>2025-05-26 11:40 AM</td>
+          <td>
+            <span class="badge bg-success fancy-badge">Completed</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>
+            <i class="bi bi-gear-fill text-secondary me-2"></i> Settings Updated
+          </td>
+          <td>Charlie Brown</td>
+          <td>2025-05-26 12:05 PM</td>
+          <td>
+            <span class="badge bg-success fancy-badge">Completed</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>
+            <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+            Login Attempt Failed
+          </td>
+          <td>Unknown User</td>
+          <td>2025-05-26 01:00 PM</td>
+          <td><span class="badge bg-danger fancy-badge">Alert</span></td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container my-5" *ngIf="studentDataLength == '0'">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="no-data-found-container p-5 text-center">
+        <div class="icon-wrapper mb-4">
+          <i class="bi bi-exclamation-triangle-fill animated-icon"></i>
+        </div>
+        <h2 class="display-5 fw-bold text-danger mb-3">No Data Found!</h2>
+        <p class="lead text-muted mb-4">
+          It seems there's no certificate data found for selected academic year.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
+
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
