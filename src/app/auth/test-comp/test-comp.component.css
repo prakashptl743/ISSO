@@ -112,17 +112,7 @@
     opacity: 1;
   }
 }
-.align-box {
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
-.alig-otp-box {
-  padding-bottom: 20px;
-}
+
 /* New CSS to freeze the screen */
 body.no-scroll {
   overflow: hidden;
@@ -252,3 +242,135 @@ body.no-scroll {
   overflow: hidden;
   height: 100%; /* Important for some browsers/scenarios */
 }
+/* Custom Styles for Fancy Look */
+
+.container {
+  max-width: 1000px;
+}
+
+.text-primary {
+  color: #007bff !important; /* Bootstrap primary blue */
+}
+
+.bg-primary {
+  background-color: #007bff !important;
+}
+
+.bg-secondary {
+  background-color: #6c757d !important; /* Bootstrap secondary gray */
+}
+
+.card-header {
+  border-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.card {
+  border-radius: 0.5rem;
+  overflow: hidden; /* Ensures header corners are respected */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* More pronounced shadow */
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa; /* Lighter hover for table rows */
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 123, 255, 0.2);
+  }
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    transform: translateY(-3px); /* More pronounced lift for save button */
+    box-shadow: 0 0.5rem 1rem rgba(40, 167, 69, 0.3);
+  }
+}
+
+/* Custom Dropdown Styling */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.175); /* Stronger dropdown shadow */
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  animation-duration: 0.3s; /* For Bootstrap's collapse animation */
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  &:hover {
+    background-color: #e9ecef; /* Light gray hover */
+    color: #0056b3; /* Darker blue text on hover */
+    transform: translateX(3px); /* Subtle slide on hover */
+  }
+  .badge {
+    min-width: 60px; /* Ensure badges are consistent */
+    text-align: center;
+  }
+  .bi-check-circle-fill {
+    color: #28a745; /* Green for assigned checkmark */
+  }
+  .bi-exclamation-triangle-fill {
+    color: #dc3545; /* Red for capacity full warning */
+  }
+}
+
+.list-group-item {
+  padding: 1rem 1.25rem;
+  font-size: 1.05rem;
+  strong {
+    color: #343a40; /* Darker text for subgame names */
+  }
+  .badge {
+    font-size: 0.9em;
+    padding: 0.5em 0.8em;
+  }
+}
+
+/* Optional: Add a subtle animation to elements as they load/appear */
+/* This requires a custom directive or an animation library if not using Bootstrap's default collapse */
+.animate__animated {
+  /* Using Animate.css if integrated, or custom CSS for simple animations */
+  animation-duration: 0.5s;
+}
+
+/* Helper for subgame icons in the HTML */
+.subgame-icon-50M-Freestyle {
+  /* Example: Use actual icon classes */
+  /* Replace with actual SVG/PNG icons */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 20px; /* Adjust size */
+  height: 20px;
+}
+/* You would define classes for each subgame icon if you use custom images */
+/* For Bootstrap Icons, you can directly use their classes like bi bi-speedometer, bi bi-flag, etc. */
+/* Example for Bootstrap Icons */
+.bi-person-add {
+  color: #007bff;
+}
+.bi-check-circle-fill {
+  color: #28a745;
+}
+.bi-exclamation-triangle-fill {
+  color: #dc3545;
+}
+/* Add specific icons for subgames if desired */

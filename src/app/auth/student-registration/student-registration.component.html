@@ -248,10 +248,23 @@
         </div>
       </form>
 
-      <div *ngIf="!isStudentEnrollForm && !validStudentId">
-        <form [formGroup]="issoEnrolledForm" (ngSubmit)="onIssoEnrollSubmit()">
-          <div class="row">
-            <div class="col-md-6 mb-4">
+      <div
+        class="d-flex justify-content-center"
+        *ngIf="!isStudentEnrollForm && !validStudentId"
+      >
+        <form [formGroup]="issoEnrolledForm">
+          <div class="row align-box">
+            <div class="col-md-12 alig-otp-box">
+              <div
+                class="alert alert-success"
+                role="alert"
+                *ngIf="isotpSuccess"
+              >
+                OTP Sent on your registered mobile number
+              </div>
+              <div class="alert alert-danger" role="alert" *ngIf="isotpError">
+                {{ otpErrorMessage }}
+              </div>
               <label class="form-label fw-bold">Student ID</label>
               <input
                 type="text"
@@ -260,6 +273,7 @@
                 (blur)="issoEnrolledForm.controls.studentId.markAsTouched()"
                 placeholder="Enter student ID"
                 [(ngModel)]="studentId"
+                (ngModelChange)="onInputChange()"
                 (input)="studentId = studentId?.toUpperCase()"
               />
               <div
@@ -269,17 +283,51 @@
                   issoEnrolledForm.controls.studentId.invalid
                 "
               >
-                Student ID is required (min 3 characters).
+                Student ID is required.
+              </div>
+              <div class=" ">
+                <button
+                  type="submit"
+                  (click)="onIssoEnrollSubmit()"
+                  class="btn btn-primary btn-medium align-isso-button"
+                  [disabled]="!isEnabled"
+                >
+                  <i class="bi bi-send-fill"></i> Verify Student ID
+                </button>
               </div>
             </div>
-            <div class="col-md-6 mb-4">
-              <button
-                type="submit"
-                class="btn btn-primary btn-medium align-isso-button"
-                [disabled]="!isIssoFormValid()"
+
+            <div class="col-md-12">
+              <label class="form-label fw-bold">OTP</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="otp"
+                (blur)="issoEnrolledForm.controls.otp.markAsTouched()"
+                placeholder="Enter OTP"
+                [(ngModel)]="otp"
+                maxlength="6"
+                [attr.disabled]="otpDisabled ? true : null"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  issoEnrolledForm.controls.otp.touched &&
+                  issoEnrolledForm.controls.otp.invalid
+                "
               >
-                <i class="bi bi-send-fill"></i> Submit
-              </button>
+                OTP is required.
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  (click)="verifyOtp()"
+                  class="btn btn-primary btn-medium align-isso-button"
+                  [disabled]="!isIssoFormValid()"
+                >
+                  <i class="bi bi-send-fill"></i> Submit
+                </button>
+              </div>
             </div>
           </div>
         </form>

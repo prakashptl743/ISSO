@@ -76,7 +76,7 @@ export class StudentProfileComponent implements OnInit {
     const currentYear = new Date().getFullYear();
     const endYear = parseInt(val.split("-")[1]);
 
-    if (currentYear === endYear) {
+    if (currentYear !== endYear) {
       this.isFirstYear = false;
     } else {
       this.isFirstYear = true;

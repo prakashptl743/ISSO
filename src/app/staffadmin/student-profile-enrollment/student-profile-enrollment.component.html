@@ -106,19 +106,38 @@
         />
       </div>
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
-        <span
+        <!-- <span
           *ngIf="student.subGameName !== ''"
           (click)="showSubgameDialog(student)"
           class="p-3 mb-2 bg-primary text-white cusror-pointer"
           >Change Subgame</span
-        >
+        > -->
+
+        <span
+          class="cursor-pointer float-right"
+          *ngIf="student.subGameName !== ''"
+          (click)="changeSubgame(student)"
+          ><i class="bi bi-pencil"></i
+        ></span>
+
         <span
           *ngIf="student.subGameName == ''"
           (click)="showSubgameDialog(student)"
           class="p-3 mb-2 bg-primary text-white cusror-pointer"
-          >ADD Subgame</span
+          ><span class="blinking-text">Add Subgame</span></span
         >
-        {{ student.subGameName }}
+
+        <div *ngIf="student.subGameName !== ''">
+          <div
+            *ngFor="
+              let subgame of student.subGameName.split(',');
+              let i = index
+            "
+          >
+            {{ i + 1 }}. {{ subgame.trim() }}
+          </div>
+        </div>
+        <!-- {{ student.subGameName }} -->
       </div>
       <div class="table-cell">
         <span
@@ -225,7 +244,17 @@
         />
       </div>
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
-        {{ student.subGameName }}
+        <span
+          *ngIf="student.paidStatus == ''"
+          class="cursor-pointer float-right"
+          (click)="editSubgame(student)"
+          ><i class="bi bi-pencil"></i
+        ></span>
+        <div
+          *ngFor="let subgame of student.subGameName.split(','); let i = index"
+        >
+          {{ i + 1 }}. {{ subgame.trim() }}
+        </div>
       </div>
       <div
         class="table-cell"
@@ -344,7 +373,7 @@
   [width]="800"
   (onHide)="onDialogClose()"
 >
-  <div class="col-md-12">
+  <div class="col-md-12 p-0">
     <div class="subgagme-dropdown col-md-9">
       <p-dropdown
         [ngModelOptions]="{ standalone: true }"
@@ -364,6 +393,13 @@
       ></button>
     </div>
   </div>
+
+  <div class="col-md-12" *ngIf="errorMessage !== ''">
+    <div *ngIf="errorMessage != ''" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+
   <div class="col-md-12">
     <p-table [value]="selectedSubgamesTable">
       <ng-template pTemplate="header">
@@ -391,13 +427,25 @@
       </ng-template>
     </p-table>
   </div>
-  <button pButton label="Save All" (click)="saveSubgames()"></button>
+
+  <button
+    class="m-4"
+    pButton
+    label="{{ addGameLabel }}"
+    (click)="saveSubgames()"
+  ></button>
 </p-dialog>
 
 <p-toast position="bottom-center"></p-toast>
 <p-confirmDialog
   key="confirm-save-enroll"
   header="Save student data"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>
+<p-confirmDialog
+  key="confirm-delete-enroll"
+  header="Delete student data"
   acceptLabel="Yes"
   rejectLabel="No"
 ></p-confirmDialog>

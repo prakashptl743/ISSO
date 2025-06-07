@@ -1,0 +1,277 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
+<!-- <div class="container">
+  <h1>Student Subgame Assignment</h1>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Father Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th colspan="3">Assigned Subgames (Min 1, Max 3)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i = index">
+        <td>{{ student.name }}</td>
+        <td>{{ student.fatherName }}</td>
+        <td>{{ student.dateOfBirth }}</td>
+        <td>{{ student.gender }}</td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 0, $event)"
+            [ngModel]="student.selectedSubGameIds[0]"
+          >
+            <option value="">-- Select SubGame 1 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 0)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[0]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 1, $event)"
+            [ngModel]="student.selectedSubGameIds[1]"
+          >
+            <option value="">-- Select SubGame 2 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 1)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[1]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select
+            (change)="onSubGameSelectionChange(student, 2, $event)"
+            [ngModel]="student.selectedSubGameIds[2]"
+          >
+            <option value="">-- Select SubGame 3 --</option>
+            <option
+              *ngFor="let subgame of getAvailableSubGames(student, 2)"
+              [value]="subgame.id"
+              [disabled]="
+                currentSubGameCounts[subgame.id] >= subgame.maxCapacity &&
+                subgame.id !== student.selectedSubGameIds[2]
+              "
+            >
+              {{ subgame.name }} (Capacity:
+              {{ currentSubGameCounts[subgame.id] || 0 }}/{{
+                subgame.maxCapacity
+              }})
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary">
+    <h3>Global Subgame Capacity Status:</h3>
+    <ul>
+      <li *ngFor="let subgame of allSubGames">
+        {{ subgame.name }} (ID: {{ subgame.id }}): Current:
+        {{ currentSubGameCounts[subgame.id] || 0 }} / Max:
+        {{ subgame.maxCapacity }}
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] < subgame.minCapacity"
+          class="warning"
+        >
+          (Min: {{ subgame.minCapacity }} - Not Met!)
+        </span>
+        <span
+          *ngIf="currentSubGameCounts[subgame.id] >= subgame.maxCapacity"
+          class="error"
+        >
+          (Max Capacity Reached!)
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <button (click)="submitDataTable()">Submit Assignments</button>
+</div> -->
+
+<!--Belo Code is IMP-->
+<div class="container mt-5">
+  <h2 class="mb-4 text-center text-primary">Student Subgame Assignment</h2>
+  <hr class="mb-5" />
+
+  <div
+    *ngIf="message"
+    class="alert alert-{{ messageType || 'info' }} alert-dismissible fade show"
+    role="alert"
+  >
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card shadow-lg border-0 mb-4">
+        <div class="card-header bg-primary text-white py-3">
+          <h4 class="card-title mb-0">
+            <i class="bi bi-person-lines-fill me-2"></i>Students & Assignments
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Student Name</th>
+                  <th scope="col" class="text-center">Assigned Subgame</th>
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let student of students">
+                  <th scope="row">{{ student.id }}</th>
+                  <td>{{ student.name }}</td>
+                  <td class="text-center">
+                    <span *ngIf="getAssignedSubgameId(student.id)">
+                      <span class="badge bg-success">
+                        {{ getSubgameName(getAssignedSubgameId(student.id)!) }}
+                      </span>
+                    </span>
+                    <span *ngIf="!getAssignedSubgameId(student.id)">
+                      <span class="badge bg-secondary"> Not Assigned </span>
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-outline-primary btn-sm dropdown-toggle"
+                        type="button"
+                        id="dropdownMenu{{ student.id }}"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Assign <i class="bi bi-person-add ms-1"></i>
+                      </button>
+                      <ul
+                        class="dropdown-menu shadow animate__animated animate__fadeInUp"
+                      >
+                        <li *ngFor="let subgame of subgames">
+                          <a
+                            class="dropdown-item"
+                            href="#"
+                            (click)="
+                              assignStudentToSubgame(student.id, subgame.id)
+                            "
+                          >
+                            <!-- <i
+                              class="bi bi-{{
+                                getSubgameIcon(subgame.id)
+                              }} me-2"
+                            ></i> -->
+                            {{ subgame.name }}
+                            <span class="badge bg-info ms-2">
+                              {{ subgameAssignedCountMap.get(subgame.id) || 0 }}
+                              / {{ subgame.minCapacity }}
+                            </span>
+                            <i
+                              *ngIf="
+                                getAssignedSubgameId(student.id) === subgame.id
+                              "
+                              class="bi bi-check-circle-fill text-success ms-2"
+                            ></i>
+                            <i
+                              *ngIf="
+                                getAssignedSubgameId(student.id) !==
+                                  subgame.id &&
+                                subgameAssignedCountMap.get(subgame.id)! >=
+                                  subgame.minCapacity
+                              "
+                              class="bi bi-exclamation-triangle-fill text-danger ms-2"
+                            ></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-lg border-0 mb-4">
+        <div class="card-header bg-secondary text-white py-3">
+          <h4 class="card-title mb-0">
+            <i class="bi bi-list-nested me-2"></i>Subgame Capacities
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <ul class="list-group list-group-flush">
+            <li
+              *ngFor="let subgame of subgames"
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <!-- <i
+                  class="bi bi-{{
+                    getSubgameIcon(subgame.id)
+                  }} me-2 text-primary"
+                ></i> -->
+                <strong class="text-dark">{{ subgame.name }}</strong>
+              </div>
+              <span class="badge bg-primary rounded-pill p-2">
+                Assigned: {{ subgameAssignedCountMap.get(subgame.id) || 0 }} /
+                Min: {{ subgame.minCapacity }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center my-4">
+        <button
+          class="btn btn-success btn-lg shadow-sm"
+          (click)="saveAssignments()"
+        >
+          <i class="bi bi-cloud-arrow-up-fill me-2"></i>Save Assignments
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

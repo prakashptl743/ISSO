@@ -268,7 +268,21 @@ h5 {
   list-style-type: disc;
   margin-left: 1.5rem;
 }
+.blinking-text {
+  animation: blink 1s linear infinite;
+}
 
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
 /* Stagger animation using nth-child */
 .animated-list li:nth-child(1) {
   animation-delay: 0.1s;
@@ -283,7 +297,7 @@ h5 {
   animation-delay: 0.7s;
 }
 .subgagme-dropdown {
-  height: 150px;
+  height: 100px;
 }
 .added-student {
   text-align: center;
@@ -373,4 +387,7 @@ body.no-scroll {
 }
 .team-complete-message {
   padding: 10px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }

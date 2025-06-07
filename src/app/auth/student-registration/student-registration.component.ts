@@ -65,9 +65,10 @@ export class StudentRegistrationComponent implements OnInit {
   maxDate: Date;
   isStudentEnrollForm: boolean = true;
   validStudentId: boolean;
-
+  studentId: string = "";
+  isEnabled: boolean = false;
   capacityContextKey: string = "fourteen_girls"; // Set this dynamically based on your application logic
-
+  otpDisabled: boolean = true;
   allSubGames: SubGame[] = [];
   isLoading: boolean = false;
   students: Student[] = [
@@ -104,6 +105,10 @@ export class StudentRegistrationComponent implements OnInit {
   subGameCapacityKeys: {
     [subGameId: string]: { maxKey: string; minKey: string };
   } = {};
+  isotpSuccess: boolean;
+  studentDataResponse: any;
+  isotpError: boolean;
+  otpErrorMessage: string;
 
   constructor(
     private fb: FormBuilder,
@@ -130,6 +135,7 @@ export class StudentRegistrationComponent implements OnInit {
     });
     this.issoEnrolledForm = this.fb.group({
       studentId: ["", [Validators.required, Validators.minLength(3)]],
+      otp: ["", [Validators.required, Validators.minLength(6)]],
     });
   }
   ngOnInit() {
@@ -628,7 +634,116 @@ export class StudentRegistrationComponent implements OnInit {
   isIssoFormValid(): boolean {
     return this.issoEnrolledForm.valid;
   }
+  onInputChange(): void {
+    console.log("hii");
+    this.isEnabled = this.studentId.length === 8;
+  }
   onIssoEnrollSubmit() {
+    this.isEnrollSubmitted = true;
+    console.log("dat-->" + this.issoEnrolledForm.value.studentId);
+    if (this.issoEnrolledForm.value.studentId !== undefined) {
+      console.log("im ifs");
+      const formData = new FormData();
+      formData.append("studentId", this.issoEnrolledForm.value.studentId);
+      this.studentProfileService.checkStudentEnroll(formData).subscribe(
+        (res) => {
+          if (res.error === "error") {
+            this.validStudentId = false;
+            this.messageService.add({
+              key: "custom",
+              severity: "error",
+              detail: "Student Id not found",
+            });
+          } else {
+            this.otpDisabled = false;
+            this.sendInfoToOtp(res);
+            // this.issoEnrolledForm.reset();
+            // localStorage.setItem("studentData", JSON.stringify(res));
+            // this.router.navigate(["parent-dashboard"]);
+          }
+        },
+        (error) => {
+          this.messageService.add({
+            key: "custom",
+            severity: "error",
+            summary: error.errorDesc,
+          });
+        }
+      );
+    } else {
+      console.log("im undefined");
+    }
+  }
+  sendInfoToOtp(res) {
+    console.log("Im res--?" + JSON.stringify(res));
+    this.studentDataResponse = res;
+    const formData = new FormData();
+    formData.append("studentName", res[0].studentName);
+    formData.append("contactNo", res[0].contactNo);
+    this.studentProfileService.sendInfoToOtp(formData).subscribe(
+      (res) => {
+        console.log("res-->" + JSON.stringify(res));
+        if (res.error === "error") {
+          this.validStudentId = false;
+          this.messageService.add({
+            key: "custom",
+            severity: "error",
+            detail: "Failed to send OTP please try again !",
+          });
+        } else {
+          this.isotpSuccess = true;
+          console.log("otp sent");
+          //this.otpDisabled = false;
+          //this.sendOtp(res);
+          // this.issoEnrolledForm.reset();
+
+          // localStorage.setItem("studentData", JSON.stringify(res));
+          // this.router.navigate(["parent-dashboard"]);
+        }
+      },
+      (error) => {
+        this.messageService.add({
+          key: "custom",
+          severity: "error",
+          summary: error.errorDesc,
+        });
+      }
+    );
+  }
+  verifyOtp() {
+    const formData = new FormData();
+    this.isotpSuccess = false;
+    formData.append("otp", this.issoEnrolledForm.value.otp);
+    this.studentProfileService.verifyOtp(formData).subscribe(
+      (res) => {
+        if (res == "OTP verified") {
+          this.isotpError = false;
+          localStorage.setItem(
+            "studentData",
+            JSON.stringify(this.studentDataResponse)
+          );
+          this.router.navigate(["parent-dashboard"]);
+        } else if (res == "OTP expired") {
+          this.isotpError = true;
+          this.otpErrorMessage = "OTP is expired please try again";
+        } else if (res == "Invalid OTP") {
+          this.isotpError = true;
+          this.otpErrorMessage = "Invalid OTP please try again";
+        } else {
+          this.isotpError = true;
+          this.otpErrorMessage = "OTP not found please try again";
+        }
+      },
+      (error) => {
+        this.messageService.add({
+          key: "custom",
+          severity: "error",
+          summary: error.errorDesc,
+        });
+      }
+    );
+  }
+  onIssoEnrollSubmit1() {
     this.isEnrollSubmitted = true;
     console.log(this.issoEnrolledForm.value.studentId);
     const formData = new FormData();
