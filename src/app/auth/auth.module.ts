@@ -14,6 +14,7 @@ import { IsfSchoolComponent } from "./isf-school/isf-school.component";
 import { StudentRegistrationComponent } from "./student-registration/student-registration.component";
 import { ParentDashboardComponent } from "./parent-dashboard/parent-dashboard.component";
 import { CertificateDashboardComponent } from "./certificate-dashboard/certificate-dashboard.component";
+import { TestCompComponent } from "./test-comp/test-comp.component";
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { CertificateDashboardComponent } from "./certificate-dashboard/certifica
     SchoolRegistrationComponent,
     StudentCertificateComponent,
     StudentRegistrationComponent,
+    TestCompComponent,
     ParentDashboardComponent,
     CertificateDashboardComponent,
     IsfSchoolComponent,
