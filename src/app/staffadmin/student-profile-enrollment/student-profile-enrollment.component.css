@@ -8,7 +8,9 @@
 :host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
   width: 400px;
 }
-
+.align-error-message {
+  font-size: medium;
+}
 .ui-toast .ui-toast-message.ui-toast-message-success {
   width: 380px !important;
   border-radius: 10px !important;

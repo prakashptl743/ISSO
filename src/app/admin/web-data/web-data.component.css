@@ -1,165 +1,158 @@
 .align-form {
-    padding: 20px 10px 0 15px;
+  padding: 20px 10px 0 15px;
 }
 .align-text {
-    padding: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
-.search-text { 
-    width: 70%;
-    margin: 0 30px 12px 0;
-    padding: 7px;
-} 
+.search-text {
+  width: 70%;
+  margin: 0 30px 12px 0;
+  padding: 7px;
+}
 :host ::ng-deep button {
-    margin-right: .25em;
+  margin-right: 0.25em;
 }
- .pad-bottom-none {
-    padding-bottom: 0;
- } 
- .align-icon {
-    width: 40px;
-    height: 30px;
-    margin-bottom: 20px;
- }
+.pad-bottom-none {
+  padding-bottom: 0;
+}
+.align-icon {
+  width: 40px;
+  height: 30px;
+  margin-bottom: 20px;
+}
 .error-class {
-    color: red;
-    padding-top: 15px;
+  color: red;
+  padding-top: 15px;
 }
 .file-hint {
-    padding-top: 10px;
-    color: green;
+  padding-top: 10px;
+  color: green;
 }
 :host ::ng-deep .custom-toast .ui-toast-message {
-    color: #ffffff;
-    background:blue;
-    border-radius: 20px;
-    padding-top: 8px;
-    width: 120%;
- 
+  color: #ffffff;
+  background: blue;
+  border-radius: 20px;
+  padding-top: 8px;
+  width: 120%;
 }
 
 :host ::ng-deep .custom-toast .ui-toast-close-icon {
-    padding-top: 10px;
-    padding-right: 15px;
-    color: #ffffff;
+  padding-top: 10px;
+  padding-right: 15px;
+  color: #ffffff;
 }
-.boder-b{
-    padding-left: 0;
-    padding-right: 0;
-    border-bottom: 1px solid black;
+.boder-b {
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: 1px solid black;
 }
 .no-padding {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 body .ui-dataview .ui-dataview-content {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 :host ::ng-deep .btn-style {
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 :host ::ng-deep .ui-panel .ui-panel-content {
-    position: relative;
+  position: relative;
 }
 .car-detail {
-    padding: 5px;
+  padding: 5px;
 }
 :host ::ng-deep .car-detail .ui-button-text {
-    display: none;
+  display: none;
 }
-:host ::ng-deep .ui-panel .ui-panel-content{
+:host ::ng-deep .ui-panel .ui-panel-content {
   min-height: 350px;
 }
-:host ::ng-deep .float-input{
-    color: black;
+:host ::ng-deep .float-input {
+  color: black;
 }
 :host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
-    vertical-align: middle;
-    font-weight: 700;
-    width: 350px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  vertical-align: middle;
+  font-weight: 700;
+  width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.tab button.active {
-    background-color: #ccc;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-  }
-  .isMenuActive {
-    background: #007ad9;
-    color: white;
-  }
-  .align-game-button {
-    margin-left: 30px;
-  }
-  .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    margin: 20px;
-  }
-  
-  /* Style the buttons inside the tab */
-  .tab button {
-   
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 14px;
-  }
+
 .submenu {
-    /* Remove right alignment */
-    text-align: left; /* or use any other alignment value you prefer */
+  /* Remove right alignment */
+  text-align: left; /* or use any other alignment value you prefer */
 }
 @media all and (min-width: 992px) {
-    .navbar .dropdown-menu-end { right: 0; left: auto; }
-    .navbar .nav-item .dropdown-menu { display: block; opacity: 0; visibility: hidden; transition: .7s; margin-top: 0; }
-    .navbar .nav-item:hover .nav-link { color: #fff; }
-    .navbar .dropdown-menu.fade-down { top: 80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
-    .navbar .dropdown-menu.fade-up { top: 100%; }
-    .navbar .nav-item:hover .dropdown-menu { transition: .7s; opacity: 1; visibility: visible; top: 100%; transform: rotateX(0deg); }
+  .navbar .dropdown-menu-end {
+    right: 0;
+    left: auto;
   }
+  .navbar .nav-item .dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.7s;
+    margin-top: 0;
+  }
+  .navbar .nav-item:hover .nav-link {
+    color: #fff;
+  }
+  .navbar .dropdown-menu.fade-down {
+    top: 80%;
+    transform: rotateX(-75deg);
+    transform-origin: 0% 0%;
+  }
+  .navbar .dropdown-menu.fade-up {
+    top: 100%;
+  }
+  .navbar .nav-item:hover .dropdown-menu {
+    transition: 0.7s;
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+    transform: rotateX(0deg);
+  }
+}
 
 .ev-name1 {
-    width: 85%;
-    margin-top: 0;
-    margin-bottom: 0;
+  width: 85%;
+  margin-top: 0;
+  margin-bottom: 0;
 }
-:host ::ng-deep .ui-calendar.ui-calendar-w-btn .ui-datepicker-trigger.ui-button {
-    position:absolute;
-    background-color: gray;
- 
+:host
+  ::ng-deep
+  .ui-calendar.ui-calendar-w-btn
+  .ui-datepicker-trigger.ui-button {
+  position: absolute;
+  background-color: gray;
 }
 :host ::ng-deep .body .ui-button {
-    border-radius: none;
+  border-radius: none;
 }
-:host ::ng-deep .ui-tieredmenu .ui-menuitem.ui-menuitem-active:hover > .ui-menuitem-link {
-    background-color: #f0f0f0; /* Change background color on hover */
-    color: #000; /* Change text color on hover */
-  }
+:host
+  ::ng-deep
+  .ui-tieredmenu
+  .ui-menuitem.ui-menuitem-active:hover
+  > .ui-menuitem-link {
+  background-color: #f0f0f0; /* Change background color on hover */
+  color: #000; /* Change text color on hover */
+}
 .custom-menubar .p-tieredmenu .p-menuitem {
-    color: red; /* Default color */
-  }
-  
-  .custom-menubar .p-tieredmenu .p-menuitem:hover {
-    background-color: #f0f0f0; /* Change background color on hover */
-    color: #000; /* Change text color on hover */
-  }
-  .align-web-container {
-    margin: 0;
-    padding: 0;
-  }
+  color: red; /* Default color */
+}
+
+.custom-menubar .p-tieredmenu .p-menuitem:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+  color: #000; /* Change text color on hover */
+}
+.align-web-container {
+  margin: 0;
+  padding: 0;
+}

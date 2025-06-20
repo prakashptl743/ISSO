@@ -10,22 +10,6 @@
     </p-tabMenu>
 </div> -->
 
-<div class="tab">
-  <button
-    [ngClass]="isGame ? 'isMenuActive' : ''"
-    (click)="onloadMenu(0)"
-    class="tablinks"
-  >
-    Game
-  </button>
-  <button
-    [ngClass]="isSubGame ? 'isMenuActive' : ''"
-    (click)="onloadMenu(1)"
-    class="tablinks"
-  >
-    Subgame
-  </button>
-</div>
 <app-loading *ngIf="showspinner"></app-loading>
 
 <div *ngIf="isSubGame">

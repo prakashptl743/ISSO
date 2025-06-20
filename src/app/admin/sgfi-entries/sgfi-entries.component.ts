@@ -12,6 +12,7 @@ import { IssoUtilService } from "src/app/services/isso-util.service";
 import { SgfiEntriesService } from "../service/sgfi-entries.service";
 import { ReportMeritService } from "../service/report-merit.service";
 import { environment } from "src/environments/environment";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-sgfi-entries",
@@ -88,6 +89,7 @@ export class SgfiEntriesComponent implements OnInit {
     private sgfiEntriesService: SgfiEntriesService,
     private messageService: MessageService,
     public datepipe: DatePipe,
+    private route: ActivatedRoute,
     private meritService: ReportMeritService
   ) {}
 
@@ -97,24 +99,14 @@ export class SgfiEntriesComponent implements OnInit {
     this.loadGame();
     console.log(environment.baseUrl);
     this.baseUrl = environment.baseUrl;
-  }
-  onloadMenu(index) {
+    const routeData = this.route.snapshot.data;
+
+    this.isAddStudent = routeData["isAddStudent"];
+    this.isViewStudent = routeData["isViewStudent"];
+    this.isShowPayment = routeData["isShowPayment"];
     this.makeEmptyForm();
-    this.enrolledStudentRecordLength = 0;
-    if (index == "0") {
-      this.isAddStudent = true;
-      this.isShowPayment = false;
-      this.isViewStudent = false;
-    } else if (index == "1") {
-      this.isViewStudent = true;
-      this.isAddStudent = false;
-      this.isShowPayment = false;
-    } else {
-      this.isViewStudent = false;
-      this.isAddStudent = false;
-      this.isShowPayment = true;
-    }
   }
+
   loadInitialData() {
     this.yearOptions = this.issoUtilService.setYear();
     this.ageOptions = this.issoUtilService.setAge();

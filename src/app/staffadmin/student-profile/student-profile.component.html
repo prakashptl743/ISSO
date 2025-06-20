@@ -123,13 +123,7 @@
       </td>
 
       <td>
-        <span
-          *ngIf="student.approvedStatus == '1'"
-          (click)="deleteStudent(student.sId)"
-          class=""
-        >
-          N/A</span
-        >
+        <span *ngIf="student.approvedStatus == '1'" class=""> N/A</span>
         <span
           *ngIf="student.approvedStatus == '0'"
           (click)="deleteStudent(student.sId)"

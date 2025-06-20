@@ -1,27 +1,593 @@
- 
+<header class="fancy-header">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+    <div class="">
+      <!-- <a class="navbar-brand fancy-brand" href="#">
+        <i class="bi bi-gem me-2"></i> Fancy
+        <span class="brand-highlight">Brand</span>
+      </a> -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#fancyNavbarCollapse"
+        aria-controls="fancyNavbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="fancyNavbarCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-hdd-network"></i>
+              Master
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[0]?.routing }}"
+                  >{{ adminMenuData[0]?.menu_name }}
+                  <i class="bi bi-speedometer2"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[1]?.routing }}"
+                >
+                  {{ adminMenuData[1]?.menu_name }}
+                  <i class="bi bi-building"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[3]?.routing }}"
+                >
+                  {{ adminMenuData[3]?.menu_name }}
+                  <i class="bi bi-person-lines-fill"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[5]?.routing }}"
+                >
+                  {{ adminMenuData[5]?.menu_name }}
+                  <i class="bi bi-file-earmark-text"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[9]?.routing }}"
+                >
+                  {{ adminMenuData[9]?.menu_name }}
+                  <i class="bi bi-calendar-check"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[12]?.routing }}"
+                >
+                  {{ adminMenuData[12]?.menu_name }}
+                  <i class="bi bi-person-workspace"></i
+                ></a>
+              </li>
+              <li class="dropdown-submenu">
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  href="#"
+                  id="moreServicesDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ adminMenuData[10]?.menu_name }}
+                  <i class="bi bi-chevron-right ms-2 dropdown-arrow"></i>
+                </a>
+                <ul
+                  class="dropdown-menu fancy-dropdown-menu submenu-level-2"
+                  aria-labelledby="moreServicesDropdown"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item fancy-dropdown-item"
+                      routerLink="{{ adminMenuData[10]?.routing }}"
+                      >Web Calender <i class="bi bi-calendar3"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item fancy-dropdown-item"
+                      routerLink="./isf-data"
+                      >ISF DATA <i class="bi bi-bar-chart-line"></i
+                    ></a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-controller"></i>
+              {{ adminMenuData[2]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[2]?.routing }}"
+                  >Game <i class="bi bi-controller"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./subgame"
+                  >SubGame <i class="bi bi-puzzle"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-calendar2-week"></i>
+              {{ adminMenuData[4]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./event"
+                >
+                  Event <i class="bi bi-calendar-event"></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./upcomingevent"
+                  >Upcomig Event <i class="bi bi-calendar2-week"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./map-game"
+                  >Map Game <i class="bi bi-map"></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./manageeventreport"
+                  >Manage Event Report
+                  <i class="bi bi-file-earmark-bar-graph"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./ManageTeamReport"
+                  >Manage Team Entries <i class="bi bi-person-rolodex"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./manageevent"
+                  >Active/Inactive Event <i class="bi bi-toggle-on"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-currency-rupee"></i>
+              {{ adminMenuData[6]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./payment-invoice"
+                  >Payment <i class="bi bi-wallet2"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./download-invoice"
+                  >Invoice <i class="bi bi-file-text"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./download-receipt"
+                  >Receipt <i class="bi bi-receipt"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./admin-payment"
+                  >Online Fee <i class="bi bi-cash-coin"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./sgfi-fee"
+                  >SGFI Fee <i class="bi bi-cash-coin"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./isf-fee"
+                  >ISF School Fee <i class="bi bi-building"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-bar-chart-line"></i>
+              {{ adminMenuData[7]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./report"
+                  >Report <i class="bi bi-bar-chart-line"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./certificate"
+                  >Certificate <i class="bi bi-award"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./coach-certificate"
+                  >Coach Certificate <i class="bi bi-person-workspace"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./consolited-report"
+                  >Consolited Report <i class="bi bi-graph-up-arrow"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./volunteer-certificate"
+                  >Volunteer Certificate <i class="bi bi-people"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./team-event-report"
+                  >Team Event Report <i class="bi bi-ui-checks-grid"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./id-card"
+                  >Download ID Card <i class="bi bi-person-badge"></i
+                ></a>
+              </li>
+              <!-- <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./isf-fee"
+                  >Certificate Content<i class="bi bi-puzzle"></i
+                ></a>
+              </li> -->
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-award"></i>
+              {{ adminMenuData[8]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[8]?.routing }}"
+                  >Add Merit <i class="bi bi-award"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./print-merit"
+                  >Print Merit <i class="bi bi-printer"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./consolited-merit"
+                  >Consolited Merit <i class="bi bi-journal-text"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-person-standing"></i>
+              Student Profile
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./profile-view-student"
+                  >View Student <i class="bi bi-person-lines-fill"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-list-check"></i>
+              {{ adminMenuData[13]?.menu_name }}
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./sgfi-add-student"
+                >
+                  Add Student
+                  <i class="bi bi-person-plus"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./sgfi-view-student"
+                  >View Student <i class="bi bi-person-lines-fill"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./sgfi-download-payment"
+                  >Download Payment <i class="bi bi-filetype-xlsx"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link fancy-link d-flex align-items-center gap-2"
+              id="servicesDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              ><i class="bi bi-person-circle"></i>
+              Profile
+              <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+            </a>
+            <ul
+              class="dropdown-menu fancy-dropdown-menu"
+              aria-labelledby="servicesDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="{{ adminMenuData[11]?.routing }}"
+                >
+                  {{ adminMenuData[11]?.menu_name }}
+                  <i class="bi bi-people"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  routerLink="./change-pass"
+                  >Change Password <i class="bi bi-key"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item fancy-dropdown-item"
+                  [routerLink]="['/login']"
+                  >Log Out <i class="bi bi-box-arrow-right"></i
+                ></a>
+              </li>
+            </ul>
+          </li>
+          <!-- {{todayDate | date: 'd MMMM , y'}}
+                {{ currentTime | date: 'hh:mm:ss a' }} -->
+          <!-- <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[10]?.routing }}"
+              >{{ adminMenuData[10]?.menu_name }}</a
+            >
+          </li> -->
+          <!-- <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[9]?.routing }}"
+              >{{ adminMenuData[9]?.menu_name }}</a
+            >
+          </li> -->
+          <!-- <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[10]?.routing }}"
+              >{{ adminMenuData[10].menu_name }}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[11]?.routing }}"
+              >{{ adminMenuData[11].menu_name }}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[12]?.routing }}"
+              >{{ adminMenuData[12].menu_name }}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fancy-link"
+              aria-current="page"
+              routerLink="{{ adminMenuData[13]?.routing }}"
+              >{{ adminMenuData[13].menu_name }}</a
+            >
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    {{ todayDate | date : "d MMMM" }}
+    {{ currentTime | date : "hh:mm:ss a" }}
+  </nav>
+</header>
 
 <div class="wrapper no-margin">
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3><span class="card-meta mb-2 align-card"><span style="color:#485E88">i</span><span style="color:#EE1D23">S</span><span style="color:#00A54F">S</span><span style="color:#54C5CF">O</span> ADMIN</span> </h3>
-                <!-- {{todayDate | date: 'd MMMM , y'}}
-                {{ currentTime | date: 'hh:mm:ss a' }} -->
-                <strong>ISSO</strong>
-            </div>
-            <ul class="list-unstyled components">
-               <li *ngFor="let menu of adminMenuData">
-                  <a class="pad-right" routerLink="{{menu.routing}}" routerLinkActive="active" class="menu-color"><i class="{{menu.menuIcon}}"></i> <span class="left-link"> {{menu.menu_name}}</span> </a>
-                </li> 
-                 <li><a  class="menu-color" [routerLink]="['/login']" routerLinkActive="active"><i class="{{faMenu}}">  </i> <span class="left-link">Logout</span></a>
-                </li> 
-         
-            </ul>
-        </nav>
+  <!-- <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>
+        <span class="card-meta mb-2 align-card"
+          ><span style="color: #485e88">i</span
+          ><span style="color: #ee1d23">S</span
+          ><span style="color: #00a54f">S</span
+          ><span style="color: #54c5cf">O</span> ADMIN</span
+        >
+      </h3>
+ 
+      <strong>ISSO</strong>
+    </div>
+    <ul class="list-unstyled components">
+      <li *ngFor="let menu of adminMenuData">
+        <a
+          class="pad-right"
+          routerLink="{{ menu?.routing }}"
+          routerLinkActive="active"
+          class="menu-color"
+          ><i class="{{ menu.menuIcon }}"></i>
+          <span class="left-link"> {{ menu.menu_name }}</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="menu-color"
+          [routerLink]="['/login']"
+          routerLinkActive="active"
+          ><i class="{{ faMenu }}"> </i>
+          <span class="left-link">Logout</span></a
+        >
+      </li>
+    </ul>
+  </nav> -->
 
-    <!-- Page Content  -->
-    <div id="content">
-       
-        <router-outlet></router-outlet>
-
-</div> 
+  <div class="container fancy-shadow rounded bg-white p-4">
+    <router-outlet></router-outlet>
+  </div>
 </div>

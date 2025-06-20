@@ -1,187 +1,152 @@
 .align-form {
-    padding: 20px 10px 0 15px;
+  padding: 20px 10px 0 15px;
 }
 .align-text {
-    padding: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
 }
- 
+
 :host ::ng-deep button {
-    margin-right: .25em;
+  margin-right: 0.25em;
 }
 .no-padding {
-    padding-left: 0;
-    padding-right: 0;
- }
- .pad-bottom-none {
-    padding-bottom: 0;
- } 
- .align-add-button {
-    padding-top: 25px;
+  padding-left: 0;
+  padding-right: 0;
 }
-.search-text { 
-    width: 100%;
-    margin: 0 30px 12px 0;
-    padding: 7px;
-    margin-left: 0px;
+.pad-bottom-none {
+  padding-bottom: 0;
 }
- .multiSelect{
-    display: block;
-    width: 100%;
- }
-:host ::ng-deep .ui-multiselect{
-  width: 100%;  
- }
+.align-add-button {
+  padding-top: 25px;
+}
+.search-text {
+  width: 100%;
+  margin: 0 30px 12px 0;
+  padding: 7px;
+  margin-left: 0px;
+}
+.multiSelect {
+  display: block;
+  width: 100%;
+}
+:host ::ng-deep .ui-multiselect {
+  width: 100%;
+}
 :host ::ng-deep .custom-toast .ui-toast-message {
-    color: #ffffff;
-    background:blue;
-    border-radius: 20px;
-    padding-top: 8px;
-    width: 120%;
+  color: #ffffff;
+  background: blue;
+  border-radius: 20px;
+  padding-top: 8px;
+  width: 120%;
 }
-.search-text { 
-    width: 77%;
-    margin: 0 30px 12px 0;
-    padding: 7px;
+.search-text {
+  width: 77%;
+  margin: 0 30px 12px 0;
+  padding: 7px;
 }
 :host ::ng-deep .custom-toast .ui-toast-close-icon {
-    padding-top: 10px;
-    padding-right: 15px;
-    color: #ffffff;
+  padding-top: 10px;
+  padding-right: 15px;
+  color: #ffffff;
 }
 .item_label {
-    width: 30% !important;
-    float: right;
+  width: 30% !important;
+  float: right;
 }
 .item_label-width {
-    width: 70%;
+  width: 70%;
 }
-.capacity-header{
-    background-color: #007ad9;
-    color: white;
-    border-bottom: none;
+.capacity-header {
+  background-color: #007ad9;
+  color: white;
+  border-bottom: none;
 }
-.align-capacity-header{
-    text-align: center;
-    font-style: bold;
-    padding: 5px;
+.align-capacity-header {
+  text-align: center;
+  font-style: bold;
+  padding: 5px;
 }
-.boder-b{
-    padding-left: 0;
-    padding-right: 0;
-    border-bottom: 1px solid black;
+.boder-b {
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: 1px solid black;
 }
 .no-padding {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 body .ui-dataview .ui-dataview-content {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 :host ::ng-deep .btn-style {
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 :host ::ng-deep .ui-panel .ui-panel-content {
-    position: relative;
+  position: relative;
 }
 /* :host ::ng-deep .ui-dialog .ui-dialog-content {
  height: 400px !important;
 } */
 .car-detail {
-    padding: 5px;
+  padding: 5px;
 }
 :host ::ng-deep .car-detail .ui-button-text {
-    display: none;
+  display: none;
 }
-:host ::ng-deep .ui-panel .ui-panel-content{
+:host ::ng-deep .ui-panel .ui-panel-content {
   min-height: 410px;
 }
-:host ::ng-deep .float-input{
-    color: black;
+:host ::ng-deep .float-input {
+  color: black;
 }
 :host ::ng-deep .ui-panel .ui-panel-titlebar .ui-panel-title {
-    vertical-align: middle;
-    font-weight: 700;
-    width: 350px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  vertical-align: middle;
+  font-weight: 700;
+  width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-legend {  
-    display: block;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 1px solid #17a2b8;
-    background-color: #17a2b8;
-    color: #fff;
-    width: auto;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin: 0 auto 20px;
-} 
+legend {
+  display: block;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid #17a2b8;
+  background-color: #17a2b8;
+  color: #fff;
+  width: auto;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 0 auto 20px;
+}
 fieldset {
-    min-width: 0;
-    padding: .35em .625em .75em;
-    margin: 0;
-    border: 1px solid silver;
+  min-width: 0;
+  padding: 0.35em 0.625em 0.75em;
+  margin: 0;
+  border: 1px solid silver;
 }
 :host ::ng-deep .align-events-list {
-    padding-bottom: 88px;
+  padding-bottom: 88px;
 }
 .align-game {
-    padding-left: 0;
+  padding-left: 0;
 }
-.align-button{
-    padding: 20px 0 20px 15px;
+.align-button {
+  padding: 20px 0 20px 15px;
 }
-.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    margin: 20px;
-  }
-  
-  /* Style the buttons inside the tab */
-  .tab button {
-   
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  /* Change background color of buttons on hover */
-  /* .tab button:hover {
-    background-color: #ddd;
-  } */
-  
-  /* Create an active/current tablink class */
-  .tab button.active {
-    background-color: #ccc;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-  }
+
 .isMenuActive {
-    background: #007ad9;
-    color: white;
-  }
- .ev-name1 {
-    width: 85%;
-    margin-top: 0;
-    margin-bottom: 0;
+  background: #007ad9;
+  color: white;
+}
+.ev-name1 {
+  width: 85%;
+  margin-top: 0;
+  margin-bottom: 0;
 }

@@ -151,7 +151,12 @@ export class AdminPayment implements OnInit {
       .subscribe(
         (response) => {
           if (response !== "") {
+            //  const sortedData = response.sort((a, b) => b.payAmount - a.payAmount);
             this.paymentData = response;
+            this.paymentData = this.paymentData.sort(
+              (a, b) => b.payAmount - a.payAmount
+            );
+
             if (this.paymentData.length > 0) {
               this.isDataAvailble = true;
             } else {

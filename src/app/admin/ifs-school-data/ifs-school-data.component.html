@@ -1,6 +1,6 @@
-<div class="content-wrapper">
-    <div>Total Records {{schoolData.length}}</div>
-<table class="fancy-table">
+<div class="content-wrapper" *ngIf="schoolData">
+  <div>Total Records {{ schoolData.length }}</div>
+  <table class="fancy-table">
     <thead>
       <tr>
         <th>Sr No.</th>
@@ -15,22 +15,44 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of schoolData;let i=index">
-        <td>{{i+1}} </td>
-        <td>{{item.name }} </td>
-        <td>{{item.gameName}}</td>
-        <td>{{item.mobNo}}</td>
-         <td><a target="_blank" href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{item.parentNocDoc}}">Download</a></td>
-         <td><a target="_blank" href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{item.schoolNocDoc}}">Download</a></td>
-        <td><a target="_blank" href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{item.passportNocDoc}}">Download</a></td>
-        <td>{{item.createdDate  | date: 'd MMM , y'}}</td>
+      <tr *ngFor="let item of schoolData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.gameName }}</td>
+        <td>{{ item.mobNo }}</td>
+        <td>
+          <a
+            target="_blank"
+            href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{
+              item.parentNocDoc
+            }}"
+            >Download</a
+          >
+        </td>
+        <td>
+          <a
+            target="_blank"
+            href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{
+              item.schoolNocDoc
+            }}"
+            >Download</a
+          >
+        </td>
+        <td>
+          <a
+            target="_blank"
+            href="https://issoindia.com/isso-php/upload/ifs-school-doc/{{
+              item.passportNocDoc
+            }}"
+            >Download</a
+          >
+        </td>
+        <td>{{ item.createdDate | date : "d MMM , y" }}</td>
         <td [ngClass]="item.isPaid == '0' ? 'paid-column' : 'not-paid-column'">
-             <span *ngIf="item.isPaid == '0'">Not paid</span>
-             <span *ngIf="item.isPaid == '1'">Paid</span>
+          <span *ngIf="item.isPaid == '0'">Not paid</span>
+          <span *ngIf="item.isPaid == '1'">Paid</span>
         </td>
       </tr>
- 
     </tbody>
   </table>
 </div>
-  
