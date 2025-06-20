@@ -1,66 +1,3 @@
-<div class="tab-menu">
-  <div class="tab">
-    <button
-      [ngClass]="currentEvent ? 'isMenuActive' : ''"
-      (click)="onloadMenu(0)"
-      class="tablinks"
-    >
-      Event
-    </button>
-    <button
-      [ngClass]="isUpcomingEvent ? 'isMenuActive' : ''"
-      (click)="onloadMenu(1)"
-      class="tablinks"
-    >
-      Upcoming Event
-    </button>
-    <button
-      [ngClass]="mapEvent ? 'isMenuActive' : ''"
-      (click)="onloadMenu(2)"
-      class="tablinks"
-    >
-      Map game
-    </button>
-    <button
-      [ngClass]="manageReport ? 'isMenuActive' : ''"
-      (click)="onloadMenu(3)"
-      class="tablinks"
-    >
-      Manage Event Report
-    </button>
-    <button
-      [ngClass]="teamEventReport ? 'isMenuActive' : ''"
-      (click)="onloadMenu(4)"
-      class="tablinks"
-    >
-      Manage Team Entries
-    </button>
-    <button
-      [ngClass]="makeActiveEvent ? 'isMenuActive' : ''"
-      (click)="onloadMenu(5)"
-      class="tablinks"
-    >
-      Active/InActive Event
-    </button>
-  </div>
-</div>
-
-<div *ngIf="isUpcomingEvent">
-  <app-upcoming-event></app-upcoming-event>
-</div>
-<div *ngIf="mapEvent">
-  <app-map-game></app-map-game>
-</div>
-<div *ngIf="manageReport">
-  <app-manage-event-report></app-manage-event-report>
-</div>
-<div *ngIf="teamEventReport">
-  <app-manage-team-report></app-manage-team-report>
-</div>
-<div *ngIf="makeActiveEvent">
-  <app-manage-event></app-manage-event>
-</div>
-
 <p-toast
   [style]="{ marginTop: '50px' }"
   styleClass="custom-toast"
@@ -337,16 +274,15 @@
           <div class="item-description">
             <label>Type:</label>
             <span class="item-value" *ngIf="event.eventType == '2'"
-              >Domestic</span
+              >Regional</span
             >
             <span class="item-value" *ngIf="event.eventType == '1'"
-              >International</span
+              >National</span
             >
             <span
               class="item-value"
               *ngIf="
-                event.eventType == 'International' ||
-                event.eventType == 'Domestic'
+                event.eventType == 'National' || event.eventType == 'Regional'
               "
               >{{ event.eventType }}</span
             >

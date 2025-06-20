@@ -1,27 +1,53 @@
- 
-<div class="tab">
-  <button [ngClass]="reportLabel=='attendance' ? 'isMenuActive' : '' "  (click)="onloadMenu(0)" class="tablinks" >Attendance</button>
+<div class="ui-g-12">
+  <div class="ui-g-4">
+    <p-dropdown
+      [options]="yearOptions"
+      placeholder="Select Year"
+      (onChange)="onyeareChange($event)"
+      [(ngModel)]="selectedYear"
+      [style]="{ 'min-width': '140px' }"
+    ></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <p-dropdown
+      [disabled]="!eventReadable"
+      [options]="eventOptions"
+      placeholder="Select Event"
+      [(ngModel)]="selectedEvent"
+      (onChange)="onEventChange($event)"
+      [style]="{ 'min-width': '140px' }"
+    ></p-dropdown>
+  </div>
 </div>
- 
- 
-   <div class="ui-g-12">
-        <div class="ui-g-4">
-          <p-dropdown  [options]="yearOptions"  placeholder="Select Year" (onChange)="onyeareChange($event)" [(ngModel)]="selectedYear" [style]="{'min-width':'140px'}"></p-dropdown>
-        </div>
-        <div class="ui-g-4">
-          <p-dropdown [disabled]="!eventReadable" [options]="eventOptions"  placeholder="Select Event"  [(ngModel)]="selectedEvent" (onChange)="onEventChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-        </div>
-    </div>    
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <p-dropdown [disabled]="!gameReadble"  [options]="gameOptions"  placeholder="Select Game" [(ngModel)]="selectedGame" (onChange)="loadGameChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-      </div>
-      <div class="ui-g-4">
-        <p-dropdown [disabled]="!schoolReadble" [options]="schoolOptions" [(ngModel)]="selectedSchool"  (onChange)="loadschoolChange($event)"  placeholder="Select School" [style]="{'min-width':'140px'}"></p-dropdown>
-      </div>
-    </div>
- 
-    <p-toast [style]="{marginTop: '50px'}"  styleClass="toast-body custom-toast" key="custom" position="bottom-center"></p-toast>
+<div class="ui-g-12">
+  <div class="ui-g-4">
+    <p-dropdown
+      [disabled]="!gameReadble"
+      [options]="gameOptions"
+      placeholder="Select Game"
+      [(ngModel)]="selectedGame"
+      (onChange)="loadGameChange($event)"
+      [style]="{ 'min-width': '140px' }"
+    ></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <p-dropdown
+      [disabled]="!schoolReadble"
+      [options]="schoolOptions"
+      [(ngModel)]="selectedSchool"
+      (onChange)="loadschoolChange($event)"
+      placeholder="Select School"
+      [style]="{ 'min-width': '140px' }"
+    ></p-dropdown>
+  </div>
+</div>
+
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="toast-body custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
 
 <!-- <td> <p-checkbox  name="group1" value="{{subGame.subGameName}}"  (onChange)="onSubGameChange($event,subGame.id,subGame.subGameName)"  inputId="{{subGame.id}}"></p-checkbox>
 </td> -->
@@ -30,7 +56,7 @@
   <label [for]="category.key">{{category.name}}</label>
 </div> -->
 
-<div class="table-responsive" *ngIf="isDataAvailble">          
+<div class="table-responsive" *ngIf="isDataAvailble">
   <table class="table">
     <thead>
       <tr>
@@ -38,44 +64,47 @@
         <th>Student Id</th>
         <th>Student Name</th>
         <th>Action</th>
-  
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let student of reportData;let i = index;">
-        <td>{{i+1}}</td>
-        <td>{{student.sId}}</td>
-        <td>{{student.studentName}}</td>
+      <tr *ngFor="let student of reportData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ student.sId }}</td>
+        <td>{{ student.studentName }}</td>
         <!-- <td>
           <p-checkbox name="group2" value="student" [value]="student"  [(ngModel)]="selectedCategories" (onChange)="onStudentChange($event,student.sId)" [inputId]="student.sId" ></p-checkbox>
 
         </td>   -->
         <td class="align-checkbox" *ngIf="student.isPresent == '1'">
-          <input 
-          class="largerCheckbox"
-          #saveUserNameCheckBox
-          id="saveUserNameCheckBox" 
-          type="checkbox" 
-          [checked]="true" 
-          (change)="onStudentAbsentChange(saveUserNameCheckBox.checked,student.sId)"/>
-
+          <input
+            class="largerCheckbox"
+            #saveUserNameCheckBox
+            id="saveUserNameCheckBox"
+            type="checkbox"
+            [checked]="true"
+            (change)="
+              onStudentAbsentChange(saveUserNameCheckBox.checked, student.sId)
+            "
+          />
 
           <!-- <p-checkbox   [checked]="true"  inputId="{{student.sId}}"  (onChange)="onStudentChange($event,student.sId)" ></p-checkbox> -->
         </td>
-        <td class="align-checkbox" *ngIf="student.isPresent =='0'">
-
-          <input 
-          class="largerCheckbox"
-          type="checkbox" 
-          [checked]="false" 
-          (change)="onStudentChange($event,student.sId)"/>
-
+        <td class="align-checkbox" *ngIf="student.isPresent == '0'">
+          <input
+            class="largerCheckbox"
+            type="checkbox"
+            [checked]="false"
+            (change)="onStudentChange($event, student.sId)"
+          />
 
           <!-- <p-checkbox   binary="true"  name="group1" inputId="{{student.sId}}"  (onChange)="onStudentChange($event,student.sId)"></p-checkbox> -->
         </td>
       </tr>
     </tbody>
   </table>
-  <p-button [disabled]="!studentAttendance"  label="Mark Attendance" (click)="saveAttendance()"></p-button>
-
-  </div>
+  <p-button
+    [disabled]="!studentAttendance"
+    label="Mark Attendance"
+    (click)="saveAttendance()"
+  ></p-button>
+</div>

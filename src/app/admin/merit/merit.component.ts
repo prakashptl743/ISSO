@@ -14,6 +14,7 @@ import { Observer } from "rxjs/Rx";
 import * as pdfFonts from "./vfs_fonts";
 import { DatePipe } from "@angular/common";
 import { environment } from "src/environments/environment";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-merit",
@@ -113,7 +114,7 @@ export class MeritComponent implements OnInit {
   showStudentList: boolean;
   error: any;
   items2: MenuItem[];
-  isAddMerit: boolean = true;
+  isAddMerit: boolean;
   display: boolean = false;
   isPrintMerit: boolean = false;
   certificateData: any;
@@ -143,11 +144,13 @@ export class MeritComponent implements OnInit {
   isTimeDistance: any;
   indexVal: any;
   baseUrl: string;
+
   constructor(
     private confirmation: ConfirmationService,
     private issoUtilService: IssoUtilService,
     private messageService: MessageService,
     public datepipe: DatePipe,
+    private route: ActivatedRoute,
     private meritService: ReportMeritService
   ) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -158,32 +161,38 @@ export class MeritComponent implements OnInit {
     this.items2 = [{ label: "Add Merit" }, { label: "Print Merit" }];
     this.setPhotoPath();
     this.baseUrl = environment.baseUrl;
+    const routeData = this.route.snapshot.data;
+    this.isAddMerit = routeData["isAddMerit"];
+    this.isPrintMerit = routeData["isPrintMerit"];
+    this.isConsolited = routeData["isConsolited"];
+    console.log("Route Data:", routeData);
+    this.makeEmptyForm();
   }
   setPhotoPath() {
     this.setPhotoYear = this.issoUtilService.setPhotoYear();
   }
-  onloadMenu(index) {
-    console.log("Im index" + index);
-    this.makeEmptyForm();
-    if (index == "0") {
-      this.isAddMerit = true;
-      this.isPrintMerit = false;
-      this.isConsolited = false;
-    } else if (index == "1") {
-      this.isPrintMerit = true;
-      this.isAddMerit = false;
-      this.isConsolited = false;
-      this.showMerit = false;
-    } else {
-      this.gameId = undefined;
-      this.isConsolited = true;
-      this.isPrintMerit = false;
-      this.isAddMerit = false;
-      this.showMerit = false;
-    }
-    console.log("this.isAddMerit" + this.isAddMerit);
-    console.log(" this.isPrintMerit" + this.isPrintMerit);
-  }
+  // onloadMenu(index) {
+  //   console.log("Im index" + index);
+  //   this.makeEmptyForm();
+  //   if (index == "0") {
+  //     this.isAddMerit = true;
+  //     this.isPrintMerit = false;
+  //     this.isConsolited = false;
+  //   } else if (index == "1") {
+  //     this.isPrintMerit = true;
+  //     this.isAddMerit = false;
+  //     this.isConsolited = false;
+  //     this.showMerit = false;
+  //   } else {
+  //     this.gameId = undefined;
+  //     this.isConsolited = true;
+  //     this.isPrintMerit = false;
+  //     this.isAddMerit = false;
+  //     this.showMerit = false;
+  //   }
+  //   console.log("this.isAddMerit" + this.isAddMerit);
+  //   console.log(" this.isPrintMerit" + this.isPrintMerit);
+  // }
   getBase64ImageFromURL(url: string) {
     return Observable.create((observer: Observer<string>) => {
       // create an image object

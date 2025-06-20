@@ -1,111 +1,190 @@
- 
 <!-- Theme style -->
 <!-- <link rel="stylesheet" href="assets/css/adminlte.min.css"> -->
 <!-- overlayScrollbars -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link
+  rel="stylesheet"
+  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+/>
 <section class="content">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+    crossorigin="anonymous"
+  />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <h3>Dashboard</h3>
 
-  <div class="col-md-10 ">
-  
-      <div class="row ">
-          <div class="col-xl-3 col-lg-6">
-
-      
-            
-              <div class="card cursor-poniter l-bg-cherry"  (click)="navigate('student')">
-                  <div class="card-statistic-3 p-4">
-                      <!-- <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div> -->
-                      <div class="mb-4">
-                          <h5 class="card-title mb-0">Total Student</h5>
-                      </div>
-                      <div class="row align-items-center mb-2 d-flex">
-                          <div class="col-8">
-                              <h2 class="d-flex align-items-center mb-0">
-                                {{studentCount}}
-                              </h2>
-                          </div>
-                          <!-- <div class="col-4 text-right">
-                              <span>12.5% <i class="fa fa-arrow-up"></i></span>
-                          </div> -->
-                      </div>
-                      <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                      </div> -->
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-3 col-lg-6">
-              <div class="card cursor-poniter l-bg-blue-dark"  (click)="navigate('event')">
-                  <div class="card-statistic-3 p-4">
-                      <!-- <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div> -->
-                      <div class="mb-4">
-                          <h5 class="card-title mb-0">Events</h5>
-                      </div>
-                      <div class="row align-items-center mb-2 d-flex">
-                          <div class="col-8">
-                              <h2 class="d-flex align-items-center mb-0">
-                                  {{eventCount}}
-                              </h2>
-                          </div>
-                          <!-- <div class="col-4 text-right">
-                              <span>9.23% <i class="fa fa-arrow-up"></i></span>
-                          </div> -->
-                      </div>
-                      <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                          <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                      </div> -->
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-3 col-lg-6">
-              <div class="card cursor-poniter l-bg-green-dark"  (click)="navigate('school')">
-                  <div class="card-statistic-3 p-4">
-                      <!-- <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div> -->
-                      <div class="mb-4">
-                          <h5 class="card-title mb-0">Total Schools</h5>
-                      </div>
-                      <div class="row align-items-center mb-2 d-flex">
-                          <div class="col-8">
-                              <h2 class="d-flex align-items-center mb-0">
-                                {{schoolCount}}
-                              </h2>
-                          </div>
-                          <!-- <div class="col-4 text-right">
-                              <span>10% <i class="fa fa-arrow-up"></i></span>
-                          </div> -->
-                      </div>
-                      <!--  <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                         <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                      </div> -->
-                  </div>
-              </div>
-          </div>
-          <div class="col-xl-3 col-lg-6">
-              <div class="card cursor-poniter l-bg-orange-dark"  (click)="navigate('game')">
-                  <div class="card-statistic-3 p-4">
-                      <!-- <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div> -->
-                      <div class="mb-4">
-                          <h5 class="card-title mb-0">Total Games</h5>
-                      </div>
-                      <div class="row align-items-center mb-2 d-flex">
-                          <div class="col-8">
-                              <h2 class="d-flex align-items-center mb-0">
-                                 {{gameCount}}
-                              </h2>
-                          </div>
-                          <!-- <div class="col-4 text-right">
-                              <span>2.5% <i class="fa fa-arrow-up"></i></span>
-                          </div> -->
-                      </div>
-                      <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                          <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                      </div> -->
-                  </div>
-              </div>
-          </div>
+  <!-- Card 1 -->
+  <div class="col-md-3 cursor-pointer" (click)="navigate('student')">
+    <div class="info-box bg-teal">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h3>{{ studentCount }}</h3>
+          <p>Total Student</p>
+        </div>
+        <div class="icon">
+          <i class="bi bi-person"></i>
+        </div>
       </div>
+    </div>
+  </div>
+  <!-- Card 2 -->
+  <div class="col-md-3 cursor-pointer" (click)="navigate('event')">
+    <div class="info-box bg-green">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h3>{{ eventCount }}</h3>
+          <p>Events</p>
+        </div>
+        <div class="icon">
+          <i class="bi bi-calendar-event"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card 3 -->
+  <div class="col-md-3 cursor-pointer" (click)="navigate('school')">
+    <div class="info-box bg-yellow">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h3>{{ schoolCount }}</h3>
+          <p>Total Schools</p>
+        </div>
+        <div class="icon">
+          <i class="bi bi-bank"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card 4 -->
+  <div class="col-md-3 cursor-pointer" (click)="navigate('game')">
+    <div class="info-box bg-red">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h3>{{ gameCount }}</h3>
+          <p>Total Games</p>
+        </div>
+        <div class="icon">
+          <i class="bi bi-controller"></i>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- <div id="pieChart" style="width: 100%; height: 400px"></div> -->
+  <div class="container mt-4">
+    <h3>Charts For ISSO</h3>
+    <div id="barChart" class="align-chart"></div>
+    <div class="col-md-3">
+      <p-dropdown
+        [options]="yearOptions"
+        placeholder="Select Year"
+        (onChange)="onyColumnChartYeareChange($event)"
+        [(ngModel)]="columnChartselectedYear"
+        [style]="{ 'min-width': '140px' }"
+      ></p-dropdown>
+    </div>
+    <div id="columnChart" class="align-chart align-year"></div>
+
+    <div class="col-md-3">
+      <p-dropdown
+        [options]="yearOptions"
+        placeholder="Select Year"
+        (onChange)="onyeareChange($event)"
+        [(ngModel)]="selectedYear"
+        [style]="{ 'min-width': '140px' }"
+      ></p-dropdown>
+    </div>
+    <div id="pieChart" class="align-chart align-year"></div>
+    <!-- <div id="lineChart" class="align-chart"></div> -->
+  </div>
+  <!-- <div class="col-md-10">
+    <div class="row">
+      <div class="col-xl-3 col-lg-6">
+        <div
+          class="card cursor-poniter l-bg-cherry"
+          (click)="navigate('student')"
+        >
+          <div class="card-statistic-3 p-4">
+             <div class="mb-4">
+              <h5 class="card-title mb-0">Total Student</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ studentCount }}
+                </h2>
+              </div>
+     
+            </div>
+   
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div
+          class="card cursor-poniter l-bg-blue-dark"
+          (click)="navigate('event')"
+        >
+          <div class="card-statistic-3 p-4">
+             <div class="mb-4">
+              <h5 class="card-title mb-0">Events</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ eventCount }}
+                </h2>
+              </div>
+       
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div
+          class="card cursor-poniter l-bg-green-dark"
+          (click)="navigate('school')"
+        >
+          <div class="card-statistic-3 p-4">
+             <div class="mb-4">
+              <h5 class="card-title mb-0">Total Schools</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ schoolCount }}
+                </h2>
+              </div>
  
+            </div>
+ 
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div
+          class="card cursor-poniter l-bg-orange-dark"
+          (click)="navigate('game')"
+        >
+          <div class="card-statistic-3 p-4">
+             <div class="mb-4">
+              <h5 class="card-title mb-0">Total Games</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ gameCount }}
+                </h2>
+              </div>
+ 
+            </div>
+ 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</section>

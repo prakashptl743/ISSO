@@ -47,6 +47,7 @@ import { ConfigureIfsSchoolPaymentComponent } from "./admin-payment/configure-if
 import { IfsSchoolDataComponent } from "./ifs-school-data/ifs-school-data.component";
 import { ManageEvent } from "./mange-event/manage-event.component";
 import { IndianCurrencyPipeModule } from "./pipe/indian-currency.pipe";
+import { ViewStudentComponent } from "./student-profile/view-student/view-student.component";
 
 @NgModule({
   imports: [
@@ -99,6 +100,7 @@ import { IndianCurrencyPipeModule } from "./pipe/indian-currency.pipe";
     ChangePassComponent,
     SgfiEntriesComponent,
     IfsSchoolDataComponent,
+    ViewStudentComponent,
   ],
   providers: [
     SumPipeModule,

@@ -1,96 +1,110 @@
- 
 <!-- Theme style -->
 <!-- <link rel="stylesheet" href="assets/css/adminlte.min.css"> -->
 <!-- overlayScrollbars -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-
-
-
-
+<link
+  rel="stylesheet"
+  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+/>
 
 <section class="content">
-    <div class="container-fluid">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{ studentCount }}</h3>
 
-
-
-
-      
-<div class="row">
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-info">
-        <div class="inner">
-          <h3>{{studentCount}}</h3>
-
-          <p>Students</p>
+            <p>Students</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a
+            class="cursor-pointer"
+            (click)="navigate('student')"
+            class="small-box-footer"
+            >More info <i class="fas fa-arrow-circle-right"></i
+          ></a>
         </div>
-        <div class="icon">
-          <i class="ion ion-bag"></i>
-        </div>
-        <a class="cursor-pointer"  (click)="navigate('student')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-success">
-        <div class="inner">
-          <h3>{{eventCount}}</h3>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{ eventCount }}</h3>
 
-          <p>Events</p>
+            <p>Events</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a
+            class="cursor-pointer"
+            (click)="navigate('event')"
+            class="small-box-footer"
+            >More info <i class="fas fa-arrow-circle-right"></i
+          ></a>
         </div>
-        <div class="icon">
-          <i class="ion ion-stats-bars"></i>
-        </div>
-        <a class="cursor-pointer"  (click)="navigate('event')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-warning">
-        <div class="inner">
-          <h3>{{schoolCount}}</h3>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{ schoolCount }}</h3>
 
-          <p>Schools</p>
+            <p>Schools</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a
+            class="cursor-pointer"
+            (click)="navigate('school')"
+            class="small-box-footer"
+            >More info <i class="fas fa-arrow-circle-right"></i
+          ></a>
         </div>
-        <div class="icon">
-          <i class="ion ion-person-add"></i>
-        </div>
-        <a class="cursor-pointer"  (click)="navigate('school')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-6">
-      <!-- small box -->
-      <div class="small-box bg-danger">
-        <div class="inner">
-          <h3>{{gameCount}}</h3>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>{{ gameCount }}</h3>
 
-          <p>Games</p>
+            <p>Games</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a
+            class="cursor-pointer"
+            (click)="navigate('game')"
+            class="small-box-footer"
+            >More info <i class="fas fa-arrow-circle-right"></i
+          ></a>
         </div>
-        <div class="icon">
-          <i class="ion ion-pie-graph"></i>
-        </div>
-        <a class="cursor-pointer"  (click)="navigate('game')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
       </div>
-    </div>
-    <div class="col-lg-3 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
             <h3>65</h3>
-  
+
             <p>Unique Visitors</p>
           </div>
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer"
+            >More info <i class="fas fa-arrow-circle-right"></i
+          ></a>
         </div>
       </div>
-    <!-- ./col -->
+      <!-- ./col -->
+    </div>
   </div>
-  </div>
-  </section>
+</section>

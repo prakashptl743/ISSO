@@ -82,6 +82,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   addGameLabel: String;
   subgameStudentId: any;
   errorMessage: string;
+  countMap: { [key: string]: number } = {};
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService,
@@ -123,28 +124,38 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   setSubGameData() {
     this.subGameoptions = [];
+    this.subGameoptions = this.studentSubgameData
+      .filter((element) => {
+        const keys = Object.keys(element);
+        const maxKey = keys.find(
+          (k) =>
+            !k.startsWith("min_") &&
+            /^[a-z_]+[0-9]*$/i.test(k) &&
+            !["id", "subGameName", "gameId", "gameType"].includes(k)
+        );
+        return maxKey && parseInt(element[maxKey], 10) > 0;
+      })
+      .map((element) => {
+        const keys = Object.keys(element);
+        const maxKey = keys.find(
+          (k) =>
+            !k.startsWith("min_") &&
+            /^[a-z_]+[0-9]*$/i.test(k) &&
+            !["id", "subGameName", "gameId", "gameType"].includes(k)
+        );
+        const minKey = `min_${maxKey}`;
 
-    this.subGameoptions = this.studentSubgameData.map((element) => {
-      const keys = Object.keys(element);
+        return {
+          label: element.subGameName,
+          value: {
+            id: element.id,
+            name: element.subGameName,
+            max: +element[maxKey],
+            min: +element[minKey],
+          },
+        };
+      });
 
-      const maxKey = keys.find(
-        (k) =>
-          !k.startsWith("min_") &&
-          /^[a-z_]+[0-9]*$/i.test(k) &&
-          !["id", "subGameName", "gameId", "gameType"].includes(k)
-      );
-      const minKey = `min_${maxKey}`;
-
-      return {
-        label: element.subGameName,
-        value: {
-          id: element.id,
-          name: element.subGameName,
-          max: +element[maxKey],
-          min: +element[minKey],
-        },
-      };
-    });
     this.subGameoptions.unshift({
       label: "Please select",
       value: null,
@@ -153,15 +164,20 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.errorMessage = "";
     this.addGameLabel = "Assign Subgame";
+    this.selectedSubgamesTable = [];
+    this.subGameIdCounts = null;
+    this.checkSubGameCapacity = [];
     this.yearOptions = this.issoUtilService.setYearToStaffadmin();
     this.setPhotoPath();
   }
 
   addSubgame() {
+    this.countMap = {};
+    const newCountMap: { [key: string]: number } = {};
     this.errorMessage = "";
     if (!this.selectedSubgame) {
-      //alert("Please select a subgame");
       this.errorMessage = "Please select a subgame";
+      this.selectedSubgame = null;
       return;
     }
 
@@ -170,52 +186,98 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     );
 
     if (alreadyAdded) {
-      //  alert("Subgame already added");
       this.errorMessage = "Subgame already added";
+      this.selectedSubgame = null;
       return;
     }
 
     if (this.selectedSubgamesTable.length >= 3) {
       this.errorMessage = "You can add a maximum of 3 subgames";
-      // alert("You can add a maximum of 3 subgames");
+      this.selectedSubgame = null;
       return;
     }
 
     this.checkSubGameCapacity.push(this.selectedSubgame.id);
-    // console.log("this.checkSubGameCapacity-->" + this.checkSubGameCapacity);
-    const countMap: { [key: string]: number } = {};
+    const id = this.selectedSubgame.id.toString();
+    this.countMap[id] = (this.countMap[id] || 0) + 1;
+    this.subGameIdCounts[id] = (this.subGameIdCounts[id] || 0) + 1;
+    // this.checkSubGameCapacity.forEach((id) => {
+    //   if (String(this.countMap[id]) !== id) {
+    //     this.countMap[id] = (this.countMap[id] || 0) + 1;
+    //     this.subGameIdCounts[id] = (this.subGameIdCounts[id] || 0) + 1;
+    //   }
+    // });
+    console.log("AAAA_----->" + JSON.stringify(this.subGameIdCounts));
+    // this.checkSubGameCapacity.forEach((id) => {
+    //   const idStr = String(id);
+    //   if (!this.countMap.hasOwnProperty(idStr)) {
+    //     console.log("Adding new id to countMap ---> " + idStr);
+    //     this.countMap[idStr] = 1;
+    //   }
+    //   newCountMap[idStr] = (newCountMap[idStr] || 0) + 1;
+    //   // this.countMap[idStr] = (this.countMap[idStr] || 0) + 1;
+    // });
+    // console.log("New CountMap-->" + JSON.stringify(newCountMap));
+    // if (!this.hasDuplicates(this.checkSubGameCapacity)) {
+    //   this.countMap = {}; // clear before rebuild
+    //   this.checkSubGameCapacity.forEach((id) => {
+    //     console.log("Im forloop");
+    //     this.countMap[id] = (this.countMap[id] || 0) + 1;
+    //   });
 
-    this.checkSubGameCapacity.forEach((id) => {
-      countMap[id] = (countMap[id] || 0) + 1;
-    });
-    console.log("countmapt-->" + JSON.stringify(countMap));
-    console.log("subGameIdCounts-->" + JSON.stringify(this.subGameIdCounts));
-    console.log("aaaaaaa->" + this.subGameIdCounts[this.selectedSubgame.id]);
-    if (
-      countMap[this.selectedSubgame.id] > this.selectedSubgame.max ||
-      this.subGameIdCounts[this.selectedSubgame.id] >= this.selectedSubgame.max
-    ) {
-      this.errorMessage = "Capacity is full";
-      // alert("Capacity is full");
+    //   console.log("countMap -->", this.countMap);
+    // } else {
+    //   console.warn("Duplicate IDs found. countMap not updated.");
+    // }
+    // console.log("COOO---->" + JSON.stringify(this.countMap));
+
+    const currentCount = this.subGameIdCounts[this.selectedSubgame.id];
+    const maxAllowed = this.selectedSubgame.max;
+
+    if (currentCount > maxAllowed) {
+      this.checkSubGameCapacity.pop();
+      // const idStr = String(this.selectedSubgame.id);
+      // if (this.subGameIdCounts[idStr]) {
+      //   this.subGameIdCounts[idStr]--;
+      //   if (this.subGameIdCounts[idStr] === 0) {
+      //     delete this.subGameIdCounts[idStr];
+      //   }
+      // }
+      if (this.subGameIdCounts[this.selectedSubgame.id] !== undefined) {
+        this.subGameIdCounts[this.selectedSubgame.id] =
+          this.selectedSubgame.max;
+      }
+      console.log(
+        "Check sUBGAME----->" + JSON.stringify(this.checkSubGameCapacity)
+      );
+      console.log("BBBB----->" + JSON.stringify(this.subGameIdCounts));
+      this.errorMessage = `Capacity is full for <b>${this.selectedSubgame.name}</b>`;
+      this.selectedSubgame = null;
       return;
     }
 
     this.subGameIdArray.push(this.selectedSubgame.id);
     this.subGameNameArray.push(this.selectedSubgame.name);
-    console.log("this.subGameIdArray-->" + JSON.stringify(this.subGameIdArray));
-    console.log(
-      "this.subGameNameArray-->" + JSON.stringify(this.subGameNameArray)
-    );
-    this.selectedSubgamesTable.push(this.selectedSubgame);
-    console.log("Im selected-->" + JSON.stringify(this.selectedSubgamesTable));
-    this.selectedSubgame = null; // clear dropdown after adding
-  }
 
+    this.selectedSubgamesTable.push(this.selectedSubgame);
+
+    this.selectedSubgame = null;
+  }
+  hasDuplicates(arr: (string | number)[]): boolean {
+    const seen = new Set();
+    for (const id of arr) {
+      if (seen.has(id)) {
+        return true;
+      }
+      seen.add(id);
+    }
+    return false;
+  }
   changeSubgame(student) {
     this.errorMessage = "";
     this.displaySubgameDialog = true;
+    this.selectedStudentForSubgame = student;
     this.addGameLabel = "Assign Subgame";
-    console.log("edtut" + JSON.stringify(student));
 
     this.subGameTableArray = [];
     const subgameArray = student.subGameId.split(",").map((id) => +id); // converts to [18, 19]
@@ -243,13 +305,9 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         }
       });
     }
-    //  console.log("Im subgame-->" + subgameName);
 
-    // allSubgameIds.push(...ids);
-    //this.checkSubGameCapacity.push(...subgameArray);
     this.selectedSubgamesTable.push(...this.subGameTableArray);
     this.displaySubgameDialog = true;
-    console.log("IM FINAL DATE-->" + this.selectedSubgamesTable);
   }
 
   editSubgame(student) {
@@ -282,13 +340,9 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         }
       });
     }
-    //  console.log("Im subgame-->" + subgameName);
 
-    // allSubgameIds.push(...ids);
-    //this.checkSubGameCapacity.push(...subgameArray);
     this.selectedSubgamesTable.push(...this.subGameTableArray);
     this.displaySubgameDialog = true;
-    console.log("IM FINAL DATE-->" + this.selectedSubgamesTable);
   }
   onDialogClose() {
     console.log("Dialog closed");
@@ -297,15 +351,59 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.selectedSubgamesTable = [];
     this.subGameIdArray = [];
     this.subGameNameArray = [];
+    this.selectedSubgame = null;
   }
   removeSubgame(sub) {
     this.selectedSubgamesTable = this.selectedSubgamesTable.filter(
       (s) => s.id !== sub.id
     );
+    const index = this.checkSubGameCapacity.findIndex((id) => id == sub.id);
+    if (index !== -1) {
+      // Remove the first occurrence of the ID
+      this.checkSubGameCapacity.splice(index, 1);
 
+      // Update countMap after removal
+    }
+    // this.checkSubGameCapacity.forEach((id) => {
+    //   this.countMap[id] = (this.countMap[id] || 0) - 1;
+    // });
+    // this.checkSubGameCapacity.forEach((id) => {
+    //   if (this.countMap[id]) {
+    //     this.countMap[id]--;
+
+    //     // Optional: Remove the key if count becomes 0
+    //     if (this.countMap[id] === 0) {
+    //       delete this.countMap[id];
+    //     }
+    //   }
+    // });
+    console.log("BEFORE COUNTMAP-->" + JSON.stringify(this.countMap));
+    const idStr = String(sub.id);
+    // if (this.countMap[idStr]) {
+    //   console.log("Im if-->" + idStr);
+    //   this.countMap[idStr]--;
+    //   if (this.countMap[idStr] === 0) {
+    //     console.log("Im if countMap-->" + idStr);
+    //     delete this.countMap[idStr];
+    //   }
+    // }
+    if (this.subGameIdCounts[idStr]) {
+      this.subGameIdCounts[idStr]--;
+      if (this.subGameIdCounts[idStr] === 0) {
+        console.log("Im if countMap-->" + idStr);
+        delete this.subGameIdCounts[idStr];
+      }
+    }
+    console.log(
+      "subGameIdCounts- IN REMOVING->" + JSON.stringify(this.subGameIdCounts)
+    );
     this.subGameIdArray = this.subGameIdArray.filter((item) => item !== sub.id);
     this.subGameNameArray = this.subGameNameArray.filter(
       (item) => item !== sub.name
+    );
+    console.log(
+      "checkSubGameCapacity REMOVINVG-->" +
+        JSON.stringify(this.checkSubGameCapacity)
     );
   }
   saveSubgames() {
@@ -317,6 +415,10 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       }
       // this.studentDataArray.push(...this.selectedSubgamesTable);
       // Optionally clear selections after saving
+      console.log(
+        "IM selectedStudentForSubgame-->" +
+          JSON.stringify(this.selectedStudentForSubgame)
+      );
       if (
         this.selectedStudentForSubgame &&
         this.studentDataArray.find(
@@ -358,10 +460,11 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       .subscribe(
         (res) => {
           if (res.status === "success") {
+            console.log("Im success");
             this.messageService.add({
               key: "custom",
               severity: "success",
-              summary: "UPdated Successfully",
+              summary: "Updated Successfully",
             });
           }
           this.displaySubgameDialog = false;
@@ -376,10 +479,11 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           });
         }
       );
+    this.selectedSubgame = null;
   }
-  loadGameChange(event) {
-    const eventval = event.value;
-  }
+  //loadGameChange(event) {
+  //   const eventval = event.value;
+  // }
   async alreadyEnrolledStudent() {
     this.isLoading = true;
     console.log("Im loading-->" + this.isLoading);
@@ -413,7 +517,10 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         });
       });
       this.subGameIdCounts = subgameCount;
-      // console.log("Im subgamecount--->" + JSON.stringify(subgameCount));
+      console.log("Im subgamecount--->" + JSON.stringify(subgameCount));
+      //     subgameIds.forEach((id) => {
+      //   delete this.subGameIdCounts[id];
+      // });
 
       if (
         this.studentEnrollData[6] !== "Both" &&
@@ -446,8 +553,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.studentProfileService.deleteenrolledStudentData(student.id).subscribe(
       (res) => {
         this.messageService.add({
-          // severity: "success",
-          // detail: "Student Data Deleted Successfully",
+          key: "custom",
           severity: "success",
           detail: "Student Data Deleted  successfully!",
         });
@@ -482,7 +588,15 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       "upload/" +
       this.issoUtilService.getAcademicYearForPhoto();
   }
-  removeSelectedStudentData(i: number): void {
+  removeSelectedStudentData(subgame, i: number): void {
+    console.log("REMOVING--->" + JSON.stringify(subgame.subGameId));
+    const subgameIds = subgame.subGameId.split(","); // ["20", "21"]
+
+    subgameIds.forEach((id) => {
+      delete this.subGameIdCounts[id];
+    });
+    console.log("AFTER REMOVING--->" + JSON.stringify(this.subGameIdCounts));
+
     this.studentDataArray.splice(i, 1);
   }
 
@@ -515,14 +629,14 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         detail: "This student is already exist",
       });
     }
-    this.schoolName = "";
+    this.schoolName = null;
   }
   filterPages(event) {
     const query = event.query.toLowerCase();
     this.filteredPages = this.studentProfileArray.filter((student) =>
       student.studentName.toLowerCase().includes(query)
     );
-    this.schoolName = "";
+    // this.schoolName = "";
   }
   filterCountry(query, countries: any[]): any[] {
     let filtered: any[] = [];
@@ -566,6 +680,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       (res) => {
         if (res.status === "success") {
           this.messageService.add({
+            key: "custom",
             severity: "success",
             detail: "Student Data saved Successfully",
           });

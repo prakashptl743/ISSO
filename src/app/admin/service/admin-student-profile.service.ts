@@ -6,16 +6,24 @@ import {
   HttpBackend,
 } from "@angular/common/http";
 import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
-import { retry, map, catchError } from "rxjs/operators";
-import { Observable } from "rxjs";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
+
+const EXCEL_TYPE =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+const EXCEL_EXTENSION = ".xlsx";
 
 @Injectable({
   providedIn: "root",
 })
-export class DashboardService {
+export class AdminStudentProfileService {
+  deleteSchool(schoolId: any) {
+    throw new Error("Method not implemented.");
+  }
+
   serverUrl = environment.baseUrl;
-  errorData: {};
   httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
@@ -24,27 +32,38 @@ export class DashboardService {
     this.http = new HttpClient(handler);
   }
 
-  getDashboardData() {
-    return this.http
-      .get(this.serverUrl + "dashboard/dashboardData")
-      .pipe(catchError(this.handleError));
-  }
-  getPaymentData(yearVal) {
-    let str = "dashboard/getChartPaymentData/" + yearVal;
+  getSchoolData(yearvalue) {
+    let str =
+      "adminStudentProfile/StudentProfile/getStudentProfileData/" + yearvalue;
     return this.http
       .get(this.serverUrl + str)
       .pipe(catchError(this.handleError));
   }
-  getBarChartDataData() {
-    let str = "dashboard/getStudentGenderStats";
+  getStudentProfileData(yearVal, schoolId) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/getStudentProfileData/" +
+      yearVal +
+      "/" +
+      schoolId;
     return this.http
       .get(this.serverUrl + str)
       .pipe(catchError(this.handleError));
   }
-  getColumnChartDataData(yearVal) {
-    let str = "dashboard/getTop5ParticipationSchools/" + yearVal;
+  changeApprovalStatus(id, formData) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/changeApprovalStatus/" +
+      id;
     return this.http
-      .get(this.serverUrl + str)
+      .post<any>(this.serverUrl + str, formData)
+      .pipe(catchError(this.handleError));
+  }
+  deleteStudentData(id: number) {
+    return this.http
+      .delete(
+        this.serverUrl +
+          "staffadmin/studentProfile/studentProfileForStaff/deleteStudentData/" +
+          id
+      )
       .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {
@@ -59,10 +78,6 @@ export class DashboardService {
       );
     }
     // return an observable with a user-facing error message
-    this.errorData = {
-      errorTitle: "Oops! Request for document failed",
-      errorDesc: "Something bad happened. Please try again later.",
-    };
-    return throwError(this.errorData);
+    return throwError("Something bad happened. Please try again later.");
   }
 }

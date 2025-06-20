@@ -18,6 +18,7 @@ import { MessageService } from "primeng/api";
 import { ConfirmationService } from "primeng/api";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { environment } from "src/environments/environment";
+import { ActivatedRoute } from "@angular/router";
 type AOA = any[][];
 
 @Component({
@@ -153,6 +154,7 @@ export class ReportComponent implements OnInit {
     private issoUtilService: IssoUtilService,
     public datepipe: DatePipe,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     //private excelService:ExcelService,
     private messageService: MessageService,
     private meritService: ReportMeritService
@@ -176,6 +178,19 @@ export class ReportComponent implements OnInit {
     //    this.base64Image = 'data:image/jpg;base64,' + base64data;
     //  });
     this.setPhotoPath();
+    const routeData = this.route.snapshot.data;
+    this.isConsolited = routeData["isConsolited"];
+    this.reportLabel = routeData["reportLabel"];
+    this.isCertificateContent = routeData["isCertificateContent"];
+    this.isEventReport = routeData["isEventReport"];
+    this.isIdCardShow = routeData["isIdCardShow"];
+    this.reportValue = routeData["reportValue"];
+    this.isConsolitedData = routeData["isConsolitedData"];
+    this.isReportShow = routeData["isReportShow"];
+    this.isTeamEventReport = routeData["isTeamEventReport"];
+    this.istshirtReport = routeData["istshirtReport"];
+
+    console.log("data-->", routeData);
   }
 
   initialiseData() {
@@ -191,7 +206,7 @@ export class ReportComponent implements OnInit {
   }
 
   loadMenu() {
-    this.reportValue = 0;
+    // this.reportValue = 0;
     this.reportLabel = "Print Report";
     this.items = [
       { label: "Report", icon: "fa fa-fw fa-bar-chart" },

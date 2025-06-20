@@ -169,53 +169,6 @@ export class EventComponent implements OnInit {
     this.endMinDate = new Date(someFormattedDate);
   }
 
-  onloadMenu(index) {
-    if (index == "0") {
-      this.isUpcomingEvent = false;
-      this.currentEvent = true;
-      this.mapEvent = false;
-      this.manageReport = false;
-      this.teamEventReport = false;
-      this.makeActiveEvent = false;
-    } else if (index == "1") {
-      this.currentEvent = false;
-      this.isUpcomingEvent = true;
-      this.manageReport = false;
-      this.teamEventReport = false;
-      this.makeActiveEvent = false;
-      this.mapEvent = false;
-    } else if (index == "2") {
-      this.isUpcomingEvent = false;
-      this.currentEvent = false;
-      this.manageReport = false;
-      this.teamEventReport = false;
-      this.makeActiveEvent = false;
-      this.mapEvent = true;
-    } else if (index == "3") {
-      this.isUpcomingEvent = false;
-      this.currentEvent = false;
-      this.mapEvent = false;
-      this.manageReport = true;
-      this.makeActiveEvent = false;
-      this.teamEventReport = false;
-    } else if (index == "4") {
-      this.isUpcomingEvent = false;
-      this.currentEvent = false;
-      this.manageReport = false;
-      this.mapEvent = false;
-      this.makeActiveEvent = false;
-      this.teamEventReport = true;
-    } else {
-      this.isUpcomingEvent = false;
-      this.currentEvent = false;
-      this.manageReport = false;
-      this.mapEvent = false;
-      this.teamEventReport = false;
-      this.makeActiveEvent = true;
-    }
-    this.display = false;
-  }
-
   zoneChange(event) {
     this.zoneValue = event.value;
   }
@@ -239,14 +192,6 @@ export class EventComponent implements OnInit {
           this.showspinner = false;
           this.eventServiceData = response;
           this.eventInfo = this.eventServiceData;
-          const currentDate = new Date();
-          if (new Date(this.eventInfo[1].startDate) > currentDate) {
-            console.log("true");
-          } else {
-            console.log("false");
-          }
-        } else {
-          alert("im blankl=");
         }
       },
       (error) => {
@@ -279,8 +224,8 @@ export class EventComponent implements OnInit {
     });
     this.options = [
       { label: "Please select", value: "" },
-      { label: "International", value: "International" },
-      { label: "Domestic", value: "Domestic" },
+      { label: "National", value: "National" },
+      { label: "Regional", value: "Regional" },
     ];
     this.yesNoOptions = this.issoUtilService.setYesNo();
     this.control = new FormControl(this.options[2].value);
@@ -293,99 +238,19 @@ export class EventComponent implements OnInit {
   addNewEvent(event: Event, eventInfo: Event, type: any) {
     if (type == "edit") {
       this.eventType = eventInfo.eventType;
-      let myString = eventInfo.eventZone;
+
       if (eventInfo.startDate > this.today) {
         this.isReadonly = false;
       } else {
         this.isReadonly = true;
       }
 
-      let commaCount = myString.split(",").length;
-      console.log("Count : ", commaCount);
-      const testFun = (myString) => {
-        console.log("Im testfun", myString);
-        let str = "EAST,WEST,NORTH";
-        return str; //'num' here, is the value of the array.
+      const existingData = {
+        eventZone: eventInfo.eventZone.split(","),
       };
-      if (commaCount == 4) {
-        this.eventZoneVal = this.zoneOptions.slice(0).map((a) => a.value);
-      }
-      if (commaCount == 1) {
-        if (myString == "EAST") {
-          this.eventZoneVal = this.zoneOptions.slice(0, 1).map((a) => a.value);
-        } else if (myString == "WEST") {
-          this.eventZoneVal = this.zoneOptions.slice(1, 2).map((a) => a.value);
-        } else if (myString == "NORTH") {
-          this.eventZoneVal = this.zoneOptions.slice(2, 3).map((a) => a.value);
-        } else {
-          this.eventZoneVal = this.zoneOptions.slice(-1).map((a) => a.value);
-        }
-      }
-      if (commaCount == 3) {
-        var hiddenString = myString;
-        var strB = "EAST,WEST,NORTH,SOUTH";
-        var temp1 = hiddenString.split(",");
-        var temp2 = strB.split(",");
-        var varFinalHiddenString = temp2
-          .filter(function (s) {
-            return temp1.indexOf(s) > -1;
-          })
-          .join(",");
-        console.log("IM VAR--->", varFinalHiddenString);
-
-        if (
-          myString == "EAST,WEST,NORTH" ||
-          myString == "WEST,EAST,NORTH" ||
-          myString == "WEST,NORTH,EAST" ||
-          myString == "NORTH,EAST,WEST" ||
-          myString == "NORTH,WEST,EAST" ||
-          myString == "EAST,NORTH,WEST"
-        ) {
-          console.log("Im");
-          this.eventZoneVal = this.zoneOptions.slice(0, 3).map((a) => a.value);
-        } else if (
-          myString == "WEST,NORTH,SOUTH" ||
-          myString == "WEST,SOUTH,NORTH" ||
-          myString == "WEST,NORTH,SOUTH" ||
-          myString == "NORTH,SOUTH,WEST" ||
-          myString == "NORTH,WEST,SOUTH" ||
-          myString == "SOUTH,NORTH,WEST"
-        ) {
-          this.eventZoneVal = this.zoneOptions.slice(1, 4).map((a) => a.value);
-        } else if (
-          myString == "EAST,NORTH,SOUTH" ||
-          myString == "EAST,SOUTH,NORTH" ||
-          myString == "EAST,NORTH,SOUTH" ||
-          myString == "NORTH,SOUTH,EAST" ||
-          myString == "NORTH,EAST,SOUTH" ||
-          myString == "SOUTH,NORTH,EAST"
-        ) {
-          const index = myString.indexOf("WEST");
-          if (index > -1) {
-            // only splice array when item is found
-            this.eventZoneVal = this.zoneOptions.splice(index, 1); // 2nd parameter means remove one item only
-          }
-        } else if (
-          myString == "WEST,EAST,SOUTH" ||
-          myString == "WEST,SOUTH,EAST" ||
-          myString == "WEST,EAST,SOUTH" ||
-          myString == "EAST,SOUTH,WEST" ||
-          myString == "EAST,WEST,SOUTH" ||
-          myString == "SOUTH,EAST,WEST"
-        ) {
-          const index = myString.indexOf("NORTH");
-          if (index > -1) {
-            // only splice array when item is found
-            this.eventZoneVal = this.zoneOptions.splice(index, 1); // 2nd parameter means remove one item only
-          }
-        }
-        //  else if (myString == 'EAST,NORTH,SOUTH') {
-        //   this.eventZoneVal = (this.zoneOptions.slice(1,4).map(a => a.value));
-        //  }
-        // this.eventZoneVal = (this.zoneOptions.slice(0).map(a => a.value));
-      }
-
-      this.eventForm.setValue({
+      this.eventZoneVal = existingData.eventZone;
+      this.zoneValue = existingData.eventZone;
+      this.eventForm.patchValue({
         eventId: eventInfo.eventId,
         eventName: eventInfo.eventName,
         registrationCharge: eventInfo.price,
@@ -393,7 +258,7 @@ export class EventComponent implements OnInit {
         eventEndDate: new Date(eventInfo.endDate),
         eventLocation: eventInfo.location,
         eventType: eventInfo.eventType,
-        eventZone: eventInfo.eventZone,
+        eventZone: existingData.eventZone,
         eventDesc: eventInfo.description,
         eventNote: eventInfo.note,
         certificateHeaderContent: eventInfo.certifiacteHeaderContent,
