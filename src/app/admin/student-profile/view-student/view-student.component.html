@@ -1,3 +1,10 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
 <div>
   <!-- <div class="event-container" class="ui-g-12">
     <div class="ui-g-4">
@@ -110,7 +117,7 @@
         <th pSortableColumn="approvedStatus">
           Status<p-sortIcon field="approvedStatus"></p-sortIcon>
         </th>
-        <th>Delete</th>
+        <th>Action</th>
       </tr>
     </ng-template>
 
@@ -128,7 +135,10 @@
             (error)="onImageError($event)"
           />
         </td>
-        <td>{{ student.studentUniqueId }}</td>
+        <td>
+          <span></span>
+          {{ student.studentUniqueId ? student.studentUniqueId : "N/A" }}
+        </td>
         <td>
           <span
             (click)="showDialog(student)"
@@ -152,14 +162,23 @@
         </td>
 
         <td>
-          <span *ngIf="student.approvedStatus == '1'" class=""> N/A</span>
+          <span class="ps-4 pe-4" (click)="editStudent(student)">
+            <i
+              class="fas fa-edit text-primary me-2"
+              title="Edit"
+              style="cursor: pointer"
+            ></i>
+          </span>
           <span
             *ngIf="student.approvedStatus == '0'"
             (click)="deleteStudent(student.sId)"
-            class="p-3 mb-2 bg-danger text-white cusror-pointer"
           >
-            Delete</span
-          >
+            <i
+              class="fas fa-trash-alt text-danger"
+              title="Delete"
+              style="cursor: pointer"
+            ></i
+          ></span>
         </td>
       </tr>
     </ng-template>
@@ -172,8 +191,8 @@
     [baseZIndex]="10000"
     [width]="800"
   >
-    <div class="container-fluid" *ngIf="selectedStudent">
-      <div class="table-responsive" *ngIf="selectedStudent">
+    <div class="container-fluid" *ngIf="selectedStudent && !editStudentData">
+      <div class="table-responsive" *ngIf="selectedStudent && !editStudentData">
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
@@ -243,6 +262,340 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="container-fluid" *ngIf="editStudentData">
+      <div class="table-responsive" *ngIf="editStudentData">
+        <!-- <form
+          [formGroup]="editStudentForm"
+          (ngSubmit)="onSubmit()"
+          class="p-4 border rounded shadow"
+        >
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="studentName"
+              />
+            </div>
+            <div class="col-md-6">
+              <label>Father Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fatherName"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Date of Birth</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="dateOfBirth"
+              />
+            </div>
+            <div class="col-md-6">
+              <label>Contact No</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="contactNo"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Aadhar Number</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="aadharNumber"
+              />
+            </div>
+            <div class="col-md-6">
+              <label>Admission Number</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="admissionNumber"
+              />
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Curriculum</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="curruclm"
+              />
+            </div>
+            <div class="col-md-6">
+              <label>Standard</label>
+              <select class="form-control" formControlName="standardClass">
+                <option *ngFor="let c of standardClass" [value]="c.value">
+                  {{ c.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>T-Shirt Size</label>
+              <select class="form-control" formControlName="tShirtSize">
+                <option *ngFor="let t of tShirtSize" [value]="t.value">
+                  {{ t.label }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label>Gender</label>
+              <select class="form-control" formControlName="gender">
+                <option *ngFor="let g of genderOptions" [value]="g.value">
+                  {{ g.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form> -->
+        <form
+          [formGroup]="editStudentForm"
+          (ngSubmit)="onSubmit()"
+          class="p-4 border rounded shadow"
+        >
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="studentName"
+              />
+              <div
+                *ngIf="f.studentName.touched && f.studentName.invalid"
+                class="text-danger"
+              >
+                Name is required
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Father Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fatherName"
+              />
+              <div
+                *ngIf="f.fatherName.touched && f.fatherName.invalid"
+                class="text-danger"
+              >
+                Father Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Date of Birth</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="dateOfBirth"
+              />
+              <div
+                *ngIf="f.dateOfBirth.touched && f.dateOfBirth.invalid"
+                class="text-danger"
+              >
+                Date of Birth is required
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Contact No</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="contactNo"
+              />
+              <div
+                *ngIf="f.contactNo.touched && f.contactNo.invalid"
+                class="text-danger"
+              >
+                Contact Number is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Aadhar Number</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="aadharNumber"
+              />
+              <div
+                *ngIf="f.aadharNumber.touched && f.aadharNumber.invalid"
+                class="text-danger"
+              >
+                Aadhar Number is required
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Admission Number</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="admissionNumber"
+              />
+              <div
+                *ngIf="f.admissionNumber.touched && f.admissionNumber.invalid"
+                class="text-danger"
+              >
+                Admission Number is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>Curriculum</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="curruclm"
+              />
+              <div
+                *ngIf="f.curruclm.touched && f.curruclm.invalid"
+                class="text-danger"
+              >
+                Curriculum is required
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Standard</label>
+              <select
+                class="custom-dropdown form-control"
+                formControlName="standardClass"
+              >
+                <option *ngFor="let c of standardClass" [value]="c.value">
+                  {{ c.label }}
+                </option>
+              </select>
+              <div
+                *ngIf="f.standardClass.touched && f.standardClass.invalid"
+                class="text-danger"
+              >
+                Standard is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label>T-Shirt Size</label>
+              <select
+                class="custom-dropdown form-control"
+                formControlName="tShirtSize"
+              >
+                <option *ngFor="let t of tShirtSize" [value]="t.value">
+                  {{ t.label }}
+                </option>
+              </select>
+              <div
+                *ngIf="f.tShirtSize.touched && f.tShirtSize.invalid"
+                class="text-danger"
+              >
+                T-Shirt size is required
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Gender</label>
+              <select
+                class="custom-dropdown form-control"
+                formControlName="gender"
+              >
+                <option *ngFor="let g of genderOptions" [value]="g.value">
+                  {{ g.label }}
+                </option>
+              </select>
+              <div
+                *ngIf="f.gender.touched && f.gender.invalid"
+                class="text-danger"
+              >
+                Gender is required
+              </div>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="editStudentForm.invalid"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+
+        <!-- <table class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <th><strong>Student Name:</strong></th>
+              <td>{{ editStudentProfile.studentName }}</td>
+              <th><strong>Father Name:</strong></th>
+              <td>{{ editStudentProfile.fatherName }}</td>
+            </tr>
+            <tr>
+              <th><strong>Date of Birth:</strong></th>
+              <td>
+                {{ editStudentProfile.dateOfBirth | date : "dd-MMM-yyyy" }}
+              </td>
+              <th><strong>Gender:</strong></th>
+              <td>{{ editStudentProfile.gender == "1" ? "Boys" : "Girls" }}</td>
+            </tr>
+            <tr>
+              <th><strong>Class:</strong></th>
+              <td>{{ editStudentProfile.standardClass }}</td>
+              <th><strong>Aadhar No:</strong></th>
+              <td>{{ editStudentProfile.aadharNumber }}</td>
+            </tr>
+            <tr>
+              <th><strong>Contact No:</strong></th>
+              <td>{{ editStudentProfile.contactNo }}</td>
+              <th><strong>Admission No:</strong></th>
+              <td>{{ editStudentProfile.admissionNumber }}</td>
+            </tr>
+            <tr>
+              <th><strong>T-Shirt Size:</strong></th>
+              <td>{{ editStudentProfile.tShirtSize }}</td>
+              <th><strong>Curriculum:</strong></th>
+              <td>{{ editStudentProfile.curruclm }}</td>
+            </tr>
+            <tr>
+              <th><strong>Passport:</strong></th>
+              <td>
+                {{
+                  editStudentProfile.passport === ""
+                    ? "N/A"
+                    : editStudentProfile.passport
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
       </div>
     </div>
   </p-dialog>

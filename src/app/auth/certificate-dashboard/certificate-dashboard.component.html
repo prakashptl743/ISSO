@@ -74,7 +74,7 @@
       </div>
     </div> -->
 
-    <table class="table fancy-table align-middle">
+    <!-- <table class="table fancy-table align-middle">
       <thead>
         <tr>
           <th scope="col">Sr No.</th>
@@ -101,8 +101,7 @@
                 <ul>
                   <li *ngFor="let key of getSubgameKeys(student)">
                     <div *ngFor="let sg of student[key]">
-                      <p><strong>SubGame Name:</strong> {{ sg.subGameName }}</p>
-                      <!-- <p><strong>Rank:</strong> {{ sg.meritRank }}</p> -->
+                      <div>SubGame Name: {{ sg.subGameName }}</div>
                       <span *ngIf="sg.meritQR !== ''">
                         Download Merit Certificate<a
                           class="btn btn-primary"
@@ -114,7 +113,9 @@
                             studentProfileData[i].gameId
                           }}/{{ studentProfileData[i].ageRange }}/{{
                             studentProfileData[i].gender
-                          }}/{{ studentProfileData[i].sId }}/merit"
+                          }}/{{ studentProfileData[i].sId }}/merit/{{
+                            sg.id
+                          }}/{{ sg.subGameName }}"
                         >
                           <i class="bi bi-download"></i
                         ></a>
@@ -143,7 +144,7 @@
                   studentProfileData[i].gameId
                 }}/{{ studentProfileData[i].ageRange }}/{{
                   studentProfileData[i].gender
-                }}/{{ studentProfileData[i].sId }}/participate"
+                }}/{{ studentProfileData[i].sId }}/participate/noid/Nosubgame"
               >
                 <i class="bi bi-download"></i
               ></a>
@@ -155,27 +156,7 @@
                 >Certificate Not Uploaded</span
               >
             </div>
-            <!-- <div
-              *ngIf="
-                studentProfileData[i].isMerit == '1' &&
-                studentProfileData[i].meritQR !== null
-              "
-            >
-              <a
-                class="btn btn-primary"
-                href="{{
-                  baseUrl
-                }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
-                  studentProfileData[i].schoolId
-                }}/{{ studentProfileData[i].eventId }}/{{
-                  studentProfileData[i].gameId
-                }}/{{ studentProfileData[i].ageRange }}/{{
-                  studentProfileData[i].gender
-                }}/{{ studentProfileData[i].sId }}/merit"
-              >
-                <i class="bi bi-download"></i
-              ></a>
-            </div> -->
+
             <div
               *ngIf="
                 studentProfileData[i].isMerit == '1' &&
@@ -186,48 +167,136 @@
             </div>
           </td>
         </tr>
-        <!-- <tr>
-          <th scope="row">2</th>
-          <td>
-            <i class="bi bi-envelope-fill text-warning me-2"></i> Email Sent
-          </td>
-          <td>Bob Williams</td>
-          <td>2025-05-26 11:15 AM</td>
-          <td><span class="badge bg-primary fancy-badge">Pending</span></td>
-        </tr>
-         <tr>
-          <th scope="row">3</th>
-          <td>
-            <i class="bi bi-person-fill-add text-success me-2"></i> New User
-            Registered
-          </td>
-          <td>System</td>
-          <td>2025-05-26 11:40 AM</td>
-          <td>
-            <span class="badge bg-success fancy-badge">Completed</span>
-          </td>
-        </tr>
+      </tbody>
+    </table> -->
+
+    <table class="table fancy-table align-middle">
+      <thead>
         <tr>
-          <th scope="row">4</th>
+          <th scope="col">Sr No.</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Certificate Details</th>
+          <th scope="col">Participation</th>
+          <th scope="col">Merit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of studentProfileData; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ student.eventName }}</td>
+          <td>{{ student.studentName }}</td>
+
+          <!-- Certificate Details -->
           <td>
-            <i class="bi bi-gear-fill text-secondary me-2"></i> Settings Updated
+            {{ student.gameName }} Under {{ student.ageRange }}
+            {{ student.gender == "1" ? "Boys" : "Girls" }}
           </td>
-          <td>Charlie Brown</td>
-          <td>2025-05-26 12:05 PM</td>
+
+          <!-- Participation -->
           <td>
-            <span class="badge bg-success fancy-badge">Completed</span>
+            <div *ngIf="student.isCertificate == '0'">
+              <span class="badge bg-danger fancy-badge"
+                >Certificate Not Uploaded</span
+              >
+            </div>
+            <div *ngIf="student.isCertificate == '1'">
+              <a
+                class="btn btn-primary btn-sm certificate-font"
+                href="{{
+                  baseUrl
+                }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                  student.schoolId
+                }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                  student.ageRange
+                }}/{{ student.gender }}/{{ student.sId }}/participate/{{
+                  student.rootGameType
+                }}/noid/Nosubgame"
+              >
+                <i class="bi bi-download"></i> Download
+              </a>
+            </div>
+          </td>
+
+          <!-- Merit -->
+          <td>
+            <div *ngIf="student.isMerit == '0'">
+              <span class="badge bg-danger fancy-badge"
+                >Certificate Not Uploaded</span
+              >
+            </div>
+            <div *ngIf="student.isMerit == '1' && student.meritQR !== null">
+              <div *ngIf="student.rootGameType == 'Team'">
+                <!-- TEam<i class="bi bi-download"></i> Download Merit Certificate -->
+                <a
+                  class="btn btn-success btn-sm certificate-font"
+                  href="{{
+                    baseUrl
+                  }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                    student.schoolId
+                  }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                    student.ageRange
+                  }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                    student.rootGameType
+                  }}/noid/Nosubgame"
+                >
+                  <i class="bi bi-download"></i> Download Merit Certificate
+                </a>
+              </div>
+              <div *ngIf="student.rootGameType == 'Individual'">
+                <a
+                  class="btn btn-success btn-sm certificate-font"
+                  href="{{
+                    baseUrl
+                  }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                    student.schoolId
+                  }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                    student.ageRange
+                  }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                    student.rootGameType
+                  }}/noid/Nosubgame"
+                >
+                  <i class="bi bi-download"></i> Download Merit Certificate
+                </a>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                (student.isMerit == '1' && student.meritQR === null) ||
+                student.meritQR === ''
+              "
+            >
+              <span class="badge bg-secondary">N/A</span>
+            </div>
+
+            <div *ngIf="student.isMerit == '1' && hasSubgames(student)">
+              <ul class="list-unstyled mb-0">
+                <li *ngFor="let key of getSubgameKeys(student)">
+                  <div *ngFor="let sg of student[key]">
+                    <span class="text-muted small d-block mb-1"
+                      >SubGame: {{ sg.subGameName }}</span
+                    >
+                    <a
+                      class="btn btn-success btn-sm mb-2 certificate-font"
+                      *ngIf="sg.meritQR !== null && sg.meritQR !== ''"
+                      href="{{
+                        baseUrl
+                      }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                        student.schoolId
+                      }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                        student.ageRange
+                      }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                        student.rootGameType
+                      }}/{{ sg.id }}/{{ sg.subGameName }}"
+                    >
+                      <i class="bi bi-download"></i> Download Merit Certificate
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </td>
         </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>
-            <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
-            Login Attempt Failed
-          </td>
-          <td>Unknown User</td>
-          <td>2025-05-26 01:00 PM</td>
-          <td><span class="badge bg-danger fancy-badge">Alert</span></td>
-        </tr> -->
       </tbody>
     </table>
   </div>

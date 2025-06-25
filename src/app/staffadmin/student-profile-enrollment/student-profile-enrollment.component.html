@@ -118,8 +118,13 @@
           class="cursor-pointer float-right"
           *ngIf="student.subGameName !== ''"
           (click)="changeSubgame(student)"
-          ><i class="bi bi-pencil"></i
-        ></span>
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i>
+        </span>
 
         <span
           *ngIf="student.subGameName == ''"
@@ -249,7 +254,12 @@
           *ngIf="student.paidStatus == ''"
           class="cursor-pointer float-right"
           (click)="editSubgame(student)"
-          ><i class="bi bi-pencil"></i
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i
         ></span>
         <div
           *ngFor="let subgame of student.subGameName.split(','); let i = index"

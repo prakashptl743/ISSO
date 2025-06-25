@@ -1,6 +1,54 @@
 input.largerCheckbox {
   transform: scale(2);
 }
+/* Your existing pulsing-dots and loader-overlay styles */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top of everything */
+}
+
+.pulsing-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.pulsing-dots div {
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pulsing-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulsing-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.custom-dropdown {
+  height: auto !important;
+  appearance: none; /* Hide default arrow in most browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  padding-right: 2.5rem; /* space for the arrow */
+  position: relative;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
 :host ::ng-deep .custom-toast .ui-toast-message {
   color: #ffffff;
   background: blue;

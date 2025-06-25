@@ -3,6 +3,8 @@ import { ConfirmationService, SelectItem } from "primeng/api";
 import { IssoUtilService } from "src/app/services/isso-util.service";
 import { MessageService } from "primeng/api";
 import { AdminStudentProfileService } from "../../service/admin-student-profile.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-view-student",
@@ -14,6 +16,7 @@ export class ViewStudentComponent implements OnInit {
   yearOptions: SelectItem[];
   display: boolean = false;
   selectedStudent: any = null;
+  editStudentProfile: any = null;
   schoolOptions: SelectItem[];
   isDataAvailble: boolean;
   schoolData: any;
@@ -25,22 +28,46 @@ export class ViewStudentComponent implements OnInit {
   yearvalue: any;
   schoolName: any;
   schoolId: any;
+  editStudentData: boolean;
+  genderOptions: SelectItem[];
+  tShirtSize: any;
+  standardClass;
+  editStudentForm!: FormGroup;
+  studentId: any;
+  isLoading: boolean = false;
+  setPhotoYear: string;
+  serverUrl = environment.baseUrl;
   constructor(
     private issoUtilService: IssoUtilService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
+    private fb: FormBuilder,
     private adminStudentProfileService: AdminStudentProfileService
   ) {}
 
   ngOnInit() {
+    this.genderOptions = this.issoUtilService.setGender();
+    this.tShirtSize = this.issoUtilService.setTshirtSize();
+    this.standardClass = this.issoUtilService.setClass();
     this.yearOptions = this.issoUtilService.setYear();
+  }
+  setPhotoPath() {
+    // this.setPhotoYear = this.issoUtilService.setPhotoYear();
+    let photoPath = this.yearvalue;
+    this.setPhotoYear = this.serverUrl + "upload/" + photoPath;
+  }
+  get f() {
+    return this.editStudentForm.controls;
   }
   onyeareChange(event) {
     // this.studentAttendanceArray = [];
     // this.studentAbsentArray = [];
+    this.isLoading = true;
     this.yearvalue = event.value;
+    this.setPhotoPath();
     this.adminStudentProfileService.getSchoolData(event.value).subscribe(
       (response) => {
+        this.isLoading = false;
         if (response !== "") {
           this.schoolData = response;
 
@@ -77,24 +104,18 @@ export class ViewStudentComponent implements OnInit {
     );
   }
   onSchoolChange(event) {
-    // this.studentAttendanceArray = [];
-    // this.studentAbsentArray = [];
-    // let yearVal = this.yearvalue.toString();
-    // let eventYear = yearVal.split("-");
-    // console.log("Hello" + eventYear[1]);
-    // this.selectedYearVal = eventYear[1];
-
-    // this.eventValue = event.value;
     this.schoolId = event.value;
     this.schoolName = event.originalEvent.currentTarget.ariaLabel;
     this.getStudentData();
   }
   getStudentData() {
+    this.isLoading = true;
     this.adminStudentProfileService
       .getStudentProfileData(this.yearvalue, this.schoolId)
       .subscribe(
         (response: any[]) => {
           // if (response !== "") {
+          this.isLoading = false;
           this.studentProfileData = response;
           this.studentDataLength = Object.keys(this.studentProfileData).length;
           this.approvalCount = response.filter(
@@ -125,7 +146,77 @@ export class ViewStudentComponent implements OnInit {
   }
   showDialog(student: any) {
     this.display = true;
+    this.editStudentData = false;
     this.selectedStudent = student;
+  }
+  editStudent(student: any) {
+    this.display = true;
+    this.editStudentData = true;
+    this.editStudentProfile = student;
+    this.studentId = student.sId;
+    this.editStudentForm = this.fb.group({
+      studentName: [this.editStudentProfile.studentName, Validators.required],
+      fatherName: [this.editStudentProfile.fatherName, Validators.required],
+      dateOfBirth: [this.editStudentProfile.dateOfBirth, Validators.required],
+      contactNo: [this.editStudentProfile.contactNo, Validators.required],
+      aadharNumber: [this.editStudentProfile.aadharNumber, Validators.required],
+      admissionNumber: [
+        this.editStudentProfile.admissionNumber,
+        Validators.required,
+      ],
+      curruclm: [this.editStudentProfile.curruclm, Validators.required],
+      standardClass: [
+        this.editStudentProfile.standardClass,
+        Validators.required,
+      ],
+      tShirtSize: [this.editStudentProfile.tShirtSize, Validators.required],
+      gender: [this.editStudentProfile.gender, Validators.required],
+    });
+  }
+  onSubmit() {
+    this.isLoading = true;
+    if (this.editStudentForm.valid) {
+      const formData = new FormData();
+      const updatedStudentData = this.editStudentForm.value;
+      console.log("Updated Student Data:", updatedStudentData);
+      Object.keys(this.editStudentForm.controls).forEach((key) => {
+        //formData.append(key, this.studentForm.get(key)?.value);
+        const control = this.editStudentForm.get(key);
+        formData.append(key, control ? control.value : "");
+      });
+      formData.append("studentId", this.studentId);
+      this.adminStudentProfileService.studentDataUpdate(formData).subscribe(
+        (res) => {
+          this.isLoading = false;
+          this.display = false;
+          if (res.status === "error") {
+            this.messageService.add({
+              severity: "error",
+              summary: "Error Message",
+              detail: "Validation failed",
+            });
+          } else {
+            this.messageService.add({
+              key: "custom",
+              severity: "success",
+              summary: "Data Updated Successfully",
+            });
+          }
+          this.getStudentData();
+          // this.getSchoolData();
+        },
+        (error) => {
+          this.isLoading = false;
+          this.messageService.add({
+            key: "custom",
+            severity: "error",
+            summary: error.errorDesc,
+          });
+        }
+      );
+    } else {
+      this.editStudentForm.markAllAsTouched();
+    }
   }
   deleteStudentData(studentId) {
     this.adminStudentProfileService.deleteStudentData(studentId).subscribe(

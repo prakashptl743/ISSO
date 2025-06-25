@@ -66,6 +66,15 @@ export class AdminStudentProfileService {
       )
       .pipe(catchError(this.handleError));
   }
+  studentDataUpdate(studentInfo) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "adminStudentProfile/StudentProfile/updateStudentProfileData/",
+        studentInfo
+      )
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
