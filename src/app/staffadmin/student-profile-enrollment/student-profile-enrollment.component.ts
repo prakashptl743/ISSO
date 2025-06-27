@@ -83,6 +83,9 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   subgameStudentId: any;
   errorMessage: string;
   countMap: { [key: string]: number } = {};
+  gameModifystatus: string;
+  addSubGameLabel: string;
+  isCustomDialogClicked: boolean;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService,
@@ -97,21 +100,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.http = new HttpClient(handler);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    // throw new Error("Method not implemented.");
-    // this.eventId,
-    // eventData.gameId,
-    // this.gender,
-    // ageRange,
-    // minCapcity,
-    console.log("onchanges");
     if (changes.studentEnrollData && changes.studentEnrollData) {
-      console.log("CAHNGES DATA-->" + JSON.stringify(this.studentEnrollData));
       this.schoolId = localStorage.getItem("schoolId");
-      //   const cutoffDate = this.getAgeCutoffDate(this.studentEnrollData[3]);
       this.getStudentDataForEnroll();
-      // this.alreadyEnrolledStudent();
-      this.subGameoptions = [];
 
+      this.subGameoptions = [];
+      this.gameModifystatus = "oninit";
       this.alreadyEnrolledStudent();
       if (this.studentSubgameData.length > 0) {
         console.log("im subgame");
@@ -163,6 +157,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.errorMessage = "";
+    this.addSubGameLabel = "Add Subgame";
     this.addGameLabel = "Assign Subgame";
     this.selectedSubgamesTable = [];
     this.subGameIdCounts = null;
@@ -207,7 +202,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     //     this.subGameIdCounts[id] = (this.subGameIdCounts[id] || 0) + 1;
     //   }
     // });
-    console.log("AAAA_----->" + JSON.stringify(this.subGameIdCounts));
+    //console.log("AAAA_----->" + JSON.stringify(this.subGameIdCounts));
     // this.checkSubGameCapacity.forEach((id) => {
     //   const idStr = String(id);
     //   if (!this.countMap.hasOwnProperty(idStr)) {
@@ -344,14 +339,51 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.selectedSubgamesTable.push(...this.subGameTableArray);
     this.displaySubgameDialog = true;
   }
+
+  isSaveDisabled(): boolean {
+    const result = this.studentDataArray.some((student) => {
+      const val = student.subGameId;
+      return (
+        val === undefined ||
+        val === null ||
+        (typeof val === "string" && val.trim() === "")
+      );
+    });
+    return result;
+  }
+  onCustomXClicked() {
+    // this.dialogClosedByX = true; // set when X is clicked
+    console.log("I clieck close");
+    this.displaySubgameDialog = false;
+    this.isCustomDialogClicked = true;
+  }
   onDialogClose() {
-    console.log("Dialog closed");
+    console.log("I clieck HIDE12");
     this.errorMessage = "";
-    //this.selectedSubgamesTable.length === 0;
-    this.selectedSubgamesTable = [];
     this.subGameIdArray = [];
     this.subGameNameArray = [];
     this.selectedSubgame = null;
+    if (!this.isCustomDialogClicked) {
+      if (this.gameModifystatus == "Add Subgame") {
+        this.isCustomDialogClicked = false;
+        console.log("Custom dialog not cliecked");
+        const selectedIds = this.selectedSubgamesTable.map((item) => item.id); // already strings
+        this.subGameIdCounts = Object.entries(this.subGameIdCounts)
+          .filter(([key]) => !selectedIds.includes(key))
+          .reduce((obj, [key, value]) => {
+            obj[key] = value;
+            return obj;
+          }, {} as { [key: string]: number });
+      }
+    } else {
+      this.subGameIdCounts = this.subGameIdCounts;
+      console.log("Custom dialog cliecked");
+    }
+    this.selectedSubgamesTable = [];
+    console.log(
+      "Filtered subGameIdCounts",
+      JSON.stringify(this.subGameIdCounts)
+    );
   }
   removeSubgame(sub) {
     this.selectedSubgamesTable = this.selectedSubgamesTable.filter(
@@ -359,34 +391,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     );
     const index = this.checkSubGameCapacity.findIndex((id) => id == sub.id);
     if (index !== -1) {
-      // Remove the first occurrence of the ID
       this.checkSubGameCapacity.splice(index, 1);
-
-      // Update countMap after removal
     }
-    // this.checkSubGameCapacity.forEach((id) => {
-    //   this.countMap[id] = (this.countMap[id] || 0) - 1;
-    // });
-    // this.checkSubGameCapacity.forEach((id) => {
-    //   if (this.countMap[id]) {
-    //     this.countMap[id]--;
 
-    //     // Optional: Remove the key if count becomes 0
-    //     if (this.countMap[id] === 0) {
-    //       delete this.countMap[id];
-    //     }
-    //   }
-    // });
     console.log("BEFORE COUNTMAP-->" + JSON.stringify(this.countMap));
     const idStr = String(sub.id);
-    // if (this.countMap[idStr]) {
-    //   console.log("Im if-->" + idStr);
-    //   this.countMap[idStr]--;
-    //   if (this.countMap[idStr] === 0) {
-    //     console.log("Im if countMap-->" + idStr);
-    //     delete this.countMap[idStr];
-    //   }
-    // }
+
     if (this.subGameIdCounts[idStr]) {
       this.subGameIdCounts[idStr]--;
       if (this.subGameIdCounts[idStr] === 0) {
@@ -437,6 +447,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       console.log(this.studentDataArray);
       this.selectedSubgamesTable = [];
       this.displaySubgameDialog = false;
+      this.isCustomDialogClicked = false;
     } else if (this.selectedSubgamesTable.length === 0) {
       // alert("Please add at least one subgame");
       this.errorMessage = "Please add at least one subgame";
@@ -447,6 +458,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     // alert("Subgames saved!");
   }
   updateSubgame() {
+    this.gameModifystatus = "update";
     console.log("Upate" + this.subgameStudentId);
     console.log("Onsubmt ID" + this.subGameIdArray);
     console.log("Onsubmt A" + this.subGameNameArray);
@@ -468,10 +480,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
             });
           }
           this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
           this.alreadyEnrolledStudent();
         },
         (error) => {
           this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
           this.messageService.add({
             key: "custom",
             severity: "error",
@@ -486,7 +500,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   // }
   async alreadyEnrolledStudent() {
     this.isLoading = true;
-    console.log("Im loading-->" + this.isLoading);
+    console.log("Im this.subGameIdArray-->" + this.subGameIdArray);
     try {
       const response = await this.http
         .get(
@@ -498,29 +512,49 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         )
         .toPromise();
 
-      console.log("API Response:", response);
+      // console.log("API Response:", response);
       this.alreadyAddedStudentData = response;
       this.alreadyAddedStudentArray = response;
       this.isLoading = false;
-      console.log("Im data-->" + JSON.stringify(this.alreadyAddedStudentArray));
+      //console.log("Im data-->" + JSON.stringify(this.alreadyAddedStudentArray));
 
       const subgameCount: { [key: string]: number } = {};
-
-      this.alreadyAddedStudentArray.forEach((item) => {
-        const subIds = item.subgameId.split(",");
-        subIds.forEach((id) => {
-          if (subgameCount[id]) {
-            subgameCount[id]++;
-          } else {
-            subgameCount[id] = 1;
-          }
+      if (this.gameModifystatus == "oninit") {
+        console.log("Im Onint" + this.subGameIdArray);
+        this.alreadyAddedStudentArray.forEach((item) => {
+          const subIds = item.subgameId.split(",");
+          subIds.forEach((id) => {
+            if (subgameCount[id]) {
+              subgameCount[id]++;
+            } else {
+              subgameCount[id] = 1;
+            }
+          });
         });
-      });
-      this.subGameIdCounts = subgameCount;
-      console.log("Im subgamecount--->" + JSON.stringify(subgameCount));
-      //     subgameIds.forEach((id) => {
-      //   delete this.subGameIdCounts[id];
-      // });
+        this.subGameIdCounts = subgameCount;
+      } else {
+        // console.log("Im update,delete" + this.subGameIdArray);
+        // const selectedIds = this.subGameIdArray; // already strings
+        // this.subGameIdCounts = Object.entries(this.subGameIdCounts)
+        //   .filter(([key]) => !selectedIds.includes(key))
+        //   .reduce((obj, [key, value]) => {
+        //     obj[key] = value;
+        //     return obj;
+        //   }, {} as { [key: string]: number });
+        // console.log(
+        //   "Filtered subGameIdCounts",
+        //   JSON.stringify(this.subGameIdCounts)
+        // );
+      }
+      console.log("Im FINAL subgamecount--->" + JSON.stringify(subgameCount));
+
+      // const student = this.alreadyAddedStudentArray.find(
+      //   (s) => s.studentId == this.alreadyAddedStudentArray.studentId
+      // );
+      // console.log("Im student-->" + student);
+
+      // const assigned = student.subgameId ? student.subgameId.split(",") : [];
+      // console.log("Im data- assigned->" + JSON.stringify(assigned));
 
       if (
         this.studentEnrollData[6] !== "Both" &&
@@ -550,6 +584,11 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
 
   deleteenrolledStudentData(student) {
+    this.gameModifystatus = "delete";
+    // this.subGameIdArray = student.subgameId;
+    const selectedIds = student.subgameId.split(","); // ["20", "21"] subgame.subGameId.split(",");
+
+    console.log("IM FDELETING--->" + JSON.stringify(this.subGameIdCounts));
     this.studentProfileService.deleteenrolledStudentData(student.id).subscribe(
       (res) => {
         this.messageService.add({
@@ -557,7 +596,20 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           severity: "success",
           detail: "Student Data Deleted  successfully!",
         });
+        const updatedCounts: { [key: string]: number } = {};
 
+        for (const key in this.subGameIdCounts) {
+          let newCount = this.subGameIdCounts[key];
+          if (selectedIds.includes(key)) {
+            newCount = newCount - 1;
+          }
+
+          if (newCount > 0) {
+            updatedCounts[key] = newCount;
+          }
+        }
+
+        this.subGameIdCounts = updatedCounts;
         //  }
 
         this.display = false;
@@ -589,13 +641,31 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       this.issoUtilService.getAcademicYearForPhoto();
   }
   removeSelectedStudentData(subgame, i: number): void {
-    console.log("REMOVING--->" + JSON.stringify(subgame.subGameId));
-    const subgameIds = subgame.subGameId.split(","); // ["20", "21"]
+    //  const subgameIds = subgame.subGameId.split(","); // ["20", "21"]
 
-    subgameIds.forEach((id) => {
-      delete this.subGameIdCounts[id];
-    });
-    console.log("AFTER REMOVING--->" + JSON.stringify(this.subGameIdCounts));
+    // subgameIds.forEach((id) => {
+    //   delete this.subGameIdCounts[id];
+    // });
+    // console.log("AFTER REMOVING--->" + JSON.stringify(this.subGameIdCounts));
+
+    const selectedIds = subgame.subGameId.split(","); // ["20", "21"]
+    const updatedCounts: { [key: string]: number } = {};
+
+    for (const key in this.subGameIdCounts) {
+      let newCount = this.subGameIdCounts[key];
+      if (selectedIds.includes(key)) {
+        newCount = newCount - 1;
+      }
+
+      if (newCount > 0) {
+        updatedCounts[key] = newCount;
+      }
+    }
+    this.subGameIdCounts = updatedCounts;
+    console.log(
+      "Updated subGameIdCounts",
+      JSON.stringify(this.subGameIdCounts)
+    );
 
     this.studentDataArray.splice(i, 1);
   }
@@ -674,6 +744,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   saveStudentEnrollData() {
     const formData = new FormData();
+    this.gameModifystatus = "save";
     formData.append("studentData", JSON.stringify(this.studentDataArray));
     console.log("DATA FORM-->" + JSON.stringify(this.studentDataArray));
     this.studentProfileService.saveEnrolledStudentData(formData).subscribe(

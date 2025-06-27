@@ -130,7 +130,7 @@
           *ngIf="student.subGameName == ''"
           (click)="showSubgameDialog(student)"
           class="p-3 mb-2 bg-primary text-white cusror-pointer"
-          ><span class="blinking-text">Add Subgame</span></span
+          ><span class="blinking-text">{{ addSubGameLabel }}</span></span
         >
 
         <div *ngIf="student.subGameName !== ''">
@@ -163,11 +163,19 @@
       </div>
     </div>
     <div class="p-4">
-      <span
+      <!-- <span
+        [disabled]="isSaveDisabled()"
         (click)="saveStudentEnroll()"
         class="p-3 mb-2 bg-success text-white cusror-pointer"
         >Save</span
+      > -->
+      <button
+        [disabled]="isSaveDisabled()"
+        (click)="saveStudentEnroll()"
+        class="btn btn-primary btn-medium align-isso-button"
       >
+        Save
+      </button>
     </div>
   </div>
 </div>
@@ -375,7 +383,7 @@
   </div>
 </p-dialog>
 
-<p-dialog
+<!-- <p-dialog
   header="Assign Subgame to student"
   [(visible)]="displaySubgameDialog"
   [modal]="true"
@@ -383,7 +391,29 @@
   [baseZIndex]="10000"
   [width]="800"
   (onHide)="onDialogClose()"
+> -->
+
+<p-dialog
+  header="Assign Subgame to student"
+  [(visible)]="displaySubgameDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [style]="{ width: '800px' }"
+  [dismissableMask]="false"
+  [closable]="false"
+  (onHide)="onDialogClose()"
 >
+  <div>
+    sdfsdgag dsg s
+    <button
+      pButton
+      type="button"
+      icon="pi pi-times"
+      class="p-button-rounded p-button-text"
+      (click)="onCustomXClicked()"
+    ></button>
+  </div>
   <div class="col-md-12 p-0">
     <div class="subgagme-dropdown col-md-9">
       <p-dropdown
