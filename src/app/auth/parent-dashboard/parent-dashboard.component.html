@@ -172,8 +172,32 @@
               {{ student.gameName }} UNDER {{ student.ageRange }}
               {{ student.gender == "1" ? "Boys" : "Girls" }}
             </p>
-            <p *ngIf="student.subGameName !== ''" class="card-text">
-              <b>SUBGAME:</b> {{ student.subGameName }}
+
+            <p>
+              <ng-container
+                *ngIf="student.rootSubGame !== null; else showSubGame"
+              >
+                <div
+                  class="subgame-color"
+                  *ngFor="
+                    let sub of getFilteredSubgames(student.rootSubGame);
+                    let i = index
+                  "
+                >
+                  Subgame: {{ i + 1 }}. {{ sub }}
+                </div>
+              </ng-container>
+
+              <ng-template #showSubGame>
+                <div
+                  *ngFor="
+                    let sub of getFilteredSubgames(student.subGameName);
+                    let i = index
+                  "
+                >
+                  Subgame: {{ i + 1 }}. {{ sub }}
+                </div>
+              </ng-template>
             </p>
             <button
               *ngIf="student.paidStatus == ''"

@@ -232,6 +232,14 @@ export class ParentDashboardComponent implements OnInit, OnChanges {
       }
     );
   }
+  getFilteredSubgames(subGameString: string): string[] {
+    if (!subGameString) return [];
+    return subGameString
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+  }
+
   copyStudentData(studentId, gameId, eventId, ageRange, gender) {
     this.parentDashboardService
       .copyStudentData(studentId, gameId, eventId, ageRange, gender)

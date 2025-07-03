@@ -692,6 +692,7 @@ export class StudentRegistrationComponent implements OnInit {
           });
         } else {
           this.isotpSuccess = true;
+          this.isotpError = false;
           console.log("otp sent");
           //this.otpDisabled = false;
           //this.sendOtp(res);

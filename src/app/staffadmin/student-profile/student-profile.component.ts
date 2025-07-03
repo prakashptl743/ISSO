@@ -169,7 +169,10 @@ export class StudentProfileComponent implements OnInit {
     const studentId = student.sId;
     const formData = new FormData();
     formData.append("approvedStatus", "1");
+    formData.append("studentName", student.studentName);
+    formData.append("contactNo", student.contactNo);
     formData.append("schoolName", this.schoolName);
+
     this.studentProfileService
       .changeApprovalStatus(studentId, formData)
       .subscribe(

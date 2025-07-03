@@ -5,6 +5,41 @@
   padding-top: 8px;
   width: 120%;
 }
+.align-form {
+  overflow: hidden;
+}
+.close-details-dialog {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.dialog-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+/* .ui-dialog-content .ui-widget-content {
+  position: initial !important;
+} */
+
+::ng-deep .ui-dialog.ui-widget .ui-dialog-content.ui-widget-content {
+  position: initial !important;
+}
+
+::ng-deep .custom-header-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1.5rem;
+  z-index: 1001;
+}
+::ng-deep .custom-close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 1001;
+}
 :host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
   width: 400px;
 }
@@ -272,8 +307,13 @@ h5 {
 }
 .blinking-text {
   animation: blink 1s linear infinite;
+  cursor: pointer;
+  color: blue;
+  border: 1px solid;
 }
-
+.blink {
+  padding: 5px;
+}
 @keyframes blink {
   0%,
   50%,

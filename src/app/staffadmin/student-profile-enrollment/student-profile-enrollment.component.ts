@@ -71,6 +71,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   subGameIdCounts: { [key: string]: number } = {};
   selectedSubgame: any = null; // bound to p-dropdown
   selectedSubgamesTable: any[] = [];
+  extraTabDetailsTable: any[] = [];
   selectedStudentForSubgame: any;
   subGameIdArray = [];
   subGameNameArray = [];
@@ -86,6 +87,13 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   gameModifystatus: string;
   addSubGameLabel: string;
   isCustomDialogClicked: boolean;
+  subGameIdCountsBackup: any;
+  tabLabels = ""; // can be loaded from API
+  tabNames: string[] = [];
+  form: FormGroup;
+
+  extraTabRequired: string;
+  displayAddDetailsDialog: boolean;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService,
@@ -116,6 +124,24 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       }
     }
   }
+  get tabs(): FormArray {
+    return this.form.get("tabs") as FormArray;
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      const formData = {};
+      this.tabNames.forEach((label, index) => {
+        formData[label] = this.tabs.at(index).value;
+      });
+      this.extraTabDetailsTable.push(formData);
+
+      console.log("Final API Data:", this.extraTabDetailsTable);
+      this.displayAddDetailsDialog = false;
+      // send formData to API
+    }
+  }
+
   setSubGameData() {
     this.subGameoptions = [];
     this.subGameoptions = this.studentSubgameData
@@ -164,8 +190,35 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.checkSubGameCapacity = [];
     this.yearOptions = this.issoUtilService.setYearToStaffadmin();
     this.setPhotoPath();
-  }
 
+    this.extraTabRequired = localStorage.getItem("extraTabRequired");
+    if (this.extraTabRequired == "Yes") {
+      // console.log("Im not empty" + localStorage.getItem("extraTabValues"));
+      // this.tabLabels = localStorage.getItem("extraTabValues");
+      // this.tabNames = this.tabLabels.split(",").map((t) => t.trim());
+      // this.form = this.fb.group({
+      //   tabs: this.fb.array([]),
+      // });
+
+      // this.tabNames.forEach(() => {
+      //   this.tabs.push(this.fb.control("", Validators.required));
+      // });
+
+      this.buildExtraTabsForm();
+    }
+  }
+  buildExtraTabsForm() {
+    this.tabLabels = localStorage.getItem("extraTabValues") || "";
+    this.tabNames = this.tabLabels.split(",").map((t) => t.trim());
+
+    this.form = this.fb.group({
+      tabs: this.fb.array([]),
+    });
+
+    this.tabNames.forEach(() => {
+      this.tabs.push(this.fb.control("", Validators.required));
+    });
+  }
   addSubgame() {
     this.countMap = {};
     const newCountMap: { [key: string]: number } = {};
@@ -270,7 +323,9 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   changeSubgame(student) {
     this.errorMessage = "";
-    this.displaySubgameDialog = true;
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
     this.selectedStudentForSubgame = student;
     this.addGameLabel = "Assign Subgame";
 
@@ -335,21 +390,27 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         }
       });
     }
-
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
     this.selectedSubgamesTable.push(...this.subGameTableArray);
     this.displaySubgameDialog = true;
   }
 
   isSaveDisabled(): boolean {
-    const result = this.studentDataArray.some((student) => {
-      const val = student.subGameId;
-      return (
-        val === undefined ||
-        val === null ||
-        (typeof val === "string" && val.trim() === "")
-      );
-    });
-    return result;
+    if (this.studentEnrollData[6] == "Both") {
+      const result = this.studentDataArray.some((student) => {
+        const val = student.subGameId;
+        return (
+          val === undefined ||
+          val === null ||
+          (typeof val === "string" && val.trim() === "")
+        );
+      });
+      return result;
+    } else {
+      return false;
+    }
   }
   onCustomXClicked() {
     // this.dialogClosedByX = true; // set when X is clicked
@@ -376,9 +437,14 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           }, {} as { [key: string]: number });
       }
     } else {
-      this.subGameIdCounts = this.subGameIdCounts;
+      this.subGameIdCounts = JSON.parse(
+        JSON.stringify(this.subGameIdCountsBackup)
+      );
+
+      // this.subGameIdCounts = this.subGameIdCounts;
       console.log("Custom dialog cliecked");
     }
+    this.subGameIdCountsBackup = null;
     this.selectedSubgamesTable = [];
     console.log(
       "Filtered subGameIdCounts",
@@ -532,29 +598,8 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           });
         });
         this.subGameIdCounts = subgameCount;
-      } else {
-        // console.log("Im update,delete" + this.subGameIdArray);
-        // const selectedIds = this.subGameIdArray; // already strings
-        // this.subGameIdCounts = Object.entries(this.subGameIdCounts)
-        //   .filter(([key]) => !selectedIds.includes(key))
-        //   .reduce((obj, [key, value]) => {
-        //     obj[key] = value;
-        //     return obj;
-        //   }, {} as { [key: string]: number });
-        // console.log(
-        //   "Filtered subGameIdCounts",
-        //   JSON.stringify(this.subGameIdCounts)
-        // );
       }
       console.log("Im FINAL subgamecount--->" + JSON.stringify(subgameCount));
-
-      // const student = this.alreadyAddedStudentArray.find(
-      //   (s) => s.studentId == this.alreadyAddedStudentArray.studentId
-      // );
-      // console.log("Im student-->" + student);
-
-      // const assigned = student.subgameId ? student.subgameId.split(",") : [];
-      // console.log("Im data- assigned->" + JSON.stringify(assigned));
 
       if (
         this.studentEnrollData[6] !== "Both" &&
@@ -800,8 +845,14 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.addGameLabel = "Assign Subgame";
     this.displaySubgameDialog = true;
     this.selectedStudentForSubgame = student;
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
   }
-
+  showAddDetailsDialog(student: any) {
+    this.addGameLabel = "Assign Subgame";
+    this.displayAddDetailsDialog = true;
+  }
   onImageError(event: any) {
     event.target.src = "assets/images/default-user.png";
   }
