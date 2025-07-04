@@ -523,6 +523,10 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     }
     // alert("Subgames saved!");
   }
+  // getSubgames(subgames: string | null): string[] {
+  //   if (!subgames || subgames === "undefined") return [];
+  //   return subgames.split(",").map((s) => s.trim());
+  // }
   updateSubgame() {
     this.gameModifystatus = "update";
     console.log("Upate" + this.subgameStudentId);

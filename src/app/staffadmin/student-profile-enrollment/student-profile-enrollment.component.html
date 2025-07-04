@@ -271,9 +271,9 @@
           ></i
         ></span>
 
-        <ng-container *ngIf="student.rootSubGame !== null; else showSubGame">
+        <ng-container *ngIf="student.subGameName !== null; else showSubGame">
           <div
-            *ngFor="let sub of student.rootSubGame.split(','); let i = index"
+            *ngFor="let sub of student.subGameName.split(','); let i = index"
           >
             {{ i + 1 }}. {{ sub.trim() }}
           </div>

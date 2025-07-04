@@ -75,6 +75,27 @@ export class AdminStudentProfileService {
       )
       .pipe(catchError(this.handleError));
   }
+  loadGloablStudentData(formData) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "adminStudentProfile/StudentProfile/loadGlobalStudentlList/",
+        formData
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getStudentDataForCertificate(yearVal, studentUniqueId) {
+    let str =
+      "staffadmin/studentProfile/parentDashboard/getStudentDataForCertificate/" +
+      yearVal +
+      "/" +
+      studentUniqueId;
+
+    return this.http
+      .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
