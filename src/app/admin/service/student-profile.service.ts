@@ -179,6 +179,13 @@ export class StudentProfileService {
       .post<any>(this.serverUrl + str, formData)
       .pipe(catchError(this.handleError));
   }
+  updateStudentExtraInfo(formData) {
+    let str =
+      "staffadmin/studentProfile/studentProfileForStaff/updateStudentExtraInfo/";
+    return this.http
+      .post<any>(this.serverUrl + str, formData)
+      .pipe(catchError(this.handleError));
+  }
   deleteStudentData(id: number) {
     return this.http
       .delete(
@@ -189,12 +196,14 @@ export class StudentProfileService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteenrolledStudentData(id: number) {
+  deleteenrolledStudentData(id: number, extraTabRequired) {
     return this.http
       .delete(
         this.serverUrl +
           "staffadmin/studentProfile/studentProfileForStaff/deleteenrolledStudentData/" +
-          id
+          id +
+          "/" +
+          extraTabRequired
       )
       .pipe(catchError(this.handleError));
   }

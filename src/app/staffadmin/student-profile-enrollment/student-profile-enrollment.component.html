@@ -138,12 +138,37 @@
             {{ i + 1 }}. {{ subgame.trim() }}
           </div>
         </div>
-        <!-- {{ student.subGameName }} -->
       </div>
       <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
-        <span (click)="showAddDetailsDialog(student)" class="blinking-text"
+        <span
+          *ngIf="!student.extrInfo"
+          (click)="showAddDetailsDialog(student)"
+          class="blinking-text"
           >Add Details</span
         >
+        <span
+          class="cursor-pointer float-right"
+          *ngIf="student.extrInfo"
+          (click)="editExtraInfo(student)"
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i>
+        </span>
+        <div *ngIf="student.extrInfo && student.extrInfo.length > 0">
+          <div *ngFor="let key of getKeys(student.extrInfo[0])">
+            <strong>{{ key }}:</strong>
+            <div>
+              {{
+                student.extrInfo[0][key].length > 15
+                  ? (student.extrInfo[0][key] | slice : 0 : 15) + "..."
+                  : student.extrInfo[0][key]
+              }}
+            </div>
+          </div>
+        </div>
       </div>
       <div class="table-cell">
         <span
@@ -233,6 +258,9 @@
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
         SubGame
       </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        Extra Details
+      </div>
       <div class="table-cell">Paid Status</div>
       <div class="table-cell">Action</div>
     </div>
@@ -286,6 +314,37 @@
             {{ i + 1 }}. {{ sub.trim() }}
           </div>
         </ng-template>
+      </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        <span
+          *ngIf="!student.extrInfo"
+          (click)="showAddDetailsDialog(student)"
+          class="blinking-text"
+          >Add Details</span
+        >
+        <span
+          class="cursor-pointer float-right"
+          *ngIf="student.extrInfo"
+          (click)="updateExtraInfo(student)"
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i>
+        </span>
+        <div *ngIf="student.extrInfo && student.extrInfo.length > 0">
+          <div *ngFor="let key of getKeys(student.extrInfo[0])">
+            <strong>{{ key }}:</strong>
+            <div>
+              {{
+                student.extrInfo[0][key].length > 40
+                  ? (student.extrInfo[0][key] | slice : 0 : 40) + "..."
+                  : student.extrInfo[0][key]
+              }}
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="table-cell"
@@ -504,41 +563,37 @@
   [dismissableMask]="false"
   [style]="{ width: '50vw' }"
 >
+  <div class="custom-header-close">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-times"
+      class="p-button-rounded p-button-danger p-button-sm p-button-text"
+      (click)="closeDetailDialog()"
+    ></button>
+  </div>
   <ng-template pTemplate="header">
     <div class="close-details-dialog">
       <span><b>Adding Details to student</b></span>
-      <!-- <button
+      <button
         type="button"
-        (click)="displayAddDetailsDialog = false"
+        (click)="closeDetailDialog()"
         class="p-button p-button-danger p-button-rounded p-button-sm"
       >
         <i class="pi pi-times"></i>
-      </button> -->
-
+      </button>
+      <!-- (click)="displayAddDetailsDialog = false" -->
       <button
         pButton
         type="button"
         icon="pi pi-times"
         class="p-button-rounded p-button-danger p-button-sm p-button-text"
-        (click)="displayAddDetailsDialog = false"
+        (click)="closeDetailDialog()"
       ></button>
     </div>
   </ng-template>
 
   <div *ngIf="extraTabRequired == 'Yes'">
-    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div formArrayName="tabs">
-        <div *ngFor="let ctrl of tabs.controls; let i = index">
-          <label>{{ tabNames[i] }}</label>
-          <input type="text" [formControlName]="i" />
-          <div *ngIf="ctrl.invalid && ctrl.touched" style="color: red">
-            Required
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" [disabled]="form.invalid">Save</button>
-    </form> -->
     <form [formGroup]="form" class="align-form" (ngSubmit)="onSubmit()">
       <div formArrayName="tabs">
         <div
@@ -552,6 +607,7 @@
                 type="text"
                 class="form-control"
                 [formControlName]="i"
+                maxlength="50"
                 [ngClass]="{ 'is-invalid': ctrl.invalid && ctrl.touched }"
               />
               <div
@@ -567,7 +623,7 @@
 
       <div class="text-end mt-4">
         <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-          Save
+          {{ extraTabButtonLabel }}
         </button>
       </div>
     </form>

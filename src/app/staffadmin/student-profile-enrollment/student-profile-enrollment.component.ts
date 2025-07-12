@@ -94,6 +94,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
 
   extraTabRequired: string;
   displayAddDetailsDialog: boolean;
+  extraTabButtonLabel: string;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService,
@@ -127,8 +128,37 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   get tabs(): FormArray {
     return this.form.get("tabs") as FormArray;
   }
+  getKeys(obj: any): string[] {
+    return obj ? Object.keys(obj) : [];
+  }
+  editExtraInfo(student: any) {
+    this.extraTabButtonLabel = "Save";
+    console.log("Im edit form-->" + JSON.stringify(student));
+    this.selectedStudentForSubgame = student;
+    this.displayAddDetailsDialog = true;
+    this.patchExtraInfoForm(student.extrInfo);
+  }
+  updateExtraInfo(student: any) {
+    console.log("Im edit form-->" + JSON.stringify(student));
+    this.extraTabButtonLabel = "Update";
+    this.selectedStudentForSubgame = student;
+    this.displayAddDetailsDialog = true;
+    this.patchExtraInfoForm(student.extrInfo);
+  }
+  patchExtraInfoForm(extrInfo: any) {
+    const tabsArray = this.form.get("tabs") as FormArray;
+    tabsArray.clear(); // clear existing controls
+
+    const infoObj = extrInfo[0]; // get the object from array
+    this.tabNames = Object.keys(infoObj); // set labels
+
+    Object.values(infoObj).forEach((value) => {
+      tabsArray.push(this.fb.control(value, Validators.required));
+    });
+  }
 
   onSubmit() {
+    this.extraTabDetailsTable = [];
     if (this.form.valid) {
       const formData = {};
       this.tabNames.forEach((label, index) => {
@@ -138,10 +168,84 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
 
       console.log("Final API Data:", this.extraTabDetailsTable);
       this.displayAddDetailsDialog = false;
-      // send formData to API
-    }
-  }
 
+      if (this.extraTabButtonLabel !== "Update") {
+        if (
+          this.selectedStudentForSubgame &&
+          this.studentDataArray.find(
+            (s) => s.sId === this.selectedStudentForSubgame.sId
+          )
+        ) {
+          this.selectedStudentForSubgame.extrInfo = this.extraTabDetailsTable;
+        }
+        console.log("NEW DATA--->" + JSON.stringify(this.studentDataArray));
+      } else {
+        const formData = new FormData();
+        formData.append("studentId", this.selectedStudentForSubgame.studentId);
+        formData.append("eventId", this.selectedStudentForSubgame.eventId);
+        formData.append("schoolId", this.selectedStudentForSubgame.schoolId);
+        formData.append("extraInfo", JSON.stringify(this.extraTabDetailsTable));
+        this.studentProfileService.updateStudentExtraInfo(formData).subscribe(
+          (res) => {
+            if (res.status === "success") {
+              console.log("Im success");
+              this.messageService.add({
+                key: "custom",
+                severity: "success",
+                summary: "Data Updated Successfully",
+              });
+            }
+            this.displaySubgameDialog = false;
+            this.isCustomDialogClicked = false;
+            this.alreadyEnrolledStudent();
+          },
+          (error) => {
+            this.displaySubgameDialog = false;
+            this.isCustomDialogClicked = false;
+            this.messageService.add({
+              key: "custom",
+              severity: "error",
+              summary: error.errorDesc,
+            });
+          }
+        );
+      }
+    }
+    this.form.reset();
+  }
+  submitUpdateExtraInfo() {
+    const formData = new FormData();
+    formData.append("studentId", this.subgameStudentId);
+    formData.append("subgameIdArray", JSON.stringify(this.subGameIdArray));
+    formData.append("subgameNameArray", JSON.stringify(this.subGameNameArray));
+    this.studentProfileService
+      .updateStudentSubgame(this.subgameStudentId, formData)
+      .subscribe(
+        (res) => {
+          if (res.status === "success") {
+            console.log("Im success");
+            this.messageService.add({
+              key: "custom",
+              severity: "success",
+              summary: "Updated Successfully",
+            });
+          }
+          this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
+          this.alreadyEnrolledStudent();
+        },
+        (error) => {
+          this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
+          this.messageService.add({
+            key: "custom",
+            severity: "error",
+            summary: error.errorDesc,
+          });
+        }
+      );
+    this.selectedSubgame = null;
+  }
   setSubGameData() {
     this.subGameoptions = [];
     this.subGameoptions = this.studentSubgameData
@@ -206,6 +310,11 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
 
       this.buildExtraTabsForm();
     }
+  }
+  closeDetailDialog() {
+    console.log("Im close");
+    this.displayAddDetailsDialog = false;
+    this.form.reset();
   }
   buildExtraTabsForm() {
     this.tabLabels = localStorage.getItem("extraTabValues") || "";
@@ -397,21 +506,43 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.displaySubgameDialog = true;
   }
 
+  // isSaveDisabled(): boolean {
+  //   if (this.studentEnrollData[6] == "Both") {
+  //     const result = this.studentDataArray.some((student) => {
+  //       const val = student.subGameId;
+  //       return (
+  //         val === undefined ||
+  //         val === null ||
+  //         (typeof val === "string" && val.trim() === "")
+  //       );
+  //     });
+  //     return result;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   isSaveDisabled(): boolean {
-    if (this.studentEnrollData[6] == "Both") {
+    if (this.studentEnrollData[6] === "Both") {
       const result = this.studentDataArray.some((student) => {
-        const val = student.subGameId;
-        return (
-          val === undefined ||
-          val === null ||
-          (typeof val === "string" && val.trim() === "")
-        );
+        const subGameInvalid =
+          student.subGameId === undefined ||
+          student.subGameId === null ||
+          (typeof student.subGameId === "string" &&
+            student.subGameId.trim() === "");
+
+        const extraInfoInvalid =
+          this.extraTabRequired === "Yes" &&
+          (!student.extrInfo || student.extrInfo.length === 0);
+
+        return subGameInvalid || extraInfoInvalid;
       });
+
       return result;
     } else {
       return false;
     }
   }
+
   onCustomXClicked() {
     // this.dialogClosedByX = true; // set when X is clicked
     console.log("I clieck close");
@@ -506,6 +637,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           this.subGameIdArray.join(",");
         this.selectedStudentForSubgame.subGameName =
           this.subGameNameArray.join(",");
+
         // this.studentDataArray.push(enrichedStudent);
       }
       this.subGameIdArray = [];
@@ -638,39 +770,41 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     const selectedIds = student.subgameId.split(","); // ["20", "21"] subgame.subGameId.split(",");
 
     console.log("IM FDELETING--->" + JSON.stringify(this.subGameIdCounts));
-    this.studentProfileService.deleteenrolledStudentData(student.id).subscribe(
-      (res) => {
-        this.messageService.add({
-          key: "custom",
-          severity: "success",
-          detail: "Student Data Deleted  successfully!",
-        });
-        const updatedCounts: { [key: string]: number } = {};
+    this.studentProfileService
+      .deleteenrolledStudentData(student.id, this.extraTabRequired)
+      .subscribe(
+        (res) => {
+          this.messageService.add({
+            key: "custom",
+            severity: "success",
+            detail: "Student Data Deleted  successfully!",
+          });
+          const updatedCounts: { [key: string]: number } = {};
 
-        for (const key in this.subGameIdCounts) {
-          let newCount = this.subGameIdCounts[key];
-          if (selectedIds.includes(key)) {
-            newCount = newCount - 1;
+          for (const key in this.subGameIdCounts) {
+            let newCount = this.subGameIdCounts[key];
+            if (selectedIds.includes(key)) {
+              newCount = newCount - 1;
+            }
+
+            if (newCount > 0) {
+              updatedCounts[key] = newCount;
+            }
           }
 
-          if (newCount > 0) {
-            updatedCounts[key] = newCount;
-          }
+          this.subGameIdCounts = updatedCounts;
+          //  }
+
+          this.display = false;
+          this.alreadyEnrolledStudent();
+        },
+        (error) => {
+          this.messageService.add({
+            severity: "error",
+            detail: error.errorDesc,
+          });
         }
-
-        this.subGameIdCounts = updatedCounts;
-        //  }
-
-        this.display = false;
-        this.alreadyEnrolledStudent();
-      },
-      (error) => {
-        this.messageService.add({
-          severity: "error",
-          detail: error.errorDesc,
-        });
-      }
-    );
+      );
   }
   getAgeCutoffDate(ageCategory: number): string {
     const currentDate = new Date();
@@ -794,8 +928,14 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   saveStudentEnrollData() {
     const formData = new FormData();
     this.gameModifystatus = "save";
+    let extraInfo;
+    if (this.extraTabRequired == "Yes") {
+      extraInfo = "Yes";
+    } else {
+      extraInfo = "No";
+    }
     formData.append("studentData", JSON.stringify(this.studentDataArray));
-    console.log("DATA FORM-->" + JSON.stringify(this.studentDataArray));
+    formData.append("extraInfo", extraInfo);
     this.studentProfileService.saveEnrolledStudentData(formData).subscribe(
       (res) => {
         if (res.status === "success") {
@@ -854,7 +994,8 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     );
   }
   showAddDetailsDialog(student: any) {
-    this.addGameLabel = "Assign Subgame";
+    this.extraTabButtonLabel = "Save";
+    this.selectedStudentForSubgame = student;
     this.displayAddDetailsDialog = true;
   }
   onImageError(event: any) {
