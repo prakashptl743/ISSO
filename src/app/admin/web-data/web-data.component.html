@@ -17,126 +17,6 @@
 ></p-toast>
 
 <div class="container mt-5 align-web-container">
-  <!-- <div class="card">
-    <p-menubar [model]="items">
-      <ng-template #item let-item>
-        <ng-container *ngIf="item.route; else urlRef">
-          <a [routerLink]="item.route" class="p-menubar-item-link">
-            <span [class]="item.icon"></span>
-            <span class="ml-2">{{ item.label }}</span>
-          </a>
-        </ng-container>
-        <ng-template #urlRef>
-          <a
-            *ngIf="item.url; else noLink"
-            [href]="item.url"
-            class="p-menubar-item-link"
-          >
-            <span [class]="item.icon"></span>
-            <span class="ml-2">{{ item.label }}</span>
-          </a>
-        </ng-template>
-        <ng-template #noLink>
-          <div class="p-menubar-item-link">
-            <span [class]="item.icon"></span>
-            <span class="ml-2">{{ item.label }}</span>
-            <span class="pi pi-fw pi-angle-down ml-2"></span>
-          </div>
-        </ng-template>
-      </ng-template>
-    </p-menubar>
-  </div> -->
-
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarColor02"
-        aria-controls="navbarColor02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Dropdown link
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li>
-                <a class="dropdown-item" href="#">Action</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another action</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <div class="d-flex align-items-center">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" aria-current="page" href="#">Menu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Items</a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-mdb-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown link
-              </a>
-              <ul
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <li>
-                  <a class="dropdown-item" href="#">Action</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Another action</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav> -->
   <div class="wrapper">
     <!-- <p-menubar [model]="items" class="custom-menubar"></p-menubar>
     <p-menubar [model]="items1" class="custom-menubar"></p-menubar>   -->
@@ -156,6 +36,18 @@
                 class="form-control"
                 formControlName="schoolname"
                 name="schoolName"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Reporting Date</label>
+              <input
+                class="form-control"
+                formControlName="reportingDate"
+                name="reportingDate"
                 type="text"
                 required
               />
@@ -341,6 +233,10 @@
                 <span class="item-value">{{
                   school.eventStartDate | date : "d MMMM , y"
                 }}</span>
+              </div>
+              <div class="item-description">
+                <label>Reporting Date:</label>
+                <span class="item-value">{{ school.reportingDate }}</span>
               </div>
               <div class="item-description">
                 <label>Event End Date:</label>

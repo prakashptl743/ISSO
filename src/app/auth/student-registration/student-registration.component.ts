@@ -71,6 +71,10 @@ export class StudentRegistrationComponent implements OnInit {
   otpDisabled: boolean = true;
   allSubGames: SubGame[] = [];
   isLoading: boolean = false;
+  mobileNumber: string = "";
+  loading: boolean = false;
+  isValidMobile: boolean = false;
+  isInvalidMobile: boolean = false;
   students: Student[] = [
     {
       id: "S001",
@@ -109,6 +113,8 @@ export class StudentRegistrationComponent implements OnInit {
   studentDataResponse: any;
   isotpError: boolean;
   otpErrorMessage: string;
+  studentErrorMessage: boolean;
+  studentError: string;
 
   constructor(
     private fb: FormBuilder,
@@ -206,6 +212,49 @@ export class StudentRegistrationComponent implements OnInit {
     //     this.currentSubGameCounts[id] = (this.currentSubGameCounts[id] || 0) + 1;
     //   });
     // });
+  }
+  allowOnlyNumbers(event: KeyboardEvent) {
+    const charCode = event.which ? event.which : event.keyCode;
+    // Allow: 0-9 (ASCII: 48-57)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
+
+  validateMobile() {
+    if (
+      !this.mobileNumber ||
+      this.mobileNumber.length < 10 ||
+      this.mobileNumber.length > 10
+    )
+      return;
+
+    this.loading = true;
+    this.isValidMobile = false;
+    this.isInvalidMobile = false;
+    const formData = new FormData();
+    formData.append("mobile", this.mobileNumber);
+    this.studentProfileService.checkMobileNumber(formData).subscribe(
+      (res) => {
+        // this.http.post<any>('http://yourdomain.com/api/check-mobile', {
+        //   mobile: this.mobileNumber
+        // }).subscribe(
+        //   (res) => {
+        this.loading = false;
+        if (res.status) {
+          if (res.count >= 3) {
+            this.isInvalidMobile = true;
+            this.mobileNumber = ""; // clear input
+          } else {
+            this.isValidMobile = true;
+          }
+        }
+      },
+      (err) => {
+        this.loading = false;
+        console.error("Error checking mobile", err);
+      }
+    );
   }
 
   // Helper methods for dynamic capacity (remain the same)
@@ -395,95 +444,6 @@ export class StudentRegistrationComponent implements OnInit {
     }
     return 0; // Default to 0 if key not found or invalid
   }
-  // getAvailableSubGames(
-  //   student: Student,
-  //   currentDropdownIndex: number
-  // ): SubGame[] {
-  //   const selectedIdsByStudent = student.selectedSubGameIds;
-  //   const availableOptions: SubGame[] = [];
-
-  //   this.allSubGames.forEach((sg) => {
-  //     // Check if this subgame is already selected by the student in a *different* dropdown
-  //     // (This handles the "disappear from other dropdowns" logic)
-  //     if (
-  //       selectedIdsByStudent.includes(sg.id) &&
-  //       selectedIdsByStudent.indexOf(sg.id) !== currentDropdownIndex
-  //     ) {
-  //       return; // Skip this subgame as it's already selected in another dropdown for this student
-  //     }
-
-  //     // Check if the subgame has reached its global max capacity
-  //     const maxCap = this.getMaxCapacity(sg);
-  //     const currentCount = this.currentSubGameCounts[sg.id] || 0;
-
-  //     // Check if the subgame is already selected in the current dropdown for this student
-  //     const isCurrentlySelectedInThisDropdown =
-  //       selectedIdsByStudent.includes(sg.id) &&
-  //       selectedIdsByStudent.indexOf(sg.id) === currentDropdownIndex;
-
-  //     if (currentCount >= maxCap && !isCurrentlySelectedInThisDropdown) {
-  //       // If capacity is maxed out AND it's not the currently selected item in this dropdown,
-  //       // then it's not available for selection.
-  //       return;
-  //     }
-
-  //     availableOptions.push(sg);
-  //   });
-  //   return availableOptions;
-  // }
-
-  /**
-   * Handles a change in a subgame dropdown for a specific student.
-   * @param student The student object being updated.
-   * @param dropdownIndex The index of the dropdown (0, 1, or 2).
-   * @param event The change event from the select element.
-   */
-
-  // onSubGameSelectionChange(
-  //   student: Student,
-  //   dropdownIndex: number,
-  //   event: Event
-  // ): void {
-  //   const selectedId = (event.target as HTMLSelectElement).value; // Get the new selected ID
-  //   const previouslySelectedId = student.selectedSubGameIds[dropdownIndex]; // Get the ID that was previously in this dropdown
-
-  //   // --- Update Global Capacity Counts ---
-  //   if (previouslySelectedId) {
-  //     this.currentSubGameCounts[previouslySelectedId]--;
-  //   }
-  //   if (selectedId) {
-  //     this.currentSubGameCounts[selectedId] =
-  //       (this.currentSubGameCounts[selectedId] || 0) + 1;
-  //   }
-
-  //   // --- Update Student's selectedSubGameIds and selectedSubGameNames arrays ---
-  //   if (selectedId) {
-  //     // Find the full subgame object to get its name
-  //     const selectedSubGame = this.allSubGames.find(
-  //       (sg) => sg.id === selectedId
-  //     );
-  //     if (selectedSubGame) {
-  //       student.selectedSubGameIds[dropdownIndex] = selectedId;
-  //       student.selectedSubGameNames[dropdownIndex] =
-  //         selectedSubGame.subGameName; // Use subGameName from the object
-  //     }
-  //   } else {
-  //     // If "Select SubGame" (empty option) is chosen, clear this slot
-  //     student.selectedSubGameIds[dropdownIndex] = "";
-  //     student.selectedSubGameNames[dropdownIndex] = "";
-  //   }
-
-  //   // Clean up empty slots from the selectedSubGame arrays (optional, but keeps arrays tidy)
-  //   student.selectedSubGameIds = student.selectedSubGameIds.filter(
-  //     (id) => id !== ""
-  //   );
-  //   student.selectedSubGameNames = student.selectedSubGameNames.filter(
-  //     (name) => name !== ""
-  //   );
-
-  //   console.log("Updated Student:", student);
-  //   console.log("Current Global SubGame Counts:", this.currentSubGameCounts);
-  // }
 
   setDateOfBirth() {
     const today = new Date();
@@ -600,30 +560,6 @@ export class StudentRegistrationComponent implements OnInit {
     }
   }
 
-  // onFileSelect(event: any) {
-  //   const file = event.target.files[0];
-  //   this.fileError = "";
-
-  //   if (
-  //     file &&
-  //     (file.type === "image/png" ||
-  //       file.type === "image/jpeg" ||
-  //       file.type === "image/PNG")
-  //   ) {
-  //     if (file.size <= 100 * 1024) {
-  //       const reader = new FileReader();
-  //       reader.onload = () => (this.imagePreview = reader.result);
-  //       reader.readAsDataURL(file);
-  //       this.uploadedFile = file;
-  //     } else {
-  //       this.fileError = "File size must be under 100KB";
-  //     }
-  //   } else {
-  //     this.fileError = "Only PNG or JPEG images allowed";
-  //   }
-  //   console.log()
-  // }
-
   // Submit form
   isFormValid(): boolean {
     return (
@@ -636,7 +572,7 @@ export class StudentRegistrationComponent implements OnInit {
   }
   onInputChange(): void {
     console.log("hii");
-    this.isEnabled = this.studentId.length === 8;
+    this.isEnabled = this.studentId.length === 10;
   }
   onIssoEnrollSubmit() {
     this.isEnrollSubmitted = true;
@@ -648,13 +584,12 @@ export class StudentRegistrationComponent implements OnInit {
       this.studentProfileService.checkStudentEnroll(formData).subscribe(
         (res) => {
           if (res.error === "error") {
+            this.studentErrorMessage = true;
+            this.studentError = "Student Id not found";
             this.validStudentId = false;
-            this.messageService.add({
-              key: "custom",
-              severity: "error",
-              detail: "Student Id not found",
-            });
           } else {
+            this.studentErrorMessage = false;
+            this.studentError = "";
             this.otpDisabled = false;
             this.sendInfoToOtp(res);
             // this.issoEnrolledForm.reset();

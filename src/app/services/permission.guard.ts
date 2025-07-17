@@ -32,7 +32,7 @@ export class PermissionGuard implements CanActivate {
     const currentRoute = state.url;
     console.log("Im guard___." + localStorage.getItem("roleId"));
     if (this.isExcludedRoute(currentRoute)) {
-      return true;
+      return true; // ✅ allow access to excluded routes
     }
     const userRole = localStorage.getItem("roleId");
     if (userRole == "2") {

@@ -1,6 +1,11 @@
 input.largerCheckbox {
   transform: scale(2);
 }
+.cert-intro {
+  color: black;
+  padding: 10px;
+  font-size: 12px;
+}
 /* Your existing pulsing-dots and loader-overlay styles */
 .loader-overlay {
   position: fixed;

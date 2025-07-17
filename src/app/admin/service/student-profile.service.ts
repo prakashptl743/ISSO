@@ -186,6 +186,13 @@ export class StudentProfileService {
       .post<any>(this.serverUrl + str, formData)
       .pipe(catchError(this.handleError));
   }
+  checkMobileNumber(formData) {
+    let str =
+      "staffadmin/studentProfile/studentRegistration/checkMobileNumber/";
+    return this.http
+      .post<any>(this.serverUrl + str, formData)
+      .pipe(catchError(this.handleError));
+  }
   deleteStudentData(id: number) {
     return this.http
       .delete(

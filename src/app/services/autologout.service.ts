@@ -75,7 +75,9 @@ export class AutoLogoutService {
     if (isTimeout) {
       console.log("Im logour in service" + currentRoute);
       console.log("Im route-->" + this.isExcludedRoute(currentRoute));
-      if (this.isExcludedRoute(currentRoute)) return;
+      if (this.isExcludedRoute(currentRoute)) {
+        return true; // ✅ allow access to excluded routes
+      }
       // localStorage.clear();
       localStorage.removeItem("currentUser");
       localStorage.removeItem("roleId");

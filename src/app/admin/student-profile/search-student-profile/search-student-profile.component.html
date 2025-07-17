@@ -388,7 +388,7 @@
                 <!-- Participation -->
                 <td>
                   <div *ngIf="student.isCertificate == '0'">
-                    <span class="badge bg-danger fancy-badge"
+                    <span class="cert-intro badge bg-warning fancy-badge"
                       >Certificate Not Uploaded</span
                     >
                   </div>
@@ -413,7 +413,7 @@
                 <!-- Merit -->
                 <td>
                   <div *ngIf="student.isMerit == '0'">
-                    <span class="badge bg-danger fancy-badge"
+                    <span class="cert-intro badge bg-warning fancy-badge"
                       >Certificate Not Uploaded</span
                     >
                   </div>
@@ -421,7 +421,6 @@
                     *ngIf="student.isMerit == '1' && student.meritQR !== null"
                   >
                     <div *ngIf="student.rootGameType == 'Team'">
-                      <!-- TEam<i class="bi bi-download"></i> Download Merit Certificate -->
                       <a
                         class="btn btn-success btn-sm certificate-font"
                         href="{{
@@ -474,7 +473,11 @@
                           >
                           <a
                             class="btn btn-success btn-sm mb-2 certificate-font"
-                            *ngIf="sg.meritQR !== null && sg.meritQR !== ''"
+                            *ngIf="
+                              sg.meritQR !== null &&
+                              sg.meritQR !== '' &&
+                              sg.gameType !== 'Team'
+                            "
                             href="{{
                               baseUrl
                             }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
@@ -486,6 +489,26 @@
                             }}/{{ sg.id }}/{{ sg.subGameName }}"
                           >
                             <i class="bi bi-download"></i> Download Merit
+                            Certificate
+                          </a>
+                          <a
+                            class="btn btn-success btn-sm mb-2 certificate-font"
+                            *ngIf="
+                              sg.meritQR !== null &&
+                              sg.meritQR !== '' &&
+                              sg.gameType == 'Team'
+                            "
+                            href="{{
+                              baseUrl
+                            }}/staffadmin/studentProfile/studentCertificate/printTeamSubgameCertificate/{{
+                              student.schoolId
+                            }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                              student.ageRange
+                            }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                              student.rootGameType
+                            }}/{{ sg.id }}/{{ sg.subGameName }}"
+                          >
+                            <i class="bi bi-download"></i>Download Merit
                             Certificate
                           </a>
                         </div>

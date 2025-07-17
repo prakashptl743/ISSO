@@ -25,6 +25,7 @@ export class WebCalender {
   eventFile: string;
   eventStartDate: string;
   eventEndDate: string;
+  reportingDate: string;
 }
 export class Event {
   gameId: any;

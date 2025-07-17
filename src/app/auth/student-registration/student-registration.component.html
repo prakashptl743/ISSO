@@ -161,7 +161,31 @@
               formControlName="contactNo"
               (blur)="studentForm.controls.contactNo.markAsTouched()"
               placeholder="Enter contact number"
+              [(ngModel)]="mobileNumber"
+              (blur)="validateMobile()"
+              [ngClass]="{
+                'is-valid':
+                  isValidMobile && !studentForm.controls.contactNo.invalid,
+                'is-invalid': isInvalidMobile
+              }"
+              [disabled]="loading"
+              (keypress)="allowOnlyNumbers($event)"
             />
+            <div
+              *ngIf="loading"
+              class="align-loader spinner-border spinner-border-sm text-primary position-absolute"
+              role="status"
+            ></div>
+
+            <div
+              *ngIf="isValidMobile && !loading"
+              class="position-absolute"
+              style="top: 35px; right: 10px"
+            ></div>
+
+            <div *ngIf="isInvalidMobile && !loading" class="text-danger">
+              Mobile number already used 3 times!
+            </div>
             <div
               class="text-danger"
               *ngIf="
@@ -169,7 +193,7 @@
                 studentForm.controls.contactNo.invalid
               "
             >
-              Contact No must be 10 digits.
+              Mobile No must be 10 digits.
             </div>
           </div>
           <div class="col-md-6 mb-4">
@@ -264,6 +288,13 @@
               </div>
               <div class="alert alert-danger" role="alert" *ngIf="isotpError">
                 {{ otpErrorMessage }}
+              </div>
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="studentErrorMessage && studentError !== ''"
+              >
+                {{ studentError }}
               </div>
               <label class="form-label fw-bold">Student ID</label>
               <input

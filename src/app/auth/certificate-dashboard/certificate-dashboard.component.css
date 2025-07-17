@@ -173,7 +173,11 @@ body.no-scroll {
   background-color: #fdfefe; /* Very light background for cells */
   vertical-align: middle; /* Align content vertically */
 }
-
+.cert-intro {
+  color: black;
+  padding: 10px;
+  font-size: 12px;
+}
 .fancy-table thead th {
   background-color: #e9ecef; /* Header background */
   font-weight: 600;

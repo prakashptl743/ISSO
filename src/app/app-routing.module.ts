@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: "**", component: PageNotFoundComponent },
   { path: "login", component: LoginComponent },
   { path: "school-registration", component: SchoolRegistrationComponent },
-  { path: "student-registration", component: StudentRegistrationComponent },
+  // { path: "student-registration", component: StudentRegistrationComponent },
   { path: "test-comp", component: TestCompComponent },
   { path: "parent-dashboard", component: ParentDashboardComponent },
   { path: "certificate-dashboard", component: CertificateDashboardComponent },
