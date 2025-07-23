@@ -58,6 +58,9 @@
     <certificate-dashboard [studentData]="studentData"></certificate-dashboard>
   </div>
   <div *ngIf="menuLabel == 'profile'">
+    <!-- <button class="edit-button" (click)="editStudent(studentData)">
+      Edit Profile
+    </button> -->
     <div class="" *ngIf="studentData[0]">
       <div class="table-responsive no-borer" *ngIf="studentData[0]">
         <table class="table table-bordered table-striped">
@@ -144,7 +147,7 @@
   <div class="container py-5" *ngIf="menuLabel == 'dashboard'">
     <div
       *ngIf="studentDataLength > 0"
-      class="fancy-section p-5 mb-5 animate__animated animate__fadeInUp animate__delay-1s"
+      class="fancy-section p-5 mb-5 animate__animated"
     >
       <h4 class="text-center mb-5 text-dark">CURRENT EVENTS</h4>
       <div class="row g-4">
@@ -172,8 +175,32 @@
               {{ student.gameName }} UNDER {{ student.ageRange }}
               {{ student.gender == "1" ? "Boys" : "Girls" }}
             </p>
-            <p *ngIf="student.subGameName !== ''" class="card-text">
-              <b>SUBGAME:</b> {{ student.subGameName }}
+
+            <p>
+              <ng-container
+                *ngIf="student.rootSubGame !== null; else showSubGame"
+              >
+                <div
+                  class="subgame-color"
+                  *ngFor="
+                    let sub of getFilteredSubgames(student.subGameName);
+                    let i = index
+                  "
+                >
+                  Subgame: {{ i + 1 }}. {{ sub }}
+                </div>
+              </ng-container>
+
+              <ng-template #showSubGame>
+                <div
+                  *ngFor="
+                    let sub of getFilteredSubgames(student.subGameName);
+                    let i = index
+                  "
+                >
+                  Subgame: {{ i + 1 }}. {{ sub }}
+                </div>
+              </ng-template>
             </p>
             <button
               *ngIf="student.paidStatus == ''"
@@ -249,3 +276,111 @@
     <div></div>
   </div>
 </div>
+<p-dialog
+  header="{{ dialogTitle }}"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+  <div *ngIf="editStudentData">
+    <form
+      [formGroup]="editStudentForm"
+      (ngSubmit)="onSubmit()"
+      class="p-4 border rounded shadow"
+    >
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>Admission Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="admissionNumber"
+          />
+          <div
+            *ngIf="f.admissionNumber.touched && f.admissionNumber.invalid"
+            class="text-danger"
+          >
+            Admission Number is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Curriculum</label>
+          <input type="text" class="form-control" formControlName="curruclm" />
+          <div
+            *ngIf="f.curruclm.touched && f.curruclm.invalid"
+            class="text-danger"
+          >
+            Curriculum is required
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>T-Shirt Size</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="tShirtSize"
+          >
+            <option *ngFor="let t of tShirtSize" [value]="t.value">
+              {{ t.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.tShirtSize.touched && f.tShirtSize.invalid"
+            class="text-danger"
+          >
+            T-Shirt size is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Standard</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="standardClass"
+          >
+            <option *ngFor="let c of standardClass" [value]="c.value">
+              {{ c.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.standardClass.touched && f.standardClass.invalid"
+            class="text-danger"
+          >
+            Standard class is required
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Upload Photo</label>
+          <input
+            type="file"
+            class="form-control"
+            formControlName="photo"
+            accept="image/png, image/jpeg"
+            (change)="onFileSelect($event)"
+          />
+          <small class="text-danger" *ngIf="fileError">{{ fileError }}</small>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center mt-2" *ngIf="imagePreview">
+            <img [src]="imagePreview" class="img-thumbnail" width="60" />
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="editStudentForm.invalid"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

@@ -1,0 +1,684 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="pulsing-dots">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div>
+  <div class="container mt-3">
+    <p class="search-title">SEARCH STUDENT</p>
+    <form (ngSubmit)="searchStudent()" [formGroup]="searchForm">
+      <div class="col-md-6 align-label">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter name, ID or phone"
+            formControlName="searchQuery"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button
+          class="btn btn-primary mt-2"
+          type="submit"
+          [disabled]="searchForm.invalid"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div
+  class="table-responsive mt-4"
+  *ngIf="searchResultData && searchResultData.length"
+>
+  <table class="table table-striped table-bordered table-hover shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>Sr. No.</th>
+        <th>Unique ID</th>
+        <th>Student Name</th>
+        <th>Contact No</th>
+        <th>School Name</th>
+        <th>Date of Birth</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of searchResultData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ student.studentUniqueId }}</td>
+        <td>{{ student.studentName }}</td>
+        <td>{{ student.contactNo }}</td>
+        <td>{{ student.schoolName }}</td>
+
+        <td>{{ student.dateOfBirth | date : "dd-MM-yyyy" }}</td>
+        <td>
+          <span
+            (click)="viewDetails(student)"
+            class="p-3 mb-2 bg-primary text-white cusror-pointer"
+            >View Details</span
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="noSearchData" class="alert alert-danger mt-3">
+  No records found.
+</div>
+
+<p-dialog
+  header="Student Details"
+  [(visible)]="display"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+  <div class="container-fluid" *ngIf="selectedStudent && !editStudentData">
+    <div class="table-responsive" *ngIf="selectedStudent && !editStudentData">
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th><strong>Student Name:</strong></th>
+            <td>{{ selectedStudent.studentName }}</td>
+            <th><strong>Father Name:</strong></th>
+            <td>{{ selectedStudent.fatherName }}</td>
+          </tr>
+          <tr>
+            <th><strong>Date of Birth:</strong></th>
+            <td>{{ selectedStudent.dateOfBirth | date : "dd-MMM-yyyy" }}</td>
+            <th><strong>Gender:</strong></th>
+            <td>{{ selectedStudent.gender == "1" ? "Boys" : "Girls" }}</td>
+          </tr>
+          <tr>
+            <th><strong>Class:</strong></th>
+            <td>{{ selectedStudent.standardClass }}</td>
+            <th><strong>Aadhar No:</strong></th>
+            <td>{{ selectedStudent.aadharNumber }}</td>
+          </tr>
+          <tr>
+            <th><strong>Contact No:</strong></th>
+            <td>{{ selectedStudent.contactNo }}</td>
+            <th><strong>Admission No:</strong></th>
+            <td>{{ selectedStudent.admissionNumber }}</td>
+          </tr>
+          <tr>
+            <th><strong>T-Shirt Size:</strong></th>
+            <td>{{ selectedStudent.tShirtSize }}</td>
+            <th><strong>Curriculum:</strong></th>
+            <td>{{ selectedStudent.curruclm }}</td>
+          </tr>
+          <tr>
+            <th><strong>Passport:</strong></th>
+            <td>
+              {{
+                selectedStudent.passport === ""
+                  ? "N/A"
+                  : selectedStudent.passport
+              }}
+            </td>
+            <th><strong>Registered Date:</strong></th>
+            <td>{{ selectedStudent.createdDate | date : "dd-MMM-yyyy" }}</td>
+          </tr>
+          <tr>
+            <th><strong>Photo:</strong></th>
+            <td>
+              <img
+                height="50"
+                width="50"
+                src="{{ setPhotoYear }}/{{ selectedStudent.photo }}"
+                (error)="onImageError($event)"
+              />
+            </td>
+            <th><strong>Status:</strong></th>
+            <td
+              [ngClass]="
+                selectedStudent.approvedStatus == '0'
+                  ? 'isPending'
+                  : 'isApproved'
+              "
+            >
+              {{
+                selectedStudent.approvedStatus == "0" ? "Pending" : "Approved"
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</p-dialog>
+<hr />
+<div *ngIf="showDetails">
+  <div class="card mt-3 shadow-sm">
+    <!-- Top Title + Dropdown Row -->
+    <div
+      class="d-flex justify-content-between align-items-center px-3 py-2 bg-info text-white"
+    >
+      <h5 class="mb-0">{{ title }}</h5>
+
+      <div>
+        <p-dropdown
+          [options]="yearOptions"
+          placeholder="Select Year"
+          [(ngModel)]="selectedYear"
+          (onChange)="onYearChange($event)"
+          [style]="{ 'min-width': '140px' }"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <!-- PrimeNG Tabs -->
+
+    <p-tabView
+      [activeIndex]="activeIndex"
+      (activeIndexChange)="beforeTabChange($event)"
+    >
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="bi bi-person-circle me-1"></i> Profile
+        </ng-template>
+        <div class="align-note" *ngIf="!selectedYear">
+          Note: Please select a year to view Profile Details.
+        </div>
+        <ng-container *ngIf="selectedYear">
+          <div class="details-tab">
+            Showing profile for year: <strong>{{ yearvalue }}</strong>
+          </div>
+          <div
+            class="table-responsive"
+            *ngIf="studentProfileYearWiseData && !editStudentData"
+          >
+            <button
+              class="edit-button"
+              (click)="editStudent(studentProfileYearWiseData)"
+            >
+              Edit Profile
+            </button>
+
+            <table class="table table-bordered table-striped">
+              <tbody>
+                <tr>
+                  <th><strong>Student Name:</strong></th>
+                  <td>{{ studentProfileYearWiseData.studentName }}</td>
+                  <th><strong>Father Name:</strong></th>
+                  <td>{{ studentProfileYearWiseData.fatherName }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Date of Birth:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.dateOfBirth
+                        | date : "dd-MMM-yyyy"
+                    }}
+                  </td>
+                  <th><strong>Gender:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.gender == "1"
+                        ? "Boys"
+                        : "Girls"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <th><strong>Contact No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.contactNo }}</td>
+                  <th><strong>Aadhar No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.aadharNumber }}</td>
+                </tr>
+
+                <tr>
+                  <th><strong>Passport:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.passport === ""
+                        ? "N/A"
+                        : studentProfileYearWiseData.passport
+                    }}
+                  </td>
+                  <th><strong>Registered Date:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.createdDate
+                        | date : "dd-MMM-yyyy"
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th><strong>T-Shirt Size:</strong></th>
+                  <td>{{ studentProfileYearWiseData.tShirtSize }}</td>
+                  <th><strong>Curriculum:</strong></th>
+                  <td>{{ studentProfileYearWiseData.curruclm }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Class:</strong></th>
+                  <td>{{ studentProfileYearWiseData.standardClass }}</td>
+                  <th><strong>Admission No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.admissionNumber }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Photo:</strong></th>
+                  <td>
+                    <img
+                      height="50"
+                      width="50"
+                      src="{{ setPhotoYear }}/{{
+                        studentProfileYearWiseData.photo
+                      }}"
+                      (error)="onImageError($event)"
+                    />
+                  </td>
+                  <th><strong>Status:</strong></th>
+                  <td
+                    [ngClass]="
+                      studentProfileYearWiseData.approvedStatus == '0'
+                        ? 'isPending'
+                        : 'isApproved'
+                    "
+                  >
+                    {{
+                      studentProfileYearWiseData.approvedStatus == "0"
+                        ? "Pending"
+                        : "Approved"
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="bi bi-calendar-event me-1"></i> Event Details
+        </ng-template>
+        <div class="align-note" *ngIf="!selectedYear">
+          Note: Please select a year to view Event Details.
+        </div>
+
+        <ng-container *ngIf="selectedYear">
+          <div class="details-tab">
+            Showing Events for year: <strong>{{ yearvalue }}</strong>
+          </div>
+
+          <table
+            class="table fancy-table align-middle"
+            *ngIf="studentDataLength > 0"
+          >
+            <thead>
+              <tr class="table-bg">
+                <th scope="col">Sr No.</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Game Name</th>
+                <th scope="col">Age Range</th>
+                <th scope="col">Gender</th>
+                <th scope="col">SubGame Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of studentProfileData; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ student.eventName }}</td>
+                <td>{{ student.studentName }}</td>
+                <td>{{ student.gameName }}</td>
+                <td>{{ student.ageRange }}</td>
+                <td>{{ student.gender == "1" ? "Boys" : "Girls" }}</td>
+
+                <td>
+                  <div>
+                    <ng-container
+                      *ngIf="
+                        isValidSubGame(student.subGameName);
+                        else showSubGame
+                      "
+                    >
+                      <div
+                        class="subgame-color"
+                        *ngFor="
+                          let sub of getFilteredSubgames(student.subGameName);
+                          let i = index
+                        "
+                      >
+                        {{ i + 1 }}. {{ sub }}
+                      </div>
+                    </ng-container>
+
+                    <ng-template #showSubGame>
+                      <div
+                        *ngFor="
+                          let sub of getFilteredSubgames(student.subGameName);
+                          let i = index
+                        "
+                      >
+                        {{ i + 1 }}. {{ sub }}
+                      </div>
+                    </ng-template>
+                  </div>
+                  <div>
+                    <ng-container *ngIf="!isValidSubGame(student.subGameName)">
+                      <div>N/A</div>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="studentDataLength == 0">
+            <div class="alert alert-info" role="alert">
+              Event Details Data is not available for this Year!
+            </div>
+          </div>
+        </ng-container>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="bi bi-award me-1"></i> Certificate
+        </ng-template>
+        <div class="align-note" *ngIf="!selectedYear">
+          Note: Please select a year to view certificate Details.
+        </div>
+        <ng-container *ngIf="selectedYear">
+          <div class="details-tab">
+            Showing certificates for year: <strong>{{ yearvalue }}</strong>
+          </div>
+
+          <table
+            class="table fancy-table align-middle"
+            *ngIf="studentDataLength > 0"
+          >
+            <thead>
+              <tr class="table-bg">
+                <th scope="col">Sr No.</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Game Name</th>
+                <th scope="col">Age Range</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Participation</th>
+                <th scope="col">Merit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of studentProfileData; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ student.eventName }}</td>
+                <td>{{ student.studentName }}</td>
+
+                <td>{{ student.gameName }}</td>
+                <td>{{ student.ageRange }}</td>
+                <td>{{ student.gender == "1" ? "Boys" : "Girls" }}</td>
+
+                <!-- Participation -->
+                <td>
+                  <div *ngIf="student.isCertificate == '0'">
+                    <span class="cert-intro badge bg-warning fancy-badge"
+                      >Certificate Not Uploaded</span
+                    >
+                  </div>
+                  <div *ngIf="student.isCertificate == '1'">
+                    <a
+                      class="btn btn-primary btn-sm certificate-font"
+                      href="{{
+                        baseUrl
+                      }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                        student.schoolId
+                      }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                        student.ageRange
+                      }}/{{ student.gender }}/{{ student.sId }}/participate/{{
+                        student.rootGameType
+                      }}/noid/Nosubgame"
+                    >
+                      <i class="bi bi-download"></i> Download
+                    </a>
+                  </div>
+                </td>
+
+                <!-- Merit -->
+                <td>
+                  <div *ngIf="student.isMerit == '0'">
+                    <span class="cert-intro badge bg-warning fancy-badge"
+                      >Certificate Not Uploaded</span
+                    >
+                  </div>
+                  <div
+                    *ngIf="student.isMerit == '1' && student.meritQR !== null"
+                  >
+                    <div *ngIf="student.rootGameType == 'Team'">
+                      <a
+                        class="btn btn-success btn-sm certificate-font"
+                        href="{{
+                          baseUrl
+                        }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                          student.schoolId
+                        }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                          student.ageRange
+                        }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                          student.rootGameType
+                        }}/noid/Nosubgame"
+                      >
+                        <i class="bi bi-download"></i> Download Merit
+                        Certificate
+                      </a>
+                    </div>
+                    <div *ngIf="student.rootGameType == 'Individual'">
+                      <a
+                        class="btn btn-success btn-sm certificate-font"
+                        href="{{
+                          baseUrl
+                        }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                          student.schoolId
+                        }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                          student.ageRange
+                        }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                          student.rootGameType
+                        }}/noid/Nosubgame"
+                      >
+                        <i class="bi bi-download"></i> Download Merit
+                        Certificate
+                      </a>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      (student.isMerit == '1' && student.meritQR === null) ||
+                      student.meritQR === ''
+                    "
+                  >
+                    <span class="badge bg-secondary">N/A</span>
+                  </div>
+
+                  <div *ngIf="student.isMerit == '1' && hasSubgames(student)">
+                    <ul class="list-unstyled mb-0">
+                      <li *ngFor="let key of getSubgameKeys(student)">
+                        <div *ngFor="let sg of student[key]">
+                          <span class="text-muted small d-block mb-1"
+                            >SubGame: {{ sg.subGameName }}</span
+                          >
+                          <a
+                            class="btn btn-success btn-sm mb-2 certificate-font"
+                            *ngIf="
+                              sg.meritQR !== null &&
+                              sg.meritQR !== '' &&
+                              sg.gameType !== 'Team'
+                            "
+                            href="{{
+                              baseUrl
+                            }}/staffadmin/studentProfile/studentCertificate/individualCertificate/{{
+                              student.schoolId
+                            }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                              student.ageRange
+                            }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                              student.rootGameType
+                            }}/{{ sg.id }}/{{ sg.subGameName }}"
+                          >
+                            <i class="bi bi-download"></i> Download Merit
+                            Certificate
+                          </a>
+                          <a
+                            class="btn btn-success btn-sm mb-2 certificate-font"
+                            *ngIf="
+                              sg.meritQR !== null &&
+                              sg.meritQR !== '' &&
+                              sg.gameType == 'Team'
+                            "
+                            href="{{
+                              baseUrl
+                            }}/staffadmin/studentProfile/studentCertificate/printTeamSubgameCertificate/{{
+                              student.schoolId
+                            }}/{{ student.eventId }}/{{ student.gameId }}/{{
+                              student.ageRange
+                            }}/{{ student.gender }}/{{ student.sId }}/merit/{{
+                              student.rootGameType
+                            }}/{{ sg.id }}/{{ sg.subGameName }}"
+                          >
+                            <i class="bi bi-download"></i>Download Merit
+                            Certificate
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="studentDataLength == 0">
+            <div class="alert alert-info" role="alert">
+              Certificate Data is not available for this Year!
+            </div>
+          </div>
+        </ng-container>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+<p-dialog
+  header="Edit Studdnet Profile"
+  [(visible)]="editDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+  <div *ngIf="editDialog">
+    <form
+      [formGroup]="editStudentForm"
+      (ngSubmit)="onSubmit()"
+      class="p-4 border rounded shadow"
+    >
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>Admission Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="admissionNumber"
+          />
+          <div
+            *ngIf="f.admissionNumber.touched && f.admissionNumber.invalid"
+            class="text-danger"
+          >
+            Admission Number is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Curriculum</label>
+          <input type="text" class="form-control" formControlName="curruclm" />
+          <div
+            *ngIf="f.curruclm.touched && f.curruclm.invalid"
+            class="text-danger"
+          >
+            Curriculum is required
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>T-Shirt Size</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="tShirtSize"
+          >
+            <option *ngFor="let t of tShirtSize" [value]="t.value">
+              {{ t.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.tShirtSize.touched && f.tShirtSize.invalid"
+            class="text-danger"
+          >
+            T-Shirt size is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Standard</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="standardClass"
+          >
+            <option *ngFor="let c of standardClass" [value]="c.value">
+              {{ c.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.standardClass.touched && f.standardClass.invalid"
+            class="text-danger"
+          >
+            Standard class is required
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Upload Photo</label>
+          <input
+            type="file"
+            class="form-control"
+            formControlName="photo"
+            accept="image/png, image/jpeg"
+            (change)="onFileSelect($event)"
+          />
+          <small class="text-danger" *ngIf="fileError">{{ fileError }}</small>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center mt-2" *ngIf="imagePreview">
+            <img [src]="imagePreview" class="img-thumbnail" width="60" />
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="editStudentForm.invalid"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-toast
+  [style]="{ marginTop: '50px' }"
+  styleClass="custom-toast"
+  key="custom"
+  position="bottom-center"
+></p-toast>
+<p-confirmDialog
+  key="confirm-delete-student"
+  header="Delete student data"
+  acceptLabel="Yes"
+  rejectLabel="No"
+></p-confirmDialog>

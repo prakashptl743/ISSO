@@ -106,6 +106,8 @@ export class EventDashboardComponent implements OnInit {
     this.display = true;
     this.eventStartDate = eventData.startDate;
     this.eventEndDate = eventData.endDate;
+    localStorage.setItem("extraTabRequired", eventData.extraTabRequired);
+    localStorage.setItem("extraTabValues", eventData.extraTabValues);
     this.dateDiff = this.getDiffDays(new Date(), new Date(this.eventStartDate));
     console.log("Im date diff-->" + this.dateDiff);
     //this.sendTextValue();
@@ -119,6 +121,7 @@ export class EventDashboardComponent implements OnInit {
     localStorage.setItem("dateDiff", this.dateDiff);
     localStorage.setItem("eventId", this.eventId);
     localStorage.setItem("eventYear", this.eventYear);
+
     this.router.navigate(["/staffadmin/student-enrollment"]);
     // this.router.navigate(['/staffadmin/student-enrollment/'+ this.eventId,this.eventYear]);
   }

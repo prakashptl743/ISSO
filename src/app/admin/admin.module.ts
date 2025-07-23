@@ -48,6 +48,7 @@ import { IfsSchoolDataComponent } from "./ifs-school-data/ifs-school-data.compon
 import { ManageEvent } from "./mange-event/manage-event.component";
 import { IndianCurrencyPipeModule } from "./pipe/indian-currency.pipe";
 import { ViewStudentComponent } from "./student-profile/view-student/view-student.component";
+import { SearchStudentProfileComponent } from "./student-profile/search-student-profile/search-student-profile.component";
 
 @NgModule({
   imports: [
@@ -101,6 +102,7 @@ import { ViewStudentComponent } from "./student-profile/view-student/view-studen
     SgfiEntriesComponent,
     IfsSchoolDataComponent,
     ViewStudentComponent,
+    SearchStudentProfileComponent,
   ],
   providers: [
     SumPipeModule,

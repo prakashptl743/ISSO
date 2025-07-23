@@ -79,6 +79,9 @@
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
         SubGame
       </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        Add Details
+      </div>
 
       <div class="table-cell">View</div>
       <div class="table-cell">Action</div>
@@ -107,13 +110,6 @@
         />
       </div>
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
-        <!-- <span
-          *ngIf="student.subGameName !== ''"
-          (click)="showSubgameDialog(student)"
-          class="p-3 mb-2 bg-primary text-white cusror-pointer"
-          >Change Subgame</span
-        > -->
-
         <span
           class="cursor-pointer float-right"
           *ngIf="student.subGameName !== ''"
@@ -129,9 +125,8 @@
         <span
           *ngIf="student.subGameName == ''"
           (click)="showSubgameDialog(student)"
-          class="p-3 mb-2 bg-primary text-white cusror-pointer"
-          ><span class="blinking-text">Add Subgame</span></span
-        >
+          ><span class="blinking-text blink">{{ addSubGameLabel }}</span>
+        </span>
 
         <div *ngIf="student.subGameName !== ''">
           <div
@@ -143,7 +138,37 @@
             {{ i + 1 }}. {{ subgame.trim() }}
           </div>
         </div>
-        <!-- {{ student.subGameName }} -->
+      </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        <span
+          *ngIf="!student.extrInfo"
+          (click)="showAddDetailsDialog(student)"
+          class="blinking-text"
+          >Add Details</span
+        >
+        <span
+          class="cursor-pointer float-right"
+          *ngIf="student.extrInfo"
+          (click)="editExtraInfo(student)"
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i>
+        </span>
+        <div *ngIf="student.extrInfo && student.extrInfo.length > 0">
+          <div *ngFor="let key of getKeys(student.extrInfo[0])">
+            <strong>{{ key }}:</strong>
+            <div>
+              {{
+                student.extrInfo[0][key].length > 15
+                  ? (student.extrInfo[0][key] | slice : 0 : 15) + "..."
+                  : student.extrInfo[0][key]
+              }}
+            </div>
+          </div>
+        </div>
       </div>
       <div class="table-cell">
         <span
@@ -163,11 +188,20 @@
       </div>
     </div>
     <div class="p-4">
-      <span
+      <!-- <span
+        [disabled]="isSaveDisabled()"
         (click)="saveStudentEnroll()"
         class="p-3 mb-2 bg-success text-white cusror-pointer"
         >Save</span
+      > -->
+
+      <button
+        [disabled]="isSaveDisabled()"
+        (click)="saveStudentEnroll()"
+        class="btn btn-primary btn-medium align-isso-button"
       >
+        Save
+      </button>
     </div>
   </div>
 </div>
@@ -224,6 +258,9 @@
       <div class="table-cell" *ngIf="studentSubgameData.length > 0">
         SubGame
       </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        Extra Details
+      </div>
       <div class="table-cell">Paid Status</div>
       <div class="table-cell">Action</div>
     </div>
@@ -261,10 +298,52 @@
             style="cursor: pointer"
           ></i
         ></span>
-        <div
-          *ngFor="let subgame of student.subGameName.split(','); let i = index"
+
+        <ng-container *ngIf="student.subGameName !== null; else showSubGame">
+          <div
+            *ngFor="let sub of student.subGameName.split(','); let i = index"
+          >
+            {{ i + 1 }}. {{ sub.trim() }}
+          </div>
+        </ng-container>
+
+        <ng-template #showSubGame>
+          <div
+            *ngFor="let sub of student.subGameName.split(','); let i = index"
+          >
+            {{ i + 1 }}. {{ sub.trim() }}
+          </div>
+        </ng-template>
+      </div>
+      <div class="table-cell" *ngIf="extraTabRequired == 'Yes'">
+        <span
+          *ngIf="!student.extrInfo"
+          (click)="showAddDetailsDialog(student)"
+          class="blinking-text"
+          >Add Details</span
         >
-          {{ i + 1 }}. {{ subgame.trim() }}
+        <span
+          class="cursor-pointer float-right"
+          *ngIf="student.extrInfo"
+          (click)="updateExtraInfo(student)"
+        >
+          <i
+            class="fas fa-edit text-primary me-2"
+            title="Edit"
+            style="cursor: pointer"
+          ></i>
+        </span>
+        <div *ngIf="student.extrInfo && student.extrInfo.length > 0">
+          <div *ngFor="let key of getKeys(student.extrInfo[0])">
+            <strong>{{ key }}:</strong>
+            <div>
+              {{
+                student.extrInfo[0][key].length > 40
+                  ? (student.extrInfo[0][key] | slice : 0 : 40) + "..."
+                  : student.extrInfo[0][key]
+              }}
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -375,7 +454,7 @@
   </div>
 </p-dialog>
 
-<p-dialog
+<!-- <p-dialog
   header="Assign Subgame to student"
   [(visible)]="displaySubgameDialog"
   [modal]="true"
@@ -383,7 +462,33 @@
   [baseZIndex]="10000"
   [width]="800"
   (onHide)="onDialogClose()"
+> -->
+
+<p-dialog
+  header="Assign Subgame to student"
+  [(visible)]="displaySubgameDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [style]="{ width: '800px' }"
+  [dismissableMask]="false"
+  [closable]="false"
+  (onHide)="onDialogClose()"
 >
+  <div class="custom-header-close">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-times"
+      class="p-button-rounded p-button-danger p-button-sm p-button-text"
+      (click)="onCustomXClicked()"
+    ></button>
+  </div>
+
+  <!-- Dialog body starts here -->
+  <div class="p-fluid">
+    <!-- Your form/select buttons -->
+  </div>
   <div class="col-md-12 p-0">
     <div class="subgagme-dropdown col-md-9">
       <p-dropdown
@@ -447,6 +552,82 @@
     label="{{ addGameLabel }}"
     (click)="saveSubgames()"
   ></button>
+</p-dialog>
+
+<p-dialog
+  header="Adding Details to student"
+  [(visible)]="displayAddDetailsDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [dismissableMask]="false"
+  [style]="{ width: '50vw' }"
+>
+  <div class="custom-header-close">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-times"
+      class="p-button-rounded p-button-danger p-button-sm p-button-text"
+      (click)="closeDetailDialog()"
+    ></button>
+  </div>
+  <ng-template pTemplate="header">
+    <div class="close-details-dialog">
+      <span><b>Adding Details to student</b></span>
+      <button
+        type="button"
+        (click)="closeDetailDialog()"
+        class="p-button p-button-danger p-button-rounded p-button-sm"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+      <!-- (click)="displayAddDetailsDialog = false" -->
+      <button
+        pButton
+        type="button"
+        icon="pi pi-times"
+        class="p-button-rounded p-button-danger p-button-sm p-button-text"
+        (click)="closeDetailDialog()"
+      ></button>
+    </div>
+  </ng-template>
+
+  <div *ngIf="extraTabRequired == 'Yes'">
+    <form [formGroup]="form" class="align-form" (ngSubmit)="onSubmit()">
+      <div formArrayName="tabs">
+        <div
+          class="row mb-3 align-items-center"
+          *ngFor="let ctrl of tabs.controls; let i = index"
+        >
+          <div class="col-md-12">
+            <label class="form-label fw-bold">{{ tabNames[i] }}</label>
+            <div class="col-md-12 p-0">
+              <input
+                type="text"
+                class="form-control"
+                [formControlName]="i"
+                maxlength="50"
+                [ngClass]="{ 'is-invalid': ctrl.invalid && ctrl.touched }"
+              />
+              <div
+                *ngIf="ctrl.invalid && ctrl.touched"
+                class="invalid-feedback d-block"
+              >
+                This field should not be empty.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ extraTabButtonLabel }}
+        </button>
+      </div>
+    </form>
+  </div>
 </p-dialog>
 
 <p-toast

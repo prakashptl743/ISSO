@@ -66,13 +66,55 @@ export class AdminStudentProfileService {
       )
       .pipe(catchError(this.handleError));
   }
-  studentDataUpdate(studentInfo) {
+  updateStudentDataYearWise(studentInfo) {
     return this.http
       .post<any>(
         this.serverUrl +
-          "adminStudentProfile/StudentProfile/updateStudentProfileData/",
+          "adminStudentProfile/StudentProfile/updateStudentDataYearWise/",
         studentInfo
       )
+      .pipe(catchError(this.handleError));
+  }
+  updateGlobalStudentProfile(studentInfo) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "adminStudentProfile/StudentProfile/updateGlobalStudentProfile/",
+        studentInfo
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  loadGloablStudentData(formData) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "adminStudentProfile/StudentProfile/loadGlobalStudentlList/",
+        formData
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getStudentDataForCertificate(yearVal, studentUniqueId) {
+    let str =
+      "staffadmin/studentProfile/parentDashboard/getStudentDataForCertificate/" +
+      yearVal +
+      "/" +
+      studentUniqueId;
+
+    return this.http
+      .get(this.serverUrl + str)
+      .pipe(catchError(this.handleError));
+  }
+  getStudentYearWiseProfile(yearVal, studentUniqueId) {
+    let str =
+      "adminStudentProfile/StudentProfile/getStudentYearWiseProfile/" +
+      yearVal +
+      "/" +
+      studentUniqueId;
+
+    return this.http
+      .get(this.serverUrl + str)
       .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {

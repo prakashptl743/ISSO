@@ -71,6 +71,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   subGameIdCounts: { [key: string]: number } = {};
   selectedSubgame: any = null; // bound to p-dropdown
   selectedSubgamesTable: any[] = [];
+  extraTabDetailsTable: any[] = [];
   selectedStudentForSubgame: any;
   subGameIdArray = [];
   subGameNameArray = [];
@@ -83,6 +84,17 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   subgameStudentId: any;
   errorMessage: string;
   countMap: { [key: string]: number } = {};
+  gameModifystatus: string;
+  addSubGameLabel: string;
+  isCustomDialogClicked: boolean;
+  subGameIdCountsBackup: any;
+  tabLabels = ""; // can be loaded from API
+  tabNames: string[] = [];
+  form: FormGroup;
+
+  extraTabRequired: string;
+  displayAddDetailsDialog: boolean;
+  extraTabButtonLabel: string;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService,
@@ -97,21 +109,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.http = new HttpClient(handler);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    // throw new Error("Method not implemented.");
-    // this.eventId,
-    // eventData.gameId,
-    // this.gender,
-    // ageRange,
-    // minCapcity,
-    console.log("onchanges");
     if (changes.studentEnrollData && changes.studentEnrollData) {
-      console.log("CAHNGES DATA-->" + JSON.stringify(this.studentEnrollData));
       this.schoolId = localStorage.getItem("schoolId");
-      //   const cutoffDate = this.getAgeCutoffDate(this.studentEnrollData[3]);
       this.getStudentDataForEnroll();
-      // this.alreadyEnrolledStudent();
-      this.subGameoptions = [];
 
+      this.subGameoptions = [];
+      this.gameModifystatus = "oninit";
       this.alreadyEnrolledStudent();
       if (this.studentSubgameData.length > 0) {
         console.log("im subgame");
@@ -121,6 +124,127 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         this.isSubgame = false;
       }
     }
+  }
+  get tabs(): FormArray {
+    return this.form.get("tabs") as FormArray;
+  }
+  getKeys(obj: any): string[] {
+    return obj ? Object.keys(obj) : [];
+  }
+  editExtraInfo(student: any) {
+    this.extraTabButtonLabel = "Save";
+    console.log("Im edit form-->" + JSON.stringify(student));
+    this.selectedStudentForSubgame = student;
+    this.displayAddDetailsDialog = true;
+    this.patchExtraInfoForm(student.extrInfo);
+  }
+  updateExtraInfo(student: any) {
+    console.log("Im edit form-->" + JSON.stringify(student));
+    this.extraTabButtonLabel = "Update";
+    this.selectedStudentForSubgame = student;
+    this.displayAddDetailsDialog = true;
+    this.patchExtraInfoForm(student.extrInfo);
+  }
+  patchExtraInfoForm(extrInfo: any) {
+    const tabsArray = this.form.get("tabs") as FormArray;
+    tabsArray.clear(); // clear existing controls
+
+    const infoObj = extrInfo[0]; // get the object from array
+    this.tabNames = Object.keys(infoObj); // set labels
+
+    Object.values(infoObj).forEach((value) => {
+      tabsArray.push(this.fb.control(value, Validators.required));
+    });
+  }
+
+  onSubmit() {
+    this.extraTabDetailsTable = [];
+    if (this.form.valid) {
+      const formData = {};
+      this.tabNames.forEach((label, index) => {
+        formData[label] = this.tabs.at(index).value;
+      });
+      this.extraTabDetailsTable.push(formData);
+
+      console.log("Final API Data:", this.extraTabDetailsTable);
+      this.displayAddDetailsDialog = false;
+
+      if (this.extraTabButtonLabel !== "Update") {
+        if (
+          this.selectedStudentForSubgame &&
+          this.studentDataArray.find(
+            (s) => s.sId === this.selectedStudentForSubgame.sId
+          )
+        ) {
+          this.selectedStudentForSubgame.extrInfo = this.extraTabDetailsTable;
+        }
+        console.log("NEW DATA--->" + JSON.stringify(this.studentDataArray));
+      } else {
+        const formData = new FormData();
+        formData.append("studentId", this.selectedStudentForSubgame.studentId);
+        formData.append("eventId", this.selectedStudentForSubgame.eventId);
+        formData.append("schoolId", this.selectedStudentForSubgame.schoolId);
+        formData.append("extraInfo", JSON.stringify(this.extraTabDetailsTable));
+        this.studentProfileService.updateStudentExtraInfo(formData).subscribe(
+          (res) => {
+            if (res.status === "success") {
+              console.log("Im success");
+              this.messageService.add({
+                key: "custom",
+                severity: "success",
+                summary: "Data Updated Successfully",
+              });
+            }
+            this.displaySubgameDialog = false;
+            this.isCustomDialogClicked = false;
+            this.alreadyEnrolledStudent();
+          },
+          (error) => {
+            this.displaySubgameDialog = false;
+            this.isCustomDialogClicked = false;
+            this.messageService.add({
+              key: "custom",
+              severity: "error",
+              summary: error.errorDesc,
+            });
+          }
+        );
+      }
+    }
+    this.form.reset();
+  }
+  submitUpdateExtraInfo() {
+    const formData = new FormData();
+    formData.append("studentId", this.subgameStudentId);
+    formData.append("subgameIdArray", JSON.stringify(this.subGameIdArray));
+    formData.append("subgameNameArray", JSON.stringify(this.subGameNameArray));
+    this.studentProfileService
+      .updateStudentSubgame(this.subgameStudentId, formData)
+      .subscribe(
+        (res) => {
+          if (res.status === "success") {
+            console.log("Im success");
+            this.messageService.add({
+              key: "custom",
+              severity: "success",
+              summary: "Updated Successfully",
+            });
+          }
+          this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
+          this.alreadyEnrolledStudent();
+        },
+        (error) => {
+          this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
+          this.messageService.add({
+            key: "custom",
+            severity: "error",
+            summary: error.errorDesc,
+          });
+        }
+      );
+    this.selectedSubgame = null;
   }
   setSubGameData() {
     this.subGameoptions = [];
@@ -163,14 +287,47 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.errorMessage = "";
+    this.addSubGameLabel = "Add Subgame";
     this.addGameLabel = "Assign Subgame";
     this.selectedSubgamesTable = [];
     this.subGameIdCounts = null;
     this.checkSubGameCapacity = [];
     this.yearOptions = this.issoUtilService.setYearToStaffadmin();
     this.setPhotoPath();
-  }
 
+    this.extraTabRequired = localStorage.getItem("extraTabRequired");
+    if (this.extraTabRequired == "Yes") {
+      // console.log("Im not empty" + localStorage.getItem("extraTabValues"));
+      // this.tabLabels = localStorage.getItem("extraTabValues");
+      // this.tabNames = this.tabLabels.split(",").map((t) => t.trim());
+      // this.form = this.fb.group({
+      //   tabs: this.fb.array([]),
+      // });
+
+      // this.tabNames.forEach(() => {
+      //   this.tabs.push(this.fb.control("", Validators.required));
+      // });
+
+      this.buildExtraTabsForm();
+    }
+  }
+  closeDetailDialog() {
+    console.log("Im close");
+    this.displayAddDetailsDialog = false;
+    this.form.reset();
+  }
+  buildExtraTabsForm() {
+    this.tabLabels = localStorage.getItem("extraTabValues") || "";
+    this.tabNames = this.tabLabels.split(",").map((t) => t.trim());
+
+    this.form = this.fb.group({
+      tabs: this.fb.array([]),
+    });
+
+    this.tabNames.forEach(() => {
+      this.tabs.push(this.fb.control("", Validators.required));
+    });
+  }
   addSubgame() {
     this.countMap = {};
     const newCountMap: { [key: string]: number } = {};
@@ -207,7 +364,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     //     this.subGameIdCounts[id] = (this.subGameIdCounts[id] || 0) + 1;
     //   }
     // });
-    console.log("AAAA_----->" + JSON.stringify(this.subGameIdCounts));
+    //console.log("AAAA_----->" + JSON.stringify(this.subGameIdCounts));
     // this.checkSubGameCapacity.forEach((id) => {
     //   const idStr = String(id);
     //   if (!this.countMap.hasOwnProperty(idStr)) {
@@ -275,7 +432,9 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   changeSubgame(student) {
     this.errorMessage = "";
-    this.displaySubgameDialog = true;
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
     this.selectedStudentForSubgame = student;
     this.addGameLabel = "Assign Subgame";
 
@@ -340,18 +499,88 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         }
       });
     }
-
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
     this.selectedSubgamesTable.push(...this.subGameTableArray);
     this.displaySubgameDialog = true;
   }
+
+  // isSaveDisabled(): boolean {
+  //   if (this.studentEnrollData[6] == "Both") {
+  //     const result = this.studentDataArray.some((student) => {
+  //       const val = student.subGameId;
+  //       return (
+  //         val === undefined ||
+  //         val === null ||
+  //         (typeof val === "string" && val.trim() === "")
+  //       );
+  //     });
+  //     return result;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+  isSaveDisabled(): boolean {
+    if (this.studentEnrollData[6] === "Both") {
+      const result = this.studentDataArray.some((student) => {
+        const subGameInvalid =
+          student.subGameId === undefined ||
+          student.subGameId === null ||
+          (typeof student.subGameId === "string" &&
+            student.subGameId.trim() === "");
+
+        const extraInfoInvalid =
+          this.extraTabRequired === "Yes" &&
+          (!student.extrInfo || student.extrInfo.length === 0);
+
+        return subGameInvalid || extraInfoInvalid;
+      });
+
+      return result;
+    } else {
+      return false;
+    }
+  }
+
+  onCustomXClicked() {
+    // this.dialogClosedByX = true; // set when X is clicked
+    console.log("I clieck close");
+    this.displaySubgameDialog = false;
+    this.isCustomDialogClicked = true;
+  }
   onDialogClose() {
-    console.log("Dialog closed");
+    console.log("I clieck HIDE12");
     this.errorMessage = "";
-    //this.selectedSubgamesTable.length === 0;
-    this.selectedSubgamesTable = [];
     this.subGameIdArray = [];
     this.subGameNameArray = [];
     this.selectedSubgame = null;
+    if (!this.isCustomDialogClicked) {
+      if (this.gameModifystatus == "Add Subgame") {
+        this.isCustomDialogClicked = false;
+        console.log("Custom dialog not cliecked");
+        const selectedIds = this.selectedSubgamesTable.map((item) => item.id); // already strings
+        this.subGameIdCounts = Object.entries(this.subGameIdCounts)
+          .filter(([key]) => !selectedIds.includes(key))
+          .reduce((obj, [key, value]) => {
+            obj[key] = value;
+            return obj;
+          }, {} as { [key: string]: number });
+      }
+    } else {
+      this.subGameIdCounts = JSON.parse(
+        JSON.stringify(this.subGameIdCountsBackup)
+      );
+
+      // this.subGameIdCounts = this.subGameIdCounts;
+      console.log("Custom dialog cliecked");
+    }
+    this.subGameIdCountsBackup = null;
+    this.selectedSubgamesTable = [];
+    console.log(
+      "Filtered subGameIdCounts",
+      JSON.stringify(this.subGameIdCounts)
+    );
   }
   removeSubgame(sub) {
     this.selectedSubgamesTable = this.selectedSubgamesTable.filter(
@@ -359,34 +588,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     );
     const index = this.checkSubGameCapacity.findIndex((id) => id == sub.id);
     if (index !== -1) {
-      // Remove the first occurrence of the ID
       this.checkSubGameCapacity.splice(index, 1);
-
-      // Update countMap after removal
     }
-    // this.checkSubGameCapacity.forEach((id) => {
-    //   this.countMap[id] = (this.countMap[id] || 0) - 1;
-    // });
-    // this.checkSubGameCapacity.forEach((id) => {
-    //   if (this.countMap[id]) {
-    //     this.countMap[id]--;
 
-    //     // Optional: Remove the key if count becomes 0
-    //     if (this.countMap[id] === 0) {
-    //       delete this.countMap[id];
-    //     }
-    //   }
-    // });
     console.log("BEFORE COUNTMAP-->" + JSON.stringify(this.countMap));
     const idStr = String(sub.id);
-    // if (this.countMap[idStr]) {
-    //   console.log("Im if-->" + idStr);
-    //   this.countMap[idStr]--;
-    //   if (this.countMap[idStr] === 0) {
-    //     console.log("Im if countMap-->" + idStr);
-    //     delete this.countMap[idStr];
-    //   }
-    // }
+
     if (this.subGameIdCounts[idStr]) {
       this.subGameIdCounts[idStr]--;
       if (this.subGameIdCounts[idStr] === 0) {
@@ -430,6 +637,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
           this.subGameIdArray.join(",");
         this.selectedStudentForSubgame.subGameName =
           this.subGameNameArray.join(",");
+
         // this.studentDataArray.push(enrichedStudent);
       }
       this.subGameIdArray = [];
@@ -437,6 +645,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       console.log(this.studentDataArray);
       this.selectedSubgamesTable = [];
       this.displaySubgameDialog = false;
+      this.isCustomDialogClicked = false;
     } else if (this.selectedSubgamesTable.length === 0) {
       // alert("Please add at least one subgame");
       this.errorMessage = "Please add at least one subgame";
@@ -446,7 +655,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     }
     // alert("Subgames saved!");
   }
+  // getSubgames(subgames: string | null): string[] {
+  //   if (!subgames || subgames === "undefined") return [];
+  //   return subgames.split(",").map((s) => s.trim());
+  // }
   updateSubgame() {
+    this.gameModifystatus = "update";
     console.log("Upate" + this.subgameStudentId);
     console.log("Onsubmt ID" + this.subGameIdArray);
     console.log("Onsubmt A" + this.subGameNameArray);
@@ -468,10 +682,12 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
             });
           }
           this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
           this.alreadyEnrolledStudent();
         },
         (error) => {
           this.displaySubgameDialog = false;
+          this.isCustomDialogClicked = false;
           this.messageService.add({
             key: "custom",
             severity: "error",
@@ -486,7 +702,7 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   // }
   async alreadyEnrolledStudent() {
     this.isLoading = true;
-    console.log("Im loading-->" + this.isLoading);
+    console.log("Im this.subGameIdArray-->" + this.subGameIdArray);
     try {
       const response = await this.http
         .get(
@@ -498,29 +714,28 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
         )
         .toPromise();
 
-      console.log("API Response:", response);
+      // console.log("API Response:", response);
       this.alreadyAddedStudentData = response;
       this.alreadyAddedStudentArray = response;
       this.isLoading = false;
-      console.log("Im data-->" + JSON.stringify(this.alreadyAddedStudentArray));
+      //console.log("Im data-->" + JSON.stringify(this.alreadyAddedStudentArray));
 
       const subgameCount: { [key: string]: number } = {};
-
-      this.alreadyAddedStudentArray.forEach((item) => {
-        const subIds = item.subgameId.split(",");
-        subIds.forEach((id) => {
-          if (subgameCount[id]) {
-            subgameCount[id]++;
-          } else {
-            subgameCount[id] = 1;
-          }
+      if (this.gameModifystatus == "oninit") {
+        console.log("Im Onint" + this.subGameIdArray);
+        this.alreadyAddedStudentArray.forEach((item) => {
+          const subIds = item.subgameId.split(",");
+          subIds.forEach((id) => {
+            if (subgameCount[id]) {
+              subgameCount[id]++;
+            } else {
+              subgameCount[id] = 1;
+            }
+          });
         });
-      });
-      this.subGameIdCounts = subgameCount;
-      console.log("Im subgamecount--->" + JSON.stringify(subgameCount));
-      //     subgameIds.forEach((id) => {
-      //   delete this.subGameIdCounts[id];
-      // });
+        this.subGameIdCounts = subgameCount;
+      }
+      console.log("Im FINAL subgamecount--->" + JSON.stringify(subgameCount));
 
       if (
         this.studentEnrollData[6] !== "Both" &&
@@ -550,26 +765,46 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
 
   deleteenrolledStudentData(student) {
-    this.studentProfileService.deleteenrolledStudentData(student.id).subscribe(
-      (res) => {
-        this.messageService.add({
-          key: "custom",
-          severity: "success",
-          detail: "Student Data Deleted  successfully!",
-        });
+    this.gameModifystatus = "delete";
+    // this.subGameIdArray = student.subgameId;
+    const selectedIds = student.subgameId.split(","); // ["20", "21"] subgame.subGameId.split(",");
 
-        //  }
+    console.log("IM FDELETING--->" + JSON.stringify(this.subGameIdCounts));
+    this.studentProfileService
+      .deleteenrolledStudentData(student.id, this.extraTabRequired)
+      .subscribe(
+        (res) => {
+          this.messageService.add({
+            key: "custom",
+            severity: "success",
+            detail: "Student Data Deleted  successfully!",
+          });
+          const updatedCounts: { [key: string]: number } = {};
 
-        this.display = false;
-        this.alreadyEnrolledStudent();
-      },
-      (error) => {
-        this.messageService.add({
-          severity: "error",
-          detail: error.errorDesc,
-        });
-      }
-    );
+          for (const key in this.subGameIdCounts) {
+            let newCount = this.subGameIdCounts[key];
+            if (selectedIds.includes(key)) {
+              newCount = newCount - 1;
+            }
+
+            if (newCount > 0) {
+              updatedCounts[key] = newCount;
+            }
+          }
+
+          this.subGameIdCounts = updatedCounts;
+          //  }
+
+          this.display = false;
+          this.alreadyEnrolledStudent();
+        },
+        (error) => {
+          this.messageService.add({
+            severity: "error",
+            detail: error.errorDesc,
+          });
+        }
+      );
   }
   getAgeCutoffDate(ageCategory: number): string {
     const currentDate = new Date();
@@ -589,13 +824,31 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
       this.issoUtilService.getAcademicYearForPhoto();
   }
   removeSelectedStudentData(subgame, i: number): void {
-    console.log("REMOVING--->" + JSON.stringify(subgame.subGameId));
-    const subgameIds = subgame.subGameId.split(","); // ["20", "21"]
+    //  const subgameIds = subgame.subGameId.split(","); // ["20", "21"]
 
-    subgameIds.forEach((id) => {
-      delete this.subGameIdCounts[id];
-    });
-    console.log("AFTER REMOVING--->" + JSON.stringify(this.subGameIdCounts));
+    // subgameIds.forEach((id) => {
+    //   delete this.subGameIdCounts[id];
+    // });
+    // console.log("AFTER REMOVING--->" + JSON.stringify(this.subGameIdCounts));
+
+    const selectedIds = subgame.subGameId.split(","); // ["20", "21"]
+    const updatedCounts: { [key: string]: number } = {};
+
+    for (const key in this.subGameIdCounts) {
+      let newCount = this.subGameIdCounts[key];
+      if (selectedIds.includes(key)) {
+        newCount = newCount - 1;
+      }
+
+      if (newCount > 0) {
+        updatedCounts[key] = newCount;
+      }
+    }
+    this.subGameIdCounts = updatedCounts;
+    console.log(
+      "Updated subGameIdCounts",
+      JSON.stringify(this.subGameIdCounts)
+    );
 
     this.studentDataArray.splice(i, 1);
   }
@@ -674,8 +927,15 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
   }
   saveStudentEnrollData() {
     const formData = new FormData();
+    this.gameModifystatus = "save";
+    let extraInfo;
+    if (this.extraTabRequired == "Yes") {
+      extraInfo = "Yes";
+    } else {
+      extraInfo = "No";
+    }
     formData.append("studentData", JSON.stringify(this.studentDataArray));
-    console.log("DATA FORM-->" + JSON.stringify(this.studentDataArray));
+    formData.append("extraInfo", extraInfo);
     this.studentProfileService.saveEnrolledStudentData(formData).subscribe(
       (res) => {
         if (res.status === "success") {
@@ -729,8 +989,15 @@ export class StudentProfileEnrollmentComponent implements OnInit, OnChanges {
     this.addGameLabel = "Assign Subgame";
     this.displaySubgameDialog = true;
     this.selectedStudentForSubgame = student;
+    this.subGameIdCountsBackup = JSON.parse(
+      JSON.stringify(this.subGameIdCounts)
+    );
   }
-
+  showAddDetailsDialog(student: any) {
+    this.extraTabButtonLabel = "Save";
+    this.selectedStudentForSubgame = student;
+    this.displayAddDetailsDialog = true;
+  }
   onImageError(event: any) {
     event.target.src = "assets/images/default-user.png";
   }

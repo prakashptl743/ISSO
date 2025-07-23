@@ -184,58 +184,6 @@ export class WebDataComponent implements OnInit {
         ],
       },
     ];
-    //   this.items = [
-    //     {
-    //         label: 'Home',
-    //         icon: 'pi pi-home'
-    //     },
-    //     {
-    //         label: 'Features',
-    //         icon: 'pi pi-star'
-    //     },
-    //     {
-    //         label: 'Projects',
-    //         icon: 'pi pi-search',
-    //         items: [
-    //             {
-    //                 label: 'Core',
-    //                 icon: 'pi pi-bolt'
-    //             },
-    //             {
-    //                 label: 'Blocks',
-    //                 icon: 'pi pi-server'
-    //             },
-    //             {
-    //                 label: 'UI Kit',
-    //                 icon: 'pi pi-pencil'
-    //             },
-    //             {
-    //                 separator: true
-    //             },
-    //             {
-    //                 label: 'Templates',
-    //                 icon: 'pi pi-palette',
-    //                 items: [
-    //                     {
-    //                         label: 'Apollo',
-    //                         icon: 'pi pi-palette',
-    //                         badge: '2'
-    //                     },
-    //                     {
-    //                         label: 'Ultima',
-    //                         icon: 'pi pi-palette',
-    //                         badge: '3'
-    //                     }
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         label: 'Contact',
-    //         icon: 'pi pi-envelope',
-    //         badge: '3'
-    //     }
-    // ];
   }
 
   fileUpladForm() {
@@ -341,6 +289,7 @@ export class WebDataComponent implements OnInit {
 
     this.schoolForm = this.fb.group({
       schoolname: ["", Validators.required],
+      reportingDate: ["", Validators.required],
       schoolEmail: ["", Validators.required],
       schoolBoard: ["", Validators.required],
       startDate: ["", Validators.required],
@@ -434,6 +383,7 @@ export class WebDataComponent implements OnInit {
         this.schoolForm.setValue({
           schoolId: calenderData.id,
           schoolname: calenderData.sportName,
+          reportingDate: calenderData.reportingDate,
           schoolEmail: calenderData.ageTitle,
           schoolBoard: calenderData.sportLocation,
           startDate: new Date(calenderData.eventStartDate),
@@ -448,6 +398,7 @@ export class WebDataComponent implements OnInit {
       this.schoolForm.setValue({
         schoolId: "",
         schoolname: "",
+        reportingDate: "",
         schoolEmail: "",
         schoolBoard: " ",
         startDate: "",
@@ -485,6 +436,10 @@ export class WebDataComponent implements OnInit {
 
     let schoolID = this.schoolForm.get("schoolId").value;
     formData.append("schoolname", this.schoolForm.get("schoolname").value);
+    formData.append(
+      "reportingDate",
+      this.schoolForm.get("reportingDate").value
+    );
     formData.append("schoolEmail", this.schoolForm.get("schoolEmail").value);
     formData.append("schoolBoard", this.schoolForm.get("schoolBoard").value);
     formData.append("eventStartDate", eventStartDate);

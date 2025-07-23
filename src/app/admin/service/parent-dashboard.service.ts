@@ -35,6 +35,15 @@ export class ParentDashboardService {
       .get(this.serverUrl + str)
       .pipe(catchError(this.handleError));
   }
+  studentDataUpdate(studentInfo) {
+    return this.http
+      .post<any>(
+        this.serverUrl +
+          "adminStudentProfile/StudentProfile/updateStudentProfileData/",
+        studentInfo
+      )
+      .pipe(catchError(this.handleError));
+  }
   updatePaymentStatus(formData) {
     let str = "staffadmin/studentProfile/parentDashboard/updatePaymentStatus/";
     return this.http

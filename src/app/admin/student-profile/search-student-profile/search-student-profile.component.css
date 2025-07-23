@@ -1,0 +1,282 @@
+input.largerCheckbox {
+  transform: scale(2);
+}
+.cert-intro {
+  color: black;
+  padding: 10px;
+  font-size: 12px;
+}
+/* Your existing pulsing-dots and loader-overlay styles */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top of everything */
+}
+.details-tab {
+  padding: 8px 0;
+  color: white;
+  text-align: center;
+  font-size: larger;
+  background: #0dcaf0 !important;
+  margin: 10px 0 20px 0;
+  border-radius: 20px;
+}
+.align-note {
+  padding: 20px 0;
+  color: red;
+}
+.table-bg {
+  background: #17a2b8;
+  color: white;
+}
+.align-label {
+  margin-top: 5px;
+  padding: 0;
+}
+.search-title {
+  color: white;
+  text-align: center;
+  padding-bottom: 6px;
+  background: red;
+  margin-left: -31px;
+  margin-top: -25px;
+  padding-top: 7px;
+  margin-bottom: 29px;
+  font-weight: bold;
+}
+.pulsing-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.pulsing-dots div {
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.pulsing-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulsing-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.custom-dropdown {
+  height: auto !important;
+  appearance: none; /* Hide default arrow in most browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  padding-right: 2.5rem; /* space for the arrow */
+  position: relative;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+:host ::ng-deep .custom-toast .ui-toast-message {
+  color: #ffffff;
+  background: blue;
+  border-radius: 20px;
+  padding-top: 8px;
+  width: 150%;
+}
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+  position: absolute;
+  font-size: 2em;
+  top: 11px;
+  text-decoration: none;
+}
+.table-responsive {
+  border-radius: inherit;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+/* Change background color of buttons on hover */
+/* .tab button:hover {
+    background-color: #ddd;
+  } */
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+:host ::ng-deep .ui-toast .ui-toast-icon {
+  padding-top: 4px;
+}
+/* :host ::ng-deep .custom-toast .ui-toast-close-icon {
+    padding-top: 10px;
+    padding-right: 15px;
+    color: #ffffff;
+} */
+
+:host ::ng-deep .custom-toast .ui-toast .ui-toast-message-text-content {
+  margin-left: 2.5em;
+}
+:host::ng-deep .ui-table .ui-paginator-bottom {
+  background-color: #f2f0ef !important;
+}
+:host::ng-deep .p-paginator {
+  border-top: 1px solid #dee2e6;
+  margin: 0 !important;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+}
+:host::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+  border-radius: 0.25rem;
+  margin: 0 0.2rem;
+  border: 1px solid #ced4da;
+  color: #495057;
+}
+
+:host::ng-deep .p-paginator .p-highlight {
+  background: #007bff !important;
+  color: white !important;
+  border-color: #007bff !important;
+}
+
+@media (min-width: 768px) {
+  :host::ng-deep .modal-dialog {
+    width: 1500px !important;
+  }
+}
+:host::ng-deep body .ui-widget {
+  border: 1px solid;
+}
+.isApproved {
+  background-color: green;
+  color: white;
+}
+.isPending {
+  background: red;
+  color: white;
+}
+.modal {
+  text-align: center;
+}
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.cusror-pointer {
+  cursor: pointer;
+}
+:host::ng-deep .ui-dialog .ui-dialog-content {
+  font-size: 13px;
+}
+:host::ng-deep .ui-table {
+  border: 1px solid #c8c8c8;
+}
+/* Basic styling for the table */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 10px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+.align-table-header {
+  color: white;
+  padding: 5px;
+  margin-top: 17px;
+  font-size: 14px;
+  text-align: center;
+}
+/* Header styling */
+.table-header {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+/* Responsive design */
+@media (max-width: 768px) {
+  .table,
+  .table-row,
+  .table-cell {
+    display: block;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .table-cell::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+h5 {
+  font-weight: bold;
+}
+.fancy-column {
+  background-color: #f8f9fa; /* Light gray background */
+  border: 2px solid #007bff; /* Blue border */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Inner padding */
+  margin-bottom: 20px; /* Space between rows */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
+}
+.align-dropdown {
+  width: 50%;
+  padding: 20px;
+}

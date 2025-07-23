@@ -1110,12 +1110,34 @@ export class ReportComponent implements OnInit {
         (response) => {
           if (response !== "") {
             this.gameConsoltedData = response;
-            console.log("Data==>" + JSON.stringify(this.gameConsoltedData));
+
             this.gameconsolitedLength = this.gameConsoltedData.length;
+
+            let hasData = false;
+
+            if (Array.isArray(this.gameConsoltedData)) {
+              if (this.gameConsoltedData.length > 0) {
+                // Case 1: Flat array with data
+                if (
+                  this.gameConsoltedData[0] &&
+                  typeof this.gameConsoltedData[0] === "object" &&
+                  !Array.isArray(this.gameConsoltedData[0])
+                ) {
+                  hasData = true;
+                }
+                // Case 2: Nested array with data inside
+                else if (
+                  Array.isArray(this.gameConsoltedData[0]) &&
+                  this.gameConsoltedData[0].length > 0
+                ) {
+                  hasData = true;
+                }
+              }
+            }
+
             this.gameconsolitedArray = [];
-            if (this.gameConsoltedData.length > 0) {
+            if (hasData) {
               this.isConsolitedData = true;
-              //  this.showspinner = false;
             } else {
               this.isConsolitedData = false;
               // this.isDataAvailble = false;
@@ -1439,7 +1461,30 @@ export class ReportComponent implements OnInit {
               console.log("Data==>" + JSON.stringify(this.consolidatedData));
               this.consoliDatedLength = this.consolidatedData.length;
               this.consolidatedArray = [];
-              if (this.consolidatedData.length > 0) {
+
+              let hasData = false;
+
+              if (Array.isArray(this.consolidatedData)) {
+                if (this.consolidatedData.length > 0) {
+                  // Case 1: Flat array with data
+                  if (
+                    this.consolidatedData[0] &&
+                    typeof this.consolidatedData[0] === "object" &&
+                    !Array.isArray(this.consolidatedData[0])
+                  ) {
+                    hasData = true;
+                  }
+                  // Case 2: Nested array with data inside
+                  else if (
+                    Array.isArray(this.consolidatedData[0]) &&
+                    this.consolidatedData[0].length > 0
+                  ) {
+                    hasData = true;
+                  }
+                }
+              }
+
+              if (hasData) {
                 this.isDataAvailble = true;
                 //  this.showspinner = false;
               } else {
