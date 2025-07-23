@@ -15,6 +15,7 @@ import { environment } from "src/environments/environment";
 export class SearchStudentProfileComponent implements OnInit {
   yearOptions: SelectItem[];
   display: boolean = false;
+  editDialog: boolean = false;
   selectedStudent: any = null;
   editStudentProfile: any = null;
 
@@ -28,7 +29,8 @@ export class SearchStudentProfileComponent implements OnInit {
   yearvalue: any;
   schoolName: any;
   schoolId: any;
-
+  imagePreview: string | ArrayBuffer | null = null;
+  editStudentForm!: FormGroup;
   studentId: any;
   isLoading: boolean = false;
   setPhotoYear: string;
@@ -44,6 +46,17 @@ export class SearchStudentProfileComponent implements OnInit {
   baseUrl: string;
   activeIndex: number = 0;
   title = "👤 Welcome to Profile";
+  oldPhoto: any;
+  standardClass: { label: string; value: string }[];
+  tShirtSize: { label: string; value: string }[];
+  fileError: string;
+  uploadedFile: null;
+  selectedFile: any;
+  isMoreDot: boolean;
+  fileName: number;
+  fullFilename: string;
+  studentUniqueId: any;
+  studentProfileYearWiseData: any[];
   constructor(
     private issoUtilService: IssoUtilService,
     private messageService: MessageService,
@@ -54,11 +67,13 @@ export class SearchStudentProfileComponent implements OnInit {
 
   ngOnInit() {
     this.baseUrl = environment.baseUrl;
-    this.yearOptions = this.issoUtilService.studentProfileYear();
+    this.yearOptions = this.issoUtilService.setYear();
     this.searchForm = this.fb.group({
       searchQuery: ["", Validators.required],
     });
     this.setPhotoPath();
+    this.tShirtSize = this.issoUtilService.setTshirtSize();
+    this.standardClass = this.issoUtilService.setClass();
   }
 
   beforeTabChange(index: number) {
@@ -168,6 +183,7 @@ export class SearchStudentProfileComponent implements OnInit {
     //  this.isLoading = true;
     this.yearvalue = event.value;
     this.setPhotoPath();
+    this.getStudentYearWiseProfile();
     if (this.yearvalue) {
       this.adminStudentProfileService
         .getStudentDataForCertificate(
@@ -193,43 +209,38 @@ export class SearchStudentProfileComponent implements OnInit {
           }
         );
     }
-    // this.adminStudentProfileService.getSchoolData(event.value).subscribe(
-    //   (response) => {
-    //     this.isLoading = false;
-    //     if (response !== "") {
-    //       this.schoolData = response;
-
-    //       if (this.schoolData.length > 0) {
-    //         this.schoolOptions = [];
-    //         this.schoolReadable = true;
-    //         this.isDataAvailble = false;
-    //         this.schoolOptions.push({
-    //           label: "Please Select",
-    //           value: "",
-    //         });
-    //         this.schoolData.forEach((element) => {
-    //           this.schoolOptions.push({
-    //             label: element.schoolName,
-    //             value: element.schoolId,
-    //           });
-    //         });
-    //       } else {
-    //         this.isDataAvailble = false;
-    //         this.schoolReadable = false;
-    //         this.messageService.add({
-    //           key: "custom",
-    //           severity: "error",
-    //           summary: "Event not found for this year",
-    //         });
-    //       }
-    //     } else {
-    //       console.log("Data is blannk from service");
-    //     }
-    //   },
-    //   (error) => {
-    //     //this.errorAlert =true;
-    //   }
-    // );
+  }
+  getStudentYearWiseProfile() {
+    console.log("Im call");
+    if (this.yearvalue) {
+      this.adminStudentProfileService
+        .getStudentYearWiseProfile(
+          this.yearvalue,
+          this.selectedStudent.studentUniqueId
+        )
+        .subscribe(
+          (response: any[]) => {
+            this.studentProfileYearWiseData = response[0];
+            console.log(
+              "response 12->" + JSON.stringify(this.studentProfileYearWiseData)
+            );
+            // this.isLoading = false;
+            // this.studentProfileData = response;
+            // this.studentDataLength = Object.keys(
+            //   this.studentProfileData
+            // ).length;
+          },
+          (error) => {
+            this.isLoading = false;
+            console.log("this is error-->" + JSON.stringify(error.errorDesc));
+            this.messageService.add({
+              key: "custom",
+              severity: "error",
+              summary: error.errorDesc,
+            });
+          }
+        );
+    }
   }
   hasSubgames(student: any): boolean {
     return this.getSubgameKeys(student).length > 0;
@@ -245,5 +256,150 @@ export class SearchStudentProfileComponent implements OnInit {
 
   onImageError(event: any) {
     event.target.src = "assets/images/default-user.png";
+  }
+  get f() {
+    return this.editStudentForm.controls;
+  }
+  editStudent(student: any) {
+    this.issoUtilService.getAcademicYearForPhoto();
+    this.editDialog = true;
+
+    this.editStudentProfile = student;
+    this.studentId = student.sId;
+    this.studentUniqueId = student.studentUniqueId;
+    this.imagePreview = this.setPhotoYear + "/" + student.photo;
+    this.oldPhoto = student.photo;
+    this.editStudentForm = this.fb.group({
+      studentName: [this.editStudentProfile.studentName, Validators.required],
+      fatherName: [this.editStudentProfile.fatherName, Validators.required],
+      dateOfBirth: [this.editStudentProfile.dateOfBirth, Validators.required],
+      contactNo: [this.editStudentProfile.contactNo, Validators.required],
+      aadharNumber: [this.editStudentProfile.aadharNumber, Validators.required],
+      admissionNumber: [
+        this.editStudentProfile.admissionNumber,
+        Validators.required,
+      ],
+      curruclm: [this.editStudentProfile.curruclm, Validators.required],
+      standardClass: [
+        this.editStudentProfile.standardClass,
+        Validators.required,
+      ],
+      photo: [null],
+      tShirtSize: [this.editStudentProfile.tShirtSize, Validators.required],
+      gender: [this.editStudentProfile.gender, Validators.required],
+    });
+  }
+  onFileSelect(event: any) {
+    console.log(event);
+    this.fileError = "";
+    this.imagePreview = null;
+    this.uploadedFile = null;
+    const file = event.target.files[0]; //event.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+    var newName = event.target.files[0].name.split(".").slice(0, -1).join(".");
+    if (newName.indexOf(".") !== -1) {
+      this.isMoreDot = true;
+    } else {
+      this.isMoreDot = false;
+    }
+    if (file) {
+      const validTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/JPEG",
+        "image/jpg",
+        "image/JPG",
+        "image/PNG",
+      ];
+      if (!validTypes.includes(file.type) && !this.isMoreDot) {
+        this.fileError = "File type not supported.";
+        return;
+      }
+      if (file.size > 100 * 1024) {
+        this.fileError = "File size must be below 100KB.";
+        return;
+      }
+
+      this.fileError = "";
+      const reader = new FileReader();
+      reader.onload = () => (this.imagePreview = reader.result);
+      reader.readAsDataURL(file);
+
+      var removeSpace = newName.replace(/\s/g, "");
+      var ext = event.target.files[0].name.split(".").pop();
+      this.fileName = Math.floor(Math.random() * 1000000000 + 1);
+      this.fullFilename = removeSpace + this.fileName + "." + ext;
+      this.editStudentForm.patchValue({ photo: file });
+      this.uploadedFile = file;
+    }
+  }
+  onSubmit() {
+    this.isLoading = true;
+    if (this.editStudentForm.valid) {
+      const formData = new FormData();
+      const updatedStudentData = this.editStudentForm.value;
+      console.log("Updated Student Data:", updatedStudentData);
+      Object.keys(this.editStudentForm.controls).forEach((key) => {
+        //formData.append(key, this.studentForm.get(key)?.value);
+        const control = this.editStudentForm.get(key);
+        formData.append(key, control ? control.value : "");
+      });
+      formData.append("studentId", this.studentId);
+      formData.append("selectedYear", this.yearvalue);
+      formData.append("studentUniqueId", this.studentUniqueId);
+      const control = this.editStudentForm.get("photo");
+      if (control && control.value) {
+        const file = control.value;
+        console.log("Selected file:", file.name);
+      }
+      if (this.selectedFile) {
+        formData.append("profile", this.fullFilename);
+        formData.append(
+          "profile",
+          this.editStudentForm.get("photo").value,
+          this.fullFilename
+        );
+      } else {
+        formData.append("profile", this.fullFilename);
+        formData.append("profile", this.oldPhoto); // Send old file name to backend
+      }
+
+      this.adminStudentProfileService
+        .updateStudentDataYearWise(formData)
+        .subscribe(
+          (res) => {
+            this.isLoading = false;
+            this.editDialog = false;
+            if (res.status === "error") {
+              this.messageService.add({
+                severity: "error",
+                summary: "Error Message",
+                detail: "Validation failed",
+              });
+            } else {
+              this.messageService.add({
+                key: "custom",
+                severity: "success",
+                summary: "Data Updated Successfully",
+              });
+              this.getStudentYearWiseProfile();
+            }
+          },
+
+          (error) => {
+            this.isLoading = false;
+            this.messageService.add({
+              key: "custom",
+              severity: "error",
+              summary: error.errorDesc,
+            });
+          }
+        );
+    } else {
+      this.editStudentForm.markAllAsTouched();
+    }
+    this.selectedFile = "";
   }
 }

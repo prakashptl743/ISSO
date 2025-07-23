@@ -184,90 +184,117 @@
         <ng-template pTemplate="header">
           <i class="bi bi-person-circle me-1"></i> Profile
         </ng-template>
+        <div class="align-note" *ngIf="!selectedYear">
+          Note: Please select a year to view Profile Details.
+        </div>
+        <ng-container *ngIf="selectedYear">
+          <div class="details-tab">
+            Showing profile for year: <strong>{{ yearvalue }}</strong>
+          </div>
+          <div
+            class="table-responsive"
+            *ngIf="studentProfileYearWiseData && !editStudentData"
+          >
+            <button
+              class="edit-button"
+              (click)="editStudent(studentProfileYearWiseData)"
+            >
+              Edit Profile
+            </button>
 
-        <div class="details-tab">
-          Showing profile for year: <strong>{{ yearvalue }}</strong>
-        </div>
-        <div
-          class="table-responsive"
-          *ngIf="selectedStudent && !editStudentData"
-        >
-          <table class="table table-bordered table-striped">
-            <tbody>
-              <tr>
-                <th><strong>Student Name:</strong></th>
-                <td>{{ selectedStudent.studentName }}</td>
-                <th><strong>Father Name:</strong></th>
-                <td>{{ selectedStudent.fatherName }}</td>
-              </tr>
-              <tr>
-                <th><strong>Date of Birth:</strong></th>
-                <td>
-                  {{ selectedStudent.dateOfBirth | date : "dd-MMM-yyyy" }}
-                </td>
-                <th><strong>Gender:</strong></th>
-                <td>{{ selectedStudent.gender == "1" ? "Boys" : "Girls" }}</td>
-              </tr>
-              <tr>
-                <th><strong>Class:</strong></th>
-                <td>{{ selectedStudent.standardClass }}</td>
-                <th><strong>Aadhar No:</strong></th>
-                <td>{{ selectedStudent.aadharNumber }}</td>
-              </tr>
-              <tr>
-                <th><strong>Contact No:</strong></th>
-                <td>{{ selectedStudent.contactNo }}</td>
-                <th><strong>Admission No:</strong></th>
-                <td>{{ selectedStudent.admissionNumber }}</td>
-              </tr>
-              <tr>
-                <th><strong>T-Shirt Size:</strong></th>
-                <td>{{ selectedStudent.tShirtSize }}</td>
-                <th><strong>Curriculum:</strong></th>
-                <td>{{ selectedStudent.curruclm }}</td>
-              </tr>
-              <tr>
-                <th><strong>Passport:</strong></th>
-                <td>
-                  {{
-                    selectedStudent.passport === ""
-                      ? "N/A"
-                      : selectedStudent.passport
-                  }}
-                </td>
-                <th><strong>Registered Date:</strong></th>
-                <td>
-                  {{ selectedStudent.createdDate | date : "dd-MMM-yyyy" }}
-                </td>
-              </tr>
-              <tr>
-                <th><strong>Photo:</strong></th>
-                <td>
-                  <img
-                    height="50"
-                    width="50"
-                    src="{{ setPhotoYear }}/{{ selectedStudent.photo }}"
-                    (error)="onImageError($event)"
-                  />
-                </td>
-                <th><strong>Status:</strong></th>
-                <td
-                  [ngClass]="
-                    selectedStudent.approvedStatus == '0'
-                      ? 'isPending'
-                      : 'isApproved'
-                  "
-                >
-                  {{
-                    selectedStudent.approvedStatus == "0"
-                      ? "Pending"
-                      : "Approved"
-                  }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            <table class="table table-bordered table-striped">
+              <tbody>
+                <tr>
+                  <th><strong>Student Name:</strong></th>
+                  <td>{{ studentProfileYearWiseData.studentName }}</td>
+                  <th><strong>Father Name:</strong></th>
+                  <td>{{ studentProfileYearWiseData.fatherName }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Date of Birth:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.dateOfBirth
+                        | date : "dd-MMM-yyyy"
+                    }}
+                  </td>
+                  <th><strong>Gender:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.gender == "1"
+                        ? "Boys"
+                        : "Girls"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <th><strong>Contact No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.contactNo }}</td>
+                  <th><strong>Aadhar No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.aadharNumber }}</td>
+                </tr>
+
+                <tr>
+                  <th><strong>Passport:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.passport === ""
+                        ? "N/A"
+                        : studentProfileYearWiseData.passport
+                    }}
+                  </td>
+                  <th><strong>Registered Date:</strong></th>
+                  <td>
+                    {{
+                      studentProfileYearWiseData.createdDate
+                        | date : "dd-MMM-yyyy"
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th><strong>T-Shirt Size:</strong></th>
+                  <td>{{ studentProfileYearWiseData.tShirtSize }}</td>
+                  <th><strong>Curriculum:</strong></th>
+                  <td>{{ studentProfileYearWiseData.curruclm }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Class:</strong></th>
+                  <td>{{ studentProfileYearWiseData.standardClass }}</td>
+                  <th><strong>Admission No:</strong></th>
+                  <td>{{ studentProfileYearWiseData.admissionNumber }}</td>
+                </tr>
+                <tr>
+                  <th><strong>Photo:</strong></th>
+                  <td>
+                    <img
+                      height="50"
+                      width="50"
+                      src="{{ setPhotoYear }}/{{
+                        studentProfileYearWiseData.photo
+                      }}"
+                      (error)="onImageError($event)"
+                    />
+                  </td>
+                  <th><strong>Status:</strong></th>
+                  <td
+                    [ngClass]="
+                      studentProfileYearWiseData.approvedStatus == '0'
+                        ? 'isPending'
+                        : 'isApproved'
+                    "
+                  >
+                    {{
+                      studentProfileYearWiseData.approvedStatus == "0"
+                        ? "Pending"
+                        : "Approved"
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
       </p-tabPanel>
       <p-tabPanel>
         <ng-template pTemplate="header">
@@ -335,6 +362,11 @@
                         {{ i + 1 }}. {{ sub }}
                       </div>
                     </ng-template>
+                  </div>
+                  <div>
+                    <ng-container *ngIf="!isValidSubGame(student.subGameName)">
+                      <div>N/A</div>
+                    </ng-container>
                   </div>
                 </td>
               </tr>
@@ -529,6 +561,115 @@
     </p-tabView>
   </div>
 </div>
+<p-dialog
+  header="Edit Studdnet Profile"
+  [(visible)]="editDialog"
+  [modal]="true"
+  [responsive]="true"
+  [baseZIndex]="10000"
+  [width]="800"
+>
+  <div *ngIf="editDialog">
+    <form
+      [formGroup]="editStudentForm"
+      (ngSubmit)="onSubmit()"
+      class="p-4 border rounded shadow"
+    >
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>Admission Number</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="admissionNumber"
+          />
+          <div
+            *ngIf="f.admissionNumber.touched && f.admissionNumber.invalid"
+            class="text-danger"
+          >
+            Admission Number is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Curriculum</label>
+          <input type="text" class="form-control" formControlName="curruclm" />
+          <div
+            *ngIf="f.curruclm.touched && f.curruclm.invalid"
+            class="text-danger"
+          >
+            Curriculum is required
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label>T-Shirt Size</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="tShirtSize"
+          >
+            <option *ngFor="let t of tShirtSize" [value]="t.value">
+              {{ t.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.tShirtSize.touched && f.tShirtSize.invalid"
+            class="text-danger"
+          >
+            T-Shirt size is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label>Standard</label>
+          <select
+            class="custom-dropdown form-control"
+            formControlName="standardClass"
+          >
+            <option *ngFor="let c of standardClass" [value]="c.value">
+              {{ c.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.standardClass.touched && f.standardClass.invalid"
+            class="text-danger"
+          >
+            Standard class is required
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Upload Photo</label>
+          <input
+            type="file"
+            class="form-control"
+            formControlName="photo"
+            accept="image/png, image/jpeg"
+            (change)="onFileSelect($event)"
+          />
+          <small class="text-danger" *ngIf="fileError">{{ fileError }}</small>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center mt-2" *ngIf="imagePreview">
+            <img [src]="imagePreview" class="img-thumbnail" width="60" />
+          </div>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="editStudentForm.invalid"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
 <p-toast
   [style]="{ marginTop: '50px' }"
   styleClass="custom-toast"

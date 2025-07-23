@@ -37,6 +37,7 @@ export class ViewStudentComponent implements OnInit {
   isLoading: boolean = false;
   setPhotoYear: string;
   serverUrl = environment.baseUrl;
+  studentUniqueId: any;
   constructor(
     private issoUtilService: IssoUtilService,
     private messageService: MessageService,
@@ -154,22 +155,23 @@ export class ViewStudentComponent implements OnInit {
     this.editStudentData = true;
     this.editStudentProfile = student;
     this.studentId = student.sId;
+    this.studentUniqueId = student.studentUniqueId;
     this.editStudentForm = this.fb.group({
       studentName: [this.editStudentProfile.studentName, Validators.required],
       fatherName: [this.editStudentProfile.fatherName, Validators.required],
       dateOfBirth: [this.editStudentProfile.dateOfBirth, Validators.required],
       contactNo: [this.editStudentProfile.contactNo, Validators.required],
       aadharNumber: [this.editStudentProfile.aadharNumber, Validators.required],
-      admissionNumber: [
-        this.editStudentProfile.admissionNumber,
-        Validators.required,
-      ],
-      curruclm: [this.editStudentProfile.curruclm, Validators.required],
-      standardClass: [
-        this.editStudentProfile.standardClass,
-        Validators.required,
-      ],
-      tShirtSize: [this.editStudentProfile.tShirtSize, Validators.required],
+      // admissionNumber: [
+      //   this.editStudentProfile.admissionNumber,
+      //   Validators.required,
+      // ],
+      // curruclm: [this.editStudentProfile.curruclm, Validators.required],
+      // standardClass: [
+      //   this.editStudentProfile.standardClass,
+      //   Validators.required,
+      // ],
+      // tShirtSize: [this.editStudentProfile.tShirtSize, Validators.required],
       gender: [this.editStudentProfile.gender, Validators.required],
     });
   }
@@ -185,35 +187,38 @@ export class ViewStudentComponent implements OnInit {
         formData.append(key, control ? control.value : "");
       });
       formData.append("studentId", this.studentId);
-      this.adminStudentProfileService.studentDataUpdate(formData).subscribe(
-        (res) => {
-          this.isLoading = false;
-          this.display = false;
-          if (res.status === "error") {
-            this.messageService.add({
-              severity: "error",
-              summary: "Error Message",
-              detail: "Validation failed",
-            });
-          } else {
+      formData.append("studentUniqueId", this.studentUniqueId);
+      this.adminStudentProfileService
+        .updateGlobalStudentProfile(formData)
+        .subscribe(
+          (res) => {
+            this.isLoading = false;
+            this.display = false;
+            if (res.status === "error") {
+              this.messageService.add({
+                severity: "error",
+                summary: "Error Message",
+                detail: "Validation failed",
+              });
+            } else {
+              this.messageService.add({
+                key: "custom",
+                severity: "success",
+                summary: "Data Updated Successfully",
+              });
+            }
+            this.getStudentData();
+            // this.getSchoolData();
+          },
+          (error) => {
+            this.isLoading = false;
             this.messageService.add({
               key: "custom",
-              severity: "success",
-              summary: "Data Updated Successfully",
+              severity: "error",
+              summary: error.errorDesc,
             });
           }
-          this.getStudentData();
-          // this.getSchoolData();
-        },
-        (error) => {
-          this.isLoading = false;
-          this.messageService.add({
-            key: "custom",
-            severity: "error",
-            summary: error.errorDesc,
-          });
-        }
-      );
+        );
     } else {
       this.editStudentForm.markAllAsTouched();
     }
