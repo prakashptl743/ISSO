@@ -61,9 +61,7 @@
             (blur)="checkEmail($event)"
             name="schoolEmail"
             type="text"
-            [ngClass]="{
-              'is-invalid': f.schoolEmail.touched && f.schoolEmail.errors
-            }"
+            [class.is-invalid]="f.schoolEmail.touched && f.schoolEmail.invalid"
           />
           <span class="align-email-error" *ngIf="showEmailErrorMessage"
             >This email already exists</span

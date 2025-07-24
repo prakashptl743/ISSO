@@ -58,6 +58,7 @@ export class StudentRegistrationComponent implements OnInit {
   genderOptions: SelectItem[];
   tShirtSize: any;
   standardClass;
+  curriculum;
   isMoreDot: boolean;
   fullFilename: string;
   fileName: number;
@@ -115,6 +116,9 @@ export class StudentRegistrationComponent implements OnInit {
   otpErrorMessage: string;
   studentErrorMessage: boolean;
   studentError: string;
+  errorMessage: string;
+  passport: string;
+  aadharNo: any;
 
   constructor(
     private fb: FormBuilder,
@@ -132,7 +136,7 @@ export class StudentRegistrationComponent implements OnInit {
       schoolName: ["", Validators.required],
       dob: ["", Validators.required],
       class: ["", Validators.required],
-      adharNo: ["", [Validators.required, Validators.pattern(/^\d{12}$/)]],
+      adharNo: ["", Validators.required],
       contactNo: ["", [Validators.required, Validators.pattern(/^\d{10}$/)]],
       studentGender: ["", Validators.required],
       tshirtSize: ["", Validators.required],
@@ -151,6 +155,7 @@ export class StudentRegistrationComponent implements OnInit {
     this.genderOptions = this.issoUtilService.setGender();
     this.tShirtSize = this.issoUtilService.setTshirtSize();
     this.standardClass = this.issoUtilService.setClass();
+    this.curriculum = this.issoUtilService.setCurriculum();
     this.initializeCapacityCounts();
 
     const fourteenGirlsSubGames: SubGame[] = [
@@ -454,6 +459,45 @@ export class StudentRegistrationComponent implements OnInit {
       today.getDate()
     );
   }
+  // In your component's .ts file
+  convertToUppercase(event: Event) {
+    this.errorMessage = "";
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.value = inputElement.value.toUpperCase();
+  }
+  verifyGovId() {
+    const inputVal = this.studentForm.value.adharNo.trim().toUpperCase();
+    let aadhar = "";
+    let passport = "";
+    this.aadharNo = "";
+    this.passport = "";
+    if (/^[0-9]{12}$/.test(inputVal)) {
+      // Further Aadhaar validation (optional checksum can go here)
+      aadhar = inputVal;
+      this.errorMessage = ""; // clear error
+    } else if (/^[A-Z0-9]{6,9}$/.test(inputVal)) {
+      passport = inputVal;
+      this.errorMessage = ""; // clear error
+    } else {
+      // Check if it's 12 digits but not valid Aadhaar
+      if (/^[0-9]+$/.test(inputVal) && inputVal.length !== 12) {
+        this.errorMessage = "Invalid Aadhaar: It must be exactly 12 digits.";
+      } else {
+        this.errorMessage =
+          "Invalid ID format. Enter Aadhaar (12 digits) or Passport (6–9 alphanumeric characters).";
+      }
+    }
+
+    if (passport !== "") {
+      this.passport = passport;
+      this.aadharNo = "";
+    } else {
+      this.aadharNo = aadhar;
+      this.passport = "";
+    }
+    console.log("Im adhar--->" + this.aadharNo);
+    console.log("Im passport--->" + this.passport);
+  }
   changeMenu(menuType: string) {
     if (menuType == "enroll") {
       this.isStudentEnrollForm = false;
@@ -467,6 +511,11 @@ export class StudentRegistrationComponent implements OnInit {
     this.isStudentEnrollForm = !this.isStudentEnrollForm;
     this.studentForm.reset();
     this.issoEnrolledForm.reset();
+    this.uploadedFile = null;
+    this.imagePreview = null;
+    this.fileError = "";
+
+    this.imagePreview = "";
   }
   loadAllSchool() {
     this.studentService.loadAllSchool().subscribe(
@@ -729,11 +778,16 @@ export class StudentRegistrationComponent implements OnInit {
       formData.append("schoolName", this.schoolId);
       formData.append("studentdateOfBirth", formatted_DOB);
       formData.append("profile", this.fullFilename);
+
       formData.append(
         "profile",
         this.studentForm.get("photo").value,
         this.fullFilename
       );
+
+      formData.append("aadharNumber", this.aadharNo);
+      formData.append("passport", this.passport);
+
       this.studentProfileService.studentRegistration(formData).subscribe(
         (res) => {
           this.isLoading = false;
@@ -760,6 +814,7 @@ export class StudentRegistrationComponent implements OnInit {
           // this.getSchoolData();
         },
         (error) => {
+          this.isLoading = false;
           this.messageService.add({
             key: "custom",
             severity: "error",

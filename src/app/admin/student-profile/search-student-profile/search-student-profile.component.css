@@ -1,6 +1,12 @@
 input.largerCheckbox {
   transform: scale(2);
 }
+.search-note {
+  padding: 10px 0;
+  color: #0d6efd !important;
+  font-size: medium;
+  font-style: italic;
+}
 .cert-intro {
   color: black;
   padding: 10px;

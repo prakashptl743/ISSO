@@ -399,7 +399,13 @@
             <th><strong>Class:</strong></th>
             <td>{{ selectedStudent.standardClass }}</td>
             <th><strong>Aadhar No:</strong></th>
-            <td>{{ selectedStudent.aadharNumber }}</td>
+            <td>
+              {{
+                selectedStudent.aadharNumber === ""
+                  ? "N/A"
+                  : selectedStudent.aadharNumber
+              }}
+            </td>
           </tr>
           <tr>
             <th><strong>Contact No:</strong></th>
