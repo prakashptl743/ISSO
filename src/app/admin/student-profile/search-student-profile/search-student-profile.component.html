@@ -35,6 +35,10 @@
   class="table-responsive mt-4"
   *ngIf="searchResultData && searchResultData.length"
 >
+  <div class="search-note">
+    Note:- Those student who is not approved you can not see profile /
+    certificate here.
+  </div>
   <table class="table table-striped table-bordered table-hover shadow-sm">
     <thead class="table-dark">
       <tr>
@@ -50,18 +54,25 @@
     <tbody>
       <tr *ngFor="let student of searchResultData; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>{{ student.studentUniqueId }}</td>
+        <td>
+          {{ student?.approvedStatus == 1 ? student.studentUniqueId : "N/A" }}
+        </td>
         <td>{{ student.studentName }}</td>
         <td>{{ student.contactNo }}</td>
         <td>{{ student.schoolName }}</td>
 
         <td>{{ student.dateOfBirth | date : "dd-MM-yyyy" }}</td>
         <td>
-          <span
-            (click)="viewDetails(student)"
-            class="p-3 mb-2 bg-primary text-white cusror-pointer"
-            >View Details</span
-          >
+          <span>
+            {{ student?.approvedStatus == 1 ? "" : "N/A" }}
+            <span
+              class="p-3 mb-2 bg-primary text-white cusror-pointer"
+              *ngIf="student?.approvedStatus == 1"
+              (click)="viewDetails(student)"
+            >
+              View Details
+            </span>
+          </span>
         </td>
       </tr>
     </tbody>
@@ -100,7 +111,13 @@
             <th><strong>Class:</strong></th>
             <td>{{ selectedStudent.standardClass }}</td>
             <th><strong>Aadhar No:</strong></th>
-            <td>{{ selectedStudent.aadharNumber }}</td>
+            <td>
+              {{
+                selectedStudent.aadharNumber === ""
+                  ? "N/A"
+                  : selectedStudent.aadharNumber
+              }}
+            </td>
           </tr>
           <tr>
             <th><strong>Contact No:</strong></th>
@@ -196,6 +213,7 @@
             *ngIf="studentProfileYearWiseData && !editStudentData"
           >
             <button
+              *ngIf="selectedStudent.approvedStatus == '1'"
               class="edit-button"
               (click)="editStudent(studentProfileYearWiseData)"
             >
@@ -592,13 +610,21 @@
         </div>
         <div class="col-md-6">
           <label>Curriculum</label>
-          <input type="text" class="form-control" formControlName="curruclm" />
+          <select
+            class="custom-dropdown form-control"
+            formControlName="curruclm"
+          >
+            <option *ngFor="let c of curriculum" [value]="c.value">
+              {{ c.label }}
+            </option>
+          </select>
+          <!-- <input type="text" class="form-control" formControlName="curruclm" />
           <div
             *ngIf="f.curruclm.touched && f.curruclm.invalid"
             class="text-danger"
           >
             Curriculum is required
-          </div>
+          </div> -->
         </div>
       </div>
 

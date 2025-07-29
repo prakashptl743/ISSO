@@ -50,7 +50,7 @@ export class ViewStudentComponent implements OnInit {
     this.genderOptions = this.issoUtilService.setGender();
     this.tShirtSize = this.issoUtilService.setTshirtSize();
     this.standardClass = this.issoUtilService.setClass();
-    this.yearOptions = this.issoUtilService.setYear();
+    this.yearOptions = this.issoUtilService.studentProfileYear();
   }
   setPhotoPath() {
     // this.setPhotoYear = this.issoUtilService.setPhotoYear();
@@ -260,6 +260,7 @@ export class ViewStudentComponent implements OnInit {
     const formData = new FormData();
     formData.append("approvedStatus", "1");
     formData.append("schoolName", this.schoolName);
+    formData.append("contactNo", student.contactNo);
     this.adminStudentProfileService
       .changeApprovalStatus(studentId, formData)
       .subscribe(

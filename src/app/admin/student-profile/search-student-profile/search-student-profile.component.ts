@@ -48,6 +48,7 @@ export class SearchStudentProfileComponent implements OnInit {
   title = "👤 Welcome to Profile";
   oldPhoto: any;
   standardClass: { label: string; value: string }[];
+  curriculum: { label: string; value: string }[];
   tShirtSize: { label: string; value: string }[];
   fileError: string;
   uploadedFile: null;
@@ -67,13 +68,14 @@ export class SearchStudentProfileComponent implements OnInit {
 
   ngOnInit() {
     this.baseUrl = environment.baseUrl;
-    this.yearOptions = this.issoUtilService.setYear();
+    this.yearOptions = this.issoUtilService.studentProfileYear();
     this.searchForm = this.fb.group({
       searchQuery: ["", Validators.required],
     });
     this.setPhotoPath();
     this.tShirtSize = this.issoUtilService.setTshirtSize();
     this.standardClass = this.issoUtilService.setClass();
+    this.curriculum = this.issoUtilService.setCurriculum();
   }
 
   beforeTabChange(index: number) {

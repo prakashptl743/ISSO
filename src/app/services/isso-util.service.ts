@@ -40,6 +40,7 @@ export class IssoUtilService {
   ageOptions: { label: string; value: string }[];
   feeType: { label: string; value: string }[];
   schoolZone: { label: string; value: string }[];
+  curriculum: { label: string; value: string }[];
   eventZone: { label: string; value: string }[];
   genderOptions: { label: string; value: string }[];
   gameOptions: { label: string; value: string }[];
@@ -419,7 +420,18 @@ export class IssoUtilService {
     this.minDate = new Date(someFormattedDate);
     return this.minDate;
   }
-
+  setCurriculum() {
+    this.curriculum = [
+      { label: "Please select", value: "" },
+      { label: "IB", value: "IB" },
+      { label: "CAMBRIDGE EDUCATION", value: "CAMBRIDGE EDUCATION" },
+      {
+        label: "OTHERS(AMERICAN/FRENCH/BRITISH etc)",
+        value: "OTHERS(AMERICAN/FRENCH/BRITISH etc)",
+      },
+    ];
+    return this.curriculum;
+  }
   setDateOfBirthValidation(ageRange) {
     var date = new Date();
     var newdate = new Date(date);

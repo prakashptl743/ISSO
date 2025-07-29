@@ -132,22 +132,21 @@
           </div>
 
           <div class="col-md-6 mb-4">
-            <label class="form-label fw-bold">Aadhar No</label>
+            <label class="form-label fw-bold"
+              >Government ID (Aadhaar or Passport)</label
+            >
             <input
               type="text"
               class="form-control"
               formControlName="adharNo"
-              (blur)="studentForm.controls.adharNo.markAsTouched()"
-              placeholder="Enter Aadhar number"
-            />
-            <div
-              class="text-danger"
-              *ngIf="
-                studentForm.controls.adharNo.touched &&
-                studentForm.controls.adharNo.invalid
+              (input)="convertToUppercase($event)"
+              (blur)="
+                verifyGovId(); studentForm.controls.adharNo.markAsTouched()
               "
-            >
-              Aadhar No must be 12 digits.
+              placeholder="Enter Government ID"
+            />
+            <div class="text-danger" *ngIf="errorMessage !== ''">
+              {{ errorMessage }}
             </div>
           </div>
         </div>
@@ -248,16 +247,22 @@
             />
             <small class="text-danger" *ngIf="fileError">{{ fileError }}</small>
             <div class="text-center mt-2" *ngIf="imagePreview">
-              <img [src]="imagePreview" class="img-thumbnail" width="120" />
+              <img [src]="imagePreview" class="img-thumbnail" width="80" />
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <label class="form-label fw-bold">Curriculum</label>
-            <textarea
+            <!-- <textarea
               class="form-control"
               formControlName="curriculum"
               placeholder="Enter curriculum details"
-            ></textarea>
+            ></textarea> -->
+            <p-dropdown
+              placeholder="Please Select"
+              [options]="curriculum"
+              size="30"
+              formControlName="curriculum"
+            ></p-dropdown>
           </div>
         </div>
 
